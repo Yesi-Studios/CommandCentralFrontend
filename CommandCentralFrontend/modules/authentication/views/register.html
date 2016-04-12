@@ -1,0 +1,25 @@
+<div ng-show="error" class="alert alert-danger status_message">{{error}}</div>
+<div class="content_panel">
+	<form name="form" ng-submit="beginRegistration()" role="form">
+		<div class="form-group">
+			<label for="password">Enter your full SSN (no spaces or dashes) to claim your account:
+				<span ng-show="form.password.$dirty && form.password.$error.required" class="label label-danger">SSN is required</span>
+				<span ng-show="form.password.$dirty && form.password.$error.pattern" class="label label-danger">Please enter only 9 numbers, no symbols or spaces.</span>
+			</label>
+			<i class="fa fa-lock"></i>
+			<input type="password" name="password" id="password" class="form-control" ng-pattern="/^[0-9]{9}$/" ng-model="password" required />
+			<span class="help-block">You will need access to your .mil email account.</span>
+			
+		</div>
+		<div class="form-actions">
+			<button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Register</button>
+			<img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+			<div class="pull-right">
+				<a href="#/login" class="text-right label label-primary">Login</a>
+				<a href="#/forgotpassword"><span class="text-right label label-primary">Forgot your password?</span></a>
+			</div>
+		</div>
+	</form>
+	<br>
+	<div ng-show="accepted" class="alert alert-success  status_message"><strong>Ok, got it!</strong> Please check your .mil email account for further instructions.</div>
+</div>

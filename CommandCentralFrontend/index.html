@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" href="libs/bootstrap.min.css" />
+		<link rel="stylesheet" href="libs/bootstrap-theme.min.css" />		
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body ng-app="CommandCentral">
+		
+		<!-- BEGIN BODY HEAD -->
+		<div class="container-fluid" id="publicdiv">
+			<div class="row header_color">
+				<div class="col-xs-12 col-md-8 col-sm-8">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tbody>
+							<tr>
+
+								<td width="100" align="center"><img src="img/niocga.png" class="command_logo"></td>
+								<td valign="middle">
+									<span class="header_left">
+										<span class="header_txt">
+											NIOC Georgia TEST<br>
+											Command Central
+										</span>
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="clearfix visible-xs"></div>
+				<div class="col-md-4  header_right visible-lg visible-md visible-sm visible-xs">
+					<span class="header_small_title"></span><br />
+					<span class="header_txt pull-right">Version 0.1a</span>
+				</div>
+			</div>
+		</div>
+		<!-- END BODY HEAD -->
+		
+		<!-- BEGIN NAV BAR -->
+		<div ng-show="showNav" class="container">
+			<div class="navbar navbar-default" id="mainNav" ng-controller="NavController">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#/">Command Central</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
+					<li ng-class="{ active: isMyProfileActive()}"><a href="{{myProfileUrl}}">My Profile</a></li>
+					<li uib-dropdown ng-class="{ active: isActive('/search') || isActive('/searchbyfield')}">
+						<a id="search-dropdown" uib-dropdown-toggle href>Search<span class="caret"></span></a>
+						<ul uib-dropdown-menu aria-labelledby="search-dropdown" class="dropdown-menu">
+							<li><a href="#/search">Search</a></li>
+							<li><a href="#/searchbyfield">Search by Field</a></li>
+						</ul>
+					</li>
+					
+				</ul>
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="" ng-click="logout()">Logout</a></li>
+				</ul>
+			</div>
+			</div>
+		</div>
+		<!-- END NAV BAR -->
+		
+		<!-- MAIN BODY VIEW -->
+		<div class="container">
+			<div ng-view></div>
+		</div>
+		
+		<br>
+		
+		<!-- BEGIN APP STATUS (FOOTER) -->
+		<div ng-show="showNews" ng-controller="AppStatusController" class="container content_panel" id="appStatus">
+			
+			<div class="row">
+				<div ng-show="error" class="col-xs-offset-2 col-xs-8 alert alert-danger status_message">{{error}}</div>
+			</div>
+			
+			<div class="row">
+				
+				<div class="col-xs-7">
+					<h2>Changes</h2>
+					<table id="changesTable" class="table table-striped">
+						<thead>
+							<tr>
+								<th>Version</th>
+								<th>Date</th>
+								<th>Changes Made</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="change in changes | orderBy: '-Time'">
+								<td>{{change.Version}}</td>
+								<td>{{change.Time | date: 'mediumDate'}}</td>
+								<td><div ng-repeat="line in change.Changes">-{{line}}</div></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<div class="col-xs-5">
+					<h2>Known Issues</h2>
+					<table id="issuesTable" class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Issue</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="issue in issues">
+								<td>{{$index + 1}}</td>
+								<td>{{issue}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-6 center-block">
+					<a ng-click="refreshNews()" ng-disabled="dataLoading" id="singlebutton" name="singlebutton" class="btn btn-primary">
+						Reload news <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+										
+					</a>
+					<small>Last loaded at <strong>{{loadedTime | date: 'short'}}</strong> from backend version {{backendVersion}}.</small><br>
+					<small>Status last updated at {{statusUpdateTime | date: 'short'}}.</small>
+				</div>
+			</div>
+		</div>
+		<!-- END APP STATUS (FOOTER) -->
+
+		<script src="libs/jquery-2.2.1.min.js"></script>
+		<script src="libs/angular.min.js"></script>
+		<script src="libs/angular-pdf.min.js"></script>
+		<script src="libs/angular-route.min.js"></script>
+		<script src="libs/angular-animate.min.js"></script>
+		<script src="libs/angular-touch.min.js"></script>
+		<script src="libs/ngStorage.min.js"></script>
+		<script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
+		<script src="app.js"></script>
+		<script src="modules/authentication/services.js"></script>
+		<script src="modules/authentication/controllers.js"></script>
+		<script src="modules/home/controllers.js"></script>
+		<script src="modules/home/services.js"></script>
+		<script src="modules/appstatus/controllers.js"></script>
+		<script src="modules/appstatus/services.js"></script>
+		<script src="modules/navigation/controllers.js"></script>
+		<script src="modules/navigation/services.js"></script>
+		<script src="modules/profile/controllers.js"></script>
+		<script src="modules/profile/services.js"></script>
+		<script src="modules/search/controllers.js"></script>
+		<script src="modules/search/services.js"></script>
+		<script src="modules/authorization/services.js"></script>
+	</body>
+
+</html>

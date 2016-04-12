@@ -1,0 +1,34 @@
+<div ng-show="error" class="alert alert-danger status_message">{{error}}</div>
+<div class="container content_panel" id="news">
+	<div class="row">
+		<div class="col-xs-offset-1 col-xs-10">
+			<div class="input-group">
+				<span class="input-group-addon" id="searchAddon">SimpleSearch</span>
+				<input type="text" class="form-control" placeholder="Enter Search Terms..." aria-describedby="searchAddon" ng-model="simpleSearchTerms" ng-keyup="searchOnEnter($event, simpleSearchTerms)">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" ng-click="goToResults(simpleSearchTerms)">Search</button>
+			  </span>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<h3 class="text-center" ng-show="results">Showing {{results.length}} results.</h3>
+			<h4 class="text-center" ng-show="results">Click a column to sort by it.</h4>
+			<table ng-show="results" class="table-striped col-xs-12">
+				<thead>
+					<tr>
+						<th ng-repeat="field in fields" ng-click="setOrder(field)"><button ng-class="{'btn-primary': orderKey==field || orderKey=='-'+field}">{{field}}<span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-'+field"></span><span class="glyphicon glyphicon-chevron-down" ng-if="orderKey==field"></span></button></th>
+						<th>Profile</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="result in results | orderBy: orderKey" ng-click="goToProfile(result.ID)">
+						<td ng-repeat="field in fields">{{result[field]}}</td>
+						<td><a href="#/profile/{{result.ID}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

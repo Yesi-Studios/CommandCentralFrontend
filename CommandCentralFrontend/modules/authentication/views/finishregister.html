@@ -1,0 +1,34 @@
+<div ng-show="error" class="alert alert-danger status_message">{{error}}</div>
+<div class="content_panel">
+	<form name="form" ng-submit="finishRegistration()" role="form">
+		<div class="form-group">
+			<label for="username">Username
+				<span ng-show="form.username.$dirty && form.username.$error.required" class="label label-danger">Username is required</span>
+				<span ng-show="form.username.$dirty && form.username.$error.pattern" class="label label-danger">Username may only contain a-z, A-Z, and 0-9.</span>
+				<span ng-show="form.username.$dirty && form.username.$error.minlength || form.username.$error.maxlength" class="label label-danger">Username must be between 5 and 12 characters.</span>
+			</label>
+			<i class="fa fa-key"></i>
+			<input type="text" name="username" id="username" class="form-control" ng-model="username" ng-minlength="5" ng-maxlength="12" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model-options="{ debounce: 500 }" required />
+			<span class="help-block">Username must be 5 to 12 characters, and may only contain letters and numbers.</span>
+		</div>
+		<div class="form-group">
+			<label for="password">Password
+				<span ng-show="form.password.$dirty && form.password.$error.required" class="label label-danger">Password is required</span>
+				<span ng-show="form.password.$dirty && form.password.$error.minlength || form.password.$error.maxlength" class="label label-danger">Password must be between 10 and 30 characters.</span>
+			</label>
+			<i class="fa fa-lock"></i>
+			<input type="password" name="password" id="password" class="form-control" ng-model="password" ng-minlength="10" ng-maxlegnth="30" ng-model-options="{ debounce: 500 }" required />
+			<span class="help-block">Password must be greater than 10 characters and may contain almost any character.</span>
+		</div>
+		<div class="form-group">
+			<label for="passwordconfirm">Confirm Password <span ng-show="form.passwordconfirm.$dirty && password != passwordconfirm" class="label label-danger">Passwords do not match</span></label>
+			<i class="fa fa-lock"></i>
+			<input type="password" name="passwordconfirm" id="passwordconfirm" class="form-control" ng-model="passwordconfirm" ng-model-options="{ debounce: 500 }" required />
+			<span class="help-block">Type your password again to make sure you got it right above.</span>
+		</div>
+		<div class="form-actions">
+			<button type="submit" ng-disabled="form.$invalid || dataLoading || password != passwordconfirm" class="btn btn-danger">Register</button>
+			<img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+		</div>
+	</form>
+</div>
