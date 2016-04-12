@@ -35,8 +35,12 @@
 						</div>
 						<div class="form-group"  ng-class="{'has-error': !isValidSSN(profileData.SSN)}">
 							<label class="col-xs-4" for="ssn">SSN</label>
-							<div class="col-xs-8">
-								<input type="password" class="form-control" id="ssn" ng-disabled="!canEditPersonField('SSN')" ng-show="canReturnPersonField('SSN')" ng-model="profileData.SSN" ng-pattern='/^\d{3}-?\d{2}-?\d{4}$/'/>
+							<div class="input-group col-xs-8">
+                                <a href="" ng-click="showSSN=true" class="btn btn-warning" ng-hide="!canReturnPersonField('SSN')||showSSN">Show SSN</a>
+								<input type="text" class="form-control" id="ssn" ng-disabled="!canEditPersonField('SSN')" ng-show="canReturnPersonField('SSN') && showSSN " ng-model="profileData.SSN" ng-pattern='/^\d{3}-?\d{2}-?\d{4}$/'/>
+                                <span class="input-group-btn">
+                                    <a href="" ng-click="showSSN=false" class="btn btn-default" ng-show="canReturnPersonField('SSN') && showSSN ">Hide SSN</a>
+                                </span>
 							</div>
 						</div>
 					</div>
