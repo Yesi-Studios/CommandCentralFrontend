@@ -28,7 +28,21 @@ angular.module('Home')
 				}
 			});
 		};
+
+		$scope.userCanEditNews = function () {
+		    for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++) {
+		        if ($rootScope.globals.currentUser.permissionGroups[i].CustomPermissions.indexOf("Manage_News") > -1) {
+		            return true;
+		        }
+		    }
+		    return false;
+		};
 		
 		$scope.refreshNews();
 		
+    }])
+
+.controller('CreateNewsController', ['$scope', '$rootScope', 'AuthenticationService', 'HomeService',
+    function ($scope, $rootScope, AuthenticationService, HomeService) {
+
     }]);

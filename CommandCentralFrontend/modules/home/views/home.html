@@ -2,7 +2,7 @@
 <div class="container content_panel" id="news">
 	<div class="row">
 		<div class="col-xs-12">
-			<h2>News</h2>
+			<h2>News<a href="#/createnews" ng-if="userCanEditNews()" class="btn btn-primary pull-right" style="margin-right: 5px;">New News Item <span class="glyphicon glyphicon-pencil"></span></a></h2>
 			<div class="panel panel-primary" ng-repeat="item in newsItems">
 				<div class="panel-heading">
 					<div class="panel-title">{{item.Title}}</div>
@@ -17,6 +17,8 @@
 			<!--<div class="wrapper">
 				<ng-pdf template-url="modules/home/views/home.html"></ng-pdf>
 			</div>-->
+        </div>
+    </div>
 			
 	<div class="row">
 		<div class="col-xs-6 center-block">
