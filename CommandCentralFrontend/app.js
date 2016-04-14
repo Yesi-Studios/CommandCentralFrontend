@@ -41,6 +41,11 @@ angular.module('CommandCentral', [
             controller: 'CreateNewsController',
             templateUrl: 'modules/home/views/createnews.html'
         })
+
+        .when('/updatenews/:id', {
+            controller: 'UpdateNewsController',
+            templateUrl: 'modules/home/views/updatenews.html'
+        })
 		
 		.when('/profile/:id', {
             controller: 'ProfileController',

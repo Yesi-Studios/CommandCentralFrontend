@@ -1,0 +1,18 @@
+<div ng-show="error" class="alert alert-danger status_message">{{error}}</div>
+<div class="content_panel" id="news">
+    <div class="row">
+        <div class="col-xs-offset-1 col-xs-10">
+            <form name="form" role="form" class="form-horizontal" ng-submit="updateNewsItem(newsItem.ID, newsItem.Title, newsItem.Text)">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="newsTitle" name="newsTitle" class="form-control" id="newsTitle" ng-model="newsItem.Title" required />
+                </div>
+                <div class="form-group">
+                    <label for="newsText">Text of News</label>
+                    <textarea type="text" name="newsText" class="form-control" id="newsText" ng-model="newsItem.Text" rows="10" required></textarea>
+                </div>
+                <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary pull-right">Save News Item</button>
+            </form>
+        </div>
+    </div>
+</div>

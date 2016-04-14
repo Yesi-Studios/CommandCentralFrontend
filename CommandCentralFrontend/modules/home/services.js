@@ -30,9 +30,51 @@ angular.module('Home')
 
 		};
 
+		service.LoadNewsItem = function (itemID, callback) {
+		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), 'newsitemid' : itemID};
+		    var serviceurl = baseurl + "/LoadNewsItem";
+		    $.ajax(
+			{
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        callback(returnContainer);
+			    },
+			    error: function (xhr, status, errortext) {
+			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    }
+			});
+
+		};
+
 		service.CreateNewsItem = function (newsItem, callback) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitem": newsItem };
 		    var serviceurl = baseurl + "/CreateNewsItem";
+		    $.ajax(
+			{
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        callback(returnContainer);
+			    },
+			    error: function (xhr, status, errortext) {
+			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    }
+			});
+
+		};
+
+		service.UpdateNewsItem = function (newsItem, callback) {
+		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitem": newsItem };
+		    var serviceurl = baseurl + "/UpdateNewsItem";
 		    $.ajax(
 			{
 			    url: serviceurl,
