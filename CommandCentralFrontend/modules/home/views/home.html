@@ -6,7 +6,7 @@
 			<div class="panel panel-primary" ng-repeat="item in newsItems">
 				<div class="panel-heading">
 					<div class="panel-title">{{item.Title}}
-                        <a href="" class="btn btn-xs btn-danger pull-right" ng-click="item.showDeleteWarning=true" ng-show="!item.showDeleteWarning">Delete <span class="glyphicon glyphicon-remove"></span></a>
+                        <a href="" class="btn btn-xs btn-danger pull-right" ng-click="item.showDeleteWarning=true" ng-show="!item.showDeleteWarning && userCanEditNews()">Delete <span class="glyphicon glyphicon-remove"></span></a>
                         <span ng-show="item.showDeleteWarning" class="pull-right">Really delete?<a href="" ng-click="deleteNewsItem(item.ID)" class="btn btn-xs btn-danger">Yes</a><a href="" ng-click="item.showDeleteWarning=false" class="btn btn-xs btn-success">No</a></span>
                     </div>
                     </div>
