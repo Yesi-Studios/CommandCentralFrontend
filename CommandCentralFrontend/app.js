@@ -4,7 +4,7 @@
 angular.module('Authentication', ['Authorization']);
 angular.module('Home', ['Authentication', 'pdf']);
 angular.module('AppStatus', ['Authentication']);
-angular.module('Navigation', ['Authentication']);
+angular.module('Navigation', ['Authentication', 'Profiles']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap']);
 angular.module('Authorization', ['Authentication']);
 angular.module('Search', ['Authentication', 'Authorization']);

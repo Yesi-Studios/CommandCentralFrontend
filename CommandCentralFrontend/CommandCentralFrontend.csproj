@@ -111,7 +111,6 @@
     <Content Include="modules\navigation\services.js" />
     <Content Include="modules\profile\controllers.js" />
     <Content Include="modules\profile\services.js" />
-    <Content Include="modules\profile\views\myprofile_old.html" />
     <Content Include="modules\profile\views\profile.html" />
     <Content Include="modules\search\controllers.js" />
     <Content Include="modules\search\services.js" />

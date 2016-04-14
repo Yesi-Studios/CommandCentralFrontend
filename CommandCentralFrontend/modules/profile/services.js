@@ -111,24 +111,44 @@ angular.module('Profiles')
 				}
 			});
 		};
-		
-		service.UpdateMyProfile = function(person, callback) {
-			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey, 'person' : person};
-			var serviceurl = baseurl + "/UpdatePerson";
-			$.ajax(
+
+		service.UpdateMyProfile = function (person, callback) {
+		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'person': person };
+		    var serviceurl = baseurl + "/UpdatePerson";
+		    $.ajax(
 			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
-				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
-				}
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        callback(returnContainer);
+			    },
+			    error: function (xhr, status, errortext) {
+			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    }
+			});
+		};
+
+		service.CreatePerson = function (callback) {
+		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey };
+		    var serviceurl = baseurl + "/CreatePerson";
+		    $.ajax(
+			{
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        callback(returnContainer);
+			    },
+			    error: function (xhr, status, errortext) {
+			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    }
 			});
 		};
 		
