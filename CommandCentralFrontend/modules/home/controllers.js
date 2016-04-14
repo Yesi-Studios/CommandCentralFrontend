@@ -90,7 +90,7 @@ angular.module('Home')
                 $scope.$apply(function () {
                     $scope.dataLoading = false;
                     $scope.newsItem = response.ReturnValue;
-                    $scope.newsItem.Text = $scope.newsItem.Paragraphs.join('\n');
+                    $scope.text = $scope.newsItem.Paragraphs.join('\n');
                 });
             } else {
                 $scope.$apply(function () {
@@ -100,8 +100,11 @@ angular.module('Home')
             }
         });
 
-        $scope.updateNewsItem = function (id, title, text) {
-            HomeService.UpdateNewsItem({"ID" : id, "Title": title, "Paragraphs": text.match(/[^\r\n]+/g) }, function (response) {
+        $scope.updateNewsItem = function (newsItem, text) {
+            $scope.error = "";
+            $scope.dataLoading = true;
+            newsItem.Paragraphs = text.match(/[^\r\n]+/g);
+            HomeService.UpdateNewsItem(newsItem, function (response) {
                 if (!response.HasError) {
                     $scope.$apply(function () {
                         $scope.dataLoading = false;
