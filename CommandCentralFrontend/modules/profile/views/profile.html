@@ -4,7 +4,7 @@
 	  <uib-tabset>
 			<div ng-show="!haveLock" class="alert alert-danger status_message text-center">Saving disabled: {{lockMessage}}</div>
 			<div ng-show="haveLock && lockMessage" class="alert alert-warning status_message text-center">{{lockMessage}}</div>
-			<button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock" class="btn btn-primary pull-right" style="margin-right: 5px;">Save Changes</button>
+			<button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 5px;">Save Changes</button>
 			<uib-tab heading="Personal Data">
 				<br />
 				<div class="row">
@@ -86,7 +86,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row"><button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
+				<div class="row"><button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
 			</uib-tab>
 			<uib-tab heading="Contact Infomation">
 			<br />
@@ -225,7 +225,7 @@
 						</div>
 					</div>
 				</div>   
-				<div class="row"><button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
+				<div class="row"><button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
 			</uib-tab>
 			<uib-tab heading="Work Information">
 				<br />
@@ -329,7 +329,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row"><button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>   
+				<div class="row"><button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>   
 			</uib-tab>
 			<uib-tab heading="Account">
 				<div class="row">
@@ -362,7 +362,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row"><button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
+				<div class="row"><button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
 			</uib-tab>
 		</uib-tabset>
 	</form>
