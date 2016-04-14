@@ -7,32 +7,52 @@ angular.module('Home')
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService, HomeService) {
 		
 		$scope.pdfUrl = "/img/pow.pdf";
-		
-		$scope.refreshNews = function(){
-			$scope.dataLoading = true;
-			$scope.error = "";
-			HomeService.GetHomeNews(function(response) {
-				if(!response.HasError) {
-                    $scope.$apply(function() {
-						$scope.dataLoading = false;
-						$scope.newsItems = response.ReturnValue;
-						$scope.loadedTime = new Date;
-					});
-                } else {
-					$scope.$apply(function() {
-						$scope.error = "News failed to refresh: " + response.ErrorMessage;
-						$scope.dataLoading = false;
-						AuthenticationService.AddLoginError("News failed to refresh: " + response.ErrorMessage);
-						$location.path('/login');
-					});
-				}
-			});
+
+		$scope.refreshNews = function () {
+		    $scope.dataLoading = true;
+		    $scope.error = "";
+		    HomeService.GetHomeNews(function (response) {
+		        if (!response.HasError) {
+		            $scope.$apply(function () {
+		                $scope.dataLoading = false;
+		                $scope.newsItems = response.ReturnValue;
+		                $scope.loadedTime = new Date;
+		            });
+		        } else {
+		            $scope.$apply(function () {
+		                $scope.error = "News failed to refresh: " + response.ErrorMessage;
+		                $scope.dataLoading = false;
+		                AuthenticationService.AddLoginError("News failed to refresh: " + response.ErrorMessage);
+		                $location.path('/login');
+		            });
+		        }
+		    });
+		};
+
+		$scope.deleteNewsItem = function (itemID) {
+		    $scope.dataLoading = true;
+		    $scope.error = "";
+		    HomeService.DeleteNewsItem(itemID, function (response) {
+		        if (!response.HasError) {
+		            $scope.$apply(function () {
+		                $scope.refreshNews();
+		            });
+		        } else {
+		            $scope.$apply(function () {
+		                $scope.error = "Failed to delete item: " + response.ErrorMessage;
+		                $scope.dataLoading = false;
+		                $scope.refreshNews();
+		            });
+		        }
+		    });
 		};
 
 		$scope.userCanEditNews = function () {
-		    for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++) {
-		        if ($rootScope.globals.currentUser.permissionGroups[i].CustomPermissions.indexOf("Manage_News") > -1) {
-		            return true;
+		    if ($rootScope.globals.currentUser && $rootScope.globals.currentUser.permissionGroups) {
+		        for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++) {
+		            if ($rootScope.globals.currentUser.permissionGroups[i].CustomPermissions.indexOf("Manage_News") > -1) {
+		                return true;
+		            }
 		        }
 		    }
 		    return false;
@@ -42,7 +62,21 @@ angular.module('Home')
 		
     }])
 
-.controller('CreateNewsController', ['$scope', '$rootScope', 'AuthenticationService', 'HomeService',
-    function ($scope, $rootScope, AuthenticationService, HomeService) {
-
+.controller('CreateNewsController', ['$scope', '$rootScope', '$location', 'AuthenticationService', 'HomeService',
+    function ($scope, $rootScope, $location, AuthenticationService, HomeService) {
+        $scope.saveNewsItem = function (title, text) {
+            HomeService.CreateNewsItem({ "Title": title, "Paragraphs": text.match(/[^\r\n]+/g) }, function (response) {
+                if (!response.HassError) {
+                    $scope.$apply(function () {
+                        $scope.dataLoading = false;
+                        $location.path('/');
+                    })
+                } else {
+                    $scope.$apply(function () {
+                        $scope.error = "News item not saved: " + response.ErrorMessage;
+                        $scope.dataLoading = false;
+                    })
+                }
+            })
+        };
     }]);
