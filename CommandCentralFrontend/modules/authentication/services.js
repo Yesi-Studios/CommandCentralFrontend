@@ -6,9 +6,19 @@ angular.module('Authentication')
     ['Base64', '$http', '$localStorage', '$rootScope', '$timeout',
     function (Base64, $http, $localStorage, $rootScope, $timeout) {
         var service = {};
-		var apikey = "A114899B-DC0B-4A71-8BB8-9C65B5748B6C";
-		var baseurl = "http://147.51.62.19:1113";
-		
+        var apikey = "A114899B-DC0B-4A71-8BB8-9C65B5748B6C";
+        var backendURL = "http://147.51.62.19";
+        var backendPort = "1113";
+        var baseurl = backendURL + ":" + backendPort;
+
+        service.GetBackendURL = function () {
+            return backendURL + ":" + backendPort;
+        }
+
+        service.GetAPIKey = function () {
+            return apikey;
+        }
+
 		service.GetHomeNews = function (callback) {
 			var reqData = {'apikey' : apikey, 'authenticationtoken' : service.GetAuthToken()};
 			var serviceurl = baseurl + "/LoadNewsItems";
@@ -254,8 +264,8 @@ angular.module('Authentication')
 		};
 		
 		service.GetCurrentUserID = function () {
-			if( $localStorage.globals && $localStorage.globals.currentUser && $localStorage.globals.currentUser.userID){
-				return $localStorage.globals.currentUser.userID;
+		    if ($rootScope.globals && $rootScope.globals.currentUser && $rootScope.globals.currentUser.userID) {
+				return $rootScope.globals.currentUser.userID;
 			} else {
 				return null;
 			}

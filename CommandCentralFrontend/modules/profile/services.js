@@ -6,8 +6,8 @@ angular.module('Profiles')
     ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService',
     function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService) {
         var service = {};
-		var apikey = "A114899B-DC0B-4A71-8BB8-9C65B5748B6C";
-		var baseurl = "http://147.51.62.19:1113";
+        var apikey = AuthenticationService.GetAPIKey();
+        var baseurl = AuthenticationService.GetBackendURL();
 		
         service.GetList = function (name, callback) {
 			var reqData = {'name' : name, 'apikey' : apikey};
