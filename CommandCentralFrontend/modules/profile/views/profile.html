@@ -119,7 +119,7 @@
 										</td>
 										<td><label><input type="checkbox" ng-model="newEmailContactable"/><span ng-show="profileData.EmailAddresses.length == 0">Usable for Contact</span></label></td>
 										<td><label><input type="checkbox" ng-model="newEmailPreferred"/><span ng-show="profileData.EmailAddresses.length == 0">Preferred</span></label></td>
-										<td><button type="button" class="btn btn-success btn-xs" ng-disabled="!isValidEmail(newEmail)" ng-click="addNewEmail(newEmail, newEmailContactable, newEmailPreferred)"><span class="glyphicon glyphicon-plus"></span></button></td>
+										<td><button type="button" class="btn btn-success btn-xs" ng-disabled="!isValidEmail(newEmail)" ng-click="addNewEmail(newEmail, newEmailContactable, newEmailPreferred); newEmailContactable = newEmailPreferred = false; newEmail = ''"><span class="glyphicon glyphicon-plus"></span></button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -165,7 +165,7 @@
 										</td>
 										<td><label><input name="newNumberContactable" type="checkbox" ng-model="newNumberContactable"/><span ng-show="profileData.PhoneNumbers.length == 0">Usable for Contact</span></label></td>
 										<td><label><input name="newNumberPreferred" type="checkbox" ng-model="newNumberPreferred"/><span ng-show="profileData.PhoneNumbers.length == 0">Preferred</span></label></td>
-										<td><button name="insertPhoneNumber" type="button" class="btn btn-success btn-xs" ng-disabled="!(newNumberType && isValidPhoneNumber(newNumber))" ng-click="addNewNumber(newNumber, newNumberType, newNumberContactable, newNumberPreferred)"><span class="glyphicon glyphicon-plus"></span></button></td>
+										<td><button name="insertPhoneNumber" type="button" class="btn btn-success btn-xs" ng-disabled="!(newNumberType && isValidPhoneNumber(newNumber))" ng-click="addNewNumber(newNumber, newNumberType, newNumberContactable, newNumberPreferred); newNumberContactable = newNumberPreferred = false; newNumberType = newNumber = ''"><span class="glyphicon glyphicon-plus"></span></button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -205,7 +205,7 @@
 											</div>
 										</td>
 										<td><label><input type="checkbox" ng-model="newAddressHome"/><span ng-show="profileData.PhysicalAddresses.length == 0">Home Address</span></label></td>
-										<td><button type="button" class="btn btn-success btn-xs" ng-click="addNewAddress(newAddressNumber, newAddressStreet, newAddressCity, newAddressState, newAddressZip, newAddressCountry, newAddressHome)"><span class="glyphicon glyphicon-plus"></span></button></td>
+										<td><button type="button" class="btn btn-success btn-xs" ng-click="addNewAddress(newAddressNumber, newAddressStreet, newAddressCity, newAddressState, newAddressZip, newAddressCountry, newAddressHome); newAddressNumber = newAddressStreet = newAddressCity = newAddressState = newAddressZip = newAddressCountry = newAddressHome = null;"><span class="glyphicon glyphicon-plus"></span></button></td>
 									</tr>
 								</tbody>
 							</table>

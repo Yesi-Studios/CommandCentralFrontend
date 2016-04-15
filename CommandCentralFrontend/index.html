@@ -51,7 +51,7 @@
 				</div>
 				<ul class="nav navbar-nav">
 					<li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
-					<li ng-class="{ active: isMyProfileActive()}"><a href="{{myProfileUrl}}">My Profile</a></li>
+					<li ng-class="{ active: isMyProfileActive()}"><a ng-href="{{myProfileUrl}}">My Profile</a></li>
 					<li uib-dropdown ng-class="{ active: isActive('/search') || isActive('/searchbyfield')}">
 						<a id="search-dropdown" uib-dropdown-toggle href>Search<span class="caret"></span></a>
 						<ul uib-dropdown-menu aria-labelledby="search-dropdown" class="dropdown-menu">
