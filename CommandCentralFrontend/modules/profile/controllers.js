@@ -133,6 +133,22 @@ angular.module('Profiles')
 			});
 		 });
 		$scope.loadProfile();
+
+		$scope.loadFullAccountHistory = function () {
+		    ProfileService.LoadAccountHistory($scope.profileData.ID, function (response) {
+		        if (!response.HasError) {
+		            $scope.$apply(function () {
+		                $scope.profileData.AccountHistory = response.ReturnValue;
+		                alert(response.ReturnValue);
+		            });
+		        } else {
+		            $scope.$apply(function () {
+		                $scope.error = response.ErrorMessage;
+		            });
+		        }
+		    });
+
+		};
 		
 		$scope.updateProfile = function() {
 			$scope.dataLoading = true;

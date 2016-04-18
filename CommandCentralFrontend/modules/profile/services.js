@@ -171,24 +171,44 @@ angular.module('Profiles')
 				}
 			});
 		};
-		
-		service.LoadProfile = function(personid, callback) {
-			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey, 'personid': personid};
-			var serviceurl = baseurl + "/LoadFullProfile";
-			$.ajax(
+
+		service.LoadProfile = function (personid, callback) {
+		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
+		    var serviceurl = baseurl + "/LoadFullProfile";
+		    $.ajax(
 			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
-				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
-				}
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        callback(returnContainer);
+			    },
+			    error: function (xhr, status, errortext) {
+			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    }
+			});
+		};
+
+		service.LoadAccountHistory = function (personid, callback) {
+		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
+		    var serviceurl = baseurl + "/LoadAccountHistoryByPerson";
+		    $.ajax(
+			{
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        callback(returnContainer);
+			    },
+			    error: function (xhr, status, errortext) {
+			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    }
 			});
 		};
 		 

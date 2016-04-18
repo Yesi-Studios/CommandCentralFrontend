@@ -334,7 +334,7 @@
 			<uib-tab heading="Account">
 				<div class="row">
 					<div class="col-xs-6">
-						<div class="form-group">
+						<div class="form-group" height="400px" style="overflow: auto; height: 400px !important;">
 							<label class="col-xs-4" for="accountHistory">Account History</label>
 							<table id="accountHistory" class="col-xs-7 table-bordered contact-table" ng-disabled="!canEditPersonField('AccountHistory')" ng-show="canReturnPersonField('AccountHistory')">
 								<thead>
@@ -350,6 +350,7 @@
 									</tr>
 								</tbody>
 							</table>
+                            <a href="" class="btn btn-primary" ng-click="loadFullAccountHistory()">Load Full History</a>
 						</div>
 					</div>
 					<div class="col-xs-6">
