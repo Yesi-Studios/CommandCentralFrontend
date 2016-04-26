@@ -139,7 +139,6 @@ angular.module('Profiles')
 		        if (!response.HasError) {
 		            $scope.$apply(function () {
 		                $scope.profileData.AccountHistory = response.ReturnValue;
-		                alert(response.ReturnValue);
 		            });
 		        } else {
 		            $scope.$apply(function () {
