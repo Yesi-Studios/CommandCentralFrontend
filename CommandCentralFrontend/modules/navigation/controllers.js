@@ -48,7 +48,13 @@ angular.module('Navigation')
 			return $routeParams.id === AuthenticationService.GetCurrentUserID();
 		}
 		
-		$scope.myProfileUrl = '#/profile/' + AuthenticationService.GetCurrentUserID();
+		$scope.getMyProfileURL = function() {
+			if(AuthenticationService.GetCurrentUserID()){
+				return '#/profile/' + AuthenticationService.GetCurrentUserID();
+			} else {
+				return null;
+			}
+			};
 		
 		$scope.isActive = function (viewLocation) { 
 			return viewLocation === $location.path();
