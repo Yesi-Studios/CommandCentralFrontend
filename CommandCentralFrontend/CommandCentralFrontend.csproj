@@ -107,6 +107,9 @@
     <Content Include="modules\home\services.js" />
     <Content Include="modules\home\views\home.html" />
     <Content Include="modules\home\views\pdfviewer.html" />
+    <Content Include="modules\modals\controllers.js" />
+    <Content Include="modules\modals\views\pii.html" />
+    <Content Include="modules\modals\views\privacyact.html" />
     <Content Include="modules\navigation\controllers.js" />
     <Content Include="modules\navigation\services.js" />
     <Content Include="modules\profile\controllers.js" />
