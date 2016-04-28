@@ -3,9 +3,13 @@
 angular.module('Navigation')
  
 .controller('NavController',
-    ['$scope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService',
-    function ($scope, $location, $routeParams, AuthenticationService, ProfileService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService) {
 		
+        $scope.resetPIIBanner = function () {
+            $rootScope.containsPII = false;
+        }
+
         $scope.createNewPerson = function () {
             ProfileService.CreatePerson(function(response) {
                 if(!response.HasError) {

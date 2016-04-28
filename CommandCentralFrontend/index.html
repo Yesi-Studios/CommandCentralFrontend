@@ -11,7 +11,7 @@
 	</head>
 
 	<body ng-app="CommandCentral">
-		
+
 		<!-- BEGIN BODY HEAD -->
 		<div class="container-fluid" id="publicdiv">
 			<div class="row header_color">
@@ -35,7 +35,7 @@
 				</div>
 				<div class="clearfix visible-xs"></div>
 				<div class="col-md-4  header_right visible-lg visible-md visible-sm visible-xs">
-					<span class="header_small_title"></span><br />
+					<span class="header_small_title pull-right" ng-show="containsPII">FOUO Privacy Sensitive</span><br />
 					<span class="header_txt pull-right">Version 0.1a</span>
 				</div>
 			</div>
@@ -50,13 +50,13 @@
 					<a class="navbar-brand" href="#/">Command Central</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
-					<li ng-class="{ active: isMyProfileActive()}"><a ng-href="{{getMyProfileURL()}}">My Profile</a></li>
+					<li ng-class="{ active: isActive('/')}"><a href="#/" ng-click="resetPIIBanner()">Home</a></li>
+					<li ng-class="{ active: isMyProfileActive()}"><a ng-href="{{getMyProfileURL()}}" ng-click="resetPIIBanner()">My Profile</a></li>
 					<li uib-dropdown ng-class="{ active: isActive('/search') || isActive('/searchbyfield')}">
 						<a id="search-dropdown" uib-dropdown-toggle href>Search<span class="caret"></span></a>
 						<ul uib-dropdown-menu aria-labelledby="search-dropdown" class="dropdown-menu">
-							<li><a href="#/search">Search</a></li>
-							<li><a href="#/searchbyfield">Search by Field</a></li>
+							<li><a href="#/search" ng-click="resetPIIBanner()">Search</a></li>
+							<li><a href="#/searchbyfield" ng-click="resetPIIBanner()">Search by Field</a></li>
 						</ul>
 					</li>
                     <li><a href="" ng-click="createNewPerson()">Create Person <span class="glyphicon glyphicon-plus"></span></a></li>
@@ -142,28 +142,39 @@
 		</div>
 		<!-- END APP STATUS (FOOTER) -->
 
-		<script src="libs/jquery-2.2.1.min.js"></script>
-		<script src="libs/angular.min.js"></script>
-		<script src="libs/angular-pdf.min.js"></script>
-		<script src="libs/angular-route.min.js"></script>
-		<script src="libs/angular-animate.min.js"></script>
-		<script src="libs/angular-touch.min.js"></script>
-		<script src="libs/ngStorage.min.js"></script>
-		<script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
-		<script src="app.js"></script>
-		<script src="modules/authentication/services.js"></script>
-		<script src="modules/authentication/controllers.js"></script>
-		<script src="modules/home/controllers.js"></script>
-		<script src="modules/home/services.js"></script>
-		<script src="modules/appstatus/controllers.js"></script>
-		<script src="modules/appstatus/services.js"></script>
-		<script src="modules/navigation/controllers.js"></script>
-		<script src="modules/navigation/services.js"></script>
-		<script src="modules/profile/controllers.js"></script>
-		<script src="modules/profile/services.js"></script>
-		<script src="modules/search/controllers.js"></script>
-		<script src="modules/search/services.js"></script>
-		<script src="modules/authorization/services.js"></script>
-	</body>
+        <div class="container" ng-controller="ModalServiceController">
+            <div class="row">
+                <div class="col-xs-offset-3 col-xs-6 text-center">
+                    <a href ng-click="show()">Re-show PII info</a>
+                </div>
+            </div>
+        </div>
+
+        <script src="libs/jquery-2.2.1.min.js"></script>
+        <script src="libs/angular.min.js"></script>
+        <script src="libs/bootstrap.min.js"></script>
+        <script src="libs/angular-pdf.min.js"></script>
+        <script src="libs/angular-route.min.js"></script>
+        <script src="libs/angular-animate.min.js"></script>
+        <script src="libs/angular-touch.min.js"></script>
+        <script src="libs/angular-modal-service.js"></script>
+        <script src="libs/ngStorage.min.js"></script>
+        <script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
+        <script src="app.js"></script>
+        <script src="modules/authentication/services.js"></script>
+        <script src="modules/authentication/controllers.js"></script>
+        <script src="modules/home/controllers.js"></script>
+        <script src="modules/home/services.js"></script>
+        <script src="modules/appstatus/controllers.js"></script>
+        <script src="modules/appstatus/services.js"></script>
+        <script src="modules/navigation/controllers.js"></script>
+        <script src="modules/navigation/services.js"></script>
+        <script src="modules/profile/controllers.js"></script>
+        <script src="modules/profile/services.js"></script>
+        <script src="modules/search/controllers.js"></script>
+        <script src="modules/search/services.js"></script>
+        <script src="modules/modals/controllers.js"></script>
+        <script src="modules/authorization/services.js"></script>
+</body>
 
 </html>

@@ -13,7 +13,8 @@ angular.module('Profiles')
 			ProfileService.LoadProfile($routeParams.id, function(response) {
 				console.log(JSON.stringify(response));
 				if(!response.HasError) {
-                    $scope.$apply(function() {
+				    $scope.$apply(function () {
+				        $rootScope.containsPII = true;
 						$scope.dataLoading = false;
 						$scope.profileData = response.ReturnValue.Person;
 						$scope.isMyProfile = response.ReturnValue.IsMyProfile;
