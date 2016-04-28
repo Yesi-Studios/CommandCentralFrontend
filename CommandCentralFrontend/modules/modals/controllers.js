@@ -7,7 +7,7 @@ angular.module('Modals')
     function ($scope, ModalService) {
         $scope.show = function () {
             ModalService.showModal({
-                templateUrl: 'modules/modals/views/privacyact.html',
+                templateUrl: 'modules/modals/views/pii.html',
                 controller: "ModalController"
             }).then(function (modal) {
                 modal.element.modal();
@@ -16,7 +16,7 @@ angular.module('Modals')
                 });
             });
         };
-
+        
         $scope.show();
     }]
 )

@@ -3,8 +3,8 @@
 angular.module('Authentication')
  
 .controller('LoginController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ModalService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ModalService) {
         // reset login status
         AuthenticationService.ClearCredentials();
 		
@@ -21,8 +21,17 @@ angular.module('Authentication')
         $scope.login = function () {
 			// Show that data is loading and clear the error message
             $scope.dataLoading = true;
-			$scope.error = null;
-            AuthenticationService.Login($scope.username, $scope.password, function(response) {
+            $scope.error = null;
+
+            ModalService.showModal({
+                templateUrl: 'modules/modals/views/privacyact.html',
+                controller: "ModalController"
+            }).then(function (modal) {
+                modal.element.modal();
+                modal.close.then(function (result) {
+                    if(result){
+
+                        AuthenticationService.Login($scope.username, $scope.password, function(response) {
                 if(!response.HasError) {
 					console.log(response);
                     AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonID);
@@ -59,6 +68,12 @@ angular.module('Authentication')
 						$scope.dataLoading = false;
 					});
                 }
+            });
+                    } else {
+                        $scope.dataLoading = false;
+                        $scope.error = "You must accept the Privacy Act Statement to continue";
+                    }
+                });
             });
         };
     }])

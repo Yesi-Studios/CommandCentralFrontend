@@ -3,13 +3,35 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Yes or No?</h4>
+                <h4 class="modal-title">Privacy Act Statement</h4>
             </div>
             <div class="modal-body">
-                <p>It's your call...</p>
+                <p>This statement serves to inform you of the purpose for collecting personal information required by the Navy Standard Integrated Personnel System (NSIPS) ESR Self-Service Online
+                    system and how it will be used.</p>
+                <ul>
+                    <li>Authorities: Secretary of the Navy Instruction 5211.5E, 10 U.S.C. 5013, Secretary of the Navy and E.O. 9397 (SSN), as amended, 5 U.S.C. 552a, DOD Directive 5400.11 of 26 Nov 04
+                    and DOD 5400.11-R of 31 Aug 83.</li>
+
+                    <li>Principal Purposes: To obtain information from individuals to allow the access, update and view of personal information on the NSIPS ESR Self-Service Online website. The
+                    purpose of this system is to provide secure worldwide personnel and pay support for Navy members and their commands. To allow authorized Navy personnel and pay specialists
+                    to collect, process, modify, transmit, and store unclassified personnel and pay data. Additionally, the system supports management of leave and pay entitlements and deductions
+                    so that this information can be provided to the Defense Finance and Accounting Service (DFAS) for payroll processing. The system also supports collection of spouse and child
+                    information to be used for updates to the military member's dependency status.</li>
+
+                    <li>Routine Uses: To access, update and view a Service Member's Electronic Service Record. Information entered and stored may be disclosed as generally permitted under 5 U.S.C of
+                    the Privacy Act, as amended. It may also be disclosed outside the Department of Defense to the Internal Revenue Service for tax purposes and the Department of Veteran Affairs
+                    regarding VA compensation. Other Federal, State, or Local Government agencies, which have identified a need to know, may obtain this information for the purpose(s) identified
+                    in the DOD blanket routine uses as published in the Federal Register.</li>
+
+                    <li>Disclosure: Voluntary. However, if you choose not to provide or update your information, the absence of the requested information could impact pay and personnel services and
+                    will result in your not being able to access and use services through the website. </li>
+                
+                </ul>
+
             </div>
             <div class="modal-footer">
-                <button type="button" ng-click="close('Ok')" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                <button type="button" ng-click="close(true)" class="btn btn-primary" data-dismiss="modal">Accept</button>
+                <button type="button" ng-click="close(false)" class="btn btn-primary" data-dismiss="modal">Decline</button>
             </div>
         </div>
     </div>

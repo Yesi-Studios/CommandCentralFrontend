@@ -6,6 +6,8 @@ angular.module('Search')
     ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService) {
 		
+        $rootScope.containsPII = true;
+
 		$scope.goToProfile= function(id) {
 			$location.path('/profile/'+id);
 		};
@@ -66,6 +68,8 @@ angular.module('Search')
     ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService) {
 	
+        $rootScope.containsPII = true;
+
 		$scope.searchableFields = AuthorizationService.GetSearchableFields();
 		$scope.returnableFields = AuthorizationService.GetReturnableFields();
 		$scope.advancedSearchFilters = {};

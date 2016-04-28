@@ -1,7 +1,7 @@
 'use strict';
 
 // declare modules
-angular.module('Authentication', ['Authorization']);
+angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals']);
 angular.module('Home', ['Authentication', 'pdf']);
 angular.module('AppStatus', ['Authentication']);
 angular.module('Navigation', ['Authentication', 'Profiles']);
