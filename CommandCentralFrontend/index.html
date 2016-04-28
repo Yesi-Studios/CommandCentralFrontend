@@ -142,28 +142,39 @@
 		</div>
 		<!-- END APP STATUS (FOOTER) -->
 
-		<script src="libs/jquery-2.2.1.min.js"></script>
-		<script src="libs/angular.min.js"></script>
-		<script src="libs/angular-pdf.min.js"></script>
-		<script src="libs/angular-route.min.js"></script>
-		<script src="libs/angular-animate.min.js"></script>
-		<script src="libs/angular-touch.min.js"></script>
-		<script src="libs/ngStorage.min.js"></script>
-		<script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
-		<script src="app.js"></script>
-		<script src="modules/authentication/services.js"></script>
-		<script src="modules/authentication/controllers.js"></script>
-		<script src="modules/home/controllers.js"></script>
-		<script src="modules/home/services.js"></script>
-		<script src="modules/appstatus/controllers.js"></script>
-		<script src="modules/appstatus/services.js"></script>
-		<script src="modules/navigation/controllers.js"></script>
-		<script src="modules/navigation/services.js"></script>
-		<script src="modules/profile/controllers.js"></script>
-		<script src="modules/profile/services.js"></script>
-		<script src="modules/search/controllers.js"></script>
-		<script src="modules/search/services.js"></script>
-		<script src="modules/authorization/services.js"></script>
-	</body>
+        <div class="container" ng-controller="ModalServiceController">
+            <div class="row">
+                <div class="col-xs-offset-3 col-xs-6 text-center">
+                    <a href ng-click="show()">Show Privacy Act Statement</a>
+                </div>
+            </div>
+        </div>
+
+        <script src="libs/jquery-2.2.1.min.js"></script>
+        <script src="libs/angular.min.js"></script>
+        <script src="libs/bootstrap.min.js"></script>
+        <script src="libs/angular-pdf.min.js"></script>
+        <script src="libs/angular-route.min.js"></script>
+        <script src="libs/angular-animate.min.js"></script>
+        <script src="libs/angular-touch.min.js"></script>
+        <script src="libs/angular-modal-service.js"></script>
+        <script src="libs/ngStorage.min.js"></script>
+        <script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
+        <script src="app.js"></script>
+        <script src="modules/authentication/services.js"></script>
+        <script src="modules/authentication/controllers.js"></script>
+        <script src="modules/home/controllers.js"></script>
+        <script src="modules/home/services.js"></script>
+        <script src="modules/appstatus/controllers.js"></script>
+        <script src="modules/appstatus/services.js"></script>
+        <script src="modules/navigation/controllers.js"></script>
+        <script src="modules/navigation/services.js"></script>
+        <script src="modules/profile/controllers.js"></script>
+        <script src="modules/profile/services.js"></script>
+        <script src="modules/search/controllers.js"></script>
+        <script src="modules/search/services.js"></script>
+        <script src="modules/modals/controllers.js"></script>
+        <script src="modules/authorization/services.js"></script>
+</body>
 
 </html>
