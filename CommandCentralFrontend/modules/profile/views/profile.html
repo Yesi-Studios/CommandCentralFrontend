@@ -357,7 +357,7 @@
 						<div class="form-group">
 							<label class="col-xs-4" for="permissionGroups">Permission Groups</label>
 							<div class="col-xs-8">
-								<select class="form-control" id="permissionGroups" ng-disabled="!canEditPersonField('PermissionGroups')" ng-show="canReturnPersonField('PermissionGroups')" ng-model="profileData.PermissionGroups" ng-options="o as o.Name for o in permissionGroups track by o.ID" multiple>
+								<select size="10" class="form-control" id="permissionGroups" ng-disabled="!canEditPersonField('PermissionGroups')" ng-show="canReturnPersonField('PermissionGroups')" ng-model="profileData.PermissionGroups" ng-options="o as o.Name for o in permissionGroups track by o.ID" multiple>
 								</select>
 							</div>
 						</div>
