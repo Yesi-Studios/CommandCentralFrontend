@@ -72,8 +72,7 @@ angular.module('Search')
 
 		$scope.searchableFields = AuthorizationService.GetSearchableFields();
 		$scope.returnableFields = AuthorizationService.GetReturnableFields();
-		$scope.advancedSearchFilters = {};
-		 
+		$scope.advancedSearchFilters = {};		 
 		
 		$scope.goToProfile= function(id) {
 			$location.path('/profile/'+id);
@@ -124,6 +123,11 @@ angular.module('Search')
 			searchByField(JSON.parse($routeParams.searchTerms), JSON.parse($routeParams.returnFields));
 			$scope.searchByFieldTerms = JSON.parse($routeParams.searchTerms);
 			$scope.searchByFieldReturns = JSON.parse($routeParams.returnFields);
+			$scope.fieldsToReturn = JSON.parse($routeParams.returnFields);
+			$scope.fieldsToSearch = Object.keys(JSON.parse($routeParams.searchTerms));
+		    $scope.advancedSearchFilters = $scope.searchByFieldTerms
+
+
 		}
 		
 	}]);
