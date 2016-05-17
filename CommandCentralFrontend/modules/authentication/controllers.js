@@ -35,9 +35,9 @@ angular.module('Authentication')
                 if(!response.HasError) {
 					console.log(response);
                     AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonID);
-					AuthorizationService.GetPersonsPermissions(function(response) {
+					AuthorizationService.GetModelPermissions(function(response) {
 						if(!response.HasError) {
-							AuthorizationService.SetPermissions(response.ReturnValue.SearchableFields, response.ReturnValue.ReturnableFields, response.ReturnValue.EditableFields);
+							AuthorizationService.SetPermissions(response.ReturnValue.Person.SearchableFields, response.ReturnValue.Person.ReturnableFields, response.ReturnValue.Person.EditableFields);
 							
 						} else {
 							$scope.$apply(function() {

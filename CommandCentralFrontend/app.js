@@ -3,7 +3,6 @@
 // declare modules
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals']);
 angular.module('Home', ['Authentication', 'pdf']);
-angular.module('AppStatus', ['Authentication']);
 angular.module('Navigation', ['Authentication', 'Profiles']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap']);
 angular.module('Authorization', ['Authentication']);
@@ -14,7 +13,6 @@ angular.module('CommandCentral', [
     'Authentication',
 	'Authorization',
     'Home',
-	'AppStatus',
 	'Navigation',
 	'Profiles',
 	'Search',
@@ -115,8 +113,7 @@ angular.module('CommandCentral', [
 		
 		// whenever the location changes... 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
-			// Show news and navigation when appropriate
-			$rootScope.showNews = $location.path().indexOf('/register') == -1 && $location.path().indexOf('/finishregistration') == -1 && $location.path().indexOf('/forgotpassword') == -1 &&$location.path().indexOf('/finishreset') == -1;
+			// Show navigation when appropriate
 			$rootScope.showNav = $location.path().indexOf('/login') == -1 && $location.path().indexOf('/register') == -1 && $location.path().indexOf('/finishregistration') == -1 && $location.path().indexOf('/forgotpassword') == -1 &&$location.path().indexOf('/finishreset') == -1;
 
             // redirect to login page if not logged in

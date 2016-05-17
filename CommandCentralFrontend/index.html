@@ -79,68 +79,6 @@
 		
 		<br>
 		
-		<!-- BEGIN APP STATUS (FOOTER) -->
-		<div ng-show="showNews" ng-controller="AppStatusController" class="container" id="appStatus">
-			<div class="content_panel">
-				<div class="row">
-					<div ng-show="error" class="col-xs-offset-2 col-xs-8 alert alert-danger status_message">{{error}}</div>
-				</div>
-				
-				<div class="row">
-					
-					<div class="col-xs-7">
-						<h2>Changes</h2>
-						<table id="changesTable" class="table table-striped">
-							<thead>
-								<tr>
-									<th>Version</th>
-									<th>Date</th>
-									<th>Changes Made</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="change in changes | orderBy: '-Time'">
-									<td>{{change.Version}}</td>
-									<td>{{change.Time | date: 'mediumDate'}}</td>
-									<td><div ng-repeat="line in change.Changes">-{{line}}</div></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					
-					<div class="col-xs-5">
-						<h2>Known Issues</h2>
-						<table id="issuesTable" class="table table-striped">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Issue</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="issue in issues">
-									<td>{{$index + 1}}</td>
-									<td>{{issue}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					
-				</div>
-				
-				<div class="row">
-					<div class="col-xs-6 center-block">
-						<a ng-click="refreshNews()" ng-disabled="dataLoading" id="singlebutton" name="singlebutton" class="btn btn-primary">
-							Reload news <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
-											
-						</a>
-						<small>Last loaded at <strong>{{loadedTime | date: 'short'}}</strong> from backend version {{backendVersion}}.</small><br>
-						<small>Status last updated at {{statusUpdateTime | date: 'short'}}.</small>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- END APP STATUS (FOOTER) -->
 
         <div class="container" ng-controller="ModalServiceController">
             <div class="row">
@@ -165,8 +103,6 @@
         <script src="modules/authentication/controllers.js"></script>
         <script src="modules/home/controllers.js"></script>
         <script src="modules/home/services.js"></script>
-        <script src="modules/appstatus/controllers.js"></script>
-        <script src="modules/appstatus/services.js"></script>
         <script src="modules/navigation/controllers.js"></script>
         <script src="modules/navigation/services.js"></script>
         <script src="modules/profile/controllers.js"></script>

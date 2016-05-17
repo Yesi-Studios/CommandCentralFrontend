@@ -10,8 +10,8 @@ angular.module('Authorization')
         var baseurl = AuthenticationService.GetBackendURL();
 
 		
-        service.GetPersonsPermissions = function (callback) {
-			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'model': 'person', 'apikey' : apikey};
+        service.GetModelPermissions = function (callback) {
+			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
 			var serviceurl = baseurl + "/GetModelPermissions";
 			return $.ajax(
 			{
