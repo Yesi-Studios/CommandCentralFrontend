@@ -9,9 +9,9 @@ angular.module('Profiles')
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
 		
-        service.GetList = function (name, callback) {
+        /*service.GetList = function (name, callback) {
 			var reqData = {'name' : name, 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadLists";
+			var serviceurl = baseurl + "/LoadReferenceLists";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -28,11 +28,11 @@ angular.module('Profiles')
 				}
 			});
 
-        };
+        };*/
 		
 		service.GetAllLists = function (callback) {
 			var reqData = {'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadLists";
+			var serviceurl = baseurl + "/LoadReferenceLists";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -52,7 +52,7 @@ angular.module('Profiles')
         };
 		service.GetPermissionGroups = function (callback) {
 			var reqData = {'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadAllPermissionGroups";
+			var serviceurl = baseurl + "/LoadPermissionGroups";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -174,7 +174,7 @@ angular.module('Profiles')
 
 		service.LoadProfile = function (personid, callback) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
-		    var serviceurl = baseurl + "/LoadFullProfile";
+		    var serviceurl = baseurl + "/LoadPerson";
 		    $.ajax(
 			{
 			    url: serviceurl,

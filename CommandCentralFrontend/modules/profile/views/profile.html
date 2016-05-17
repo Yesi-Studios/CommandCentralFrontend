@@ -54,7 +54,7 @@
 						<div class="form-group">
 							<label class="col-xs-4" for="ethnicity">Ethnicity</label>
 							<div class="col-xs-8">
-								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o for o in getListOptions('Ethnicities')">
+								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o for o in lists['Ethnicities']">
 								<option></option>
 								</select>
 							</div>
@@ -62,7 +62,7 @@
 						<div class="form-group">
 							<label class="col-xs-4" for="religiousPreference">Religious Preference</label>
 							<div class="col-xs-8">
-								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o for o in getListOptions('ReligiousPreferences')">
+								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o for o in lists['ReligiousPreferences']">
 								<option></option>
 								</select>
 							</div>
@@ -142,7 +142,7 @@
 										<td>{{number.Number}}</td>
 										<!--<td>{{number.Carrier}}</td>-->
 										<td>
-											<select class="form-control" id="phoneType" ng-model="number.PhoneType" ng-options="o as o for o in getListOptions('PhoneTypes')">
+											<select class="form-control" id="phoneType" ng-model="number.PhoneType" ng-options="o as o for o in lists['PhoneTypes']">
 												<option></option>
 											</select>
 										</td>
@@ -158,7 +158,7 @@
 											</div>
 										</td>
 										<td>
-											<select name="newNumberType" class="form-control" id="phoneType" ng-model="newNumberType" ng-options="o as o for o in getListOptions('PhoneTypes')">
+											<select name="newNumberType" class="form-control" id="phoneType" ng-model="newNumberType" ng-options="o as o for o in lists['PhoneTypes']">
 												<option ng-if="profileData.PhoneNumbers.length == 0" value="" disabled selected hidden><strong>Phone Type</strong></option>
 												<option ng-if="profileData.PhoneNumbers.length != 0" disabled selected hidden></option>
 											</select>
@@ -266,7 +266,7 @@
 							</div>
                             <label class="col-xs-2" for="necs">NECs</label>
                             <div class="col-xs-4">
-                                <select class="form-control" id="necs" ng-disabled="!canEditPersonField('NECs')" ng-show="canReturnPersonField('NECs')" ng-model="profileData.NECs" ng-options="o as o for o in getListOptions('NECs')" multiple></select>
+                                <select class="form-control" id="necs" ng-disabled="!canEditPersonField('NECs')" ng-show="canReturnPersonField('NECs')" ng-model="profileData.NECs" ng-options="o as o for o in lists['NECs']" multiple></select>
                             </div>
 						</div>
 					</div>
@@ -274,13 +274,13 @@
 						<div class="form-group">
 							<label class="col-xs-2" for="rate">Rate</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="rate" ng-disabled="!canEditPersonField('Rate')" ng-show="canReturnPersonField('Rate')" ng-model="profileData.Rate" ng-options="o as o for o in getListOptions('Rates')">
+								<select class="form-control" id="rate" ng-disabled="!canEditPersonField('Rate')" ng-show="canReturnPersonField('Rate')" ng-model="profileData.Rate" ng-options="o as o for o in list['Rates']">
 								<option></option>
 								</select>
 							</div>
 							<label class="col-xs-2" for="rank">Rank</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="rank" ng-disabled="!canEditPersonField('Rank')" ng-show="canReturnPersonField('Rank')" ng-model="profileData.Rank" ng-options="o as o for o in getListOptions('Ranks')">
+								<select class="form-control" id="rank" ng-disabled="!canEditPersonField('Rank')" ng-show="canReturnPersonField('Rank')" ng-model="profileData.Rank" ng-options="o as o for o in lists['Ranks']">
 								<option></option>
 								</select>
 							</div>
@@ -310,13 +310,13 @@
 						<div class="form-group">
 							<label class="col-xs-2" for="dutyStatus">Duty Status</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="dutyStatus" ng-disabled="!canEditPersonField('DutyStatus')" ng-show="canReturnPersonField('DutyStatus')" ng-model="profileData.DutyStatus" ng-options="o as o for o in getListOptions('DutyStatuses')">
+								<select class="form-control" id="dutyStatus" ng-disabled="!canEditPersonField('DutyStatus')" ng-show="canReturnPersonField('DutyStatus')" ng-model="profileData.DutyStatus" ng-options="o as o for o in lists['DutyStatuses']">
 								<option></option>
 								</select>
 							</div>
 							<label class="col-xs-2" for="uic">UIC</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="uic" ng-disabled="!canEditPersonField('UIC')" ng-show="canReturnPersonField('UIC')" ng-model="profileData.UIC" ng-options="o as o for o in getListOptions('UICs')">
+								<select class="form-control" id="uic" ng-disabled="!canEditPersonField('UIC')" ng-show="canReturnPersonField('UIC')" ng-model="profileData.UIC" ng-options="o as o for o in lists['UICs']">
 								<option></option>
 								</select>
 							</div>

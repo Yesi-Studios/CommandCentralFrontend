@@ -117,12 +117,13 @@ angular.module('Profiles')
 		ProfileService.GetAllLists(function(response) {
 			$scope.$apply(function() {
 				$scope.lists = response.ReturnValue;
-				$scope.getListOptions = function(listName) {
+				$scope.getListOptions = function(listName) {/*
 					for (var i = 0, len = $scope.lists.length; i < len; i++) {
 						if ($scope.lists[i].Name === listName)
 							return $scope.lists[i].Values; // Return as soon as the object is found
 						}
-					return null; // The object was not found
+					return null; // The object was not found*/
+				    return ["Thing1", "Thing2"];
 				};
 			});
 		 });
