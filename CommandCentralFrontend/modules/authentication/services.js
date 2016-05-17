@@ -6,7 +6,7 @@ angular.module('Authentication')
     ['Base64', '$http', '$localStorage', '$rootScope', '$timeout',
     function (Base64, $http, $localStorage, $rootScope, $timeout) {
         var service = {};
-        var apikey = "A114899B-DC0B-4A71-8BB8-9C65B5748B6C";
+        var apikey = "C7C6A39A-C75F-433E-A808-E8A8922ED2FC";    // "A114899B-DC0B-4A71-8BB8-9C65B5748B6C" Old API Key
         var backendURL = "http://147.51.62.19";
         var backendPort = "1113";
         var baseurl = backendURL + ":" + backendPort;
@@ -154,7 +154,7 @@ angular.module('Authentication')
 		};
 		
 		service.FinishRegistration = function (username, password, id, callback) {
-			var reqData = {'username' : username, 'password' : password, 'AccountConfirmationID' : id, 'apikey' : apikey};
+			var reqData = {'username' : username, 'password' : password, 'accountconfirmationid' : id, 'apikey' : apikey};
 			var serviceurl = baseurl + "/CompleteRegistration";
 			
 			$.ajax(
@@ -196,7 +196,7 @@ angular.module('Authentication')
 		
 		service.ForgotPassword = function (email, ssn, callback) {
 			var reqData = {'email' : email, 'ssn' : ssn, 'apikey' : apikey};
-			var serviceurl = baseurl + "/InitiatePasswordReset";
+			var serviceurl = baseurl + "/BeginPasswordReset";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -216,7 +216,7 @@ angular.module('Authentication')
 		
 		service.FinishReset = function (password, id, callback) {
 			var reqData = {'Password' : password, 'PasswordResetid' : id, 'apikey' : apikey};
-			var serviceurl = baseurl + "/FinishPasswordReset";
+			var serviceurl = baseurl + "/CompletePasswordReset";
 			
 			$.ajax(
 			{

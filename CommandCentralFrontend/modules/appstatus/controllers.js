@@ -7,7 +7,7 @@ angular.module('AppStatus')
     function ($scope, AppStatusService, AuthenticationService) {
 		
 		$scope.refreshNews = function(){
-			$scope.dataLoading = true;
+			/* $scope.dataLoading = true;
 			$scope.error = "";
 			AppStatusService.GetAppStatus(function(response) {
 				if(!response.HasError) {
@@ -31,7 +31,7 @@ angular.module('AppStatus')
 					});
 				}
 			});
-		};
+		*/};
 		
 		$scope.refreshNews();
     }]);

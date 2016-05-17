@@ -12,7 +12,7 @@ angular.module('Authorization')
 		
         service.GetPersonsPermissions = function (callback) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'model': 'person', 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadModelPermissions";
+			var serviceurl = baseurl + "/GetModelPermissions";
 			return $.ajax(
 			{
 				url: serviceurl,
