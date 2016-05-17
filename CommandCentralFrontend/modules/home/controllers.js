@@ -50,7 +50,7 @@ angular.module('Home')
 		$scope.userCanEditNews = function () {
 		    if ($rootScope.globals.currentUser && $rootScope.globals.currentUser.permissionGroups) {
 		        for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++) {
-		            if ($rootScope.globals.currentUser.permissionGroups[i].CustomPermissions.indexOf("Manage_News") > -1) {
+		            if ($rootScope.globals.currentUser.permissionGroups[i].SpecialPermissions.indexOf("ManageNews") > -1) {
 		                return true;
 		            }
 		        }
@@ -65,7 +65,7 @@ angular.module('Home')
 .controller('CreateNewsController', ['$scope', '$rootScope', '$location', 'AuthenticationService', 'HomeService',
     function ($scope, $rootScope, $location, AuthenticationService, HomeService) {
         $scope.saveNewsItem = function (title, text) {
-            HomeService.CreateNewsItem({ "Title": title, "Paragraphs": text.match(/[^\r\n]+/g) }, function (response) {
+            HomeService.CreateNewsItem( title, text.match(/[^\r\n]+/g), function (response) {
                 if (!response.HassError) {
                     $scope.$apply(function () {
                         $scope.dataLoading = false;
@@ -75,9 +75,9 @@ angular.module('Home')
                     $scope.$apply(function () {
                         $scope.error = "News item not saved: " + response.ErrorMessage;
                         $scope.dataLoading = false;
-                    })
+                    });
                 }
-            })
+            });
         };
     }])
 .controller('UpdateNewsController', ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'HomeService',

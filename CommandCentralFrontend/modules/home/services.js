@@ -51,8 +51,8 @@ angular.module('Home')
 
 		};
 
-		service.CreateNewsItem = function (newsItem, callback) {
-		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitem": newsItem };
+		service.CreateNewsItem = function (title, paragraphs, callback) {
+		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "Title": title, "Paragraphs" : paragraphs };
 		    var serviceurl = baseurl + "/CreateNewsItem";
 		    $.ajax(
 			{
