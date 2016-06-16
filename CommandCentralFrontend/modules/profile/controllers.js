@@ -64,7 +64,7 @@ angular.module('Profiles')
 						
 					});
 					
-					ProfileService.TakeLock($scope.profileData.ID, function (response) {
+					ProfileService.TakeLock($scope.profileData.Id, function (response) {
 						if(!response.HasError) {
 							$scope.$apply(function() {
 								$scope.haveLock = true;

@@ -32,7 +32,7 @@ angular.module('Profiles')
 		
 		service.GetAllLists = function (callback) {
 			var reqData = {'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadReferenceLists";
+			var serviceurl = baseurl + "/LoadLists";
 			$.ajax(
 			{
 				url: serviceurl,
