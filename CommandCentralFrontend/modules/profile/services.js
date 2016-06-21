@@ -45,7 +45,9 @@ angular.module('Profiles')
 					callback(returnContainer);
 				},
 				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				    console.log(response);
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    callback(returnContainer);
 				}
 			});
 
@@ -65,7 +67,9 @@ angular.module('Profiles')
 					callback(returnContainer);
 				},
 				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				    console.log(response);
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    callback(returnContainer);
 				}
 			});
 
@@ -86,7 +90,9 @@ angular.module('Profiles')
 					callback(returnContainer);
 				},
 				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				    console.log(response);
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    callback(returnContainer);
 				}
 			});
 
@@ -107,12 +113,14 @@ angular.module('Profiles')
 					callback(returnContainer);
 				},
 				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				    console.log(response);
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    callback(returnContainer);
 				}
 			});
 		};
 
-		service.UpdateMyProfile = function (person, callback) {
+		service.UpdateMyProfile = function (person, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'person': person };
 		    var serviceurl = baseurl + "/UpdatePerson";
 		    $.ajax(
@@ -124,10 +132,12 @@ angular.module('Profiles')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    error: function (response, status, errortext) {
+                    console.log(response)
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
 			    }
 			});
 		};
@@ -147,7 +157,9 @@ angular.module('Profiles')
 			        callback(returnContainer);
 			    },
 			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			        console.log(response);
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        callback(returnContainer);
 			    }
 			});
 		};
@@ -167,7 +179,9 @@ angular.module('Profiles')
 					callback(returnContainer);
 				},
 				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				    console.log(response);
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    callback(returnContainer);
 				}
 			});
 		};
@@ -187,7 +201,9 @@ angular.module('Profiles')
 			        callback(returnContainer);
 			    },
 			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			        console.log(response);
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        callback(returnContainer);
 			    }
 			});
 		};
@@ -207,7 +223,9 @@ angular.module('Profiles')
 			        callback(returnContainer);
 			    },
 			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			        console.log(response);
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        callback(returnContainer);
 			    }
 			});
 		};

@@ -24,7 +24,9 @@ angular.module('Home')
 			        callback(returnContainer);
 			    },
 			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			        console.log(response);
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        callback(returnContainer);
 			    }
 			});
 
@@ -45,7 +47,9 @@ angular.module('Home')
 			        callback(returnContainer);
 			    },
 			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			        console.log(response);
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        callback(returnContainer);
 			    }
 			});
 
@@ -66,7 +70,9 @@ angular.module('Home')
 			        callback(returnContainer);
 			    },
 			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			        console.log(response);
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        callback(returnContainer);
 			    }
 			});
 
@@ -87,7 +93,9 @@ angular.module('Home')
 			        callback(returnContainer);
 			    },
 			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			        console.log(response);
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        callback(returnContainer);
 			    }
 			});
 
@@ -108,7 +116,9 @@ angular.module('Home')
 			        callback(returnContainer);
 			    },
 			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			        console.log(response);
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        callback(returnContainer);
 			    }
 			});
 

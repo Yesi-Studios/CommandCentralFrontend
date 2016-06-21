@@ -153,20 +153,25 @@ angular.module('Profiles')
 		
 		$scope.updateProfile = function() {
 			$scope.dataLoading = true;
-			ProfileService.UpdateMyProfile($scope.profileData, function(response) {
-				if(!response.HasError) {
-					$scope.$apply(function() {
-							$scope.loadProfile();
-					});
-				} else {
-					$scope.$apply(function() {
-						$scope.error = response.ErrorMessage;
-						$scope.dataLoading = false;
-						AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessage);
-						$location.path('/login');
-					});
-				}
-			});
+			ProfileService.UpdateMyProfile($scope.profileData, function (response) {
+			        $scope.$apply(function () {
+			            $scope.loadProfile();
+			        })
+			    },
+                function(response) {
+			        $scope.$apply(function () {
+				        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+				            for (i = 0; i < response.ErrorMessages.length; i++) {
+				                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+				            }
+				            $location.path('/login');
+				        } else {
+				            $scope.errors = response.ErrorMessages;
+				        }
+					    $scope.dataLoading = false;
+				    });
+			    }
+			);
 		};
 		
 		$scope.makePreferred = function(listOfItems, preferredOne) {
