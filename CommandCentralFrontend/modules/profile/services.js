@@ -52,7 +52,7 @@ angular.module('Profiles')
 			});
 
         };
-		service.GetPermissionGroups = function (callback) {
+		service.GetPermissionGroups = function (success, error) {
 			var reqData = {'apikey' : apikey};
 			var serviceurl = baseurl + "/LoadPermissionGroups";
 			$.ajax(
@@ -64,12 +64,12 @@ angular.module('Profiles')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
+				error: function (response, status, errortext) {
 				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
-				    callback(returnContainer);
+				    error(returnContainer);
 				}
 			});
 
@@ -208,7 +208,7 @@ angular.module('Profiles')
 			});
 		};
 
-		service.LoadAccountHistory = function (personid, callback) {
+		service.LoadAccountHistory = function (personid, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
 		    var serviceurl = baseurl + "/LoadAccountHistoryByPerson";
 		    $.ajax(
@@ -220,12 +220,12 @@ angular.module('Profiles')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
+			    error: function (response, status, errortext) {
 			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
-			        callback(returnContainer);
+			        error(returnContainer);
 			    }
 			});
 		};
