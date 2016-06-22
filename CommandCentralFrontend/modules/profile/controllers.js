@@ -158,7 +158,7 @@ angular.module('Profiles')
 		$scope.loadProfile();
 
 		$scope.loadFullAccountHistory = function () {
-		    ProfileService.LoadAccountHistory($scope.profileData.ID,
+		    ProfileService.LoadAccountHistory($scope.profileData.Id,
                 // If we succeed, this is our call back
                 function (response) {
 		            $scope.$apply(function () {
