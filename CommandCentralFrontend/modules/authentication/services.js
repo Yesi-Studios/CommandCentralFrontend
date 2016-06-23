@@ -205,7 +205,7 @@ angular.module('Authentication')
         };
  
         service.ClearCredentials = function () {
-            $rootScope.globals.currentUser = {};
+            delete $rootScope.globals.currentUser;
             delete $localStorage.globals
             //$http.defaults.headers.common.Authorization = 'Basic ';
         };
