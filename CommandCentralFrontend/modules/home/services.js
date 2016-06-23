@@ -11,7 +11,7 @@ angular.module('Home')
 		
 		service.GetHomeNews = function (success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken() };
-		    var serviceurl = baseurl + "/LoadNewsItems";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadNewsItems";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -33,7 +33,7 @@ angular.module('Home')
 
 		service.LoadNewsItem = function (itemID, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), 'newsitemid' : itemID};
-		    var serviceurl = baseurl + "/LoadNewsItem";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadNewsItem";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -55,7 +55,7 @@ angular.module('Home')
 
 		service.CreateNewsItem = function (title, paragraphs, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "Title": title, "Paragraphs" : paragraphs };
-		    var serviceurl = baseurl + "/CreateNewsItem";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/CreateNewsItem";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -77,7 +77,7 @@ angular.module('Home')
 
 		service.UpdateNewsItem = function (newsItem, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitem": newsItem };
-		    var serviceurl = baseurl + "/UpdateNewsItem";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/UpdateNewsItem";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -99,7 +99,7 @@ angular.module('Home')
 
 		service.DeleteNewsItem = function (itemID, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitemid": itemID };
-		    var serviceurl = baseurl + "/DeleteNewsItem";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/DeleteNewsItem";
 		    $.ajax(
 			{
 			    url: serviceurl,

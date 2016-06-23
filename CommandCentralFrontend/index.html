@@ -87,30 +87,41 @@
                 </div>
             </div>
         </div>
+        <div class="container" ng-controller="SetPortController">
+            <div class="row">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="portInput">Current URL: {{currentURL}}</label>
+                        <input type="text" class="form-control" id="portInput" placeholder="1113" ng-model="newPort">
+                        <button type="submit" class="btn btn-default" ng-click="setPort(newPort)">Set Port</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-        <script src="libs/jquery-2.2.1.min.js"></script>
-        <script src="libs/angular.min.js"></script>
-        <script src="libs/bootstrap.min.js"></script>
-        <script src="libs/angular-pdf.min.js"></script>
-        <script src="libs/angular-route.min.js"></script>
-        <script src="libs/angular-animate.min.js"></script>
-        <script src="libs/angular-touch.min.js"></script>
-        <script src="libs/angular-modal-service.js"></script>
-        <script src="libs/ngStorage.min.js"></script>
-        <script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
-        <script src="app.js"></script>
-        <script src="modules/authentication/services.js"></script>
-        <script src="modules/authentication/controllers.js"></script>
-        <script src="modules/home/controllers.js"></script>
-        <script src="modules/home/services.js"></script>
-        <script src="modules/navigation/controllers.js"></script>
-        <script src="modules/navigation/services.js"></script>
-        <script src="modules/profile/controllers.js"></script>
-        <script src="modules/profile/services.js"></script>
-        <script src="modules/search/controllers.js"></script>
-        <script src="modules/search/services.js"></script>
-        <script src="modules/modals/controllers.js"></script>
-        <script src="modules/authorization/services.js"></script>
+            <script src="libs/jquery-2.2.1.min.js"></script>
+            <script src="libs/angular.min.js"></script>
+            <script src="libs/bootstrap.min.js"></script>
+            <script src="libs/angular-pdf.min.js"></script>
+            <script src="libs/angular-route.min.js"></script>
+            <script src="libs/angular-animate.min.js"></script>
+            <script src="libs/angular-touch.min.js"></script>
+            <script src="libs/angular-modal-service.js"></script>
+            <script src="libs/ngStorage.min.js"></script>
+            <script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
+            <script src="app.js"></script>
+            <script src="modules/authentication/services.js"></script>
+            <script src="modules/authentication/controllers.js"></script>
+            <script src="modules/home/controllers.js"></script>
+            <script src="modules/home/services.js"></script>
+            <script src="modules/navigation/controllers.js"></script>
+            <script src="modules/navigation/services.js"></script>
+            <script src="modules/profile/controllers.js"></script>
+            <script src="modules/profile/services.js"></script>
+            <script src="modules/search/controllers.js"></script>
+            <script src="modules/search/services.js"></script>
+            <script src="modules/modals/controllers.js"></script>
+            <script src="modules/authorization/services.js"></script>
 </body>
 
 </html>

@@ -8,11 +8,10 @@ angular.module('Authorization')
         var service = {};
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
-
 		
         service.GetModelPermissions = function (success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl = baseurl + "/GetModelPermissions";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/GetModelPermissions";
 			return $.ajax(
 			{
 				url: serviceurl,
@@ -34,7 +33,7 @@ angular.module('Authorization')
 		
 		service.GetPermissionGroups = function (success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadPermissionGroups";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPermissionGroups";
 			return $.ajax(
 			{
 				url: serviceurl,

@@ -11,7 +11,7 @@ angular.module('Search')
 		
         service.DoSimpleSearch = function (terms, success, error) {
 			var reqData = {'apikey' : apikey, 'authenticationtoken' : AuthenticationService.GetAuthToken(), 'searchterm':terms};
-			var serviceurl = baseurl + "/SimpleSearchPersons";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/SimpleSearchPersons";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -33,7 +33,7 @@ angular.module('Search')
 		
 		service.DoAdvancedSearch = function (filters, returnFields, success, error) {
 			var reqData = {'apikey' : apikey, 'authenticationtoken' : AuthenticationService.GetAuthToken(), 'filters' : filters, 'returnfields' : returnFields};
-			var serviceurl = baseurl + "/AdvancedSearchPersons";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/AdvancedSearchPersons";
 			$.ajax(
 			{
 				url: serviceurl,

@@ -15,13 +15,18 @@ angular.module('Authentication')
             return backendURL + ":" + backendPort;
         }
 
+        service.SetBackendPort = function (portnumber) {
+            backendPort = portnumber;
+            baseurl = backendURL + ":" + backendPort;
+        }
+
         service.GetAPIKey = function () {
             return apikey;
         }		
 		
         service.Login = function (username, password, success, error) {
 			var reqData = {'username' : username, 'password': password, 'apikey' : apikey};
-			var serviceurl = baseurl + "/Login";
+			var serviceurl =  service.GetBackendURL() + "/Login";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -59,7 +64,7 @@ angular.module('Authentication')
 			}
 		}
 		
-		service.ClearLoginMessage = function(){
+		service.ClearLoginMessages = function(){
 			$rootScope.globals.loginMessages = [];
 		}
 		
@@ -75,7 +80,7 @@ angular.module('Authentication')
 			}
 		}
 		
-		service.ClearLoginMessage = function(){
+		service.ClearLoginErrors = function(){
 			$rootScope.globals.loginErrors = [];
 		}
 		
@@ -86,7 +91,7 @@ angular.module('Authentication')
 		
 		service.Logout = function (success, error) {
 			var reqData = {'authenticationtoken': $localStorage.globals.currentUser.authtoken, 'apikey' : apikey};
-			var serviceurl = baseurl + "/Logout";
+			var serviceurl =  service.GetBackendURL() + "/Logout";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -107,7 +112,7 @@ angular.module('Authentication')
 		
 		service.FinishRegistration = function (username, password, id, success, error) {
 			var reqData = {'username' : username, 'password' : password, 'accountconfirmationid' : id, 'apikey' : apikey};
-			var serviceurl = baseurl + "/CompleteRegistration";
+			var serviceurl =  service.GetBackendURL() + "/CompleteRegistration";
 			
 			$.ajax(
 			{
@@ -129,7 +134,7 @@ angular.module('Authentication')
 		
 		service.BeginRegistration = function (ssn, success, error) {
 			var reqData = {'ssn' : ssn, 'apikey' : apikey};
-			var serviceurl = baseurl + "/BeginRegistration";
+			var serviceurl =  service.GetBackendURL() + "/BeginRegistration";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -150,7 +155,7 @@ angular.module('Authentication')
 		
 		service.ForgotPassword = function (email, ssn, success, error) {
 			var reqData = {'email' : email, 'ssn' : ssn, 'apikey' : apikey};
-			var serviceurl = baseurl + "/BeginPasswordReset";
+			var serviceurl =  service.GetBackendURL() + "/BeginPasswordReset";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -171,7 +176,7 @@ angular.module('Authentication')
 		
 		service.FinishReset = function (password, id, success, error) {
 			var reqData = {'Password' : password, 'PasswordResetid' : id, 'apikey' : apikey};
-			var serviceurl = baseurl + "/CompletePasswordReset";
+			var serviceurl =  service.GetBackendURL() + "/CompletePasswordReset";
 			
 			$.ajax(
 			{

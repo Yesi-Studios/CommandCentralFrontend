@@ -11,7 +11,7 @@ angular.module('Profiles')
 		
 		service.GetAllLists = function (success, error) {
 			var reqData = {'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadLists";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadLists";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -32,7 +32,7 @@ angular.module('Profiles')
         };
 		service.GetPermissionGroups = function (success, error) {
 			var reqData = {'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadPermissionGroups";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPermissionGroups";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -54,7 +54,7 @@ angular.module('Profiles')
 		
 		service.GetCommands = function (success, error) {
 			var reqData = {'Name' : name, 'apikey' : apikey, 'acceptcachedresults' : true};
-			var serviceurl = baseurl + "/LoadCommands";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadCommands";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -76,7 +76,7 @@ angular.module('Profiles')
 
 		service.UpdateMyProfile = function (person, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'person': person };
-		    var serviceurl = baseurl + "/UpdatePerson";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/UpdatePerson";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -97,7 +97,7 @@ angular.module('Profiles')
 
 		service.CreatePerson = function (success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey };
-		    var serviceurl = baseurl + "/CreatePerson";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/CreatePerson";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -118,7 +118,7 @@ angular.module('Profiles')
 		
 		service.TakeLock = function(personid, success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey, 'personid' : personid};
-			var serviceurl = baseurl + "/TakeProfileLock";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/TakeProfileLock";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -139,7 +139,7 @@ angular.module('Profiles')
 
 		service.LoadProfile = function (personid, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
-		    var serviceurl = baseurl + "/LoadPerson";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPerson";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -160,7 +160,7 @@ angular.module('Profiles')
 
 		service.LoadAccountHistory = function (personid, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
-		    var serviceurl = baseurl + "/LoadAccountHistoryByPerson";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadAccountHistoryByPerson";
 		    $.ajax(
 			{
 			    url: serviceurl,
