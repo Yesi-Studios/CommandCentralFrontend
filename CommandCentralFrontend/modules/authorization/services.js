@@ -8,11 +8,10 @@ angular.module('Authorization')
         var service = {};
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
-
 		
-        service.GetModelPermissions = function (callback) {
+        service.GetModelPermissions = function (success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl = baseurl + "/GetModelPermissions";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/GetModelPermissions";
 			return $.ajax(
 			{
 				url: serviceurl,
@@ -22,18 +21,19 @@ angular.module('Authorization')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 
         };
 		
-		service.GetPermissionGroups = function (callback) {
+		service.GetPermissionGroups = function (success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadPermissionGroups";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPermissionGroups";
 			return $.ajax(
 			{
 				url: serviceurl,
@@ -43,10 +43,11 @@ angular.module('Authorization')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 

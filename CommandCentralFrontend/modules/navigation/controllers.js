@@ -11,43 +11,64 @@ angular.module('Navigation')
         }
 
         $scope.createNewPerson = function () {
-            ProfileService.CreatePerson(function(response) {
-                if(!response.HasError) {
+            ProfileService.CreatePerson(
+                function (response) {
                     $scope.$apply(function() {
                         $location.path('/profile/' + response.ReturnValue);
                         $scope.dataLoading = false;
                     });
-                } else {
-                    AuthenticationService.ClearCredentials();
-                    $scope.$apply(function() {
-                        $scope.error = response.ErrorMessage;
-                        AuthenticationService.AddLoginMessage(response.ErrorMessage);
+                },
+                // If we fail, this is our call back (nearly the same for all backend calls)
+                function (response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (var i = 0; i < response.ErrorMessages.length; i++) {
+                                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            AuthenticationService.ClearCredentials();
+                            $location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            $scope.errors = response.ErrorMessages;
+                        }
                         $scope.dataLoading = false;
-                        $location.path('/login');
                     });
                 }
-            });
+            );
         };
         
 
 		$scope.logout = function() {
 			AuthenticationService.AddLoginMessage("Succesfully logged out!");
-			AuthenticationService.Logout(function(response) {
-					if(!response.HasError) {
-						AuthenticationService.ClearCredentials();
-						$scope.$apply(function() {
-							$location.path('/login');
-						});
-					} else {
-						AuthenticationService.ClearCredentials();
-						$scope.$apply(function() {
-							$scope.error = response.ErrorMessage;
-							$scope.dataLoading = false;
-							$location.path('/login');
-						});
-					}
-				});
-			};
+			AuthenticationService.Logout(
+                function (response) {
+					AuthenticationService.ClearCredentials();
+					$scope.$apply(function() {
+						$location.path('/login');
+					});
+				},
+			    // If we fail, this is our call back (nearly the same for all backend calls)
+                function (response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (var i = 0; i < response.ErrorMessages.length; i++) {
+                                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            AuthenticationService.ClearCredentials();
+                            $location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            $scope.errors = response.ErrorMessages;
+                        }
+                        $scope.dataLoading = false;
+                    });
+                }
+            );
+		};
 		$scope.isMyProfileActive = function() {
 			return $routeParams.id === AuthenticationService.GetCurrentUserID();
 		}

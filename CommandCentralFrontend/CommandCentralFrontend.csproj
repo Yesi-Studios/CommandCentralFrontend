@@ -91,8 +91,6 @@
     <Content Include="libs\jquery-2.2.1.min.js" />
     <Content Include="libs\ngStorage.min.js" />
     <Content Include="libs\ui-bootstrap-tpls-1.2.4.min.js" />
-    <Content Include="modules\appstatus\controllers.js" />
-    <Content Include="modules\appstatus\services.js" />
     <Content Include="modules\authentication\controllers.js" />
     <Content Include="modules\authentication\services.js" />
     <Content Include="modules\authentication\views\finishregister.html" />
