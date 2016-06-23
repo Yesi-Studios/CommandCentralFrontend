@@ -10,7 +10,7 @@ angular.module('Home')
 
 		$scope.refreshNews = function () {
 		    $scope.dataLoading = true;
-		    $scope.error = "";
+		    $scope.errors = null;
 		    HomeService.GetHomeNews(
                 function (response) {
 		            $scope.$apply(function () {
@@ -42,7 +42,7 @@ angular.module('Home')
 
 		$scope.deleteNewsItem = function (itemID) {
 		    $scope.dataLoading = true;
-		    $scope.error = "";
+		    $scope.errors = null;
 		    HomeService.DeleteNewsItem(itemID,
                 function (response) {
 		            $scope.$apply(function () {
@@ -120,7 +120,7 @@ angular.module('Home')
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService, HomeService) {
 
         $scope.dataLoading = true;
-        $scope.error = "";
+        $scope.errors = null;
         HomeService.LoadNewsItem($routeParams.id,
             function (response) {
                 $scope.$apply(function () {
@@ -150,7 +150,7 @@ angular.module('Home')
         );
 
         $scope.updateNewsItem = function (newsItem, text) {
-            $scope.error = "";
+            $scope.errors = null;
             $scope.dataLoading = true;
             newsItem.Paragraphs = text.match(/[^\r\n]+/g);
             HomeService.UpdateNewsItem(newsItem,

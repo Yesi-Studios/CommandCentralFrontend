@@ -1,5 +1,5 @@
 <div ng-show="error" class="alert alert-danger status_message">{{error}}</div>
-<div ng-repeat="message in errors" class="alert alert-danger status_message">{{message}}</div>
+<div ng-show="errors" ng-repeat="error in errors" class="alert alert-danger status_message">{{error}}</div>
 <div class="content_panel">
 	<form name="form" ng-submit="login()" role="form">
 		<div class="form-group">

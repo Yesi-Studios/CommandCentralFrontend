@@ -41,7 +41,7 @@ angular.module('Search')
         // Define how we do a simple search first, so we can do it whenever
 		var simpleSearch = function(terms){
 			$scope.dataLoading = true;
-			$scope.error = "";
+			$scope.errors = null;
 			SearchService.DoSimpleSearch(terms,
                 function (response) {
                     $scope.$apply(function() {
@@ -116,7 +116,7 @@ angular.module('Search')
 		
 		var searchByField = function(filters, returnFields) {
 			$scope.dataLoading = true;
-			$scope.error = "";
+			$scope.errors = null;
 			SearchService.DoAdvancedSearch(filters, returnFields,
                 // If we succeed, this is our callback
                 function(response) {

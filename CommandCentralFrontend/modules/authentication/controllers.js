@@ -21,7 +21,7 @@ angular.module('Authentication')
         $scope.login = function () {
 			// Show that data is loading and clear the error message
             $scope.dataLoading = true;
-            $scope.error = null;
+            $scope.errors = null;
 
             ModalService.showModal({
                 templateUrl: 'modules/modals/views/privacyact.html',
@@ -112,7 +112,7 @@ angular.module('Authentication')
                         );
                     } else {
                         $scope.dataLoading = false;
-                        $scope.error = "You must accept the Privacy Act Statement to continue";
+                        $scope.errors.push("You must accept the Privacy Act Statement to continue");
                     }
                 });
             });
@@ -196,7 +196,7 @@ angular.module('Authentication')
  
         $scope.forgotpassword = function () {
             $scope.dataLoading = true;
-			$scope.error = "";
+			$scope.errors = null;
 			AuthenticationService.ForgotPassword($scope.email, $scope.ssn,
                 function (response) {
                     $scope.$apply(function() {
