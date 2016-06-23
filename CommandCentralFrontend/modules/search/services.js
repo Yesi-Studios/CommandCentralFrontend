@@ -9,7 +9,7 @@ angular.module('Search')
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
 		
-        service.DoSimpleSearch = function (terms, callback) {
+        service.DoSimpleSearch = function (terms, success, error) {
 			var reqData = {'apikey' : apikey, 'authenticationtoken' : AuthenticationService.GetAuthToken(), 'searchterm':terms};
 			var serviceurl = baseurl + "/SimpleSearchPersons";
 			$.ajax(
@@ -21,18 +21,18 @@ angular.module('Search')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
+				error: function (response, status, errortext) {
 				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
-				    callback(returnContainer);
+				    error(returnContainer);
 				}
 			});
 
         };
 		
-		service.DoAdvancedSearch = function (filters, returnFields, callback) {
+		service.DoAdvancedSearch = function (filters, returnFields, success, error) {
 			var reqData = {'apikey' : apikey, 'authenticationtoken' : AuthenticationService.GetAuthToken(), 'filters' : filters, 'returnfields' : returnFields};
 			var serviceurl = baseurl + "/AdvancedSearchPersons";
 			$.ajax(
@@ -44,12 +44,12 @@ angular.module('Search')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
+				error: function (response, status, errortext) {
 				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
-				    callback(returnContainer);
+				    error(returnContainer);
 				}
 			});
 

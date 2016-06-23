@@ -9,28 +9,7 @@ angular.module('Profiles')
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
 		
-        /*service.GetList = function (name, callback) {
-			var reqData = {'name' : name, 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadReferenceLists";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
-				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
-				}
-			});
-
-        };*/
-		
-		service.GetAllLists = function (callback) {
+		service.GetAllLists = function (success, error) {
 			var reqData = {'apikey' : apikey};
 			var serviceurl = baseurl + "/LoadLists";
 			$.ajax(
@@ -42,12 +21,12 @@ angular.module('Profiles')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
+				error: function (response, status, errortext) {
 				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
-				    callback(returnContainer);
+				    error(returnContainer);
 				}
 			});
 
@@ -75,7 +54,7 @@ angular.module('Profiles')
 
         };
 		
-		service.GetCommands = function (callback) {
+		service.GetCommands = function (success, error) {
 			var reqData = {'Name' : name, 'apikey' : apikey, 'acceptcachedresults' : true};
 			var serviceurl = baseurl + "/LoadCommands";
 			$.ajax(
@@ -87,38 +66,16 @@ angular.module('Profiles')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
+				error: function (response, status, errortext) {
 				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
-				    callback(returnContainer);
+				    error(returnContainer);
 				}
 			});
 
         };
-		
-		service.LoadMyProfile = function(callback) {
-			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadSessionUsersFullProfile";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
-				},
-				error: function (xhr, status, errortext) {
-				    console.log(response);
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    callback(returnContainer);
-				}
-			});
-		};
 
 		service.UpdateMyProfile = function (person, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'person': person };
@@ -142,7 +99,7 @@ angular.module('Profiles')
 			});
 		};
 
-		service.CreatePerson = function (callback) {
+		service.CreatePerson = function (success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey };
 		    var serviceurl = baseurl + "/CreatePerson";
 		    $.ajax(
@@ -154,17 +111,17 @@ angular.module('Profiles')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
+			    error: function (response, status, errortext) {
 			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
-			        callback(returnContainer);
+			        error(returnContainer);
 			    }
 			});
 		};
 		
-		service.TakeLock = function(personid, callback) {
+		service.TakeLock = function(personid, success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey, 'personid' : personid};
 			var serviceurl = baseurl + "/TakeProfileLock";
 			$.ajax(
@@ -176,17 +133,17 @@ angular.module('Profiles')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
+				error: function (response, status, errortext) {
 				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
-				    callback(returnContainer);
+				    error(returnContainer);
 				}
 			});
 		};
 
-		service.LoadProfile = function (personid, callback) {
+		service.LoadProfile = function (personid, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
 		    var serviceurl = baseurl + "/LoadPerson";
 		    $.ajax(
@@ -198,12 +155,12 @@ angular.module('Profiles')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
+			    error: function (response, status, errortext) {
 			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
-			        callback(returnContainer);
+			        error(returnContainer);
 			    }
 			});
 		};

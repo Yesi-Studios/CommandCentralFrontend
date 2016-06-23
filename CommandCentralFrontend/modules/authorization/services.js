@@ -10,7 +10,7 @@ angular.module('Authorization')
         var baseurl = AuthenticationService.GetBackendURL();
 
 		
-        service.GetModelPermissions = function (callback) {
+        service.GetModelPermissions = function (success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
 			var serviceurl = baseurl + "/GetModelPermissions";
 			return $.ajax(
@@ -22,18 +22,18 @@ angular.module('Authorization')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
+				error: function (response, status, errortext) {
 				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
-				    callback(returnContainer);
+				    error(returnContainer);
 				}
 			});
 
         };
 		
-		service.GetPermissionGroups = function (callback) {
+		service.GetPermissionGroups = function (success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
 			var serviceurl = baseurl + "/LoadPermissionGroups";
 			return $.ajax(
@@ -45,12 +45,12 @@ angular.module('Authorization')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
+				error: function (response, status, errortext) {
 				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
-				    callback(returnContainer);
+				    error(returnContainer);
 				}
 			});
 

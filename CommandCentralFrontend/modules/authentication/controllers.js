@@ -31,44 +31,85 @@ angular.module('Authentication')
                 modal.close.then(function (result) {
                     if(result){
 
-                        AuthenticationService.Login($scope.username, $scope.password, function(response) {
-                if(!response.HasError) {
-					console.log(response);
-                    AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonID);
-					AuthorizationService.GetModelPermissions(function(response) {
-						if(!response.HasError) {
-							AuthorizationService.SetPermissions(response.ReturnValue.Person.SearchableFields, response.ReturnValue.Person.ReturnableFields, response.ReturnValue.Person.EditableFields);
-							
-						} else {
-							$scope.$apply(function() {
-								$scope.error = response.ErrorMessage;
-								$scope.dataLoading = false;
-							});
-						}
-					}).then( function () {
-						AuthorizationService.GetPermissionGroups(function(response) {
-							if(!response.HasError) {
-								AuthorizationService.SetPermissionGroups(response.ReturnValue);
-							} else {
-								$scope.$apply(function() {
-									$scope.error = response.ErrorMessage;
-									$scope.dataLoading = false;
-								});
-							}
-						})
-					})
-					.done(function() {
-						$scope.$apply(function() {
-								$location.path('/');
-							});
-					});
-                } else {
-                    $scope.$apply(function() {
-						$scope.error = response.ErrorMessage;
-						$scope.dataLoading = false;
-					});
-                }
-            });
+                        AuthenticationService.Login($scope.username, $scope.password,
+                            function (response) {
+                                AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonID);
+                                AuthorizationService.GetModelPermissions(
+                                    // If we succeed this is our call back
+                                    function (response) {
+                                        AuthorizationService.SetPermissions(response.ReturnValue.Person.SearchableFields, response.ReturnValue.Person.ReturnableFields, response.ReturnValue.Person.EditableFields);
+
+                                    },
+                                    // If we fail, this is our call back (nearly the same for all backend calls)
+                                    function (response) {
+                                        $scope.$apply(function () {
+                                            // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                                            // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                                            if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                                                for (i = 0; i < response.ErrorMessages.length; i++) {
+                                                    AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                                                }
+                                                AuthenticationService.ClearCredentials();
+                                                $location.path('/login');
+                                            } else {
+                                                // If it's any other type of error, we can just show it to them on this page.
+                                                $scope.errors = response.ErrorMessages;
+                                            }
+                                            $scope.dataLoading = false;
+                                        }
+                                    );
+                                }).then(function () {
+                                    AuthorizationService.GetPermissionGroups(
+                                        // If we succeed, this is our callback
+                                        function (response) {
+                                            AuthorizationService.SetPermissionGroups(response.ReturnValue);
+                                        },
+                                        // If we fail, this is our call back (nearly the same for all backend calls)
+                                        function (response) {
+                                            $scope.$apply(function () {
+                                                // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                                                // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                                                if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                                                    for (i = 0; i < response.ErrorMessages.length; i++) {
+                                                        AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                                                    }
+                                                    AuthenticationService.ClearCredentials();
+                                                    $location.path('/login');
+                                                } else {
+                                                    // If it's any other type of error, we can just show it to them on this page.
+                                                    $scope.errors = response.ErrorMessages;
+                                                }
+                                                $scope.dataLoading = false;
+                                            }
+                                            );
+                                        }
+                                    )
+                                    .done(function () {
+                                        $scope.$apply(function () {
+                                            $location.path('/');
+                                        });
+                                    });
+                                })
+                            },
+                            // If we fail, this is our call back (nearly the same for all backend calls)
+                            function (response) {
+                                $scope.$apply(function () {
+                                    // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                                    // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                                    if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                                        for (i = 0; i < response.ErrorMessages.length; i++) {
+                                            AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                                        }
+                                        AuthenticationService.ClearCredentials();
+                                        $location.path('/login');
+                                    } else {
+                                        // If it's any other type of error, we can just show it to them on this page.
+                                        $scope.errors = response.ErrorMessages;
+                                    }
+                                    $scope.dataLoading = false;
+                                });
+                            }
+                        );
                     } else {
                         $scope.dataLoading = false;
                         $scope.error = "You must accept the Privacy Act Statement to continue";
@@ -85,19 +126,32 @@ angular.module('Authentication')
 		$scope.accepted = null;
         $scope.beginRegistration = function () {
             $scope.dataLoading = true;
-            AuthenticationService.BeginRegistration($scope.password, function(response) {
-                if(!response.HasError) {
+            AuthenticationService.BeginRegistration($scope.password,
+                function (response) {
 					$scope.$apply(function() {
 						$scope.accepted = true;
 						$scope.dataLoading = false;
 					});					
-                } else {
-					$scope.$apply(function() {
-						$scope.error = response.ErrorMessage;
-						$scope.dataLoading = false;
-					});
-				}
-            });
+                },
+                // If we fail, this is our call back (nearly the same for all backend calls)
+                function (response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (i = 0; i < response.ErrorMessages.length; i++) {
+                                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            AuthenticationService.ClearCredentials();
+                            $location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            $scope.errors = response.ErrorMessages;
+                        }
+                        $scope.dataLoading = false;
+                    });
+                }
+            );
         };
     }])
 	
@@ -106,19 +160,32 @@ angular.module('Authentication')
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService) {
 		$scope.finishRegistration = function () {
             $scope.dataLoading = true;
-            AuthenticationService.FinishRegistration($scope.username, $scope.password, $routeParams.id, function(response) {
-                if(!response.HasError) {
+            AuthenticationService.FinishRegistration($scope.username, $scope.password, $routeParams.id,
+                function (response) {
                     $scope.$apply(function() {
 						AuthenticationService.AddLoginMessage("Account created. Login with your new account");
 						$location.path('/login');
 					});
-                } else {
-					$scope.$apply(function() {
-					    $scope.error = response.ErrorMessage;
-						$scope.dataLoading = false;
-					});
+                },
+                // If we fail, this is our call back (nearly the same for all backend calls)
+                function (response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (i = 0; i < response.ErrorMessages.length; i++) {
+                                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            AuthenticationService.ClearCredentials();
+                            $location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            $scope.errors = response.ErrorMessages;
+                        }
+                        $scope.dataLoading = false;
+                    });
                 }
-            });
+            );
         };
 	}])
 	.controller('ForgotController',
@@ -130,19 +197,32 @@ angular.module('Authentication')
         $scope.forgotpassword = function () {
             $scope.dataLoading = true;
 			$scope.error = "";
-            AuthenticationService.ForgotPassword($scope.email, $scope.ssn, function(response) {
-                if(!response.HasError) {
+			AuthenticationService.ForgotPassword($scope.email, $scope.ssn,
+                function (response) {
                     $scope.$apply(function() {
 						$scope.confirmation = "Got it. Check your .mil email for further instructions.";
 						$scope.dataLoading = false;
 					});
-                } else {
-					$scope.$apply(function() {
-					    $scope.error = response.ErrorMessage;
-						$scope.dataLoading = false;
-					});
+                },
+                // If we fail, this is our call back (nearly the same for all backend calls)
+                function (response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (i = 0; i < response.ErrorMessages.length; i++) {
+                                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            AuthenticationService.ClearCredentials();
+                            $location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            $scope.errors = response.ErrorMessages;
+                        }
+                        $scope.dataLoading = false;
+                    });
                 }
-            });
+            );
         };
     }])
 	.controller('FinishResetController',
@@ -150,18 +230,31 @@ angular.module('Authentication')
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService) {
 		$scope.finishReset = function () {
             $scope.dataLoading = true;
-            AuthenticationService.FinishReset($scope.password, $routeParams.id, function(response) {
-                if(!response.HasError) {
+            AuthenticationService.FinishReset($scope.password, $routeParams.id,
+                function (response) {
 					$scope.$apply(function () {
 						AuthenticationService.AddLoginMessage("Password reset. Please login with your new password.");
 						$location.path('/login');
 					});
-                } else {
-					$scope.$apply(function () {
-						$scope.error = response.message;
-						$scope.dataLoading = false;
-					});
+                },
+                // If we fail, this is our call back (nearly the same for all backend calls)
+                function (response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (i = 0; i < response.ErrorMessages.length; i++) {
+                                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            AuthenticationService.ClearCredentials();
+                            $location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            $scope.errors = response.ErrorMessages;
+                        }
+                        $scope.dataLoading = false;
+                    });
                 }
-            });
+            );
         };
 	}]);

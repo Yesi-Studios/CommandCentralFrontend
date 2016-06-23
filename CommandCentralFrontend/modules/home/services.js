@@ -9,7 +9,7 @@ angular.module('Home')
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
 		
-		service.GetHomeNews = function (callback) {
+		service.GetHomeNews = function (success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken() };
 		    var serviceurl = baseurl + "/LoadNewsItems";
 		    $.ajax(
@@ -21,18 +21,18 @@ angular.module('Home')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
+			    error: function (response, status, errortext) {
 			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
-			        callback(returnContainer);
+			        error(returnContainer);
 			    }
 			});
 
 		};
 
-		service.LoadNewsItem = function (itemID, callback) {
+		service.LoadNewsItem = function (itemID, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), 'newsitemid' : itemID};
 		    var serviceurl = baseurl + "/LoadNewsItem";
 		    $.ajax(
@@ -44,18 +44,18 @@ angular.module('Home')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
+			    error: function (response, status, errortext) {
 			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
-			        callback(returnContainer);
+			        error(returnContainer);
 			    }
 			});
 
 		};
 
-		service.CreateNewsItem = function (title, paragraphs, callback) {
+		service.CreateNewsItem = function (title, paragraphs, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "Title": title, "Paragraphs" : paragraphs };
 		    var serviceurl = baseurl + "/CreateNewsItem";
 		    $.ajax(
@@ -67,18 +67,18 @@ angular.module('Home')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
+			    error: function (response, status, errortext) {
 			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
-			        callback(returnContainer);
+			        error(returnContainer);
 			    }
 			});
 
 		};
 
-		service.UpdateNewsItem = function (newsItem, callback) {
+		service.UpdateNewsItem = function (newsItem, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitem": newsItem };
 		    var serviceurl = baseurl + "/UpdateNewsItem";
 		    $.ajax(
@@ -90,18 +90,18 @@ angular.module('Home')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
+			    error: function (response, status, errortext) {
 			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
-			        callback(returnContainer);
+			        error(returnContainer);
 			    }
 			});
 
 		};
 
-		service.DeleteNewsItem = function (itemID, callback) {
+		service.DeleteNewsItem = function (itemID, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitemid": itemID };
 		    var serviceurl = baseurl + "/DeleteNewsItem";
 		    $.ajax(
@@ -113,12 +113,12 @@ angular.module('Home')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
+			    error: function (response, status, errortext) {
 			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
-			        callback(returnContainer);
+			        error(returnContainer);
 			    }
 			});
 
