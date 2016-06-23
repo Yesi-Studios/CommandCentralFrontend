@@ -24,7 +24,6 @@ angular.module('Profiles')
 					success(returnContainer);
 				},
 				error: function (response, status, errortext) {
-				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
 				    error(returnContainer);
 				}
@@ -46,7 +45,6 @@ angular.module('Profiles')
 					success(returnContainer);
 				},
 				error: function (response, status, errortext) {
-				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
 				    error(returnContainer);
 				}
@@ -69,7 +67,6 @@ angular.module('Profiles')
 					success(returnContainer);
 				},
 				error: function (response, status, errortext) {
-				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
 				    error(returnContainer);
 				}
@@ -92,7 +89,6 @@ angular.module('Profiles')
 			        success(returnContainer);
 			    },
 			    error: function (response, status, errortext) {
-                    console.log(response)
 			        var returnContainer = JSON.parse(response.responseJSON);
 			        error(returnContainer);
 			    }
@@ -114,7 +110,6 @@ angular.module('Profiles')
 			        success(returnContainer);
 			    },
 			    error: function (response, status, errortext) {
-			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
 			        error(returnContainer);
 			    }
@@ -136,7 +131,6 @@ angular.module('Profiles')
 					success(returnContainer);
 				},
 				error: function (response, status, errortext) {
-				    console.log(response);
 				    var returnContainer = JSON.parse(response.responseJSON);
 				    error(returnContainer);
 				}
@@ -158,7 +152,6 @@ angular.module('Profiles')
 			        success(returnContainer);
 			    },
 			    error: function (response, status, errortext) {
-			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
 			        error(returnContainer);
 			    }
@@ -180,7 +173,6 @@ angular.module('Profiles')
 			        success(returnContainer);
 			    },
 			    error: function (response, status, errortext) {
-			        console.log(response);
 			        var returnContainer = JSON.parse(response.responseJSON);
 			        error(returnContainer);
 			    }
