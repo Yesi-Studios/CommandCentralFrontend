@@ -28,8 +28,6 @@ angular.module('Home')
                             for (var i = 0; i < response.ErrorMessages.length; i++) {
                                 AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                             }
-
-                            alert("fuck");
                             AuthenticationService.ClearCredentials();
                             $location.path('/login');
                         } else {
