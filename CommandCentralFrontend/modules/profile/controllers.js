@@ -56,7 +56,7 @@ angular.module('Profiles')
                                     // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                                     // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                                     if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
-                                        for (i = 0; i < response.ErrorMessages.length; i++) {
+                                        for (var i = 0; i < response.ErrorMessages.length; i++) {
                                             AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                                         }
                                         AuthenticationService.ClearCredentials();
@@ -94,7 +94,7 @@ angular.module('Profiles')
                                     // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                                     // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                                     if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
-                                        for (i = 0; i < response.ErrorMessages.length; i++) {
+                                        for (var i = 0; i < response.ErrorMessages.length; i++) {
                                             AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                                         }
                                         AuthenticationService.ClearCredentials();
@@ -114,7 +114,7 @@ angular.module('Profiles')
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
-                            for (i = 0; i < response.ErrorMessages.length; i++) {
+                            for (var i = 0; i < response.ErrorMessages.length; i++) {
                                 AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                             }
                             AuthenticationService.ClearCredentials();
@@ -142,7 +142,7 @@ angular.module('Profiles')
                     // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                     // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                     if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
-                        for (i = 0; i < response.ErrorMessages.length; i++) {
+                        for (var i = 0; i < response.ErrorMessages.length; i++) {
                             AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                         }
                         AuthenticationService.ClearCredentials();
@@ -169,7 +169,7 @@ angular.module('Profiles')
                     // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                     // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                     if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
-                        for (i = 0; i < response.ErrorMessages.length; i++) {
+                        for (var i = 0; i < response.ErrorMessages.length; i++) {
                             AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                         }
                         AuthenticationService.ClearCredentials();
@@ -198,7 +198,7 @@ angular.module('Profiles')
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
-                            for (i = 0; i < response.ErrorMessages.length; i++) {
+                            for (var i = 0; i < response.ErrorMessages.length; i++) {
                                 AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                             }
                             AuthenticationService.ClearCredentials();
@@ -230,7 +230,7 @@ angular.module('Profiles')
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
 				        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
-				            for (i = 0; i < response.ErrorMessages.length; i++) {
+				            for (var i = 0; i < response.ErrorMessages.length; i++) {
 				                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
 				            }
 				            AuthenticationService.ClearCredentials();
