@@ -40,8 +40,12 @@ angular.module('Authentication')
 					success(returnContainer);
 				},
 				error: function (response, status, errortext) {
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    error(returnContainer);
+				    if (status == "error") {
+				        error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
+				    } else {
+				        var returnContainer = JSON.parse(response.responseJSON);
+				        error(returnContainer);
+				    }
 				}
 			});
 		
