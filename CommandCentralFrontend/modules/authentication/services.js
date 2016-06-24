@@ -8,7 +8,7 @@ angular.module('Authentication')
         var service = {};
         var apikey = /*"f6ec2c55-7571-43bb-8a6e-f1eccc76244b";*/ "33e0e8d0-0d1c-4880-9ba7-069eea5d1210"; //"C7C6A39A-C75F-433E-A808-E8A8922ED2FC" Slightly old API Key    // "A114899B-DC0B-4A71-8BB8-9C65B5748B6C" Old API Key
         var backendURL = /*"http://73.20.152.170";*/ "http://147.51.62.19";
-        var backendPort = "1113";
+        var backendPort = $localStorage.backendPort;
         var baseurl = backendURL + ":" + backendPort;
 
         service.GetBackendURL = function () {
@@ -18,6 +18,7 @@ angular.module('Authentication')
         service.SetBackendPort = function (portnumber) {
             backendPort = portnumber;
             baseurl = backendURL + ":" + backendPort;
+            $localStorage.backendPort = portnumber;
         }
 
         service.GetAPIKey = function () {
