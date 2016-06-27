@@ -26,21 +26,26 @@
         </div>
         <div class="col-xs-5">
             <div class="alert alert-info">User Has These Permissions:</div>
-                <table id="userPermssionGroups" class="table-striped col-xs-12">
-                    <thead>
-                        <tr>
-                            <th>Permission Name</th>
-                            <th>Remove</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="group in userPermissionGroups track by group.Id">
-                            <td>{{group.Name}}</td>
-                            <td><button type="button" class="btn btn-danger btn-xs" ng-disabled="!canEditPermissionGroup(group)" ng-click="removePermissionGroup(group)"><span class="glyphicon glyphicon-remove"></span></button></td>
-                        </tr>
-                        <tr ng-if="userPermissionGroups.length == 0"><td>No permission groups.</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <table id="userPermssionGroups" class="table-striped col-xs-12">
+                <thead>
+                    <tr>
+                        <th>Permission Name</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="group in userPermissionGroups track by group.Id">
+                        <td>{{group.Name}}</td>
+                        <td><button type="button" class="btn btn-danger btn-xs" ng-disabled="!canEditPermissionGroup(group)" ng-click="removePermissionGroup(group)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                    </tr>
+                    <tr ng-if="userPermissionGroups.length == 0"><td>No permission groups.</td></tr>
+                </tbody>
+            </table>
+        </div>
 	</div>
+    <div class="row">
+        <div class="col-xs-offset-5 col-xs-2 text-center">
+            <button class="btn btn-primary" ng-click="updatePermissions()" role="button">Update Permissions</button>
+        </div>
+    </div>
 </div>
