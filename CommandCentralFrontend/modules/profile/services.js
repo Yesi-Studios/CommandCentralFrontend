@@ -76,7 +76,7 @@ angular.module('Profiles')
 
 		service.UpdateMyProfile = function (person, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'person': person };
-		    var serviceurl =  AuthenticationService.GetBackendURL() + "/UpdatePerson";
+		    var serviceurl = AuthenticationService.GetBackendURL() + "/UpdatePerson";
 		    $.ajax(
 			{
 			    url: serviceurl,

@@ -266,7 +266,7 @@
 							</div>
                             <label class="col-xs-2" for="necs">NECs</label>
                             <div class="col-xs-4">
-                                <select class="form-control" id="necs" ng-disabled="!canEditPersonField('NECs')" ng-show="canReturnPersonField('NECs')" ng-model="profileData.NECs" ng-options="o as o.Value for o in lists['NEC']" multiple></select>
+                                <select class="form-control" id="necs" ng-disabled="!canEditPersonField('NECs')" ng-show="canReturnPersonField('NECs')" ng-model="profileData.NECs" ng-options="o as o.Value for o in lists['NEC'] track by o.Id" multiple></select>
                             </div>
 						</div>
 					</div>
