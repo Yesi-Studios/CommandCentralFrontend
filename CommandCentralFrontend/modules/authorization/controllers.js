@@ -61,7 +61,6 @@ angular.module('Authorization')
                                     $scope.$apply(function () {
                                         $scope.messages.push('Permissions successfully updated.');
                                         if (!response.ReturnValue.WasSelf) {
-                                            alert("fuck");
                                             AuthenticationService.AddLoginError("Your permissions have changed. Please re-login.");
                                             AuthenticationService.ClearCredentials();
                                             $location.path('/login');
