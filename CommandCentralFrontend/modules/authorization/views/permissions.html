@@ -1,0 +1,46 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
+<div ng-repeat="message in messages" class="alert alert-success">{{message}}</div>
+<div class="content_panel">
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-8 text-center">
+            <h4>Editing Permission Groups for {{friendlyName}}</h4>
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-xs-offset-1 col-xs-5">
+            <div class="alert alert-info">Available Permissions:</div>
+            <table id="allPermissionGroup" class="table-striped col-xs-12">
+                <thead>
+                    <tr>
+                        <th>Permission Name</th>
+                        <th>Add</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="group in allPermissionGroups track by group.Id">
+                        <td>{{group.Name}}</td>
+                        <td><button type="button" class="btn btn-success btn-xs" ng-disabled="!canEditPermissionGroup(group)" ng-click="givePermissionGroup(group)"><span class="glyphicon glyphicon-plus"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-5">
+            <div class="alert alert-info">User Has These Permissions:</div>
+                <table id="userPermssionGroups" class="table-striped col-xs-12">
+                    <thead>
+                        <tr>
+                            <th>Permission Name</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="group in userPermissionGroups track by group.Id">
+                            <td>{{group.Name}}</td>
+                            <td><button type="button" class="btn btn-danger btn-xs" ng-disabled="!canEditPermissionGroup(group)" ng-click="removePermissionGroup(group)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                        </tr>
+                        <tr ng-if="userPermissionGroups.length == 0"><td>No permission groups.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+	</div>
+</div>

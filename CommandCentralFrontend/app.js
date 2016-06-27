@@ -90,11 +90,17 @@ angular.module('CommandCentral', [
 			templateUrl: 'modules/authentication/views/forgotpassword.html',
 			hideMenus: true
 		})
-		
+
 		.when('/finishreset/:id', {
-			controller: 'FinishResetController',
-			templateUrl: 'modules/authentication/views/finishreset.html',
-			hideMenus: true
+		    controller: 'FinishResetController',
+		    templateUrl: 'modules/authentication/views/finishreset.html',
+		    hideMenus: true
+		})
+
+		.when('/editpermissions/:id', {
+		    controller: 'EditPermissionGroupsController',
+		    templateUrl: 'modules/authorization/views/permissions.html',
+		    hideMenus: true
 		})
  
         .otherwise({ redirectTo: '/' });
