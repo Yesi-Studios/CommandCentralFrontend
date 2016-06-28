@@ -358,7 +358,7 @@
 						<div class="form-group">
 							<label class="col-xs-4" for="permissionGroups">Permission Groups <a class="btn btn-primary btn-sm" ng-href="#/editpermissions/{{profileData.Id}}" ng-if="canEditPersonField('PermissionGroups')">Edit</a></label>
 							<div class="col-xs-8">
-								<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroups')" ng-model="profileData.PermissionGroups" ng-options="o as o.Name for o in permissionGroups track by o.ID" multiple>
+								<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroups')" ng-model="profileData.PermissionGroups" ng-options="o as o.Name for o in permissionGroups track by o.Id" multiple>
 								</select>
 							</div>
 						</div>
