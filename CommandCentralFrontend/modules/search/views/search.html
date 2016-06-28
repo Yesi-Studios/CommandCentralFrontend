@@ -25,7 +25,7 @@
 				<tbody>
 					<tr ng-repeat="result in results | orderBy: orderKey" ng-click="goToProfile(result.Id)">
 						<td ng-repeat="field in fields">{{result[field]}}</td>
-						<td><a href="#/profile/{{result.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+						<td><a ng-href="#/profile/{{result.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
 					</tr>
 				</tbody>
 			</table>
