@@ -4,7 +4,7 @@
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals']);
 angular.module('Home', ['Authentication', 'pdf']);
 angular.module('Navigation', ['Authentication', 'Profiles']);
-angular.module('Profiles', ['Authentication', 'ui.bootstrap']);
+angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask']);
 angular.module('Authorization', ['Authentication']);
 angular.module('Search', ['Authentication', 'Authorization']);
 angular.module('Modals', ['angularModalService']);
@@ -21,6 +21,7 @@ angular.module('CommandCentral', [
     'ngRoute',
     'ngStorage',
 	'ui.bootstrap',
+    'ui.mask',
 	'pdf'
 ])
  

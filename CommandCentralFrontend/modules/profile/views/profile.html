@@ -37,7 +37,7 @@
 							<label class="col-xs-4" for="ssn">SSN</label>
 							<div class="input-group col-xs-8">
                                 <a href="" ng-click="showSSN=true" class="btn btn-warning" ng-hide="!canReturnPersonField('SSN')||showSSN">Show SSN</a>
-								<input type="text" class="form-control" id="ssn" ng-disabled="!canEditPersonField('SSN')" ng-show="canReturnPersonField('SSN') && showSSN " ng-model="profileData.SSN" ng-pattern='/^\d{3}-?\d{2}-?\d{4}$/'/>
+								<input type="text" class="form-control" id="ssn" ng-disabled="!canEditPersonField('SSN')" ng-show="canReturnPersonField('SSN') && showSSN " ng-model="profileData.SSN" ui-mask="999-99-9999" ui-mask-placeholder ui-mask-placeholder-char="_" /><!-- ng-pattern='/^\d{3}-?\d{2}-?\d{4}$/'/>-->
                                 <span class="input-group-btn">
                                     <a href="" ng-click="showSSN=false" class="btn btn-default" ng-show="canReturnPersonField('SSN') && showSSN ">Hide SSN</a>
                                 </span>
@@ -154,7 +154,7 @@
 										<td class="col-xs-5">
 											<div class="input-group">
 												<span class="input-group-addon" id="newNumberAddon">New Number:</span>
-												<input name="newNumber" id="newNumber" type="text" class="form-control" aria-describedby="newNumberAddon" ng-model="newNumber"/>
+												<input name="newNumber" id="newNumber" type="text" class="form-control" aria-describedby="newNumberAddon" ng-model="newNumber" ui-mask="(999)-999-9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
 											</div>
 										</td>
 										<td>
