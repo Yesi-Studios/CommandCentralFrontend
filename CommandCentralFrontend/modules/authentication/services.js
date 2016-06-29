@@ -6,8 +6,8 @@ angular.module('Authentication')
     ['Base64', '$http', '$localStorage', '$rootScope', '$timeout',
     function (Base64, $http, $localStorage, $rootScope, $timeout) {
         var service = {};
-        var apikey = /*"f6ec2c55-7571-43bb-8a6e-f1eccc76244b";*/ "33e0e8d0-0d1c-4880-9ba7-069eea5d1210"; //"C7C6A39A-C75F-433E-A808-E8A8922ED2FC" Slightly old API Key    // "A114899B-DC0B-4A71-8BB8-9C65B5748B6C" Old API Key
-        var backendURL = /*"http://73.20.152.170";*/ "http://147.51.62.19";
+        var apikey = "768482c5-e5fb-43f2-a7f7-10c2b961fad3";//"0ab78de1-b5b5-4a07-a272-219cbd103436"; //"f6ec2c55-7571-43bb-8a6e-f1eccc76244b"; //*/"33e0e8d0-0d1c-4880-9ba7-069eea5d1210"; //"C7C6A39A-C75F-433E-A808-E8A8922ED2FC" Slightly old API Key    // "A114899B-DC0B-4A71-8BB8-9C65B5748B6C" Old API Key
+        var backendURL = "http://73.20.152.170";//*/ "http://147.51.62.19";
         var backendPort = $localStorage.backendPort;
         var baseurl = backendURL + ":" + backendPort;
 

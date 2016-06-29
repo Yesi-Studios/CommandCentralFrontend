@@ -261,16 +261,16 @@ angular.module('Profiles')
 			return listOfItems;
 		};
 		
-		$scope.addNewNumber = function(number, contactable, preferred) {
+		$scope.addNewNumber = function(number, phoneType, contactable, preferred) {
 			if(preferred) {
 				for (var i = 0; i < $scope.profileData.PhoneNumbers.length; ++i) {
 					$scope.profileData.PhoneNumbers[i].IsPreferred = false;
 				}
 			}
 			$scope.profileData.PhoneNumbers.push({ "Number": number, "PhoneType" : phoneType, "IsContactable": contactable, "IsPreferred": preferred });
-			
+
 		};
-		
+
 		$scope.addNewEmail = function(email, contactable, preferred) {
 			if(preferred) {
 				for (var i = 0; i < $scope.profileData.EmailAddresses.length; ++i) {

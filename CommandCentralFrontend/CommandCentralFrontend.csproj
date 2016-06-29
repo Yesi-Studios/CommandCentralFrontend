@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +63,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="img\pow.pdf" />
+    <Content Include="libs\mask.min.js" />
     <Content Include="LICENSE" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -101,6 +103,7 @@
     <Content Include="modules\authentication\views\resetlogin.html" />
     <Content Include="modules\authorization\controllers.js" />
     <Content Include="modules\authorization\services.js" />
+    <Content Include="modules\authorization\views\permissions.html" />
     <Content Include="modules\home\controllers.js" />
     <Content Include="modules\home\services.js" />
     <Content Include="modules\home\views\home.html" />

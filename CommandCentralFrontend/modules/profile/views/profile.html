@@ -37,7 +37,7 @@
 							<label class="col-xs-4" for="ssn">SSN</label>
 							<div class="input-group col-xs-8">
                                 <a href="" ng-click="showSSN=true" class="btn btn-warning" ng-hide="!canReturnPersonField('SSN')||showSSN">Show SSN</a>
-								<input type="text" class="form-control" id="ssn" ng-disabled="!canEditPersonField('SSN')" ng-show="canReturnPersonField('SSN') && showSSN " ng-model="profileData.SSN" ng-pattern='/^\d{3}-?\d{2}-?\d{4}$/'/>
+								<input type="text" class="form-control" id="ssn" ng-disabled="!canEditPersonField('SSN')" ng-show="canReturnPersonField('SSN') && showSSN " ng-model="profileData.SSN" ui-mask="999-99-9999" ui-mask-placeholder ui-mask-placeholder-char="_" /><!-- ng-pattern='/^\d{3}-?\d{2}-?\d{4}$/'/>-->
                                 <span class="input-group-btn">
                                     <a href="" ng-click="showSSN=false" class="btn btn-default" ng-show="canReturnPersonField('SSN') && showSSN ">Hide SSN</a>
                                 </span>
@@ -54,7 +54,7 @@
 						<div class="form-group">
 							<label class="col-xs-4" for="ethnicity">Ethnicity</label>
 							<div class="col-xs-8">
-								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o.Value for o in lists['Ethnicity']">
+								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o.Value for o in lists['Ethnicity'] track by o.Id">
 								<option></option>
 								</select>
 							</div>
@@ -62,7 +62,7 @@
 						<div class="form-group">
 							<label class="col-xs-4" for="religiousPreference">Religious Preference</label>
 							<div class="col-xs-8">
-								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o.Value for o in lists['ReligiousPreference']">
+								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o.Value for o in lists['ReligiousPreference'] track by o.Id">
 								<option></option>
 								</select>
 							</div>
@@ -71,10 +71,10 @@
 							<label class="col-xs-4" for="sex">Sex</label>
 							<div class="col-xs-8">
 								<label class="radio-inline">
-									<input type="radio" name="sex" id="male" value="Male" ng-disabled="!canEditPersonField('Gender')" ng-show="canReturnPersonField('Gender')" ng-model="profileData.Gender"> Male
+									<input type="radio" name="sex" id="male" value="Male" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex"> Male
 								</label>
 								<label class="radio-inline">
-									<input type="radio" name="sex" id="female" value="Female" ng-disabled="!canEditPersonField('Gender')" ng-show="canReturnPersonField('Gender')" ng-model="profileData.Gender"> Female
+									<input type="radio" name="sex" id="female" value="Female" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex"> Female
 								</label>
 							</div>
 						</div>						
@@ -108,7 +108,7 @@
 										<td>{{email.Address}}</td>
 										<td><button ng-if="!email.IsContactable" type="button" class="btn btn-danger btn-xs" ng-click="email.IsContactable=true">No</button><button ng-if="email.IsContactable" type="button" class="btn btn-success btn-xs" ng-click="email.IsContactable=false">Yes</button></td>
 										<td><button ng-if="!email.IsPreferred" type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses = makePreferred(profileData.EmailAddresses, email)">No</button><button ng-if="email.IsPreferred" type="button" class="btn btn-success btn-xs" ng-click="email.IsPreferred = false">Yes</button></td>
-										<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses.splice(profileData.EmailAddresses.indexOf(email), 1)"><span class="glyphicon glyphicon-remove"></span></button></td>
+										<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses.splice(profileData.EmailAddresses.indexOf(email), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
 									</tr>
 									<tr>
 										<td class="col-xs-5">
@@ -148,13 +148,13 @@
 										</td>
 										<td><button ng-if="!number.IsContactable" type="button" class="btn btn-danger btn-xs" ng-click="number.IsContactable=true">No</button><button ng-if="number.IsContactable" type="button" class="btn btn-success btn-xs" ng-click="number.IsContactable=false">Yes</button></td>
 										<td><button ng-if="!number.IsPreferred" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers = makePreferred(profileData.PhoneNumbers, number)">No</button><button ng-if="number.IsPreferred" type="button" class="btn btn-success btn-xs">Yes</button></td>
-										<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers.splice(profileData.PhoneNumbers.indexOf(number), 1)"><span class="glyphicon glyphicon-remove"></span></button></td>
+										<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers.splice(profileData.PhoneNumbers.indexOf(number), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
 									</tr>
 									<tr>
 										<td class="col-xs-5">
 											<div class="input-group">
 												<span class="input-group-addon" id="newNumberAddon">New Number:</span>
-												<input name="newNumber" id="newNumber" type="text" class="form-control" aria-describedby="newNumberAddon" ng-model="newNumber"/>
+												<input name="newNumber" id="newNumber" type="text" class="form-control" aria-describedby="newNumberAddon" ng-model="newNumber" ui-mask="(999)-999-9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
 											</div>
 										</td>
 										<td>
@@ -187,7 +187,7 @@
 										{{address.City}}, {{address.State}} {{address.ZipCode}}<br />
 										{{address.Country}}<br /></td>
 										<td><button ng-if="!address.IsHomeAddress" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses = makeHome(profileData.PhysicalAddresses, address)">No</button><button ng-if="address.IsHomeAddress" type="button" class="btn btn-success btn-xs" ng-click="address.IsHomeAddress = false">Yes</button></td>
-										<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses.splice(profileData.PhysicalAddresses.indexOf(address), 1)"><span class="glyphicon glyphicon-remove"></span></button></td>
+										<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses.splice(profileData.PhysicalAddresses.indexOf(address), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
 									</tr>
 									<tr>
 										<td class="col-xs-5">
@@ -266,7 +266,7 @@
 							</div>
                             <label class="col-xs-2" for="necs">NECs</label>
                             <div class="col-xs-4">
-                                <select class="form-control" id="necs" ng-disabled="!canEditPersonField('NECs')" ng-show="canReturnPersonField('NECs')" ng-model="profileData.NECs" ng-options="o as o.Value for o in lists['NEC']" multiple></select>
+                                <select class="form-control" id="necs" ng-disabled="!canEditPersonField('NECs')" ng-show="canReturnPersonField('NECs')" ng-model="profileData.NECs" ng-options="o as o.Value for o in lists['NEC'] track by o.Id" multiple></select>
                             </div>
 						</div>
 					</div>
@@ -274,13 +274,13 @@
 						<div class="form-group">
 							<label class="col-xs-2" for="rate">Rate</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="rate" ng-disabled="!canEditPersonField('Rate')" ng-show="canReturnPersonField('Rate')" ng-model="profileData.Rate" ng-options="o as o.Value for o in list['Designation']">
+								<select class="form-control" id="rate" ng-disabled="!canEditPersonField('Designation')" ng-show="canReturnPersonField('Designation')" ng-model="profileData.Designation" ng-options="o as o.Value for o in lists['Designation'] track by o.Id">
 								<option></option>
 								</select>
 							</div>
 							<label class="col-xs-2" for="rank">Rank</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="rank" ng-disabled="!canEditPersonField('Rank')" ng-show="canReturnPersonField('Rank')" ng-model="profileData.Rank" ng-options="o as o for o in lists['Paygrades']">
+								<select class="form-control" id="rank" ng-disabled="!canEditPersonField('Paygrade')" ng-show="canReturnPersonField('Paygrade')" ng-model="profileData.Paygrade" ng-options="o as o for o in lists['Paygrades']">
 								<option></option>
 								</select>
 							</div>
@@ -296,13 +296,13 @@
 						<div class="form-group">
 							<label class="col-xs-2" for="division">Division</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="division" ng-disabled="!canEditPersonField('Division')" ng-show="canReturnPersonField('Division')" ng-model="profileData.Division" ng-options="o.Name as o.Name for o in getByName(command.Departments, profileData.Department).Divisions">
+								<select class="form-control" id="division" ng-disabled="!canEditPersonField('Division')" ng-show="canReturnPersonField('Division')" ng-model="profileData.Division" ng-options="o as o.Value for o in profileData.Department.Divisions track by o.Id">
 								<option></option>
 								</select>
 							</div>
 							<label class="col-xs-2" for="department">Department</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="department" ng-disabled="!canEditPersonField('Department')" ng-show="canReturnPersonField('Department')" ng-model="profileData.Department" ng-options="o.Name as o.Name for o in command.Departments">
+								<select class="form-control" id="department" ng-disabled="!canEditPersonField('Department')" ng-show="canReturnPersonField('Department')" ng-model="profileData.Department" ng-options="o as o.Value for o in profileData.Command.Departments track by o.Id">
 								<option></option>
 								</select>
 							</div>
@@ -316,7 +316,7 @@
 							</div>
 							<label class="col-xs-2" for="uic">UIC</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="uic" ng-disabled="!canEditPersonField('UIC')" ng-show="canReturnPersonField('UIC')" ng-model="profileData.UIC" ng-options="o as o.Value for o in lists['UIC']">
+								<select class="form-control" id="uic" ng-disabled="!canEditPersonField('UIC')" ng-show="canReturnPersonField('UIC')" ng-model="profileData.UIC" ng-options="o as o.Value for o in lists['UIC'] track by o.Id">
 								<option></option>
 								</select>
 							</div>
@@ -356,9 +356,9 @@
 					</div>
 					<div class="col-xs-6">
 						<div class="form-group">
-							<label class="col-xs-4" for="permissionGroups">Permission Groups</label>
+							<label class="col-xs-4" for="permissionGroups">Permission Groups <a class="btn btn-primary btn-sm" ng-href="#/editpermissions/{{profileData.Id}}" ng-if="canEditPersonField('PermissionGroups')">Edit</a></label>
 							<div class="col-xs-8">
-								<select size="10" class="form-control" id="permissionGroups" ng-disabled="!canEditPersonField('PermissionGroups')" ng-show="canReturnPersonField('PermissionGroups')" ng-model="profileData.PermissionGroups" ng-options="o as o.Name for o in permissionGroups track by o.ID" multiple>
+								<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroups')" ng-model="profileData.PermissionGroups" ng-options="o as o.Name for o in permissionGroups track by o.Id" multiple>
 								</select>
 							</div>
 						</div>

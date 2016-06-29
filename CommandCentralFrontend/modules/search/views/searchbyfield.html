@@ -1,5 +1,5 @@
 <div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
-<div class="content_panel" id="news">
+<div class="content_panel">
     <div class="row text-center">
         <div class="col-xs-offset-3 col-xs-6">
             <div class="alert alert-info">Use Ctrl key to select multiple fields.</div>
@@ -50,9 +50,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="result in results | orderBy: orderKey" ng-click="goToProfile(result.ID)">
+                        <tr ng-repeat="result in results | orderBy: orderKey" ng-click="goToProfile(result.Id)">
                             <td ng-repeat="field in searchByFieldReturns">{{result[field]}}</td>
-                            <td><a href="#/profile/{{result.ID}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                            <td><a href="#/profile/{{result.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                         </tr>
                     </tbody>
                 </table>

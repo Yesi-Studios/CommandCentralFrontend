@@ -4,7 +4,7 @@
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals']);
 angular.module('Home', ['Authentication', 'pdf']);
 angular.module('Navigation', ['Authentication', 'Profiles']);
-angular.module('Profiles', ['Authentication', 'ui.bootstrap']);
+angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask']);
 angular.module('Authorization', ['Authentication']);
 angular.module('Search', ['Authentication', 'Authorization']);
 angular.module('Modals', ['angularModalService']);
@@ -21,6 +21,7 @@ angular.module('CommandCentral', [
     'ngRoute',
     'ngStorage',
 	'ui.bootstrap',
+    'ui.mask',
 	'pdf'
 ])
  
@@ -90,11 +91,17 @@ angular.module('CommandCentral', [
 			templateUrl: 'modules/authentication/views/forgotpassword.html',
 			hideMenus: true
 		})
-		
+
 		.when('/finishreset/:id', {
-			controller: 'FinishResetController',
-			templateUrl: 'modules/authentication/views/finishreset.html',
-			hideMenus: true
+		    controller: 'FinishResetController',
+		    templateUrl: 'modules/authentication/views/finishreset.html',
+		    hideMenus: true
+		})
+
+		.when('/editpermissions/:id', {
+		    controller: 'EditPermissionGroupsController',
+		    templateUrl: 'modules/authorization/views/permissions.html',
+		    hideMenus: true
 		})
  
         .otherwise({ redirectTo: '/' });
