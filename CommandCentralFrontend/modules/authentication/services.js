@@ -41,7 +41,7 @@ angular.module('Authentication')
 					success(returnContainer);
 				},
 				error: function (response, status, errortext) {
-				    if (response.readyState == 0) {
+				    if (response.readyState != 4) {
 				        error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
 				    } else {
 				        var returnContainer = JSON.parse(response.responseJSON);
