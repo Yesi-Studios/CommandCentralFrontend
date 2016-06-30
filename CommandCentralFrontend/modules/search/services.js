@@ -9,9 +9,9 @@ angular.module('Search')
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
 		
-        service.DoSimpleSearch = function (terms, callback) {
+        service.DoSimpleSearch = function (terms, success, error) {
 			var reqData = {'apikey' : apikey, 'authenticationtoken' : AuthenticationService.GetAuthToken(), 'searchterm':terms};
-			var serviceurl = baseurl + "/SimpleSearchPersons";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/SimpleSearchPersons";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -21,18 +21,19 @@ angular.module('Search')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 
         };
 		
-		service.DoAdvancedSearch = function (filters, returnFields, callback) {
+		service.DoAdvancedSearch = function (filters, returnFields, success, error) {
 			var reqData = {'apikey' : apikey, 'authenticationtoken' : AuthenticationService.GetAuthToken(), 'filters' : filters, 'returnfields' : returnFields};
-			var serviceurl = baseurl + "/AdvancedSearchPersons";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/AdvancedSearchPersons";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -42,10 +43,11 @@ angular.module('Search')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 

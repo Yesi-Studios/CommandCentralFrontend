@@ -6,44 +6,29 @@ angular.module('Authentication')
     ['Base64', '$http', '$localStorage', '$rootScope', '$timeout',
     function (Base64, $http, $localStorage, $rootScope, $timeout) {
         var service = {};
-        var apikey = "A114899B-DC0B-4A71-8BB8-9C65B5748B6C";
+        var apikey = "ddaf2d5f-3014-4a60-9513-2e0715df2c02";//"768482c5-e5fb-43f2-a7f7-10c2b961fad3";//"0ab78de1-b5b5-4a07-a272-219cbd103436"; //"f6ec2c55-7571-43bb-8a6e-f1eccc76244b"; //*/"33e0e8d0-0d1c-4880-9ba7-069eea5d1210"; //"C7C6A39A-C75F-433E-A808-E8A8922ED2FC" Slightly old API Key    // "A114899B-DC0B-4A71-8BB8-9C65B5748B6C" Old API Key
+        //var backendURL = "http://73.20.152.170";
         var backendURL = "http://147.51.62.19";
-        var backendPort = "1113";
+        var backendPort = $localStorage.backendPort;
         var baseurl = backendURL + ":" + backendPort;
 
         service.GetBackendURL = function () {
             return backendURL + ":" + backendPort;
         }
 
-        service.GetAPIKey = function () {
-            return apikey;
+        service.SetBackendPort = function (portnumber) {
+            backendPort = portnumber;
+            baseurl = backendURL + ":" + backendPort;
+            $localStorage.backendPort = portnumber;
         }
 
-		service.GetHomeNews = function (callback) {
-			var reqData = {'apikey' : apikey, 'authenticationtoken' : service.GetAuthToken()};
-			var serviceurl = baseurl + "/LoadNewsItems";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
-				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
-				}
-			});
-
-        };
+        service.GetAPIKey = function () {
+            return apikey;
+        }		
 		
-		
-        service.Login = function (username, password, callback) {
+        service.Login = function (username, password, success, error) {
 			var reqData = {'username' : username, 'password': password, 'apikey' : apikey};
-			var serviceurl = baseurl + "/Login";
+			var serviceurl =  service.GetBackendURL() + "/Login";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -53,10 +38,15 @@ angular.module('Authentication')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    if (response.readyState != 4) {
+				        error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
+				    } else {
+				        var returnContainer = JSON.parse(response.responseJSON);
+				        error(returnContainer);
+				    }
 				}
 			});
 		
@@ -70,14 +60,6 @@ angular.module('Authentication')
                 callback(response);
             }, 1000);*/
 
-
-            /* Use this for real authentication
-             ----------------------------------------------*/
-            //$http.post('/api/authenticate', { username: username, password: password })
-            //    .success(function (response) {
-            //        callback(response);
-            //    });
-
         };
 		
 		service.AddLoginMessage = function(loginMessage) {
@@ -88,7 +70,7 @@ angular.module('Authentication')
 			}
 		}
 		
-		service.ClearLoginMessage = function(){
+		service.ClearLoginMessages = function(){
 			$rootScope.globals.loginMessages = [];
 		}
 		
@@ -104,7 +86,7 @@ angular.module('Authentication')
 			}
 		}
 		
-		service.ClearLoginMessage = function(){
+		service.ClearLoginErrors = function(){
 			$rootScope.globals.loginErrors = [];
 		}
 		
@@ -113,9 +95,9 @@ angular.module('Authentication')
 		}
 		
 		
-		service.Logout = function (callback) {
+		service.Logout = function (success, error) {
 			var reqData = {'authenticationtoken': $localStorage.globals.currentUser.authtoken, 'apikey' : apikey};
-			var serviceurl = baseurl + "/Logout";
+			var serviceurl =  service.GetBackendURL() + "/Logout";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -125,37 +107,18 @@ angular.module('Authentication')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 		};
 		
-		service.BeginRegistration = function (ssn, callback) {
-			var reqData = {'ssn' : ssn, 'apikey' : apikey};
-			var serviceurl = baseurl + "/BeginRegistration";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
-				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
-				}
-			});
-		};
-		
-		service.FinishRegistration = function (username, password, id, callback) {
-			var reqData = {'username' : username, 'password' : password, 'AccountConfirmationID' : id, 'apikey' : apikey};
-			var serviceurl = baseurl + "/CompleteRegistration";
+		service.FinishRegistration = function (username, password, id, success, error) {
+			var reqData = {'username' : username, 'password' : password, 'accountconfirmationid' : id, 'apikey' : apikey};
+			var serviceurl =  service.GetBackendURL() + "/CompleteRegistration";
 			
 			$.ajax(
 			{
@@ -166,17 +129,18 @@ angular.module('Authentication')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 		};
 		
-		service.BeginRegistration = function (ssn, callback) {
+		service.BeginRegistration = function (ssn, success, error) {
 			var reqData = {'ssn' : ssn, 'apikey' : apikey};
-			var serviceurl = baseurl + "/BeginRegistration";
+			var serviceurl =  service.GetBackendURL() + "/BeginRegistration";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -186,17 +150,18 @@ angular.module('Authentication')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 		};
 		
-		service.ForgotPassword = function (email, ssn, callback) {
+		service.ForgotPassword = function (email, ssn, success, error) {
 			var reqData = {'email' : email, 'ssn' : ssn, 'apikey' : apikey};
-			var serviceurl = baseurl + "/InitiatePasswordReset";
+			var serviceurl =  service.GetBackendURL() + "/BeginPasswordReset";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -206,17 +171,18 @@ angular.module('Authentication')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 		};
 		
-		service.FinishReset = function (password, id, callback) {
+		service.FinishReset = function (password, id, success, error) {
 			var reqData = {'Password' : password, 'PasswordResetid' : id, 'apikey' : apikey};
-			var serviceurl = baseurl + "/FinishPasswordReset";
+			var serviceurl =  service.GetBackendURL() + "/CompletePasswordReset";
 			
 			$.ajax(
 			{
@@ -227,10 +193,11 @@ angular.module('Authentication')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 		};
@@ -249,7 +216,7 @@ angular.module('Authentication')
         };
  
         service.ClearCredentials = function () {
-            $rootScope.globals.currentUser = {};
+            delete $rootScope.globals.currentUser;
             delete $localStorage.globals
             //$http.defaults.headers.common.Authorization = 'Basic ';
         };

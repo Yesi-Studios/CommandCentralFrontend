@@ -9,10 +9,53 @@ angular.module('Authorization')
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
 
-		
-        service.GetPersonsPermissions = function (callback) {
-			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'model': 'person', 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadModelPermissions";
+        service.GetUserPermissionGroups = function (personid, success, error) {
+            var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
+            var serviceurl = AuthenticationService.GetBackendURL() + "/LoadPermissionGroupsByPerson";
+            return $.ajax(
+			{
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        success(returnContainer);
+			    },
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
+			    }
+			});
+
+        };
+
+        service.UpdateUserPermissionGroups = function (personid, groupids, success, error) {
+            var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid, 'permissionslist' : groupids };
+            var serviceurl = AuthenticationService.GetBackendURL() + "/UpdatePermissionGroupsByPerson";
+            return $.ajax(
+			{
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        success(returnContainer);
+			    },
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
+			    }
+			});
+
+        };
+
+        service.GetModelPermissions = function (success, error) {
+			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/GetModelPermissions";
 			return $.ajax(
 			{
 				url: serviceurl,
@@ -22,18 +65,19 @@ angular.module('Authorization')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 
         };
 		
-		service.GetPermissionGroups = function (callback) {
+		service.GetPermissionGroups = function (success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadPermissionGroups";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPermissionGroups";
 			return $.ajax(
 			{
 				url: serviceurl,
@@ -43,10 +87,11 @@ angular.module('Authorization')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 

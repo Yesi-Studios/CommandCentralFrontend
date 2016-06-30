@@ -9,9 +9,9 @@ angular.module('Home')
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
 		
-		service.GetHomeNews = function (callback) {
+		service.GetHomeNews = function (success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken() };
-		    var serviceurl = baseurl + "/LoadNewsItems";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadNewsItems";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -21,18 +21,19 @@ angular.module('Home')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
 			    }
 			});
 
 		};
 
-		service.LoadNewsItem = function (itemID, callback) {
+		service.LoadNewsItem = function (itemID, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), 'newsitemid' : itemID};
-		    var serviceurl = baseurl + "/LoadNewsItem";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadNewsItem";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -42,18 +43,41 @@ angular.module('Home')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
 			    }
 			});
 
 		};
 
-		service.CreateNewsItem = function (newsItem, callback) {
+		service.CreateNewsItem = function (title, paragraphs, success, error) {
+		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "Title": title, "Paragraphs" : paragraphs };
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/CreateNewsItem";
+		    $.ajax(
+			{
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        success(returnContainer);
+			    },
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
+			    }
+			});
+
+		};
+
+		service.UpdateNewsItem = function (newsItem, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitem": newsItem };
-		    var serviceurl = baseurl + "/CreateNewsItem";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/UpdateNewsItem";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -63,39 +87,19 @@ angular.module('Home')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
 			    }
 			});
 
 		};
 
-		service.UpdateNewsItem = function (newsItem, callback) {
-		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitem": newsItem };
-		    var serviceurl = baseurl + "/UpdateNewsItem";
-		    $.ajax(
-			{
-			    url: serviceurl,
-			    type: "POST",
-			    crossDomain: true,
-			    data: JSON.stringify(reqData),
-			    dataType: "json",
-			    success: function (response) {
-			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
-			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
-			    }
-			});
-
-		};
-
-		service.DeleteNewsItem = function (itemID, callback) {
+		service.DeleteNewsItem = function (itemID, success, error) {
 		    var reqData = { 'apikey': apikey, 'authenticationtoken': AuthenticationService.GetAuthToken(), "newsitemid": itemID };
-		    var serviceurl = baseurl + "/DeleteNewsItem";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/DeleteNewsItem";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -105,10 +109,11 @@ angular.module('Home')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
 			    }
 			});
 

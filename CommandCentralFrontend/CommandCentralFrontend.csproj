@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +63,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="img\pow.pdf" />
+    <Content Include="libs\mask.min.js" />
     <Content Include="LICENSE" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -91,8 +93,6 @@
     <Content Include="libs\jquery-2.2.1.min.js" />
     <Content Include="libs\ngStorage.min.js" />
     <Content Include="libs\ui-bootstrap-tpls-1.2.4.min.js" />
-    <Content Include="modules\appstatus\controllers.js" />
-    <Content Include="modules\appstatus\services.js" />
     <Content Include="modules\authentication\controllers.js" />
     <Content Include="modules\authentication\services.js" />
     <Content Include="modules\authentication\views\finishregister.html" />
@@ -103,6 +103,7 @@
     <Content Include="modules\authentication\views\resetlogin.html" />
     <Content Include="modules\authorization\controllers.js" />
     <Content Include="modules\authorization\services.js" />
+    <Content Include="modules\authorization\views\permissions.html" />
     <Content Include="modules\home\controllers.js" />
     <Content Include="modules\home\services.js" />
     <Content Include="modules\home\views\home.html" />

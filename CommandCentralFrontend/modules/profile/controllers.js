@@ -8,164 +8,241 @@ angular.module('Profiles')
 		
 		$scope.loadProfile = function(){
 			$scope.dataLoading = true;
-			$scope.error = "";
+			$scope.errors = null;
 			
-			ProfileService.LoadProfile($routeParams.id, function(response) {
-				console.log(JSON.stringify(response));
-				if(!response.HasError) {
-				    $scope.$apply(function () {
-				        $rootScope.containsPII = true;
-						$scope.dataLoading = false;
-						$scope.profileData = response.ReturnValue.Person;
-						$scope.isMyProfile = response.ReturnValue.IsMyProfile;
-						$scope.returnableFields = response.ReturnValue.ReturnableFields;
-						$scope.editableFields = response.ReturnValue.EditableFields;
+			ProfileService.LoadProfile($routeParams.id,
+                function (response) {
+				        $scope.$apply(function () {
+
+                            // Set all the scope variables that matter the most.
+				            $rootScope.containsPII = true;
+						    $scope.dataLoading = false;
+						    $scope.profileData = response.ReturnValue.Person;
+						    $scope.isMyProfile = response.ReturnValue.IsMyProfile;
+						    $scope.returnableFields = response.ReturnValue.ReturnableFields;
+						    $scope.editableFields = response.ReturnValue.EditableFields;
 						
-						$scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
-						$scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
-						$scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
-						$scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
-						$scope.profileData.ClaimTime = new Date(response.ReturnValue.Person.ClaimTime);
+                            // Set up all the dates to be actual Dates
+						    $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
+						    $scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
+						    $scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
+						    $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
+						    $scope.profileData.ClaimTime = new Date(response.ReturnValue.Person.ClaimTime);
 						
-						/*var adjustedDate = new Date(response.ReturnValue.DateOfBirth);
-						adjustedDate.setHours(adjustedDate.getHours() + adjustedDate.getTimezoneOffset()/60)
-						$scope.profileData.DateOfBirth = adjustedDate;
-						
-						adjustedDate = new Date(response.ReturnValue.DateOfArrival);
-						adjustedDate.setHours(adjustedDate.getHours() + adjustedDate.getTimezoneOffset()/60)
-						$scope.profileData.DateOfArrival = adjustedDate;
-						
-						adjustedDate = new Date(response.ReturnValue.DateOfDeparture);
-						adjustedDate.setHours(adjustedDate.getHours() + adjustedDate.getTimezoneOffset()/60)
-						$scope.profileData.DateOfDeparture = adjustedDate;
-						
-						adjustedDate = new Date(response.ReturnValue.EOAS);
-						adjustedDate.setHours(adjustedDate.getHours() + adjustedDate.getTimezoneOffset()/60)
-						$scope.profileData.EOAS = adjustedDate;
-						
-						adjustedDate = new Date(response.ReturnValue.ClaimTime);
-						adjustedDate.setHours(adjustedDate.getHours() + adjustedDate.getTimezoneOffset()/60)
-						$scope.profileData.ClaimTime = adjustedDate;*/
-						
-						$scope.canSearchPersonField = function(field){
-							return ('currentUser' in $scope.globals) && ($scope.globals.currentUser.permissions.searchable.indexOf(field) > -1);
-						}
-						$scope.canReturnPersonField = function(field){
-							return $scope.returnableFields.indexOf(field) > -1;
-							// OLD FUNCTIONALITY:
-							//return ('currentUser' in $scope.globals) && ($scope.globals.currentUser.permissions.returnable.indexOf(field) > -1);
-						}
-						$scope.canEditPersonField = function(field){
-							return $scope.editableFields.indexOf(field) > -1;
-							// OLD FUNCTIONALITY:
-							//return ('currentUser' in $scope.globals) && ($scope.globals.currentUser.permissions.editable.indexOf(field) > -1);
-						}
+						    $scope.canSearchPersonField = function(field){
+							    return ('currentUser' in $scope.globals) && ($scope.globals.currentUser.permissions.searchable.indexOf(field) > -1);
+						    }
+						    $scope.canReturnPersonField = function(field){
+							    return $scope.returnableFields.indexOf(field) > -1;
+						    }
+						    $scope.canEditPersonField = function(field){
+							    return $scope.editableFields.indexOf(field) > -1;
+						    }
 						
 						
-					});
+					    });
 					
-					ProfileService.TakeLock($scope.profileData.ID, function (response) {
-						if(!response.HasError) {
-							$scope.$apply(function() {
-								$scope.haveLock = true;
-							});
-						} else {
-							$scope.$apply(function() {
-								$scope.haveLock = false;
-								$scope.lockMessage = response.ErrorMessage;
-							});
-						}
+				        ProfileService.TakeLock($scope.profileData.Id,
+                            // If we succeed, this is our callback.
+                            function (response) {
+                                $scope.$apply(function () {
+                                    // Hey, we have a lock. Sweet.
+								    $scope.haveLock = true;
+							    });
+                            },
+                            // If we fail, this is our call back (nearly the same for all backend calls)
+                            function (response) {
+                                $scope.$apply(function () {
+                                    // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                                    // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                                    if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                                        for (var i = 0; i < response.ErrorMessages.length; i++) {
+                                            AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                                        }
+                                        AuthenticationService.ClearCredentials();
+                                        $location.path('/login');
+                                    } else {
+                                        // If it's any other type of error, we can just show it to them on this page.
+                                        $scope.errors = response.ErrorMessages;
+                                    }
+                                    $scope.dataLoading = false;
+                                });
+                            }
+					    );
 					
-					});
-					
-					ProfileService.GetCommands(function(response) {
-						if(!response.HasError) {
-							$scope.$apply(function() {
-								$scope.commandList = response.ReturnValue;
-								$scope.getByName = function(theThings, thingName) {
-									if(theThings){
-										for (var i = 0, len = theThings.length; i < len; i++) {
-											if (theThings[i].Name === thingName)
-												return theThings[i] // Return as soon as the object is found
-											}
-									}
-									return null; // The object was not found
-								};
-								$scope.command = $scope.getByName(response.ReturnValue, $scope.profileData.Command);
-							});
-						} else {
-							$scope.$apply(function() {
-								$scope.error = response.ErrorMessage;
-								$scope.dataLoading = false;
-								AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessage);
-								$location.path('/login');
-							});
-						}
-					});
-                } else {
-					AuthenticationService.ClearCredentials();
-                    $scope.$apply(function() {
-						$scope.error = response.ErrorMessage;
-						$scope.dataLoading = false;
-						AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessage);
-						$location.path('/login');
-					});
-				}
-			});
+					    ProfileService.GetCommands(
+                            // If we succeed, this is our callback
+                            function (response) {
+                                $scope.$apply(function () {
+                                    // Give our scope the commands and a function we can use to search inside them
+								    $scope.commandList = response.ReturnValue;
+								    $scope.getByName = function(theThings, thingName) {
+									    if(theThings){
+										    for (var i = 0, len = theThings.length; i < len; i++) {
+											    if (theThings[i].Name === thingName)
+												    return theThings[i] // Return as soon as the object is found
+											    }
+									    }
+									    return null; // The object was not found
+								    };
+								    $scope.command = $scope.getByName(response.ReturnValue, $scope.profileData.Command);
+							    });
+					        },
+                            // If we fail, this is our call back (nearly the same for all backend calls)
+                            function (response) {
+                                $scope.$apply(function () {
+                                    // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                                    // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                                    if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                                        for (var i = 0; i < response.ErrorMessages.length; i++) {
+                                            AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                                        }
+                                        AuthenticationService.ClearCredentials();
+                                        $location.path('/login');
+                                    } else {
+                                        // If it's any other type of error, we can just show it to them on this page.
+                                        $scope.errors = response.ErrorMessages;
+                                    }
+                                    $scope.dataLoading = false;
+                                });
+                            }
+                        );
+				    },
+                    // If we fail, this is our call back (nearly the same for all backend calls)
+                function (response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (var i = 0; i < response.ErrorMessages.length; i++) {
+                                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            AuthenticationService.ClearCredentials();
+                            $location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            $scope.errors = response.ErrorMessages;
+                        }
+                        $scope.dataLoading = false;
+                    });
+                }
+            );
 		};
 		
-		ProfileService.GetAllLists(function(response) {
-			$scope.$apply(function() {
-				$scope.lists = response.ReturnValue;
-				$scope.getListOptions = function(listName) {
-					for (var i = 0, len = $scope.lists.length; i < len; i++) {
-						if ($scope.lists[i].Name === listName)
-							return $scope.lists[i].Values; // Return as soon as the object is found
-						}
-					return null; // The object was not found
-				};
-			});
-		 });
+		ProfileService.GetAllLists(
+            // If we succeed, this is our call back
+            function (response) {
+			    $scope.$apply(function() {
+				    $scope.lists = response.ReturnValue;
+			    });
+		    },
+            // If we fail, this is our call back (nearly the same for all backend calls)
+            function (response) {
+                $scope.$apply(function () {
+                    // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                    // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                    if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                        for (var i = 0; i < response.ErrorMessages.length; i++) {
+                            AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                        }
+                        AuthenticationService.ClearCredentials();
+                        $location.path('/login');
+                    } else {
+                        // If it's any other type of error, we can just show it to them on this page.
+                        $scope.errors = response.ErrorMessages;
+                    }
+                    $scope.dataLoading = false;
+                });
+            }
+        );
 		
-		ProfileService.GetPermissionGroups(function(response) {
-			$scope.$apply(function() {
-				$scope.permissionGroups = response.ReturnValue;
-				
-			});
-		 });
+		ProfileService.GetPermissionGroups(
+            // If we succeed, this is our callback.
+            function(response) {		    
+                $scope.$apply(function() {		        
+                    $scope.permissionGroups = response.ReturnValue;				
+		        });
+		    },
+            // If we fail, this is our call back (nearly the same for all backend calls)
+            function(response) {
+                $scope.$apply(function () {
+                    // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                    // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                    if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                        for (var i = 0; i < response.ErrorMessages.length; i++) {
+                            AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                        }
+                        AuthenticationService.ClearCredentials();
+                        $location.path('/login');
+                    } else {
+                        // If it's any other type of error, we can just show it to them on this page.
+                        $scope.errors = response.ErrorMessages;
+                    }
+                    $scope.dataLoading = false;
+                });
+            }
+	    );
 		$scope.loadProfile();
 
 		$scope.loadFullAccountHistory = function () {
-		    ProfileService.LoadAccountHistory($scope.profileData.ID, function (response) {
-		        if (!response.HasError) {
+		    ProfileService.LoadAccountHistory($scope.profileData.Id,
+                // If we succeed, this is our call back
+                function (response) {
 		            $scope.$apply(function () {
 		                $scope.profileData.AccountHistory = response.ReturnValue;
 		            });
-		        } else {
-		            $scope.$apply(function () {
-		                $scope.error = response.ErrorMessage;
-		            });
-		        }
-		    });
+		        },
+                // If we fail, this is our call back (nearly the same for all backend calls)
+                function (response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (var i = 0; i < response.ErrorMessages.length; i++) {
+                                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            AuthenticationService.ClearCredentials();
+                            $location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            $scope.errors = response.ErrorMessages;
+                        }
+                        $scope.dataLoading = false;
+                    });
+                }
+		    );
 
 		};
 		
 		$scope.updateProfile = function() {
-			$scope.dataLoading = true;
-			ProfileService.UpdateMyProfile($scope.profileData, function(response) {
-				if(!response.HasError) {
-					$scope.$apply(function() {
-							$scope.loadProfile();
-					});
-				} else {
-					$scope.$apply(function() {
-						$scope.error = response.ErrorMessage;
-						$scope.dataLoading = false;
-						AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessage);
-						$location.path('/login');
-					});
-				}
-			});
+		    $scope.dataLoading = true;
+            // Update the profile with the data currently on this page (used when "Save Profile" button is clicked)
+			ProfileService.UpdateMyProfile($scope.profileData,
+                // If we succeed, this is our callback
+                function (response) {
+			        $scope.$apply(function () {
+			            $scope.loadProfile();
+			        })
+                },
+                // If we fail, this is our call back (nearly the same for all backend calls)
+                function(response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+				        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+				            for (var i = 0; i < response.ErrorMessages.length; i++) {
+				                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+				            }
+				            AuthenticationService.ClearCredentials();
+				            $location.path('/login');
+				        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+				            $scope.errors = response.ErrorMessages;
+				        }
+					    $scope.dataLoading = false;
+				    });
+			    }
+			);
 		};
 		
 		$scope.makePreferred = function(listOfItems, preferredOne) {
@@ -184,16 +261,16 @@ angular.module('Profiles')
 			return listOfItems;
 		};
 		
-		$scope.addNewNumber = function(number, contactable, preferred) {
+		$scope.addNewNumber = function(number, phoneType, contactable, preferred) {
 			if(preferred) {
 				for (var i = 0; i < $scope.profileData.PhoneNumbers.length; ++i) {
 					$scope.profileData.PhoneNumbers[i].IsPreferred = false;
 				}
 			}
 			$scope.profileData.PhoneNumbers.push({ "Number": number, "PhoneType" : phoneType, "IsContactable": contactable, "IsPreferred": preferred });
-			
+
 		};
-		
+
 		$scope.addNewEmail = function(email, contactable, preferred) {
 			if(preferred) {
 				for (var i = 0; i < $scope.profileData.EmailAddresses.length; ++i) {

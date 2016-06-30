@@ -1,29 +1,23 @@
 # Command Central Frontend #
 
-This README is under construction.
+This is the official front end for NIOC GA's Command Central. It is designed
+to interface with the back end of the same name to alleviate some of the administrative
+burdens on the command, allowing our sailors to get back to their jobs!
 
-### What is this repository for? ###
+### How do I help? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+This repository is maintained by CTI2(IDW) Angus McLean. The back end is maintained
+by CTI2(IDW) Daniel Atwood. Contact either of us to help with either part of the project.
+We're looking for people with any experience in C#, AngularJS, Bootstrap, or similar languages,
+and a willingness to learn. See contact info below.
 
-### How do I get set up? ###
+### What is this repository made of? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
+* AngularJS
+* Bootstrap 3
+* Various (open source, MIT License) AngularJS add ons to get various desired functionality
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* CTI2(IDW) Angus McLean - anguslmm@gmail.com
+* CTI2(IDW) Daniel Atwood - sundevilgoalie13@gmail.com

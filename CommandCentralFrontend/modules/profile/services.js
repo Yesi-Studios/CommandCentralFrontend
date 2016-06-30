@@ -9,9 +9,9 @@ angular.module('Profiles')
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
 		
-        service.GetList = function (name, callback) {
-			var reqData = {'name' : name, 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadLists";
+		service.GetAllLists = function (success, error) {
+			var reqData = {'apikey' : apikey};
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadLists";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -21,59 +21,40 @@ angular.module('Profiles')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
+				}
+			});
+
+        };
+		service.GetPermissionGroups = function (success, error) {
+			var reqData = {'apikey' : apikey};
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPermissionGroups";
+			$.ajax(
+			{
+				url: serviceurl,
+				type: "POST",
+				crossDomain: true,
+				data: JSON.stringify(reqData),
+				dataType: "json",
+				success: function (response) {
+					var returnContainer = JSON.parse(response);
+					success(returnContainer);
+				},
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 
         };
 		
-		service.GetAllLists = function (callback) {
-			var reqData = {'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadLists";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
-				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
-				}
-			});
-
-        };
-		service.GetPermissionGroups = function (callback) {
-			var reqData = {'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadAllPermissionGroups";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
-				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
-				}
-			});
-
-        };
-		
-		service.GetCommands = function (callback) {
+		service.GetCommands = function (success, error) {
 			var reqData = {'Name' : name, 'apikey' : apikey, 'acceptcachedresults' : true};
-			var serviceurl = baseurl + "/LoadCommands";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadCommands";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -83,38 +64,19 @@ angular.module('Profiles')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 
         };
-		
-		service.LoadMyProfile = function(callback) {
-			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl = baseurl + "/LoadSessionUsersFullProfile";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
-				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
-				}
-			});
-		};
 
-		service.UpdateMyProfile = function (person, callback) {
+		service.UpdateMyProfile = function (person, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'person': person };
-		    var serviceurl = baseurl + "/UpdatePerson";
+		    var serviceurl = AuthenticationService.GetBackendURL() + "/UpdatePerson";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -124,17 +86,18 @@ angular.module('Profiles')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
 			    }
 			});
 		};
 
-		service.CreatePerson = function (callback) {
+		service.CreatePerson = function (success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey };
-		    var serviceurl = baseurl + "/CreatePerson";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/CreatePerson";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -144,17 +107,18 @@ angular.module('Profiles')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
 			    }
 			});
 		};
 		
-		service.TakeLock = function(personid, callback) {
+		service.TakeLock = function(personid, success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey, 'personid' : personid};
-			var serviceurl = baseurl + "/TakeProfileLock";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/TakeProfileLock";
 			$.ajax(
 			{
 				url: serviceurl,
@@ -164,17 +128,18 @@ angular.module('Profiles')
 				dataType: "json",
 				success: function (response) {
 					var returnContainer = JSON.parse(response);
-					callback(returnContainer);
+					success(returnContainer);
 				},
-				error: function (xhr, status, errortext) {
-					callback({'HasError': true, 'ErrorMessage' : "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers."});
+				error: function (response, status, errortext) {
+				    var returnContainer = JSON.parse(response.responseJSON);
+				    error(returnContainer);
 				}
 			});
 		};
 
-		service.LoadProfile = function (personid, callback) {
+		service.LoadProfile = function (personid, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
-		    var serviceurl = baseurl + "/LoadFullProfile";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPerson";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -184,17 +149,18 @@ angular.module('Profiles')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
 			    }
 			});
 		};
 
-		service.LoadAccountHistory = function (personid, callback) {
+		service.LoadAccountHistory = function (personid, success, error) {
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
-		    var serviceurl = baseurl + "/LoadAccountHistoryByPerson";
+		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadAccountHistoryByPerson";
 		    $.ajax(
 			{
 			    url: serviceurl,
@@ -204,10 +170,11 @@ angular.module('Profiles')
 			    dataType: "json",
 			    success: function (response) {
 			        var returnContainer = JSON.parse(response);
-			        callback(returnContainer);
+			        success(returnContainer);
 			    },
-			    error: function (xhr, status, errortext) {
-			        callback({ 'HasError': true, 'ErrorMessage': "Unable to communicate with server. Please try again shortly. If this problem persists, please contact the developers." });
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
 			    }
 			});
 		};
