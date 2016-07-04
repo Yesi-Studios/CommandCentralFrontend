@@ -1,7 +1,7 @@
 'use strict';
 
 // declare modules
-angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals']);
+angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles']);
 angular.module('Home', ['Authentication', 'pdf']);
 angular.module('Navigation', ['Authentication', 'Profiles']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask']);
@@ -95,6 +95,12 @@ angular.module('CommandCentral', [
 		.when('/finishreset/:id', {
 		    controller: 'FinishResetController',
 		    templateUrl: 'modules/authentication/views/finishreset.html',
+		    hideMenus: true
+		})
+
+		.when('/createuser', {
+		    controller: 'CreateUserController',
+		    templateUrl: 'modules/authentication/views/createuser.html',
 		    hideMenus: true
 		})
 

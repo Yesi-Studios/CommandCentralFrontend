@@ -262,6 +262,84 @@ angular.module('Authentication')
             );
         };
     }])
+	.controller('CreateUserController',
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService) {
+
+        $scope.errors = [];
+        $scope.messages = [];
+        ProfileService.GetAllLists(
+            // If we succeed, this is our call back
+            function (response) {
+                $scope.$apply(function () {
+                    $scope.lists = response.ReturnValue;
+                });
+            },
+            // If we fail, this is our call back (nearly the same for all backend calls)
+            function (response) {
+                $scope.$apply(function () {
+                    // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                    // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                    if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                        for (var i = 0; i < response.ErrorMessages.length; i++) {
+                            AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                        }
+                        AuthenticationService.ClearCredentials();
+                        $location.path('/login');
+                    } else {
+                        // If it's any other type of error, we can just show it to them on this page.
+                        $scope.errors = response.ErrorMessages;
+                    }
+                    $scope.dataLoading = false;
+                });
+            }
+        );
+
+        $scope.trimString = function (str) {
+            if (str) {
+                return str.replace(/^\s+|\s+$/g, '');
+            }
+            return '';
+        };
+
+        $scope.isValidSSN = function (number) {
+            var re = /^\d{3}-?\d{2}-?\d{4}$/
+            return re.test(number);
+        };
+
+        $scope.createUser = function () {
+            $scope.errors = [];
+            $scope.messages = [];
+            $scope.dataLoading = true;
+            AuthenticationService.CreateUser($scope.newUser,
+                function (response) {
+                    $scope.$apply(function () {
+                        $scope.messages.push("User created. Please instruct them to register their account.");
+                        $scope.dataLoading = false;
+                        $location.path('/profile/' + response.ReturnValue);
+                    });
+                },
+                // If we fail, this is our call back (nearly the same for all backend calls)
+                function (response) {
+                    $scope.$apply(function () {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (var i = 0; i < response.ErrorMessages.length; i++) {
+                                AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            AuthenticationService.ClearCredentials();
+                            $location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            $scope.errors = response.ErrorMessages;
+                        }
+                        $scope.dataLoading = false;
+                    });
+                }
+            );
+        };
+    }])
     .controller('SetPortController',
     ['$scope', '$rootScope', 'AuthenticationService',
         function ($scope, $rootScope, AuthenticationService) {

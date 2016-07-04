@@ -1,0 +1,102 @@
+﻿<div ng-show="errors" ng-repeat="error in errors" class="alert alert-danger status_message">{{error}}</div>
+<div ng-show="messages" ng-repeat="message in messages" class="alert alert-success status_message">{{message}}</div>
+<div class="content_panel">
+    <h3>All fields are required.</h3>
+    <form name="form" ng-submit="createUser()" role="form">
+        <div class="row">
+            <div class="form-group" ng-class="{'has-error': trimString(newUser.FirstName)==''}">
+                <label class="col-xs-4" for="firstName">First Name</label>
+                <div class="col-xs-8">
+                    <input type="text" class="form-control" name="firstName" id="firstName" ng-model="newUser.FirstName" required />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group" ng-class="{'has-error': trimString(newUser.LastName)==''}">
+                <label class="col-xs-4" for="lastName">Last Name</label>
+                <div class="col-xs-8">
+                    <input type="text" class="form-control" name="lastName" id="lastName" ng-model="newUser.LastName" required />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-4" for="sex">Sex</label>
+                <div class="col-xs-8">
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" id="male" value="Male" ng-model="newUser.Sex" required> Male
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" id="female" value="Female" ng-model="newUser.Sex" required> Female
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-4" for="dutyStatus">Duty Status</label>
+                <div class="col-xs-4">
+                    <select class="form-control" id="dutyStatus" ng-model="newUser.DutyStatus" ng-options="o as o for o in lists['DutyStatuses']" required>
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-4" for="paygrade">Paygrade</label>
+                <div class="col-xs-4">
+                    <select class="form-control" id="paygrade" ng-model="newUser.Paygrade" ng-options="o as o for o in lists['Paygrades']" required>
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group" ng-class="{'has-error': !isValidSSN(newUser.SSN)}">
+                <label class="col-xs-4" for="ssn">SSN</label>
+                <div class="col-xs-4">
+                    <input type="text" class="form-control" id="ssn" ng-model="newUser.SSN" ui-mask="999-99-9999" ui-mask-placeholder ui-mask-placeholder-char="_" required />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-4" for="dateOfArrival">Date of Arrival</label>
+                <div class="col-xs-4">
+                    <input type="date" class="form-control" id="dateOfArrival" ng-model="newUser.DateOfArrival" required />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-4" for="eaos">EAOS</label>
+                <div class="col-xs-4">
+                    <input type="date" class="form-control" id="eaos" ng-model="newUser.EAOS" required />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-4" for="dateOfBirth">Date Of Birth</label>
+                <div class="col-xs-4">
+                    <input type="date" class="form-control" id="dateOfBirth" ng-model="newUser.DateOfBirth" required />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Create User</button>
+            <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+    </form>
+</div>

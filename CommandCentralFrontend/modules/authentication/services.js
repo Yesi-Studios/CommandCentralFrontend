@@ -137,25 +137,46 @@ angular.module('Authentication')
 				}
 			});
 		};
-		
+
 		service.BeginRegistration = function (ssn, success, error) {
-			var reqData = {'ssn' : ssn, 'apikey' : apikey};
-			var serviceurl =  service.GetBackendURL() + "/BeginRegistration";
-			$.ajax(
+		    var reqData = { 'ssn': ssn, 'apikey': apikey };
+		    var serviceurl = service.GetBackendURL() + "/BeginRegistration";
+		    $.ajax(
 			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					success(returnContainer);
-				},
-				error: function (response, status, errortext) {
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    error(returnContainer);
-				}
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        success(returnContainer);
+			    },
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
+			    }
+			});
+		};
+
+		service.CreateUser = function (person, success, error) {
+		    var reqData = { 'person': person, 'apikey': apikey, 'authenticationtoken': service.GetAuthToken()};
+		    var serviceurl = service.GetBackendURL() + "/CreatePerson";
+		    $.ajax(
+			{
+			    url: serviceurl,
+			    type: "POST",
+			    crossDomain: true,
+			    data: JSON.stringify(reqData),
+			    dataType: "json",
+			    success: function (response) {
+			        var returnContainer = JSON.parse(response);
+			        success(returnContainer);
+			    },
+			    error: function (response, status, errortext) {
+			        var returnContainer = JSON.parse(response.responseJSON);
+			        error(returnContainer);
+			    }
 			});
 		};
 		
