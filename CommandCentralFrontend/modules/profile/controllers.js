@@ -42,7 +42,7 @@ angular.module('Profiles')
 						
 					    });
 					
-				        ProfileService.TakeLock($scope.profileData.Id,
+				        ProfileService.TakeLock($routeParams.id,
                             // If we succeed, this is our callback.
                             function (response) {
                                 $scope.$apply(function () {
