@@ -24,8 +24,12 @@ angular.module('Home')
 			        success(returnContainer);
 			    },
 			    error: function (response, status, errortext) {
-			        var returnContainer = JSON.parse(response.responseJSON);
-			        error(returnContainer);
+			        if (response.readyState != 4) {
+			            error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
+			        } else {
+			            var returnContainer = JSON.parse(response.responseJSON);
+			            error(returnContainer);
+			        }
 			    }
 			});
 
