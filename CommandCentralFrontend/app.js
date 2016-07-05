@@ -7,6 +7,7 @@ angular.module('Navigation', ['Authentication', 'Profiles']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask']);
 angular.module('Authorization', ['Authentication']);
 angular.module('Search', ['Authentication', 'Authorization']);
+angular.module('Muster', ['Authentication', 'Authorization']);
 angular.module('Modals', ['angularModalService']);
 
 angular.module('CommandCentral', [
@@ -17,6 +18,7 @@ angular.module('CommandCentral', [
 	'Profiles',
 	'Search',
     'Modals',
+    'Muster',
     'angularModalService',
     'ngRoute',
     'ngStorage',
@@ -42,6 +44,11 @@ angular.module('CommandCentral', [
         .when('/createnews', {
             controller: 'CreateNewsController',
             templateUrl: 'modules/home/views/createnews.html'
+        })
+
+        .when('/muster', {
+            controller: 'MusterController',
+            templateUrl: 'modules/muster/views/muster.html'
         })
 
         .when('/updatenews/:id', {

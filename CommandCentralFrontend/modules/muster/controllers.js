@@ -8,9 +8,63 @@ angular.module('Muster')
 		
         // This scope will just about always contain PII
         $rootScope.containsPII = true;
-        
+        $scope.divisions = [];
+        $scope.fields = ['FriendlyName', 'Paygrade', 'Division', 'HasBeenMustered']
         // The default sorting key
-        $scope.orderKey = "LastName";
+        $scope.orderKey = "Division";
+        $scope.selectedDivision = "All";
+
+        $scope.setDivision = function (selectedDivision) {
+            $scope.displaySailorsList = []
+            alert(selectedDivision);
+            if (selectedDivision == "All") {
+                $scope.displaySailorsList = $scope.allSailorsList;
+                return;
+            } else {
+                for (var i = 0; i < $scope.allSailorsList.length; i++) {
+                    if ($scope.allSailorsList[i].Division == selectedDivision) {
+                        $scope.displaySailorsList.push($scope.allSailorsList[i]);
+                    }
+                }
+            }
+        };
+
+        MusterService.LoadTodaysMuster(
+            function (response) {
+                console.log(response);
+                $scope.$apply(function() {
+                    // Create the divisions array
+                    for (var i = 0; i < response.ReturnValue.Musters.length; i++) {
+                        if ($scope.divisions.indexOf(response.ReturnValue.Musters[i].Division) == -1){
+                            $scope.divisions.push(response.ReturnValue.Musters[i].Division);
+                        }
+                    }
+
+                    $scope.displaySailorsList = response.ReturnValue.Musters;
+                    $scope.allSailorsList = response.ReturnValue.Musters;
+                })
+
+            },
+            // If we fail, this is our call back (nearly the same for all backend calls)
+            function (response) {
+                $scope.$apply(function () {
+                    // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                    // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                    if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                        for (var i = 0; i < response.ErrorMessages.length; i++) {
+                            AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                        }
+                        AuthenticationService.ClearCredentials();
+                        $location.path('/login');
+                    } else {
+                        // If it's any other type of error, we can just show it to them on this page.
+                        $scope.errors = response.ErrorMessages;
+                    }
+                    $scope.dataLoading = false;
+                });
+            }
+
+            );
 
         // Give our scope a way to sort
         $scope.setOrder = function (theKey) {

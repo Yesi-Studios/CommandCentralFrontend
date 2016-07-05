@@ -9,9 +9,9 @@ angular.module('Muster')
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
 		
-        service.DoSimpleSearch = function (terms, success, error) {
-			var reqData = {'apikey' : apikey, 'authenticationtoken' : AuthenticationService.GetAuthToken(), 'searchterm':terms};
-			var serviceurl =  AuthenticationService.GetBackendURL() + "/SimpleSearchPersons";
+        service.LoadTodaysMuster = function (success, error) {
+			var reqData = {'apikey' : apikey, 'authenticationtoken' : AuthenticationService.GetAuthToken()};
+			var serviceurl = AuthenticationService.GetBackendURL() + "/LoadTodaysMuster ";
 			$.ajax(
 			{
 				url: serviceurl,
