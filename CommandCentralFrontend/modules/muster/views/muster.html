@@ -19,16 +19,27 @@
 				<thead>
 					<tr>
 						<th ng-repeat="field in fields track by $index" ng-click="setOrder(field)"><button ng-class="{'btn-primary': orderKey==field || orderKey=='-'+field}">{{field}}<span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-'+field"></span><span class="glyphicon glyphicon-chevron-down" ng-if="orderKey==field"></span></button></th>
-						<th>Profile</th>
+						<th>Muster Status</th>
+                        <th>Profile</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="sailor in displaySailorsList | orderBy: orderKey track by $index" ng-click="goToProfile(result.Id)">
 						<td ng-repeat="field in fields track by $index">{{sailor[field]}}</td>
+                        <td>
+                            <select name="{{sailor.Id}}MusterStatus" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus">
+                                <option ng-repeat="o in musterStatuses track by $index" ng-value="o">{{o}}</option>
+                            </select>
+                        </td>
 						<td><a ng-href="#/profile/{{sailor.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
+    <div class="row">
+        <div class="col-xs-offset-10 col-xs-2">
+            <button class="btn btn-primary" type="button" ng-click="submitMuster(displaySailorsList)">Save</button>
+        </div>
+    </div>
 </div>

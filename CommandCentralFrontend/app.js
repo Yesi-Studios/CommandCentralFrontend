@@ -7,7 +7,7 @@ angular.module('Navigation', ['Authentication', 'Profiles']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask']);
 angular.module('Authorization', ['Authentication']);
 angular.module('Search', ['Authentication', 'Authorization']);
-angular.module('Muster', ['Authentication', 'Authorization']);
+angular.module('Muster', ['Authentication', 'Authorization', 'Profiles']);
 angular.module('Modals', ['angularModalService']);
 
 angular.module('CommandCentral', [
