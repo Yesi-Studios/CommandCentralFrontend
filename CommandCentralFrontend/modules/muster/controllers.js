@@ -20,7 +20,5 @@ angular.module('Muster')
                 $scope.orderKey = theKey;
             }
         }
-
-		}
-		
-    ]);
+    }
+]);

@@ -95,6 +95,7 @@
     <Content Include="libs\ui-bootstrap-tpls-1.2.4.min.js" />
     <Content Include="modules\authentication\controllers.js" />
     <Content Include="modules\authentication\services.js" />
+    <Content Include="modules\authentication\views\createuser.html" />
     <Content Include="modules\authentication\views\finishregister.html" />
     <Content Include="modules\authentication\views\finishreset.html" />
     <Content Include="modules\authentication\views\forgotpassword.html" />
