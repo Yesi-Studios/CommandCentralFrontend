@@ -23,7 +23,7 @@ angular.module('Authentication')
         $scope.login = function () {
             // Show that data is loading and clear the error message
             $scope.dataLoading = true;
-            $scope.errors = null;
+            $scope.errors = [];
 
             ModalService.showModal({
                 templateUrl: 'modules/modals/views/privacyact.html',
