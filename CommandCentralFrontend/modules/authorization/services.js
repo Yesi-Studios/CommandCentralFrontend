@@ -97,6 +97,18 @@ angular.module('Authorization')
 
         };
 		
+		service.CanCreatePerson = function () {
+		    if ($rootScope.canCreatePerson) {
+		        return $rootScope.canCreatePerson;
+		    } else {
+		        return false;
+		    }
+		};
+
+		service.SetCanCreatePerson = function (newValue) {
+		    $rootScope.canCreatePerson = newValue;
+		}
+
         service.SetPermissions = function (searchableperms, returnableperms) {
             $rootScope.globals.currentUser.permissions = {
                 searchable: searchableperms,

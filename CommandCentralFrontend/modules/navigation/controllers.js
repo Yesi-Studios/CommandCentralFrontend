@@ -3,22 +3,21 @@
 angular.module('Navigation')
  
 .controller('NavController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService) {
 		
         $scope.resetPIIBanner = function () {
             $rootScope.containsPII = false;
         }
-
-        $scope.canCreatePerson = false;
+        $scope.canCreatePerson = function () { return AuthorizationService.CanCreatePerson(); };
         if ($rootScope.globals && $rootScope.globals.currentUser && $rootScope.globals.currentUser.permissionGroups) {
             for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++) {
                 if ($rootScope.globals.currentUser.permissionGroups[i].SpecialPermissions.indexOf("CreatePerson") != -1) {
-                    $scope.canCreatePerson = true;
+                    AuthorizationService.SetCanCreatePerson(true);
+                    
                 }
             }
         }
-
 
         $scope.createNewPerson = function () {
             ProfileService.CreatePerson(
