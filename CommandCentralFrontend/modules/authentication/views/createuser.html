@@ -1,12 +1,16 @@
 ﻿<div ng-show="errors" ng-repeat="error in errors" class="alert alert-danger status_message">{{error}}</div>
 <div ng-show="messages" ng-repeat="message in messages" class="alert alert-success status_message">{{message}}</div>
 <div class="content_panel">
-    <h3>All fields are required.</h3>
     <form name="form" ng-submit="createUser()" role="form">
+        <div class="row" ng-if="form.$invalid">
+            <div class="col-xs-8">
+                <div class="alert alert-danger" role="alert"><h4>All fields are required.</h4></div>
+            </div>
+        </div>
         <div class="row">
             <div class="form-group" ng-class="{'has-error': trimString(newUser.FirstName)==''}">
                 <label class="col-xs-4" for="firstName">First Name</label>
-                <div class="col-xs-8">
+                <div class="col-xs-4">
                     <input type="text" class="form-control" name="firstName" id="firstName" ng-model="newUser.FirstName" required />
                 </div>
             </div>
@@ -14,7 +18,7 @@
         <div class="row">
             <div class="form-group" ng-class="{'has-error': trimString(newUser.LastName)==''}">
                 <label class="col-xs-4" for="lastName">Last Name</label>
-                <div class="col-xs-8">
+                <div class="col-xs-4">
                     <input type="text" class="form-control" name="lastName" id="lastName" ng-model="newUser.LastName" required />
                 </div>
             </div>
@@ -65,31 +69,37 @@
             </div>
         </div>
 
-
-        <div class="row">
+        <div class="row" ng-if="form.dateOfArrival.$invalid || form.eaos.$invalid || form.dateOfBirth.$invalid">
             <div class="form-group">
+                <div class="col-xs-8">
+                    <div class="alert alert-danger" role="alert">Dates must be in the format "yyyy-mm-dd". For example: 2016-07-11</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group" ng-class="{'has-error': form.dateOfArrival.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
                 <label class="col-xs-4" for="dateOfArrival">Date of Arrival</label>
                 <div class="col-xs-4">
-                    <input type="date" class="form-control" id="dateOfArrival" ng-model="newUser.DateOfArrival" required />
+                    <input type="date" class="form-control" name="dateOfArrival" id="dateOfArrival" ng-model="newUser.DateOfArrival" placeholder="yyyy-mm-dd" required />
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': form.eaos.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
                 <label class="col-xs-4" for="eaos">EAOS</label>
                 <div class="col-xs-4">
-                    <input type="date" class="form-control" id="eaos" ng-model="newUser.EAOS" required />
+                    <input type="date" class="form-control" name="eaos" id="eaos" ng-model="newUser.EAOS" placeholder="yyyy-mm-dd" required />
                 </div>
             </div>
         </div>
 
 
         <div class="row">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': form.dateOfBirth.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
                 <label class="col-xs-4" for="dateOfBirth">Date Of Birth</label>
                 <div class="col-xs-4">
-                    <input type="date" class="form-control" id="dateOfBirth" ng-model="newUser.DateOfBirth" required />
+                    <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth" ng-model="newUser.DateOfBirth" placeholder="yyyy-mm-dd" required />
                 </div>
             </div>
         </div>
