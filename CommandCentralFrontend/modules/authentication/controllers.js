@@ -89,6 +89,13 @@ angular.module('Authentication')
                                         .done(function () {
                                             $scope.$apply(function () {
                                                 $location.path('/');
+                                                if ($rootScope.globals && $rootScope.globals.currentUser && $rootScope.globals.currentUser.permissionGroups) {
+                                                    for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++) {
+                                                        if ($rootScope.globals.currentUser.permissionGroups[i].SpecialPermissions.indexOf("CreatePerson") != -1) {
+                                                            $scope.canCreatePerson = true;
+                                                        }
+                                                    }
+                                                }
                                             });
                                         });
                                     })
