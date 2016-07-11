@@ -53,9 +53,9 @@ angular.module('Authorization')
 
         };
 
-        service.GetModelPermissions = function (success, error) {
+        service.GetPersonMetadata = function (success, error) {
 			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl =  AuthenticationService.GetBackendURL() + "/GetModelPermissions";
+			var serviceurl =  AuthenticationService.GetBackendURL() + "/GetPersonMetadata";
 			return $.ajax(
 			{
 				url: serviceurl,
@@ -97,11 +97,10 @@ angular.module('Authorization')
 
         };
 		
-        service.SetPermissions = function (searchableperms, returnableperms, editableperms) {
+        service.SetPermissions = function (searchableperms, returnableperms) {
             $rootScope.globals.currentUser.permissions = {
                 searchable: searchableperms,
 				returnable: returnableperms,
-				editable: editableperms
             };
  
             $localStorage.globals = $rootScope.globals;

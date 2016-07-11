@@ -10,6 +10,14 @@ angular.module('Navigation')
             $rootScope.containsPII = false;
         }
 
+        $scope.canCreatePerson = false;
+        for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++)
+        {
+            if ($rootScope.globals.currentUser.permissionGroups[i].SpecialPermissions.indexOf("CreatePerson") != -1) {
+                $scope.canCreatePerson = true;
+            }
+        }
+
         $scope.createNewPerson = function () {
             ProfileService.CreatePerson(
                 function (response) {

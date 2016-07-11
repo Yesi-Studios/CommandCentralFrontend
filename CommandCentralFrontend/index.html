@@ -36,7 +36,7 @@
 				<div class="clearfix visible-xs"></div>
 				<div class="col-md-4  header_right visible-lg visible-md visible-sm visible-xs">
 					<span class="header_small_title pull-right" ng-show="containsPII">FOUO Privacy Sensitive</span><br />
-					<span class="header_txt pull-right">Version 0.1a</span>
+					<span class="header_txt pull-right">Version 0.9b</span>
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
 							<li><a href="#/searchbyfield" ng-click="resetPIIBanner()">Search by Field</a></li>
 						</ul>
 					</li>
-                    <li><a href="#/createuser">Create User <span class="glyphicon glyphicon-plus"></span></a></li>
+                    <li ng-if="canCreatePerson"><a href="#/createuser">Create User <span class="glyphicon glyphicon-plus"></span></a></li>
 					
 				</ul>
 				
@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <div class="container" ng-controller="SetPortController">
+        <!--<div class="container" ng-controller="SetPortController">
             <div class="row">
                 <form class="form-inline">
                     <div class="form-group">
@@ -97,7 +97,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div>-->
 
             <script src="libs/jquery-2.2.1.min.js"></script>
             <script src="libs/angular.min.js"></script>

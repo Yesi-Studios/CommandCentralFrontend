@@ -46,7 +46,6 @@ angular.module('Search')
                 function (response) {
                     $scope.$apply(function() {
 						$scope.dataLoading = false;
-						console.log(response.ReturnValue);
 						$scope.results = response.ReturnValue.Results;
 						$scope.fields = response.ReturnValue.Fields;
 					});

@@ -36,10 +36,10 @@ angular.module('Authentication')
                         AuthenticationService.Login($scope.username, $scope.password,
                             function (response) {
                                 AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonId);
-                                AuthorizationService.GetModelPermissions(
+                                AuthorizationService.GetPersonMetadata(
                                     // If we succeed this is our call back
                                     function (response) {
-                                        AuthorizationService.SetPermissions(response.ReturnValue.Person.SearchableFields, response.ReturnValue.Person.ReturnableFields, response.ReturnValue.Person.EditableFields);
+                                        AuthorizationService.SetPermissions(response.ReturnValue.SearchableFields, response.ReturnValue.ReturnableFields);
 
                                     },
                                     // If we fail, this is our call back (nearly the same for all backend calls)
