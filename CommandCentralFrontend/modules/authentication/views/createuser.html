@@ -68,19 +68,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="row" ng-if="form.dateOfArrival.$invalid || form.eaos.$invalid || form.dateOfBirth.$invalid">
-            <div class="form-group">
-                <div class="col-xs-8">
-                    <div class="alert alert-danger" role="alert">Dates must be in the format "yyyy-mm-dd". For example: 2016-07-11</div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="form-group" ng-class="{'has-error': form.dateOfArrival.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
                 <label class="col-xs-4" for="dateOfArrival">Date of Arrival</label>
                 <div class="col-xs-4">
-                    <input type="date" class="form-control" name="dateOfArrival" id="dateOfArrival" ng-model="newUser.DateOfArrival" placeholder="yyyy-mm-dd" required />
+                    <ng-custom-date-picker name="dateOfArrival" ng-model="newUser.DateOfArrival"/>
                 </div>
             </div>
         </div>
@@ -89,7 +81,7 @@
             <div class="form-group" ng-class="{'has-error': form.eaos.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
                 <label class="col-xs-4" for="eaos">EAOS</label>
                 <div class="col-xs-4">
-                    <input type="date" class="form-control" name="eaos" id="eaos" ng-model="newUser.EAOS" placeholder="yyyy-mm-dd" required />
+                    <ng-custom-date-picker name="eaos" ng-model="newUser.EAOS"/>
                 </div>
             </div>
         </div>
@@ -99,11 +91,59 @@
             <div class="form-group" ng-class="{'has-error': form.dateOfBirth.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
                 <label class="col-xs-4" for="dateOfBirth">Date Of Birth</label>
                 <div class="col-xs-4">
-                    <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth" ng-model="newUser.DateOfBirth" placeholder="yyyy-mm-dd" required />
+                    <ng-custom-date-picker name="dateOfBirth" ng-model="newUser.DateOfBirth"/>
                 </div>
             </div>
         </div>
 
+
+        <!--style>
+            .full button span {
+                background-color: limegreen;
+                border-radius: 32px;
+                color: black;
+            }
+
+            .partially button span {
+                background-color: orange;
+                border-radius: 32px;
+                color: black;
+            }
+        </!--style>
+        <input type="text" uib-datepicker-popup ng-model="tdate"></inputuib-datepicker-popup>
+        <div ng-controller="DatepickerPopupCtrl">
+            <h4>Popup</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="col-md-6">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Format: <span class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label> <select class="form-control" ng-model="format" ng-options="f for f in formats"><option></option></select>
+                </div>
+            </div>
+
+            <hr />
+            <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+            <button type="button" class="btn btn-sm btn-default" ng-click="setDate(2009, 7, 24)">2009-08-24</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+            <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+        </div-->
         <div class="form-actions">
             <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Create User</button>
             <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />

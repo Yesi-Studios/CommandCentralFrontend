@@ -48,7 +48,7 @@
 						<div class="form-group">
 							<label class="col-xs-4" for="dob">Date of Birth</label>
 							<div class="col-xs-8">
-								<input type="date" class="form-control" id="dob" ng-disabled="!canEditPersonField('DateOfBirth')" ng-show="canReturnPersonField('DateOfBirth')" ng-model="profileData.DateOfBirth" />
+                                <ng-custom-date-picker id="dob" ng-disabled="!canEditPersonField('DateOfBirth')" ng-show="canReturnPersonField('DateOfBirth')" ng-model="profileData.DateOfBirth"/>
 							</div>
 						</div>
 						<div class="form-group">
@@ -252,17 +252,17 @@
 						<div class="form-group">
 							<label class="col-xs-2" for="dateOfArrival">Date of Arrival</label>
 							<div class="col-xs-4">
-								<input type="date" class="form-control" id="dob" ng-disabled="!canEditPersonField('DateOfArrival')" ng-show="canReturnPersonField('DateOfArrival')" ng-model="profileData.DateOfArrival" />
+                                <ng-custom-date-picker id="dateOfArrival" ng-disabled="!canEditPersonField('DateOfArrival')" ng-show="canReturnPersonField('DateOfArrival')" ng-model="profileData.DateOfArrival" />
 							</div>
 							<label class="col-xs-2" for="dateOfDeparture">Date of Departure</label>
 							<div class="col-xs-4">
-								<input type="date" class="form-control" id="dob" ng-disabled="!canEditPersonField('DateOfDeparture')" ng-show="canReturnPersonField('DateOfDeparture')" ng-model="profileData.DateOfDeparture" />
+                                <ng-custom-date-picker ng-disabled ="!canEditPersonField('DateOfDeparture')" ng-show="canReturnPersonField('DateOfDeparture')" ng-model="profileData.DateOfDeparture" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-xs-2" for="eaos">EAOS</label>
 							<div class="col-xs-4">
-								<input type="date" class="form-control" id="eaos" ng-disabled="!canEditPersonField('EAOS')" ng-show="canReturnPersonField('EAOS')" ng-model="profileData.EAOS" />
+								<ng-custom-date-picker ng-disabled="!canEditPersonField('EAOS')" ng-show="canReturnPersonField('EAOS')" ng-model="profileData.EAOS" />
 							</div>
                             <label class="col-xs-2" for="necs">NECs</label>
                             <div class="col-xs-4">
