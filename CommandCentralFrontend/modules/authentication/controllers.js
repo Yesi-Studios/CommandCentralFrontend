@@ -346,11 +346,4 @@ angular.module('Authentication')
                 }
             );
         };
-    }])
-    .controller('SetPortController',
-    ['$scope', '$rootScope', 'AuthenticationService',
-        function ($scope, $rootScope, AuthenticationService) {
-            $scope.setPort = function (thePort) { AuthenticationService.SetBackendPort(thePort); $scope.currentURL = $scope.getCurrentUrl() };
-            $scope.getCurrentUrl = function () { return AuthenticationService.GetBackendURL(); };
-            $scope.currentURL = $scope.getCurrentUrl();
-        }]);
+    }]);

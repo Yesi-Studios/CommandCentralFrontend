@@ -105,6 +105,7 @@
     <Content Include="modules\authorization\controllers.js" />
     <Content Include="modules\authorization\services.js" />
     <Content Include="modules\authorization\views\permissions.html" />
+    <Content Include="modules\connection\controllers.js" />
     <Content Include="modules\home\controllers.js" />
     <Content Include="modules\home\services.js" />
     <Content Include="modules\home\views\home.html" />

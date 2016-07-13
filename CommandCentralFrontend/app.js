@@ -2,7 +2,7 @@
 
 // declare modules
 angular.module('Connection', ['Authentication']);
-angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles']);
+angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles', 'Connection']);
 angular.module('Home', ['Authentication', 'pdf']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask', 'Connection']);

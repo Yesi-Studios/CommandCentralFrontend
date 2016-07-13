@@ -137,27 +137,8 @@ angular.module('Profiles')
 			});
 		};
 
-		service.LoadProfile = function (personid, success, error) {/*
-		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
-		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPerson";
-		    $.ajax(
-			{
-			    url: serviceurl,
-			    type: "POST",
-			    crossDomain: true,
-			    data: JSON.stringify(reqData),
-			    dataType: "json",
-			    success: function (response) {
-			        var returnContainer = JSON.parse(response);
-			        success(returnContainer);
-			    },
-			    error: function (response, status, errortext) {
-			        var returnContainer = JSON.parse(response.responseJSON);
-			        error(returnContainer);
-			    }
-			});
-		*/
-		    ConnectionService.RequestFromBackend('LoadPerson', {'personid' : personid}, success, error);
+		service.LoadProfile = function (personid, success, error) {
+		    ConnectionService.RequestFromBackend('LoadPerson', {'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);
 		};
 
 		service.LoadAccountHistory = function (personid, success, error) {
