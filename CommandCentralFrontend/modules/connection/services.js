@@ -38,7 +38,21 @@ angular.module('Connection')
             for (var attrname in params) { reqData[attrname] = params[attrname];} // Merge params into our reqData
 
             var serviceurl = service.GetBackendURL() + "/" + endpoint;
-            $.ajax(
+
+            // This is what we should be able to do, but we get a 405:
+            /*
+            var data = $.param(reqData);
+
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+
+            return $http.post(serviceurl, data, config).then(success, error);*/
+
+            // So instead, we do this. This requires the $scope.$apply() stuff we have everywhere, which sucks.
+            return $.ajax(
 			{
 			    url: serviceurl,
 			    type: "POST",

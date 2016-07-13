@@ -3,11 +3,11 @@
 // declare modules
 angular.module('Connection', ['Authentication']);
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles', 'Connection']);
-angular.module('Home', ['Authentication', 'pdf']);
+angular.module('Home', ['Authentication', 'pdf', 'Connection']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask', 'Connection']);
-angular.module('Authorization', ['Authentication']);
-angular.module('Search', ['Authentication', 'Authorization']);
+angular.module('Authorization', ['Authentication', 'Connection']);
+angular.module('Search', ['Authentication', 'Authorization', 'Connection']);
 angular.module('Modals', ['angularModalService']);
 
 angular.module('CommandCentral', [
