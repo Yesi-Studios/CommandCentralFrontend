@@ -13,15 +13,13 @@ angular.module('Home')
 		    $scope.errors = null;
 		    HomeService.GetHomeNews(
                 function (response) {
-		            $scope.$apply(function () {
 		                $scope.dataLoading = false;
 		                $scope.newsItems = response.ReturnValue;
 		                $scope.loadedTime = new Date;
-		            });
+		            
 		        },
 		        // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -35,7 +33,7 @@ angular.module('Home')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
             );
 		};
@@ -45,13 +43,11 @@ angular.module('Home')
 		    $scope.errors = null;
 		    HomeService.DeleteNewsItem(itemID,
                 function (response) {
-		            $scope.$apply(function () {
 		                $scope.refreshNews();
-		            });
+		            
 		        },
 		        // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -65,7 +61,7 @@ angular.module('Home')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
             );
 		};
@@ -90,14 +86,12 @@ angular.module('Home')
         $scope.saveNewsItem = function (title, text) {
             HomeService.CreateNewsItem(title, text.match(/[^\r\n]+/g),
                 function (response) {
-                    $scope.$apply(function () {
                         $scope.dataLoading = false;
                         $location.path('/');
-                    })
+                   
                 },
                 // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -111,7 +105,7 @@ angular.module('Home')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
             );
         };
@@ -123,15 +117,13 @@ angular.module('Home')
         $scope.errors = null;
         HomeService.LoadNewsItem($routeParams.id,
             function (response) {
-                $scope.$apply(function () {
                     $scope.dataLoading = false;
                     $scope.newsItem = response.ReturnValue;
                     $scope.text = $scope.newsItem.Paragraphs.join('\n');
-                });
+                
             },
             // If we fail, this is our call back (nearly the same for all backend calls)
             function (response) {
-                $scope.$apply(function () {
                     // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                     // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                     if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -145,7 +137,7 @@ angular.module('Home')
                         $scope.errors = response.ErrorMessages;
                     }
                     $scope.dataLoading = false;
-                });
+                
             }
         );
 
@@ -155,14 +147,12 @@ angular.module('Home')
             newsItem.Paragraphs = text.match(/[^\r\n]+/g);
             HomeService.UpdateNewsItem(newsItem,
                 function (response) {
-                    $scope.$apply(function () {
                         $scope.dataLoading = false;
                         $location.path('/');
-                    })
+                   
                 },
                 // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -176,7 +166,7 @@ angular.module('Home')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
             );
         };

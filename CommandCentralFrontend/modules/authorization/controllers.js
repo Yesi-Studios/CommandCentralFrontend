@@ -14,7 +14,6 @@ angular.module('Authorization')
         function($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService){
             AuthorizationService.GetUserPermissionGroups($routeParams.id,
                 function(response) {
-                    $scope.$apply(function () {
                         $scope.errors = [];
                         $scope.messages = [];
                         $scope.friendlyName = response.ReturnValue.FriendlyName;
@@ -58,18 +57,16 @@ angular.module('Authorization')
                             }
                             AuthorizationService.UpdateUserPermissionGroups($routeParams.id, groupIDs,
                                 function (response) {
-                                    $scope.$apply(function () {
                                         $scope.messages.push('Permissions successfully updated.');
                                         if (!response.ReturnValue.WasSelf) {
                                             AuthenticationService.AddLoginError("Your permissions have changed. Please re-login.");
                                             AuthenticationService.ClearCredentials();
                                             $location.path('/login');
                                         }
-                                    });
+                                    
                                 },
                                 // If we fail, this is our call back (nearly the same for all backend calls)
                                 function (response) {
-                                    $scope.$apply(function () {
                                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -83,16 +80,15 @@ angular.module('Authorization')
                                             $scope.errors = response.ErrorMessages;
                                         }
                                         $scope.dataLoading = false;
-                                    });
+                                    
                                 }
                             );
                             
                         };
-                    });
+                    
                 },
                 // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -106,7 +102,7 @@ angular.module('Authorization')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
             );
 

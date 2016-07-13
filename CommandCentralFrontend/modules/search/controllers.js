@@ -44,15 +44,13 @@ angular.module('Search')
 			$scope.errors = null;
 			SearchService.DoSimpleSearch(terms,
                 function (response) {
-                    $scope.$apply(function() {
 						$scope.dataLoading = false;
 						$scope.results = response.ReturnValue.Results;
 						$scope.fields = response.ReturnValue.Fields;
-					});
+					
 				},
 			    // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -66,7 +64,7 @@ angular.module('Search')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
             );
 		};
@@ -119,16 +117,14 @@ angular.module('Search')
 			SearchService.DoAdvancedSearch(filters, returnFields,
                 // If we succeed, this is our callback
                 function(response) {
-                    $scope.$apply(function () {
                         // We're done loading, drop the results and a list of fields in them on the scope.
 						$scope.dataLoading = false;
 						$scope.results = response.ReturnValue.Results;
 						$scope.fields = response.ReturnValue.Fields;
-					});
+					
 				},
 			    // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -142,7 +138,7 @@ angular.module('Search')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
             );
 		}

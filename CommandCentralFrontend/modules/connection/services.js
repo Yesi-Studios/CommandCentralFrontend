@@ -40,19 +40,27 @@ angular.module('Connection')
             var serviceurl = service.GetBackendURL() + "/" + endpoint;
 
             // This is what we should be able to do, but we get a 405:
-            /*
-            var data = $.param(reqData);
+            
+            var data = JSON.stringify(reqData);
 
             var config = {
+                method: 'POST',
+                url: serviceurl,
+                data: data,
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                    'Content-Type': 'application/json;charset=utf-8;'
                 }
             }
-
-            return $http.post(serviceurl, data, config).then(success, error);*/
+            var maybe = $http(config).then(function (response) {
+                console.log(response);
+                success(JSON.parse(response.data));
+            }, error);/**/
+            console.log(maybe);
+            return maybe;
+            
 
             // So instead, we do this. This requires the $scope.$apply() stuff we have everywhere, which sucks.
-            return $.ajax(
+            /*return $.ajax(
 			{
 			    url: serviceurl,
 			    type: "POST",
@@ -72,7 +80,7 @@ angular.module('Connection')
 			        }
 			    }
 			}
-            );
+            );/**/
 
         };
 

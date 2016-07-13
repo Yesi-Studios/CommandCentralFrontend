@@ -12,7 +12,6 @@ angular.module('Profiles')
 			
 			ProfileService.LoadProfile($routeParams.id,
                 function (response) {
-				        $scope.$apply(function () {
 
                             // Set all the scope variables that matter the most.
 				            $rootScope.containsPII = true;
@@ -40,19 +39,16 @@ angular.module('Profiles')
 						    }
 						
 						
-					    });
+					    
 					
 				        ProfileService.TakeLock($routeParams.id,
                             // If we succeed, this is our callback.
                             function (response) {
-                                $scope.$apply(function () {
                                     // Hey, we have a lock. Sweet.
 								    $scope.haveLock = true;
-							    });
                             },
                             // If we fail, this is our call back (nearly the same for all backend calls)
                             function (response) {
-                                $scope.$apply(function () {
                                     // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                                     // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                                     if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -66,14 +62,12 @@ angular.module('Profiles')
                                         $scope.errors = response.ErrorMessages;
                                     }
                                     $scope.dataLoading = false;
-                                });
                             }
 					    );
 					
 					    ProfileService.GetCommands(
                             // If we succeed, this is our callback
                             function (response) {
-                                $scope.$apply(function () {
                                     // Give our scope the commands and a function we can use to search inside them
 								    $scope.commandList = response.ReturnValue;
 								    $scope.getByName = function(theThings, thingName) {
@@ -86,11 +80,9 @@ angular.module('Profiles')
 									    return null; // The object was not found
 								    };
 								    $scope.command = $scope.getByName(response.ReturnValue, $scope.profileData.Command);
-							    });
 					        },
                             // If we fail, this is our call back (nearly the same for all backend calls)
                             function (response) {
-                                $scope.$apply(function () {
                                     // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                                     // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                                     if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -104,13 +96,12 @@ angular.module('Profiles')
                                         $scope.errors = response.ErrorMessages;
                                     }
                                     $scope.dataLoading = false;
-                                });
+                                
                             }
                         );
 				    },
                     // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -124,7 +115,6 @@ angular.module('Profiles')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
                 }
             );
 		};
@@ -132,13 +122,11 @@ angular.module('Profiles')
 		ProfileService.GetAllLists(
             // If we succeed, this is our call back
             function (response) {
-			    $scope.$apply(function() {
 				    $scope.lists = response.ReturnValue;
-			    });
+			    
 		    },
             // If we fail, this is our call back (nearly the same for all backend calls)
             function (response) {
-                $scope.$apply(function () {
                     // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                     // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                     if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -152,20 +140,17 @@ angular.module('Profiles')
                         $scope.errors = response.ErrorMessages;
                     }
                     $scope.dataLoading = false;
-                });
             }
         );
 		
 		ProfileService.GetPermissionGroups(
             // If we succeed, this is our callback.
-            function(response) {		    
-                $scope.$apply(function() {		        
+            function(response) {		        
                     $scope.permissionGroups = response.ReturnValue;				
-		        });
+		        
 		    },
             // If we fail, this is our call back (nearly the same for all backend calls)
             function(response) {
-                $scope.$apply(function () {
                     // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                     // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                     if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -179,7 +164,7 @@ angular.module('Profiles')
                         $scope.errors = response.ErrorMessages;
                     }
                     $scope.dataLoading = false;
-                });
+                
             }
 	    );
 		$scope.loadProfile();
@@ -188,13 +173,11 @@ angular.module('Profiles')
 		    ProfileService.LoadAccountHistory($scope.profileData.Id,
                 // If we succeed, this is our call back
                 function (response) {
-		            $scope.$apply(function () {
 		                $scope.profileData.AccountHistory = response.ReturnValue;
-		            });
+		            
 		        },
                 // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -208,7 +191,7 @@ angular.module('Profiles')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
 		    );
 
@@ -220,13 +203,11 @@ angular.module('Profiles')
 			ProfileService.UpdateMyProfile($scope.profileData,
                 // If we succeed, this is our callback
                 function (response) {
-			        $scope.$apply(function () {
 			            $scope.loadProfile();
-			        })
+			       
                 },
                 // If we fail, this is our call back (nearly the same for all backend calls)
                 function(response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
 				        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -240,7 +221,7 @@ angular.module('Profiles')
 				            $scope.errors = response.ErrorMessages;
 				        }
 					    $scope.dataLoading = false;
-				    });
+				    
 			    }
 			);
 		};

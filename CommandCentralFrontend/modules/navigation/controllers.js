@@ -22,14 +22,12 @@ angular.module('Navigation')
         $scope.createNewPerson = function () {
             ProfileService.CreatePerson(
                 function (response) {
-                    $scope.$apply(function() {
                         $location.path('/profile/' + response.ReturnValue);
                         $scope.dataLoading = false;
-                    });
+                    
                 },
                 // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -43,7 +41,7 @@ angular.module('Navigation')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
             );
         };
@@ -54,13 +52,11 @@ angular.module('Navigation')
 			AuthenticationService.Logout(
                 function (response) {
 					AuthenticationService.ClearCredentials();
-					$scope.$apply(function() {
 						$location.path('/login');
-					});
+					
 				},
 			    // If we fail, this is our call back (nearly the same for all backend calls)
                 function (response) {
-                    $scope.$apply(function () {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                         if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
@@ -74,7 +70,7 @@ angular.module('Navigation')
                             $scope.errors = response.ErrorMessages;
                         }
                         $scope.dataLoading = false;
-                    });
+                    
                 }
             );
 		};
