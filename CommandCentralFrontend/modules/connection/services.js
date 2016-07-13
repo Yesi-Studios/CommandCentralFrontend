@@ -38,9 +38,7 @@ angular.module('Connection')
             for (var attrname in params) { reqData[attrname] = params[attrname];} // Merge params into our reqData
 
             var serviceurl = service.GetBackendURL() + "/" + endpoint;
-
-            // This is what we should be able to do, but we get a 405:
-            
+                        
             var data = JSON.stringify(reqData);
 
             var config = {
@@ -51,37 +49,19 @@ angular.module('Connection')
                     'Content-Type': 'application/json;charset=utf-8;'
                 }
             }
-            var maybe = $http(config).then(function (response) {
-                console.log(response);
+            return $http(config).then(function (response) {
+
+                console.log(response)
                 success(JSON.parse(response.data));
-            }, error);/**/
-            console.log(maybe);
-            return maybe;
-            
-
-            // So instead, we do this. This requires the $scope.$apply() stuff we have everywhere, which sucks.
-            /*return $.ajax(
-			{
-			    url: serviceurl,
-			    type: "POST",
-			    crossDomain: true,
-			    data: JSON.stringify(reqData),
-			    dataType: "json",
-			    success: function (response) {
-			        var returnContainer = JSON.parse(response);
-			        success(returnContainer);
-			    },
-			    error: function (response, status, errortext) {
-			        if (response.readyState != 4) {
-			            error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
-			        } else {
-			            var returnContainer = JSON.parse(response.responseJSON);
-			            error(returnContainer);
-			        }
-			    }
-			}
-            );/**/
-
+            },
+            function (response) {
+                console.log(response)
+                if (response.status = -1) {
+                    error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
+                } else {
+                    error(JSON.parse(response.data));
+                }
+            });
         };
 
         return service;

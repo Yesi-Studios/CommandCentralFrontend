@@ -45,7 +45,7 @@ angular.module('Authentication')
 		
 		
 		service.Logout = function (success, error) {
-		    return ConnectionService.RequestFromBackend('Logout', { 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+		    return ConnectionService.RequestFromBackend('Logout', { 'authenticationtoken': service.GetAuthToken()}, success, error);
 		};
 		
 		service.FinishRegistration = function (username, password, id, success, error) {
@@ -57,7 +57,7 @@ angular.module('Authentication')
 		};
 
 		service.CreateUser = function (person, success, error) {
-		    return ConnectionService.RequestFromBackend('CreatePerson', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'person': person }, success, error);
+		    return ConnectionService.RequestFromBackend('CreatePerson', { 'authenticationtoken': service.GetAuthToken(), 'person': person }, success, error);
 		};
 		
 		service.ForgotPassword = function (email, ssn, success, error) {
