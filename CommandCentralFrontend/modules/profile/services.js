@@ -3,8 +3,8 @@
 angular.module('Profiles')
  
 .factory('ProfileService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService',
-    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService) {
+    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
+    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
         var apikey = AuthenticationService.GetAPIKey();
         var baseurl = AuthenticationService.GetBackendURL();
@@ -137,7 +137,7 @@ angular.module('Profiles')
 			});
 		};
 
-		service.LoadProfile = function (personid, success, error) {
+		service.LoadProfile = function (personid, success, error) {/*
 		    var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
 		    var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPerson";
 		    $.ajax(
@@ -156,6 +156,8 @@ angular.module('Profiles')
 			        error(returnContainer);
 			    }
 			});
+		*/
+		    ConnectionService.RequestFromBackend('LoadPerson', {'personid' : personid}, success, error);
 		};
 
 		service.LoadAccountHistory = function (personid, success, error) {

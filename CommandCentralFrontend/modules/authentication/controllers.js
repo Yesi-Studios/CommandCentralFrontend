@@ -34,10 +34,10 @@ angular.module('Authentication')
                     if (result) {
 
                         AuthenticationService.Login($scope.username, $scope.password,
+                            // If we succeed this is our call back
                             function (response) {
                                 AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonId);
                                 AuthorizationService.GetPersonMetadata(
-                                    // If we succeed this is our call back
                                     function (response) {
                                         AuthorizationService.SetPermissions(response.ReturnValue.SearchableFields, response.ReturnValue.ReturnableFields);
 

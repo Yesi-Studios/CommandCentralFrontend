@@ -1,11 +1,11 @@
 'use strict';
 
 // declare modules
-angular.module('Connection', []);
+angular.module('Connection', ['Authentication']);
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles']);
 angular.module('Home', ['Authentication', 'pdf']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
-angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask']);
+angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask', 'Connection']);
 angular.module('Authorization', ['Authentication']);
 angular.module('Search', ['Authentication', 'Authorization']);
 angular.module('Modals', ['angularModalService']);
@@ -13,6 +13,7 @@ angular.module('Modals', ['angularModalService']);
 angular.module('CommandCentral', [
     'Authentication',
 	'Authorization',
+    'Connection',
     'Home',
 	'Navigation',
 	'Profiles',
