@@ -43,6 +43,9 @@ angular.module('Connection')
             return apikey;
         }
 
+        // This is a convenience function. Just about every controller handles service errors the same way, so we just feed this
+        // function the appropriate $scope and the $location service and let it handle the work. The Authentication controller has
+        // a customized version of this for handling errors when we're already on the login page.
         service.HandleServiceError = function (response, scope, location) {
             // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
             // The stored credentials and kick them back to login page, displaying all appropriate error messages.
@@ -64,9 +67,7 @@ angular.module('Connection')
             var reqData = { 'apikey': service.GetAPIKey() };
             for (var attrname in params) { reqData[attrname] = params[attrname]; } // Merge params into our reqData
 
-            var serviceurl = service.GetBackendURL() + "/" + endpoint;
-
-            var data = JSON.stringify(reqData);
+            var serviceurl = service.GetBackendURL() + "/" + endpoint; // Make the url we need
 
             var config = {
                 method: 'POST',
@@ -76,9 +77,9 @@ angular.module('Connection')
                     'Content-Type': 'application/json;charset=utf-8;'
                 }
             }
-            return $http(config).then(function (response) {
+            var data = JSON.stringify(reqData); // Make a string out of our data
 
-                console.log(response)
+            return $http(config).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
                 success(JSON.parse(response.data));
             },
             function (response) {

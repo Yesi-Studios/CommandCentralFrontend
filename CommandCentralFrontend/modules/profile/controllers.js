@@ -7,7 +7,9 @@ angular.module('Profiles')
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService) {
 
         /*
-        *   This function is a little hefty, so some pre explanation is warranted. This is how we actually load the profile.
+        *   This function chain is a little hefty, so a preface is warranted.
+        *
+        *   This is how we actually load the profile.
         *   In this explanation, I'm assuming success on all backend calls. If that's not the case, the error is displayed at
         *   the top of the screen, and, depending on the error, we may be kicked back to the login screen.
         *
@@ -15,14 +17,13 @@ angular.module('Profiles')
         *   that needs it. We create functions the scope can use to check to see if the user has permission to search, return,
         *   or edit a field, making properly displaying of the data easier.
         *
-        *   After that, and therefore inside that call's callback, we call TakeLock. This allows the user to edit the profile,
-        *   making sure that no one else is at the moment. Successfully acquiring the lock enables saving.
+        *   After that, in the .then() after LoadProfile, we call TakeLock. The .then() call works because we return the promise
+        *   from the http call all the way up to the controller. This allows the user to edit the profile, making sure that no
+        *   one else is at the moment. Successfully acquiring the lock enables saving.
         *
         *   At the same time as we request a lock, we also GetCommands. This gets the structure of all available commands, so
         *   that we can properly prompt the user with the right divisions in departments in commands, e.g., if they select
         *   10 department at NIOC GA, we know to show them 11, 12, and 13 divisions.
-        *   
-        *   These calls should probably be restructured to use promises.
         */
         $scope.loadProfile = function () {
             $scope.dataLoading = true;
@@ -55,49 +56,49 @@ angular.module('Profiles')
                     $scope.canEditPersonField = function (field) {
                         return $scope.editableFields.indexOf(field) > -1;
                     }
-
-
-
-
-                    ProfileService.TakeLock($routeParams.id,
-                        // If we succeed, this is our callback.
-                        function (response) {
-                            // Hey, we have a lock. Sweet.
-                            $scope.haveLock = true;
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
-
-                    ProfileService.GetCommands(
-                        // If we succeed, this is our callback
-                        function (response) {
-                            // Give our scope the commands and a function we can use to search inside them
-                            $scope.commandList = response.ReturnValue;
-                            $scope.getByName = function (theThings, thingName) {
-                                if (theThings) {
-                                    for (var i = 0, len = theThings.length; i < len; i++) {
-                                        if (theThings[i].Name === thingName)
-                                            return theThings[i] // Return as soon as the object is found
-                                    }
-                                }
-                                return null; // The object was not found
-                            };
-                            $scope.command = $scope.getByName(response.ReturnValue, $scope.profileData.Command);
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
-            );
+            ).then(function () {
+                // This is where LoadProfile ends, and the follow ups begin. We use .then above to make sure we don't try to take a
+                // lock on a profile that we haven't loaded, or try to process commands when we haven't loaded the profile's command.
+
+                ProfileService.TakeLock($routeParams.id,
+                            // If we succeed, this is our callback.
+                            function (response) {
+                                // Hey, we have a lock. Sweet.
+                                $scope.haveLock = true;
+                            },
+                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                            function (response) {
+                                ConnectionService.HandleServiceError(response, $scope, $location);
+                            }
+                        );
+
+                ProfileService.GetCommands(
+                    // If we succeed, this is our callback
+                    function (response) {
+                        // Give our scope the commands and a function we can use to search inside them
+                        $scope.commandList = response.ReturnValue;
+                        $scope.getByName = function (theThings, thingName) {
+                            if (theThings) {
+                                for (var i = 0, len = theThings.length; i < len; i++) {
+                                    if (theThings[i].Name === thingName)
+                                        return theThings[i] // Return as soon as the object is found
+                                }
+                            }
+                            return null; // The object was not found
+                        };
+                        $scope.command = $scope.getByName(response.ReturnValue, $scope.profileData.Command);
+                    },
+                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    function (response) {
+                        ConnectionService.HandleServiceError(response, $scope, $location);
+                    }
+                );
+            });
         };
 
         ProfileService.GetAllLists(
