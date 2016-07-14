@@ -5,11 +5,7 @@ angular.module('Navigation')
 .factory('NavigationService',
     ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService',
     function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService) {
-        var service = {};
-        var apikey = AuthenticationService.GetAPIKey();
-        var baseurl = AuthenticationService.GetBackendURL();
-		
-        
+        var service = {};        
 		 
         return service;
     }])

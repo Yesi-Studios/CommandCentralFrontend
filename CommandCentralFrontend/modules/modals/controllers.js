@@ -1,7 +1,7 @@
 ﻿'use strict';
- 
+
 angular.module('Modals')
- 
+
 .controller('ModalServiceController',
     ['$scope', 'ModalService',
     function ($scope, ModalService) {
@@ -16,7 +16,7 @@ angular.module('Modals')
                 });
             });
         };
-        
+
         $scope.show();
     }]
 )

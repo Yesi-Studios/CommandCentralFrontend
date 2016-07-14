@@ -1,5 +1,5 @@
 'use strict';
- 
+
 angular.module('Connection')
 
 .factory('ConnectionService',
@@ -7,38 +7,65 @@ angular.module('Connection')
     function (Base64, $http, $localStorage, $rootScope, $timeout) {
         var service = {};
 
-        var apikey = "d7d82136-46ff-4047-b202-957c67fdcedc";//"5c96c9d9-0975-4936-aecf-7fae269a7b15";//"ddaf2d5f-3014-4a60-9513-2e0715df2c02";//"768482c5-e5fb-43f2-a7f7-10c2b961fad3";//"0ab78de1-b5b5-4a07-a272-219cbd103436"; //"f6ec2c55-7571-43bb-8a6e-f1eccc76244b"; //*/"33e0e8d0-0d1c-4880-9ba7-069eea5d1210"; //"C7C6A39A-C75F-433E-A808-E8A8922ED2FC" Slightly old API Key    // "A114899B-DC0B-4A71-8BB8-9C65B5748B6C" Old API Key
-        //var backendURL = "http://73.20.152.170";
-        var backendURL = "http://147.51.62.19";
+        // Information for connecting to the database, including the URL and API key.
+        var apikey = "d7d82136-46ff-4047-b202-957c67fdcedc";
+        //var backendURL = "http://73.20.152.170";  // Atwood's IP for working at home.
+        var backendURL = "http://147.51.62.19";     // Live service IP.
+
+        // Here we check to see if we have a port stored in localStorage, and if not, we use 1113.
+        // If it's enabled, there's a widget at the bottom of index.html, controlled by this module,
+        // that allows the user to set the port to look for the service on. This is for development,
+        // and must be disabled before live launch.
         var backendPort;
         if ($localStorage.backendPort) {
             backendPort = $localStorage.backendPort;
         } else {
             backendPort = "1113";
         }
+
+        // Create the base URL for all REST calls
         var baseurl = backendURL + ":" + backendPort;
 
+        // If you can't figure out what this does, stop reading and go get an adult.
         service.GetBackendURL = function () {
             return backendURL + ":" + backendPort;
         }
 
+        // This too.
         service.SetBackendPort = function (portnumber) {
             backendPort = portnumber;
             baseurl = backendURL + ":" + backendPort;
             $localStorage.backendPort = portnumber;
         }
 
+        // Ditto
         service.GetAPIKey = function () {
             return apikey;
         }
 
+        service.HandleServiceError = function (response, scope, location) {
+            // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+            // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+            if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                for (var i = 0; i < response.ErrorMessages.length; i++) {
+                    AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                }
+                AuthenticationService.ClearCredentials();
+                location.path('/login');
+            } else {
+                // If it's any other type of error, we can just show it to them on this page.
+                scope.errors = response.ErrorMessages;
+            }
+            scope.dataLoading = false;
+
+        }
 
         service.RequestFromBackend = function (endpoint, params, success, error) {
-            var reqData = {'apikey': service.GetAPIKey()};
-            for (var attrname in params) { reqData[attrname] = params[attrname];} // Merge params into our reqData
+            var reqData = { 'apikey': service.GetAPIKey() };
+            for (var attrname in params) { reqData[attrname] = params[attrname]; } // Merge params into our reqData
 
             var serviceurl = service.GetBackendURL() + "/" + endpoint;
-                        
+
             var data = JSON.stringify(reqData);
 
             var config = {

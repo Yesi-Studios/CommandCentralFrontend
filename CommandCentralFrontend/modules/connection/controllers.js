@@ -1,5 +1,5 @@
 'use strict';
- 
+
 angular.module('Connection')
 
 .controller('SetPortController',
