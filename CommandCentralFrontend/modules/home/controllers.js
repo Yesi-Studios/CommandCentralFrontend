@@ -3,8 +3,8 @@
 angular.module('Home')
 
 .controller('HomeController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'HomeService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, HomeService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'HomeService','ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, HomeService, ConnectionService) {
 
         $scope.pdfUrl = "/img/pow.pdf";
 
@@ -55,8 +55,8 @@ angular.module('Home')
 
     }])
 
-.controller('CreateNewsController', ['$scope', '$rootScope', '$location', 'AuthenticationService', 'HomeService',
-    function ($scope, $rootScope, $location, AuthenticationService, HomeService) {
+.controller('CreateNewsController', ['$scope', '$rootScope', '$location', 'AuthenticationService', 'HomeService', 'ConnectionService',
+    function ($scope, $rootScope, $location, AuthenticationService, HomeService, ConnectionService) {
         $scope.saveNewsItem = function (title, text) {
             HomeService.CreateNewsItem(title, text.match(/[^\r\n]+/g),
                 function (response) {
@@ -71,8 +71,8 @@ angular.module('Home')
             );
         };
     }])
-.controller('UpdateNewsController', ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'HomeService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, HomeService) {
+.controller('UpdateNewsController', ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'HomeService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, HomeService, ConnectionService) {
 
         $scope.dataLoading = true;
         $scope.errors = null;
@@ -92,8 +92,12 @@ angular.module('Home')
         $scope.updateNewsItem = function (newsItem, text) {
             $scope.errors = null;
             $scope.dataLoading = true;
-            newsItem.Paragraphs = text.match(/[^\r\n]+/g);
-            HomeService.UpdateNewsItem(newsItem,
+            var newsItemDTO = {};
+            newsItemDTO.Paragraphs = text.match(/[^\r\n]+/g);
+            newsItemDTO.Title = newsItem.Title;
+            newsItemDTO.NewsItemId = newsItem.Id;
+            console.log(newsItem.Id);
+            HomeService.UpdateNewsItem(newsItemDTO,
                 function (response) {
                     $scope.dataLoading = false;
                     $location.path('/');

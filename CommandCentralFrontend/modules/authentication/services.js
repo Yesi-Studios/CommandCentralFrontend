@@ -11,39 +11,6 @@ angular.module('Authentication')
             return ConnectionService.RequestFromBackend('Login', { 'username': username, 'password': password }, success, error);
         };
 		
-		service.AddLoginMessage = function(loginMessage) {
-			if($rootScope.globals.loginMessages){
-				$rootScope.globals.loginMessages.push(loginMessage);
-			} else {
-				$rootScope.globals.loginMessages = [loginMessage];
-			}
-		}
-		
-		service.ClearLoginMessages = function(){
-			$rootScope.globals.loginMessages = [];
-		}
-		
-		service.GetLoginMessages = function(){
-			return $rootScope.globals.loginMessages;
-		}
-		
-		service.AddLoginError = function(loginError) {
-			if($rootScope.globals.loginErrors){
-				$rootScope.globals.loginErrors.push(loginError);
-			} else {
-				$rootScope.globals.loginErrors = [loginError];
-			}
-		}
-		
-		service.ClearLoginErrors = function(){
-			$rootScope.globals.loginErrors = [];
-		}
-		
-		service.GetLoginErrors = function(){
-			return $rootScope.globals.loginErrors;
-		}
-		
-		
 		service.Logout = function (success, error) {
 		    return ConnectionService.RequestFromBackend('Logout', { 'authenticationtoken': service.GetAuthToken()}, success, error);
 		};

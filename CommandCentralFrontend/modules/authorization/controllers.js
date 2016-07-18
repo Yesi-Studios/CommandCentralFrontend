@@ -10,8 +10,8 @@ angular.module('Authorization')
     ]
 )
 .controller('EditPermissionGroupsController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService',
-        function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ConnectionService',
+function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ConnectionService) {
             AuthorizationService.GetUserPermissionGroups($routeParams.id,
                 function (response) {
                     $scope.errors = [];
@@ -59,8 +59,8 @@ angular.module('Authorization')
                             function (response) {
                                 $scope.messages.push('Permissions successfully updated.');
                                 if (!response.ReturnValue.WasSelf) {
-                                    AuthenticationService.AddLoginError("Your permissions have changed. Please re-login.");
-                                    AuthenticationService.ClearCredentials();
+                                    ConnectionService.AddLoginError("Your permissions have changed. Please re-login.");
+                                    ConnectionService.ClearCredentials();
                                     $location.path('/login');
                                 }
 

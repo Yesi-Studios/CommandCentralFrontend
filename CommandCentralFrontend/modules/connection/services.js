@@ -43,6 +43,47 @@ angular.module('Connection')
             return apikey;
         }
 
+        // Login page error displaying. This seems like it should be in the Authentication module, but actually this is part of backend service error handling, and
+        // belongs here. Also, keeping it here prevents a circular dependancy between Authentication and Connection.
+
+        service.AddLoginMessage = function (loginMessage) {
+            if ($rootScope.globals.loginMessages) {
+                $rootScope.globals.loginMessages.push(loginMessage);
+            } else {
+                $rootScope.globals.loginMessages = [loginMessage];
+            }
+        }
+
+        service.ClearLoginMessages = function () {
+            $rootScope.globals.loginMessages = [];
+        }
+
+        service.GetLoginMessages = function () {
+            return $rootScope.globals.loginMessages;
+        }
+
+        service.AddLoginError = function (loginError) {
+            if ($rootScope.globals.loginErrors) {
+                $rootScope.globals.loginErrors.push(loginError);
+            } else {
+                $rootScope.globals.loginErrors = [loginError];
+            }
+        }
+
+        service.ClearLoginErrors = function () {
+            $rootScope.globals.loginErrors = [];
+        }
+
+        service.GetLoginErrors = function () {
+            return $rootScope.globals.loginErrors;
+        }
+
+
+        service.ClearCredentials = function () {
+            delete $rootScope.globals.currentUser;
+            delete $localStorage.globals
+        };
+
         // This is a convenience function. Just about every controller handles service errors the same way, so we just feed this
         // function the appropriate $scope and the $location service and let it handle the work. The Authentication controller has
         // a customized version of this for handling errors when we're already on the login page.
@@ -51,9 +92,9 @@ angular.module('Connection')
             // The stored credentials and kick them back to login page, displaying all appropriate error messages.
             if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
                 for (var i = 0; i < response.ErrorMessages.length; i++) {
-                    AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                    service.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                 }
-                AuthenticationService.ClearCredentials();
+                service.ClearCredentials();
                 location.path('/login');
             } else {
                 // If it's any other type of error, we can just show it to them on this page.
@@ -86,7 +127,7 @@ angular.module('Connection')
             },
             function (response) {
                 console.log(response)
-                if (response.status = -1) {
+                if (response.statusText == "") {
                     error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
                 } else {
                     error(JSON.parse(response.data));

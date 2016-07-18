@@ -3,16 +3,16 @@
 angular.module('Authentication')
 
 .controller('LoginController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ModalService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ModalService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ModalService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ModalService, ConnectionService) {
         // Reset login status
         AuthenticationService.ClearCredentials();
 
         // Display error messages and messages stored in the AuthenticationService
-        $scope.errors = AuthenticationService.GetLoginErrors();
-        $scope.messages = AuthenticationService.GetLoginMessages();
-        AuthenticationService.ClearLoginErrors();
-        AuthenticationService.ClearLoginMessages();
+        $scope.errors = ConnectionService.GetLoginErrors();
+        $scope.messages = ConnectionService.GetLoginMessages();
+        ConnectionService.ClearLoginErrors();
+        ConnectionService.ClearLoginMessages();
 
         // When they click login...
         $scope.login = function () {
@@ -71,13 +71,13 @@ angular.module('Authentication')
                                 // The stored credentials and kick them back to login page, displaying all appropriate error messages.
                                 if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
                                     for (var i = 0; i < response.ErrorMessages.length; i++) {
-                                        AuthenticationService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                                        ConnectionService.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                                     }
                                     AuthenticationService.ClearCredentials();
                                     $location.path('/login');
                                     // Since we're already at the login page, go ahead and get the Errors.
-                                    $scope.errors = AuthenticationService.GetLoginErrors();
-                                    AuthenticationService.ClearLoginErrors();
+                                    $scope.errors = ConnectionService.GetLoginErrors();
+                                    ConnectionService.ClearLoginErrors();
                                 } else {
                                     // If it's any other type of error, we can just show it to them on this page.
                                     $scope.errors = response.ErrorMessages;
@@ -123,7 +123,7 @@ angular.module('Authentication')
             $scope.dataLoading = true;
             AuthenticationService.FinishRegistration($scope.username, $scope.password, $routeParams.id,
                 function (response) {
-                    AuthenticationService.AddLoginMessage("Account created. Login with your new account");
+                    ConnectionService.AddLoginMessage("Account created. Login with your new account");
                     $location.path('/login');
 
                 },
@@ -157,13 +157,13 @@ angular.module('Authentication')
         };
     }])
 	.controller('FinishResetController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService) {
         $scope.finishReset = function () {
             $scope.dataLoading = true;
             AuthenticationService.FinishReset($scope.password, $routeParams.id,
                 function (response) {
-                    AuthenticationService.AddLoginMessage("Password reset. Please login with your new password.");
+                    ConnectionService.AddLoginMessage("Password reset. Please login with your new password.");
                     $location.path('/login');
 
                 },

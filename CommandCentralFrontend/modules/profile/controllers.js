@@ -3,8 +3,8 @@
 angular.module('Profiles')
 
 .controller('ProfileController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService) {
 
         /*
         *   This function chain is a little hefty, so a preface is warranted.

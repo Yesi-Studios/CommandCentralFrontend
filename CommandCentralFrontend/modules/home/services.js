@@ -20,7 +20,7 @@ angular.module('Home')
         };
 
         service.UpdateNewsItem = function (newsItem, success, error) {
-            return ConnectionService.RequestFromBackend('UpdateNewsItem', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'newsitem': newsItem }, success, error);
+            return ConnectionService.RequestFromBackend('UpdateNewsItem', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'newsitemid': newsItem.NewsItemId, 'paragraphs': newsItem.Paragraphs, 'title': newsItem.Title }, success, error);
 		};
 
         service.DeleteNewsItem = function (itemID, success, error) {

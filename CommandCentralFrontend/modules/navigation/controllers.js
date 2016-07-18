@@ -3,8 +3,8 @@
 angular.module('Navigation')
 
 .controller('NavController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService) {
 
         $scope.resetPIIBanner = function () {
             $rootScope.containsPII = false;
@@ -35,7 +35,7 @@ angular.module('Navigation')
 
 
         $scope.logout = function () {
-            AuthenticationService.AddLoginMessage("Succesfully logged out!");
+            ConnectionService.AddLoginMessage("Succesfully logged out!");
             AuthenticationService.Logout(
                 function (response) {
                     AuthenticationService.ClearCredentials();
