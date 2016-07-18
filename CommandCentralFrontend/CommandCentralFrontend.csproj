@@ -109,8 +109,10 @@
     <Content Include="modules\connection\services.js" />
     <Content Include="modules\home\controllers.js" />
     <Content Include="modules\home\services.js" />
+    <Content Include="modules\home\views\createnews.html" />
     <Content Include="modules\home\views\home.html" />
     <Content Include="modules\home\views\pdfviewer.html" />
+    <Content Include="modules\home\views\updatenews.html" />
     <Content Include="modules\modals\controllers.js" />
     <Content Include="modules\modals\views\pii.html" />
     <Content Include="modules\modals\views\privacyact.html" />
