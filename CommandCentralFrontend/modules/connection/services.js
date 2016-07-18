@@ -64,15 +64,17 @@ angular.module('Connection')
         }
 
         service.RequestFromBackend = function (endpoint, params, success, error) {
+            console.log(params);
             var reqData = { 'apikey': service.GetAPIKey() };
             for (var attrname in params) { reqData[attrname] = params[attrname]; } // Merge params into our reqData
+            console.log(reqData);
 
             var serviceurl = service.GetBackendURL() + "/" + endpoint; // Make the url we need
 
             var config = {
                 method: 'POST',
                 url: serviceurl,
-                data: data,
+                data: reqData,
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8;'
                 }
