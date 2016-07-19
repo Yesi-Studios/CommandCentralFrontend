@@ -14,10 +14,6 @@ angular.module('Muster')
         service.SubmitMuster = function (musterSubmissions, success, error) {
             return ConnectionService.RequestFromBackend('SubmitMuster', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'mustersubmissions': musterSubmissions }, success, error);
         };
-		
-        service.DoSimpleSearch = function (terms, success, error) {
-            return ConnectionService.RequestFromBackend('SimpleSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'searchterm': terms }, success, error);
-        };
-		
+
         return service;
     }]);
