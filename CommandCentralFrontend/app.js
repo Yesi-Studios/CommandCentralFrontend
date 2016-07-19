@@ -1,18 +1,21 @@
 'use strict';
 
 // declare modules
-angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles']);
-angular.module('Home', ['Authentication', 'pdf']);
-angular.module('Navigation', ['Authentication', 'Profiles']);
-angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask']);
-angular.module('Authorization', ['Authentication']);
-angular.module('Search', ['Authentication', 'Authorization']);
-angular.module('Muster', ['Authentication', 'Authorization', 'Profiles']);
+angular.module('Connection', []);
+angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles', 'Connection']);
+angular.module('Home', ['Authentication', 'pdf', 'Connection']);
+angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
+angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask', 'Connection']);
+angular.module('Authorization', ['Authentication', 'Connection']);
+angular.module('Search', ['Authentication', 'Authorization', 'Connection']);
+angular.module('Muster', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
+
 angular.module('Modals', ['angularModalService']);
 
 angular.module('CommandCentral', [
     'Authentication',
 	'Authorization',
+    'Connection',
     'Home',
 	'Navigation',
 	'Profiles',
@@ -120,8 +123,8 @@ angular.module('CommandCentral', [
         .otherwise({ redirectTo: '/' });
 }])
  
-.run(['$rootScope', '$location', '$localStorage', '$http', 'AuthenticationService',
-    function ($rootScope, $location, $localStorage, $http, AuthenticationService) {
+.run(['$rootScope', '$location', '$localStorage', '$http', 'ConnectionService',
+    function ($rootScope, $location, $localStorage, $http, ConnectionService) {
 		// keep user logged in after page refresh
         $rootScope.globals = $localStorage.globals || {};
         if ($rootScope.globals.currentUser) {
@@ -138,7 +141,7 @@ angular.module('CommandCentral', [
 
             // redirect to login page if not logged in
             if ($location.path().indexOf('/login') == -1 && $location.path() !== '/resetlogin' && $location.path() !== '/register' && $location.path().indexOf('/finishregistration') == -1 && $location.path() !== '/forgotpassword' && $location.path().indexOf('/finishreset') == -1 && !$rootScope.globals.currentUser) {
-                AuthenticationService.AddLoginError("You must log in to see that page");
+                ConnectionService.AddLoginError("You must log in to see that page");
 				$location.path('/login');
             }
 			
@@ -231,4 +234,125 @@ angular.module('CommandCentral', [
             updateScroll();
         }
     }
-}]);
+}]).directive('ngCustomDatePicker', function () {
+    return {
+        restrict: 'E',
+        require: '^ngModel',
+        scope: {
+            ngModel: '=',
+        },
+        template: '<div class="input-group">'+
+                        '<input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />' +
+                        '<span class="input-group-btn">'+
+                            '<button type="button" class="btn btn-default" ng-click="openPicker()"><i class="glyphicon glyphicon-calendar"></i></button>'+
+                        '</span>'+
+                  '</div>',
+        controller: ['$scope', function ($scope) {
+            $scope.opened = false;
+
+            $scope.openPicker = function () {
+                $scope.opened = true;
+            };
+
+            $scope.dateOptions = {
+                startingDay: 1
+            };
+
+        }]
+    }
+})
+    /*.controller('DatepickerPopupCtrl', function ($scope) {
+    $scope.today = function () {
+        $scope.dt = new Date();
+    };
+    $scope.today();
+
+    $scope.clear = function () {
+        $scope.dt = null;
+    };
+
+    $scope.inlineOptions = {
+        customClass: getDayClass,
+        minDate: new Date(),
+        showWeeks: true
+    };
+
+    $scope.dateOptions = {
+        dateDisabled: disabled,
+        formatYear: 'yy',
+        maxDate: new Date(2020, 5, 22),
+        minDate: new Date(),
+        startingDay: 1
+    };
+
+    // Disable weekend selection
+    function disabled(data) {
+        var date = data.date,
+          mode = data.mode;
+        return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+    }
+
+    $scope.toggleMin = function () {
+        $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+        $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
+
+    $scope.toggleMin();
+
+    $scope.openPicker = function () {
+        $scope.popup.opened = true;
+    };
+
+    $scope.open2 = function () {
+        $scope.popup2.opened = true;
+    };
+
+    $scope.setDate = function (year, month, day) {
+        $scope.dt = new Date(year, month, day);
+    };
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = 'dd-MMMM-yyyy';
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.popup1 = {
+        opened: false
+    };
+
+    $scope.popup2 = {
+        opened: false
+    };
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var afterTomorrow = new Date();
+    afterTomorrow.setDate(tomorrow.getDate() + 1);
+    $scope.events = [
+      {
+          date: tomorrow,
+          status: 'full'
+      },
+      {
+          date: afterTomorrow,
+          status: 'partially'
+      }
+    ];
+
+    function getDayClass(data) {
+        var date = data.date,
+          mode = data.mode;
+        if (mode === 'day') {
+            var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+            for (var i = 0; i < $scope.events.length; i++) {
+                var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                if (dayToCheck === currentDay) {
+                    return $scope.events[i].status;
+                }
+            }
+        }
+
+        return '';
+    }
+})*/;

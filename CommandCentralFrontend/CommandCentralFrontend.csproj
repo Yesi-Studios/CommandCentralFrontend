@@ -95,6 +95,7 @@
     <Content Include="libs\ui-bootstrap-tpls-1.2.4.min.js" />
     <Content Include="modules\authentication\controllers.js" />
     <Content Include="modules\authentication\services.js" />
+    <Content Include="modules\authentication\views\createuser.html" />
     <Content Include="modules\authentication\views\finishregister.html" />
     <Content Include="modules\authentication\views\finishreset.html" />
     <Content Include="modules\authentication\views\forgotpassword.html" />
@@ -104,10 +105,14 @@
     <Content Include="modules\authorization\controllers.js" />
     <Content Include="modules\authorization\services.js" />
     <Content Include="modules\authorization\views\permissions.html" />
+    <Content Include="modules\connection\controllers.js" />
+    <Content Include="modules\connection\services.js" />
     <Content Include="modules\home\controllers.js" />
     <Content Include="modules\home\services.js" />
+    <Content Include="modules\home\views\createnews.html" />
     <Content Include="modules\home\views\home.html" />
     <Content Include="modules\home\views\pdfviewer.html" />
+    <Content Include="modules\home\views\updatenews.html" />
     <Content Include="modules\modals\controllers.js" />
     <Content Include="modules\modals\views\pii.html" />
     <Content Include="modules\modals\views\privacyact.html" />

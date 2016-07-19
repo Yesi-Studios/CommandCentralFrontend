@@ -4,6 +4,9 @@
 ## Custom stuff done by Angus
 # Ignore /old folder
 old/
+# Other crap
+livebeta/
+Development/
 
 # User-specific files
 *.suo

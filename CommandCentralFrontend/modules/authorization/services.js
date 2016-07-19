@@ -3,105 +3,42 @@
 angular.module('Authorization')
  
 .factory('AuthorizationService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService',
-    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService) {
+    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
+    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
-        var apikey = AuthenticationService.GetAPIKey();
-        var baseurl = AuthenticationService.GetBackendURL();
 
         service.GetUserPermissionGroups = function (personid, success, error) {
-            var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid };
-            var serviceurl = AuthenticationService.GetBackendURL() + "/LoadPermissionGroupsByPerson";
-            return $.ajax(
-			{
-			    url: serviceurl,
-			    type: "POST",
-			    crossDomain: true,
-			    data: JSON.stringify(reqData),
-			    dataType: "json",
-			    success: function (response) {
-			        var returnContainer = JSON.parse(response);
-			        success(returnContainer);
-			    },
-			    error: function (response, status, errortext) {
-			        var returnContainer = JSON.parse(response.responseJSON);
-			        error(returnContainer);
-			    }
-			});
-
+            return ConnectionService.RequestFromBackend('LoadPermissionGroupsByPerson', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);
         };
 
         service.UpdateUserPermissionGroups = function (personid, groupids, success, error) {
-            var reqData = { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'apikey': apikey, 'personid': personid, 'permissionslist' : groupids };
-            var serviceurl = AuthenticationService.GetBackendURL() + "/UpdatePermissionGroupsByPerson";
-            return $.ajax(
-			{
-			    url: serviceurl,
-			    type: "POST",
-			    crossDomain: true,
-			    data: JSON.stringify(reqData),
-			    dataType: "json",
-			    success: function (response) {
-			        var returnContainer = JSON.parse(response);
-			        success(returnContainer);
-			    },
-			    error: function (response, status, errortext) {
-			        var returnContainer = JSON.parse(response.responseJSON);
-			        error(returnContainer);
-			    }
-			});
-
+            return ConnectionService.RequestFromBackend('UpdatePermissionGroupsByPerson', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid, 'permissionslist': groupids }, success, error);
         };
 
-        service.GetModelPermissions = function (success, error) {
-			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl =  AuthenticationService.GetBackendURL() + "/GetModelPermissions";
-			return $.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					success(returnContainer);
-				},
-				error: function (response, status, errortext) {
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    error(returnContainer);
-				}
-			});
-
+        service.GetPersonMetadata = function (success, error) {
+            return ConnectionService.RequestFromBackend('GetPersonMetadata', { 'authenticationtoken': AuthenticationService.GetAuthToken() }, success, error);
         };
 		
-		service.GetPermissionGroups = function (success, error) {
-			var reqData = {'authenticationtoken' : AuthenticationService.GetAuthToken(), 'apikey' : apikey};
-			var serviceurl =  AuthenticationService.GetBackendURL() + "/LoadPermissionGroups";
-			return $.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					success(returnContainer);
-				},
-				error: function (response, status, errortext) {
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    error(returnContainer);
-				}
-			});
-
+        service.GetPermissionGroups = function (success, error) {
+            return ConnectionService.RequestFromBackend('LoadPermissionGroups', { 'authenticationtoken': AuthenticationService.GetAuthToken() }, success, error);
         };
 		
-        service.SetPermissions = function (searchableperms, returnableperms, editableperms) {
+		service.CanCreatePerson = function () {
+		    if ($rootScope.canCreatePerson) {
+		        return $rootScope.canCreatePerson;
+		    } else {
+		        return false;
+		    }
+		};
+
+		service.SetCanCreatePerson = function (newValue) {
+		    $rootScope.canCreatePerson = newValue;
+		}
+
+        service.SetPermissions = function (searchableperms, returnableperms) {
             $rootScope.globals.currentUser.permissions = {
                 searchable: searchableperms,
 				returnable: returnableperms,
-				editable: editableperms
             };
  
             $localStorage.globals = $rootScope.globals;
