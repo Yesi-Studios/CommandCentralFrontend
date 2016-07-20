@@ -15,5 +15,9 @@ angular.module('Muster')
             return ConnectionService.RequestFromBackend('SubmitMuster', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'mustersubmissions': musterSubmissions }, success, error);
         };
 
+        service.LoadMusterByDay = function (musterDate, success, error) {
+            return ConnectionService.RequestFromBackend('LoadMusterRecordsByMusterDay', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'musterdate': musterDate }, success, error);
+        };
+
         return service;
     }]);

@@ -54,6 +54,11 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/muster/views/muster.html'
         })
 
+        .when('/muster/archive', {
+            controller: 'MusterArchiveController',
+            templateUrl: 'modules/muster/views/archive.html'
+        })
+
         .when('/updatenews/:id', {
             controller: 'UpdateNewsController',
             templateUrl: 'modules/home/views/updatenews.html'
