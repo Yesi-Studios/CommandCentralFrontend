@@ -10,6 +10,8 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
         $rootScope.containsPII = true;
         $scope.divisions = [];
         $scope.fields = ['FriendlyName', 'Paygrade', 'Division', 'HasBeenMustered']
+        $scope.errors = [];
+        $scope.messages = [];
 
         // The default sorting key
         $scope.orderKey = "Division";
@@ -17,7 +19,6 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
 
         $scope.setDivision = function (selectedDivision) {
             $scope.displaySailorsList = []
-            alert(selectedDivision);
             if (selectedDivision == "All") {
                 $scope.displaySailorsList = $scope.allSailorsList;
                 return;
@@ -34,7 +35,6 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
         ProfileService.GetAllLists(
             // If we succeed, this is our call back
             function (response) {
-                console.log(response.ReturnValue.MusterStatuses);
                 $scope.musterStatuses = response.ReturnValue.MusterStatuses;
                 
             },
@@ -46,7 +46,6 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
 
         MusterService.LoadTodaysMuster(
             function (response) {
-                console.log(response);
                 // Create the divisions array
                 for (var i = 0; i < response.ReturnValue.Musters.length; i++) {
                     if ($scope.divisions.indexOf(response.ReturnValue.Musters[i].Division) == -1){
@@ -72,10 +71,12 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
                 }
             }
 
+            $scope.messages = [];
+            $scope.errors = [];
+
             MusterService.SubmitMuster(dtoMuster, 
                 function (response) {
-                    alert("Holy fuck");
-                    console.log(response);
+                    $scope.messages.push("Muster successfully submitted.")
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {

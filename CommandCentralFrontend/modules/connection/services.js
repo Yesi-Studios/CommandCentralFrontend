@@ -105,10 +105,8 @@ angular.module('Connection')
         }
 
         service.RequestFromBackend = function (endpoint, params, success, error) {
-            console.log(params);
             var reqData = { 'apikey': service.GetAPIKey() };
             for (var attrname in params) { reqData[attrname] = params[attrname]; } // Merge params into our reqData
-            console.log(reqData);
 
             var serviceurl = service.GetBackendURL() + "/" + endpoint; // Make the url we need
 
@@ -126,7 +124,6 @@ angular.module('Connection')
                 success(JSON.parse(response.data));
             },
             function (response) {
-                console.log(response)
                 if (response.statusText == "") {
                     error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
                 } else {
