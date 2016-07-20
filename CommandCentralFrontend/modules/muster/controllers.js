@@ -13,6 +13,8 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
     $scope.errors = [];
     $scope.messages = [];
 
+    var originalMusterList = [];
+
     // The default sorting key
     $scope.orderKey = "Division";
     $scope.selectedDivision = "All";
@@ -55,6 +57,15 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
 
             $scope.displaySailorsList = response.ReturnValue.Musters;
             $scope.allSailorsList = response.ReturnValue.Musters;
+
+
+            for (var i in $scope.displaySailorsList) {
+                originalMusterList[i] = {
+                    "CurrentMusterStatus": {
+                        "MusterStatus": $scope.displaySailorsList[i].CurrentMusterStatus.MusterStatus
+                        }
+                }
+            }
         },
         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
         function (response) {
@@ -66,14 +77,15 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
     $scope.submitMuster = function (musterList) {
         var dtoMuster = {};
         for (var i = 0; i < musterList.length; i++) {
-            if (musterList[i].CurrentMusterStatus.MusterStatus != null) {
+            if (musterList[i].CurrentMusterStatus.MusterStatus != null && musterList[i].CurrentMusterStatus.MusterStatus != originalMusterList[i].CurrentMusterStatus.MusterStatus) {
                 dtoMuster[musterList[i].Id] = musterList[i].CurrentMusterStatus.MusterStatus;
             }
         }
-
+        
         $scope.messages = [];
         $scope.errors = [];
-
+        console.log(dtoMuster);
+        if (JSON.stringify(dtoMuster) === JSON.stringify({})) { $scope.errors.push("No muster records altered"); return;}
         MusterService.SubmitMuster(dtoMuster,
             function (response) {
                 $scope.messages.push("Muster successfully submitted.")
@@ -102,78 +114,33 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
     $scope.musterDate.setDate($scope.musterDate.getDate() - 1);
 
     $scope.getMuster = function (musterDate) {
-        MusterService.LoadMusterByDay(musterDate, function (response) {
-
-        },
+        $scope.errors = [];
+        MusterService.LoadMusterByDay(musterDate,
+            function (response) {
+                if (response.ReturnValue.length == 0) {
+                    $scope.errors.push("No muster records for that date.");
+                } else {
+                    $scope.command = {
+                        "name": response.ReturnValue[1].Command,
+                        "departments": {}
+                    }
+                    for (var i in response.ReturnValue) {
+                        var record = response.ReturnValue[i];
+                        if (!$scope.command.departments[record.Department]) {
+                            $scope.command.departments[record.Department] = {};
+                        }
+                        if (!$scope.command.departments[record.Department][record.Division]) {
+                            $scope.command.departments[record.Department][record.Division] = [];
+                        }
+                        $scope.command.departments[record.Department][record.Division].push(record);
+                    }
+                }
+            },
         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
         function (response) {
             ConnectionService.HandleServiceError(response, $scope, $location);
         }
         );
-    };
-
-    $scope.command = {
-        "name": "NIOC GA",
-        "departments":
-            {
-                "N0":
-                    {
-                        "N0":
-                            [
-                                {
-                                    "Musteree": {
-                                        "Id": "263e1f86-4055-4191-8601-08fc69a3c26f",
-                                        "FriendlyName": "CTI Atwood, Daniel "
-                                    },
-                                    "Musterer": {
-                                        "Id": "3858e7df-7213-4789-b870-893b7997f4d8",
-                                        "FriendlyName": "CTI McLean, Angus "
-                                    },
-                                    "MusterStatus": "Dead",
-                                    "SubmitTime": "2016-07-20T12:59:49",
-                                },
-                                {
-                                    "Musteree": {
-                                        "Id": "263e1f86-4055-4191-8601-08fc69a3c26f",
-                                        "FriendlyName": "CTI Atwood, Daniel "
-                                    },
-                                    "Musterer": {
-                                        "Id": "3858e7df-7213-4789-b870-893b7997f4d8",
-                                        "FriendlyName": "CTI McLean, Angus "
-                                    },
-                                    "MusterStatus": "Dead",
-                                    "SubmitTime": "2016-07-20T12:59:49",
-                                }
-                            ]
-                    },
-                "N7":
-                    {
-                        "N75":
-                            [
-                                {
-                                    "Musteree": {
-                                        "Id": "263e1f86-4055-4191-8601-08fc69a3c26f",
-                                        "FriendlyName": "CTI Atwood, Daniel "
-                                    },
-                                    "Musterer": {
-                                        "Id": "3858e7df-7213-4789-b870-893b7997f4d8",
-                                        "FriendlyName": "CTI McLean, Angus "
-                                    },
-                                    "MusterStatus": "Dead",
-                                    "SubmitTime": "2016-07-20T12:59:49",
-                                },
-                                {
-                                    "Musteree": {
-                                        "Id": "263e1f86-4055-4191-8601-08fc69a3c26f",
-                                        "FriendlyName": "CTI Atwood, Daniel "
-                                    },
-                                    "Musterer": null,
-                                    "MusterStatus": "Dead",
-                                    "SubmitTime": "2016-07-20T12:59:49",
-                                }
-                            ]
-                    }
-            }
     };
 }
 ]);

@@ -96,7 +96,6 @@ angular.module('Home')
             newsItemDTO.Paragraphs = text.match(/[^\r\n]+/g);
             newsItemDTO.Title = newsItem.Title;
             newsItemDTO.NewsItemId = newsItem.Id;
-            console.log(newsItem.Id);
             HomeService.UpdateNewsItem(newsItemDTO,
                 function (response) {
                     $scope.dataLoading = false;
