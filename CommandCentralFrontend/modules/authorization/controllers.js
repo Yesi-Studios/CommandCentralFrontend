@@ -58,7 +58,7 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
                         AuthorizationService.UpdateUserPermissionGroups($routeParams.id, groupIDs,
                             function (response) {
                                 $scope.messages.push('Permissions successfully updated.');
-                                if (!response.ReturnValue.WasSelf) {
+                                if (response.ReturnValue.WasSelf) {
                                     ConnectionService.AddLoginError("Your permissions have changed. Please re-login.");
                                     ConnectionService.ClearCredentials();
                                     $location.path('/login');
