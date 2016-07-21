@@ -58,6 +58,13 @@
                             <li><a href="#/searchbyfield" ng-click="resetPIIBanner()">Search by Field</a></li>
                         </ul>
                     </li>
+                    <li uib-dropdown ng-class="{ active: isActive('/muster') || isActive('/muster/archive')}">
+                        <a id="muster-dropdown" uib-dropdown-toggle href>Muster<span class="caret"></span></a>
+                        <ul uib-dropdown-menu aria-labelledby="muster-dropdown" class="dropdown-menu">
+                            <li><a href="#/muster" ng-click="resetPIIBanner()">Today's Muster</a></li>
+                            <li><a href="#/muster/archive" ng-click="resetPIIBanner()">Muster Archive</a></li>
+                        </ul>
+                    </li>
                     <li ng-if="canCreatePerson()"><a href="#/createuser">Create User <span class="glyphicon glyphicon-plus"></span></a></li>
 
                 </ul>
