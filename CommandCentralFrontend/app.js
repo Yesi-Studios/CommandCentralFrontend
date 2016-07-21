@@ -1,22 +1,27 @@
 'use strict';
 
 // declare modules
-angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles']);
-angular.module('Home', ['Authentication', 'pdf']);
+angular.module('Connection', []);
+angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles', 'Connection']);
+angular.module('Home', ['Authentication', 'pdf', 'Connection']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
-angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask']);
-angular.module('Authorization', ['Authentication']);
-angular.module('Search', ['Authentication', 'Authorization']);
+angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask', 'Connection']);
+angular.module('Authorization', ['Authentication', 'Connection']);
+angular.module('Search', ['Authentication', 'Authorization', 'Connection']);
+angular.module('Muster', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
+
 angular.module('Modals', ['angularModalService']);
 
 angular.module('CommandCentral', [
     'Authentication',
 	'Authorization',
+    'Connection',
     'Home',
 	'Navigation',
 	'Profiles',
 	'Search',
     'Modals',
+    'Muster',
     'angularModalService',
     'ngRoute',
     'ngStorage',
@@ -42,6 +47,16 @@ angular.module('CommandCentral', [
         .when('/createnews', {
             controller: 'CreateNewsController',
             templateUrl: 'modules/home/views/createnews.html'
+        })
+
+        .when('/muster', {
+            controller: 'MusterController',
+            templateUrl: 'modules/muster/views/muster.html'
+        })
+
+        .when('/muster/archive', {
+            controller: 'MusterArchiveController',
+            templateUrl: 'modules/muster/views/archive.html'
         })
 
         .when('/updatenews/:id', {
@@ -113,8 +128,8 @@ angular.module('CommandCentral', [
         .otherwise({ redirectTo: '/' });
 }])
  
-.run(['$rootScope', '$location', '$localStorage', '$http', 'AuthenticationService',
-    function ($rootScope, $location, $localStorage, $http, AuthenticationService) {
+.run(['$rootScope', '$location', '$localStorage', '$http', 'ConnectionService',
+    function ($rootScope, $location, $localStorage, $http, ConnectionService) {
 		// keep user logged in after page refresh
         $rootScope.globals = $localStorage.globals || {};
         if ($rootScope.globals.currentUser) {
@@ -131,7 +146,7 @@ angular.module('CommandCentral', [
 
             // redirect to login page if not logged in
             if ($location.path().indexOf('/login') == -1 && $location.path() !== '/resetlogin' && $location.path() !== '/register' && $location.path().indexOf('/finishregistration') == -1 && $location.path() !== '/forgotpassword' && $location.path().indexOf('/finishreset') == -1 && !$rootScope.globals.currentUser) {
-                AuthenticationService.AddLoginError("You must log in to see that page");
+                ConnectionService.AddLoginError("You must log in to see that page");
 				$location.path('/login');
             }
 			

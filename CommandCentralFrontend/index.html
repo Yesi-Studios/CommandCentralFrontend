@@ -1,129 +1,126 @@
 ﻿<!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8" />
+<head>
+    <meta charset="utf-8" />
 
-		<link rel="stylesheet" href="libs/bootstrap.min.css" />
-		<link rel="stylesheet" href="libs/bootstrap-theme.min.css" />		
-		<link rel="stylesheet" href="css/style.css" />
-		<link rel="icon" href="/favicon.ico" type="image/x-icon">
-	</head>
+    <link rel="stylesheet" href="libs/bootstrap.min.css" />
+    <link rel="stylesheet" href="libs/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
 
-	<body ng-app="CommandCentral">
+<body ng-app="CommandCentral">
 
-		<!-- BEGIN BODY HEAD -->
-		<div class="container-fluid" id="publicdiv">
-			<div class="row header_color">
-				<div class="col-xs-12 col-md-8 col-sm-8">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tbody>
-							<tr>
+    <!-- BEGIN BODY HEAD -->
+    <div class="container-fluid" id="publicdiv">
+        <div class="row header_color">
+            <div class="col-xs-12 col-md-8 col-sm-8">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
 
-								<td width="100" align="center"><img src="img/niocga.png" class="command_logo"></td>
-								<td valign="middle">
-									<span class="header_left">
-										<span class="header_txt">
-											NIOC Georgia<br>
-											Command Central
-										</span>
-									</span>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="clearfix visible-xs"></div>
-				<div class="col-md-4  header_right visible-lg visible-md visible-sm visible-xs">
-					<span class="header_small_title pull-right" ng-show="containsPII">FOUO Privacy Sensitive</span><br />
-					<span class="header_txt pull-right">Version 0.9b</span>
-				</div>
-			</div>
-		</div>
-		<!-- END BODY HEAD -->
-		
-		<!-- BEGIN NAV BAR -->
-		<div ng-show="showNav" class="container">
-			<div class="navbar navbar-default" id="mainNav" ng-controller="NavController">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#/">Command Central</a>
-				</div>
-				<ul class="nav navbar-nav">
-					<li ng-class="{ active: isActive('/')}"><a href="#/" ng-click="resetPIIBanner()">Home</a></li>
-					<li ng-class="{ active: isMyProfileActive()}"><a ng-href="{{getMyProfileURL()}}" ng-click="resetPIIBanner()">My Profile</a></li>
-					<li uib-dropdown ng-class="{ active: isActive('/search') || isActive('/searchbyfield')}">
-						<a id="search-dropdown" uib-dropdown-toggle href>Search<span class="caret"></span></a>
-						<ul uib-dropdown-menu aria-labelledby="search-dropdown" class="dropdown-menu">
-							<li><a href="#/search" ng-click="resetPIIBanner()">Search</a></li>
-							<li><a href="#/searchbyfield" ng-click="resetPIIBanner()">Search by Field</a></li>
-						</ul>
-					</li>
-                    <li ng-if="canCreatePerson()"><a href="#/createuser">Create User <span class="glyphicon glyphicon-plus"></span></a></li>
-					
-				</ul>
-				
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="" ng-click="logout()">Logout</a></li>
-				</ul>
-			</div>
-			</div>
-		</div>
-		<!-- END NAV BAR -->
-		
-		<!-- MAIN BODY VIEW -->
-		<div class="container">
-			<div ng-view></div>
+                            <td width="100" align="center"><img src="img/niocga.png" class="command_logo"></td>
+                            <td valign="middle">
+                                <span class="header_left">
+                                    <span class="header_txt">
+                                        NIOC Georgia<br>
+                                        Command Central
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clearfix visible-xs"></div>
+            <div class="col-md-4  header_right visible-lg visible-md visible-sm visible-xs">
+                <span class="header_small_title pull-right" ng-show="containsPII">FOUO Privacy Sensitive</span><br />
+                <span class="header_txt pull-right">Version 0.9b</span>
+            </div>
         </div>
-		
-		
-		<br>
-		
-
-        <div class="container" ng-controller="ModalServiceController">
-            <div class="row">
-                <div class="col-xs-offset-3 col-xs-6 text-center">
-                    <a href ng-click="show()">Re-show PII info</a>
+    </div>
+    <!-- END BODY HEAD -->
+    <!-- BEGIN NAV BAR -->
+    <div ng-show="showNav" class="container">
+        <div class="navbar navbar-default" id="mainNav" ng-controller="NavController">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/">Command Central</a>
                 </div>
+                <ul class="nav navbar-nav">
+                    <li ng-class="{ active: isActive('/')}"><a href="#/" ng-click="resetPIIBanner()">Home</a></li>
+                    <li ng-class="{ active: isMyProfileActive()}"><a ng-href="{{getMyProfileURL()}}" ng-click="resetPIIBanner()">My Profile</a></li>
+                    <li uib-dropdown ng-class="{ active: isActive('/search') || isActive('/searchbyfield')}">
+                        <a id="search-dropdown" uib-dropdown-toggle href>Search<span class="caret"></span></a>
+                        <ul uib-dropdown-menu aria-labelledby="search-dropdown" class="dropdown-menu">
+                            <li><a href="#/search" ng-click="resetPIIBanner()">Search</a></li>
+                            <li><a href="#/searchbyfield" ng-click="resetPIIBanner()">Search by Field</a></li>
+                        </ul>
+                    </li>
+                    <li uib-dropdown ng-class="{ active: isActive('/muster') || isActive('/muster/archive')}">
+                        <a id="muster-dropdown" uib-dropdown-toggle href>Muster<span class="caret"></span></a>
+                        <ul uib-dropdown-menu aria-labelledby="muster-dropdown" class="dropdown-menu">
+                            <li><a href="#/muster" ng-click="resetPIIBanner()">Today's Muster</a></li>
+                            <li><a href="#/muster/archive" ng-click="resetPIIBanner()">Muster Archive</a></li>
+                        </ul>
+                    </li>
+                    <li ng-if="canCreatePerson()"><a href="#/createuser">Create User <span class="glyphicon glyphicon-plus"></span></a></li>
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="" ng-click="logout()">Logout</a></li>
+                </ul>
             </div>
         </div>
-        <!--<div class="container" ng-controller="SetPortController">
-            <div class="row">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label for="portInput">Current URL: {{currentURL}}</label>
-                        <input type="text" class="form-control" id="portInput" placeholder="1113" ng-model="newPort">
-                        <button type="submit" class="btn btn-default" ng-click="setPort(newPort)">Set Port</button>
-                    </div>
-                </form>
-            </div>
-        </div>-->
+    </div>
+    <!-- END NAV BAR -->
+    <!-- MAIN BODY VIEW -->
+    <div class="container">
+        <div ng-view></div>
+    </div>
 
-            <script src="libs/jquery-2.2.1.min.js"></script>
-            <script src="libs/angular.min.js"></script>
-            <script src="libs/bootstrap.min.js"></script>
-            <script src="libs/angular-pdf.min.js"></script>
-            <script src="libs/angular-route.min.js"></script>
-            <script src="libs/angular-animate.min.js"></script>
-            <script src="libs/mask.min.js"></script>
-            <script src="libs/angular-touch.min.js"></script>
-            <script src="libs/angular-modal-service.js"></script>
-            <script src="libs/ngStorage.min.js"></script>
-            <script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
-            <script src="app.js"></script>
-            <script src="modules/authentication/services.js"></script>
-            <script src="modules/authentication/controllers.js"></script>
-            <script src="modules/home/controllers.js"></script>
-            <script src="modules/home/services.js"></script>
-            <script src="modules/navigation/controllers.js"></script>
-            <script src="modules/navigation/services.js"></script>
-            <script src="modules/profile/controllers.js"></script>
-            <script src="modules/profile/services.js"></script>
-            <script src="modules/search/controllers.js"></script>
-            <script src="modules/search/services.js"></script>
-            <script src="modules/modals/controllers.js"></script>
-            <script src="modules/authorization/services.js"></script>
-            <script src="modules/authorization/controllers.js"></script>
+
+    <br>
+
+
+    <div class="container" ng-controller="ModalServiceController">
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6 text-center">
+                <a href ng-click="show()">Re-show PII info</a>
+            </div>
+        </div>
+    </div>
+    <script src="libs/jquery-2.2.1.min.js"></script>
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/bootstrap.min.js"></script>
+    <script src="libs/angular-pdf.min.js"></script>
+    <script src="libs/angular-route.min.js"></script>
+    <script src="libs/angular-animate.min.js"></script>
+    <script src="libs/mask.min.js"></script>
+    <script src="libs/angular-touch.min.js"></script>
+    <script src="libs/angular-modal-service.js"></script>
+    <script src="libs/ngStorage.min.js"></script>
+    <script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
+    <script src="app.js"></script>
+    <script src="modules/authentication/services.js"></script>
+    <script src="modules/authentication/controllers.js"></script>
+    <script src="modules/home/controllers.js"></script>
+    <script src="modules/home/services.js"></script>
+    <script src="modules/navigation/controllers.js"></script>
+    <script src="modules/navigation/services.js"></script>
+    <script src="modules/profile/controllers.js"></script>
+    <script src="modules/profile/services.js"></script>
+    <script src="modules/search/controllers.js"></script>
+    <script src="modules/search/services.js"></script>
+    <script src="modules/modals/controllers.js"></script>
+    <script src="modules/authorization/services.js"></script>
+    <script src="modules/authorization/controllers.js"></script>
+    <script src="modules/connection/services.js"></script>
+    <script src="modules/connection/controllers.js"></script>
+    <script src="modules/muster/services.js"></script>
+    <script src="modules/muster/controllers.js"></script>
 </body>
 
 </html>

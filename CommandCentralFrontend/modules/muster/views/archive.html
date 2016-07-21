@@ -1,0 +1,59 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
+<div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">{{message}}</div>
+<div class="content_panel">
+    <div class="row">
+        <div class="form-group text-center">
+            <div class="col-xs-offset-4 col-xs-4">
+                Select Date:
+                <ng-custom-date-picker name="musterDate" ng-model="musterDate" /><br/>
+                <button class="btn btn-primary" ng-click="getMuster(musterDate)">Get Muster</button><br/>
+            </div>
+        </div>
+    </div><br/>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel-group" id="musterRecords" role="tablist" aria-multiselectable="true">
+                <div ng-repeat="(departmentName, department) in command['departments']" class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="department{{departmentName}}Heading">
+                        <h4 class="panel-title">
+                            <button data-toggle="collapse" data-target="#department{{departmentName}}" class="btn btn-default">{{departmentName}}</button>
+                        </h4>
+                    </div>
+                    <div id="department{{departmentName}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="department{{departmentName}}Heading">
+                        <div class="panel-body">
+                            <div ng-repeat="(divisionName, division) in department" class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="division{{departmentName}}{{divisionName}}Heading">
+                                    <h4 class="panel-title">
+                                        <button data-toggle="collapse" data-target="#division{{departmentName}}{{divisionName}}" class="btn btn-default">{{divisionName}}</button>
+                                    </h4>
+                                </div>
+                                <div id="division{{departmentName}}{{divisionName}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="division{{departmentName}}{{divisionName}}Heading">
+                                    <div class="panel-body">
+                                        <table class="table-striped col-xs-12">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Muster Status</th>
+                                                    <th>Mustered By</th>
+                                                    <th>Muster Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="record in division track by $index" class="form-group">
+                                                    <td>{{record.Musteree.FriendlyName}}<a ng-if="record.Musteree" ng-href="#/profile/{{record.Musteree.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                                    <td>{{record.MusterStatus}}</td>
+                                                    <td>{{record.Musterer.FriendlyName}}<span ng-if="!record.Musterer">Not mustered, set at finalization.</span><a ng-if="record.Musterer" ng-href="#/profile/{{record.Musterer.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                                    <td>{{record.SubmitTime | date:'short'}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

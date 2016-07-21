@@ -3,33 +3,21 @@
 angular.module('Muster')
  
 .factory('MusterService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService',
-    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService) {
+    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
+    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
-        var apikey = AuthenticationService.GetAPIKey();
-        var baseurl = AuthenticationService.GetBackendURL();
-		
-        service.DoSimpleSearch = function (terms, success, error) {
-			var reqData = {'apikey' : apikey, 'authenticationtoken' : AuthenticationService.GetAuthToken(), 'searchterm':terms};
-			var serviceurl =  AuthenticationService.GetBackendURL() + "/SimpleSearchPersons";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					success(returnContainer);
-				},
-				error: function (response, status, errortext) {
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    error(returnContainer);
-				}
-			});
+        
+        service.LoadTodaysMuster = function (success, error) {
+            return ConnectionService.RequestFromBackend('LoadMusterablePersonsForToday', { 'authenticationtoken': AuthenticationService.GetAuthToken() }, success, error);
+        };
 
-        };		
-		
+        service.SubmitMuster = function (musterSubmissions, success, error) {
+            return ConnectionService.RequestFromBackend('SubmitMuster', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'mustersubmissions': musterSubmissions }, success, error);
+        };
+
+        service.LoadMusterByDay = function (musterDate, success, error) {
+            return ConnectionService.RequestFromBackend('LoadMusterRecordsByMusterDay', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'musterdate': musterDate }, success, error);
+        };
+
         return service;
     }]);

@@ -1,31 +1,46 @@
 <div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
+<div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">{{message}}</div>
 <div class="content_panel">
 	<div class="row">
 		<div class="col-xs-offset-1 col-xs-10">
 			<div class="form-group">
-                <select name="divisionDropdown" id="divisionDropdown" class="form-control" ng-model="selectedDivision" ng-options="divisions"></select>
+                <select name="divisionDropdown" id="divisionDropdown" class="form-control" ng-model="selectedDivision" ng-change="setDivision(selectedDivision)">
+                    <option value="All">All</option>
+                    <option ng-repeat="o in divisions track by $index" ng-value="o">{{o}}</option>
+                </select>
                 <label for="divisionDropdown">Select group to show.</label>
 			</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-12">
-			<h3 class="text-center" ng-show="results">Showing {{displaySailorsList.length}} sailors in {{selectedDivision}}.</h3>
-			<h4 class="text-center" ng-show="results">Click a column to sort by it.</h4>
-			<table ng-show="results" class="table-striped col-xs-12">
+			<h3 class="text-center" ng-show="displaySailorsList">Showing {{displaySailorsList.length}} sailors in {{selectedDivision}}.</h3>
+			<h4 class="text-center" ng-show="displaySailorsList">Click a column to sort by it.</h4>
+			<table ng-show="displaySailorsList" class="table-striped col-xs-12">
 				<thead>
 					<tr>
-						<th ng-repeat="field in fields" ng-click="setOrder(field)"><button ng-class="{'btn-primary': orderKey==field || orderKey=='-'+field}">{{field}}<span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-'+field"></span><span class="glyphicon glyphicon-chevron-down" ng-if="orderKey==field"></span></button></th>
-						<th>Profile</th>
+						<th ng-repeat="field in fields track by $index" ng-click="setOrder(field)"><button ng-class="{'btn-primary': orderKey==field || orderKey=='-'+field}">{{field}}<span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-'+field"></span><span class="glyphicon glyphicon-chevron-down" ng-if="orderKey==field"></span></button></th>
+						<th>Muster Status</th>
+                        <th>Profile</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="sailor in sailors | orderBy: orderKey" ng-click="goToProfile(result.Id)">
-						<td ng-repeat="field in fields">{{sailor[field]}}</td>
+					<tr ng-repeat="sailor in displaySailorsList | orderBy: orderKey track by $index" ng-click="goToProfile(result.Id)" class="form-group">
+						<td ng-repeat="field in fields track by $index">{{sailor[field]}}</td>
+                        <td>
+                            <select name="{{sailor.Id}}MusterStatus" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus">
+                                <option ng-repeat="o in musterStatuses track by $index" ng-value="o">{{o}}</option>
+                            </select>
+                        </td>
 						<td><a ng-href="#/profile/{{sailor.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
+    <div class="row">
+        <div class="col-xs-offset-10 col-xs-2">
+            <button class="btn btn-primary" type="button" ng-click="submitMuster(displaySailorsList)">Save</button>
+        </div>
+    </div>
 </div>

@@ -3,229 +3,36 @@
 angular.module('Authentication')
  
 .factory('AuthenticationService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout',
-    function (Base64, $http, $localStorage, $rootScope, $timeout) {
+    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'ConnectionService',
+    function (Base64, $http, $localStorage, $rootScope, $timeout, ConnectionService) {
         var service = {};
-        var apikey = "d7d82136-46ff-4047-b202-957c67fdcedc";//"5c96c9d9-0975-4936-aecf-7fae269a7b15";//"ddaf2d5f-3014-4a60-9513-2e0715df2c02";//"768482c5-e5fb-43f2-a7f7-10c2b961fad3";//"0ab78de1-b5b5-4a07-a272-219cbd103436"; //"f6ec2c55-7571-43bb-8a6e-f1eccc76244b"; //*/"33e0e8d0-0d1c-4880-9ba7-069eea5d1210"; //"C7C6A39A-C75F-433E-A808-E8A8922ED2FC" Slightly old API Key    // "A114899B-DC0B-4A71-8BB8-9C65B5748B6C" Old API Key
-        //var backendURL = "http://73.20.152.170";
-        var backendURL = "http://147.51.62.19";
-        var backendPort;
-        if ($localStorage.backendPort) {
-            backendPort = $localStorage.backendPort;
-        } else {
-            backendPort = "1113";
-        }
-        var baseurl = backendURL + ":" + backendPort;
 
-        service.GetBackendURL = function () {
-            return backendURL + ":" + backendPort;
-        }
-
-        service.SetBackendPort = function (portnumber) {
-            backendPort = portnumber;
-            baseurl = backendURL + ":" + backendPort;
-            $localStorage.backendPort = portnumber;
-        }
-
-        service.GetAPIKey = function () {
-            return apikey;
-        }		
-		
         service.Login = function (username, password, success, error) {
-			var reqData = {'username' : username, 'password': password, 'apikey' : apikey};
-			var serviceurl =  service.GetBackendURL() + "/Login";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					success(returnContainer);
-				},
-				error: function (response, status, errortext) {
-				    if (response.readyState != 4) {
-				        error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
-				    } else {
-				        var returnContainer = JSON.parse(response.responseJSON);
-				        error(returnContainer);
-				    }
-				}
-			});
-		
-            /* Dummy authentication for testing, uses $timeout to simulate api call
-             ----------------------------------------------
-            $timeout(function(){
-                var response = { success: username === 'test' && password === 'test' };
-                if(!response.success) {
-                    response.message = 'Username or password is incorrect';
-                }
-                callback(response);
-            }, 1000);*/
-
+            return ConnectionService.RequestFromBackend('Login', { 'username': username, 'password': password }, success, error);
         };
 		
-		service.AddLoginMessage = function(loginMessage) {
-			if($rootScope.globals.loginMessages){
-				$rootScope.globals.loginMessages.push(loginMessage);
-			} else {
-				$rootScope.globals.loginMessages = [loginMessage];
-			}
-		}
-		
-		service.ClearLoginMessages = function(){
-			$rootScope.globals.loginMessages = [];
-		}
-		
-		service.GetLoginMessages = function(){
-			return $rootScope.globals.loginMessages;
-		}
-		
-		service.AddLoginError = function(loginError) {
-			if($rootScope.globals.loginErrors){
-				$rootScope.globals.loginErrors.push(loginError);
-			} else {
-				$rootScope.globals.loginErrors = [loginError];
-			}
-		}
-		
-		service.ClearLoginErrors = function(){
-			$rootScope.globals.loginErrors = [];
-		}
-		
-		service.GetLoginErrors = function(){
-			return $rootScope.globals.loginErrors;
-		}
-		
-		
 		service.Logout = function (success, error) {
-			var reqData = {'authenticationtoken': $localStorage.globals.currentUser.authtoken, 'apikey' : apikey};
-			var serviceurl =  service.GetBackendURL() + "/Logout";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					success(returnContainer);
-				},
-				error: function (response, status, errortext) {
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    error(returnContainer);
-				}
-			});
+		    return ConnectionService.RequestFromBackend('Logout', { 'authenticationtoken': service.GetAuthToken()}, success, error);
 		};
 		
 		service.FinishRegistration = function (username, password, id, success, error) {
-			var reqData = {'username' : username, 'password' : password, 'accountconfirmationid' : id, 'apikey' : apikey};
-			var serviceurl =  service.GetBackendURL() + "/CompleteRegistration";
-			
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					success(returnContainer);
-				},
-				error: function (response, status, errortext) {
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    error(returnContainer);
-				}
-			});
+		    return ConnectionService.RequestFromBackend('CompleteRegistration', { 'username': username, 'password': password, 'accountconfirmationid': id }, success, error);
 		};
 
 		service.BeginRegistration = function (ssn, success, error) {
-		    var reqData = { 'ssn': ssn, 'apikey': apikey };
-		    var serviceurl = service.GetBackendURL() + "/BeginRegistration";
-		    $.ajax(
-			{
-			    url: serviceurl,
-			    type: "POST",
-			    crossDomain: true,
-			    data: JSON.stringify(reqData),
-			    dataType: "json",
-			    success: function (response) {
-			        var returnContainer = JSON.parse(response);
-			        success(returnContainer);
-			    },
-			    error: function (response, status, errortext) {
-			        var returnContainer = JSON.parse(response.responseJSON);
-			        error(returnContainer);
-			    }
-			});
+		    return ConnectionService.RequestFromBackend('BeginRegistration', { 'ssn': ssn }, success, error);
 		};
 
 		service.CreateUser = function (person, success, error) {
-		    var reqData = { 'person': person, 'apikey': apikey, 'authenticationtoken': service.GetAuthToken()};
-		    var serviceurl = service.GetBackendURL() + "/CreatePerson";
-		    $.ajax(
-			{
-			    url: serviceurl,
-			    type: "POST",
-			    crossDomain: true,
-			    data: JSON.stringify(reqData),
-			    dataType: "json",
-			    success: function (response) {
-			        var returnContainer = JSON.parse(response);
-			        success(returnContainer);
-			    },
-			    error: function (response, status, errortext) {
-			        var returnContainer = JSON.parse(response.responseJSON);
-			        error(returnContainer);
-			    }
-			});
+		    return ConnectionService.RequestFromBackend('CreatePerson', { 'authenticationtoken': service.GetAuthToken(), 'person': person }, success, error);
 		};
 		
 		service.ForgotPassword = function (email, ssn, success, error) {
-			var reqData = {'email' : email, 'ssn' : ssn, 'apikey' : apikey};
-			var serviceurl =  service.GetBackendURL() + "/BeginPasswordReset";
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					success(returnContainer);
-				},
-				error: function (response, status, errortext) {
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    error(returnContainer);
-				}
-			});
+		    return ConnectionService.RequestFromBackend('BeginPasswordReset', { 'email': email, 'ssn': ssn }, success, error);
 		};
 		
 		service.FinishReset = function (password, id, success, error) {
-			var reqData = {'Password' : password, 'PasswordResetid' : id, 'apikey' : apikey};
-			var serviceurl =  service.GetBackendURL() + "/CompletePasswordReset";
-			
-			$.ajax(
-			{
-				url: serviceurl,
-				type: "POST",
-				crossDomain: true,
-				data: JSON.stringify(reqData),
-				dataType: "json",
-				success: function (response) {
-					var returnContainer = JSON.parse(response);
-					success(returnContainer);
-				},
-				error: function (response, status, errortext) {
-				    var returnContainer = JSON.parse(response.responseJSON);
-				    error(returnContainer);
-				}
-			});
+		    return ConnectionService.RequestFromBackend('CompletePasswordReset', { 'PasswordResetid': id, 'Password': password }, success, error);
 		};
 		
         service.SetCredentials = function (username, authtoken, userID) {
