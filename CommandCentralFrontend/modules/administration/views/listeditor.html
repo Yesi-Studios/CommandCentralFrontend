@@ -1,0 +1,24 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
+<div ng-repeat="message in messages" class="alert alert-success">{{message}}</div>
+<div class="content_panel">
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-8 text-center">
+            <h4>Editing lists</h4>
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-xs-4">
+            <div class="alert alert-info">Lists:</div>
+            <select class="form-control" id="allLists" ng-model="selectedList" ng-options="o for o in listNames track by $index"></select>
+        </div>
+        <div class="col-xs-5">
+            <div class="alert alert-info">Items in this list:</div>
+            <select class="form-control" id="listItems" ng-model="selectedItem" ng-options="o as o.Value for o in lists[selectedList]"></select>
+        </div>
+	</div>
+    <div class="row">
+        <div class="col-xs-offset-5 col-xs-2 text-center">
+            <button class="btn btn-primary" ng-click="updatePermissions()" role="button">Update Permissions</button>
+        </div>
+    </div>
+</div>

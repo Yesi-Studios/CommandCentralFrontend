@@ -64,6 +64,7 @@ angular.module('Administration')
                     $scope.lists[list] = $.grep($scope.lists[list], function (e) {
                         return e.Id != listitem.Id;
                     });
+                    $scope.lists.push({ "Id": listitem.Id, "Value": value, "Description": description });
                     $scope.messages.push("Item successfully updated.");
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.

@@ -3,8 +3,8 @@
 angular.module('Administration')
  
 .factory('AdministrationService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AdministrationService', 'ConnectionService',
-    function (Base64, $http, $localStorage, $rootScope, $timeout, AdministrationService, ConnectionService) {
+    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'ConnectionService',
+    function (Base64, $http, $localStorage, $rootScope, $timeout, ConnectionService) {
         var service = {};
 
         service.LoadLists = function (success, error) {
