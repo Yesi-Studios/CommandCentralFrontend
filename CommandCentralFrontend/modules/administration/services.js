@@ -7,8 +7,8 @@ angular.module('Administration')
     function (Base64, $http, $localStorage, $rootScope, $timeout, ConnectionService) {
         var service = {};
 
-        service.LoadLists = function (success, error) {
-            return ConnectionService.RequestFromBackend('LoadLists', {}, success, error);
+        service.LoadEditableLists = function (success, error) {
+            return ConnectionService.RequestFromBackend('LoadEditableLists', {}, success, error);
         };
 
         service.AddListItem = function (listname, value, description, success, error) {

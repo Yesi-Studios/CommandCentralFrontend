@@ -10,7 +10,7 @@ angular.module('Administration')
         $scope.errors = [];
 
         $scope.loadLists = function () {
-                AdministrationService.LoadLists(
+            AdministrationService.LoadEditableLists(
                 function (response) {
                     $scope.errors = [];
                     $scope.dataLoading = false;
@@ -73,6 +73,8 @@ angular.module('Administration')
                 }
             );
         }
+
+        $scope.listItems = "o as o.Value for o in lists[selectedList]"
 
         $scope.loadLists();
 

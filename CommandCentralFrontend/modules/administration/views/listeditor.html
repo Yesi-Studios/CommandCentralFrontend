@@ -13,7 +13,7 @@
         </div>
         <div class="col-xs-5">
             <div class="alert alert-info">Items in this list:</div>
-            <select class="form-control" id="listItems" ng-model="selectedItem" ng-options="o as o.Value for o in lists[selectedList]"></select>
+            <select class="form-control" id="listItems" ng-model="selectedItem" ng-options="{{ listItems }}"></select>
         </div>
 	</div>
     <div class="row">
