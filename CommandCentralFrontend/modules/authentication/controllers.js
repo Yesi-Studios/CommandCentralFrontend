@@ -95,8 +95,8 @@ angular.module('Authentication')
         };
     }])
 .controller('RegisterController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService',
-    function ($scope, $rootScope, $location, AuthenticationService) {
+    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService',
+    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService) {
         // reset login status
         //AuthenticationService.ClearCredentials();
         $scope.accepted = null;
@@ -117,8 +117,8 @@ angular.module('Authentication')
     }])
 
 .controller('FinishRegisterController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService) {
         $scope.finishRegistration = function () {
             $scope.dataLoading = true;
             AuthenticationService.FinishRegistration($scope.username, $scope.password, $routeParams.id,
@@ -135,8 +135,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('ForgotController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService',
-    function ($scope, $rootScope, $location, AuthenticationService) {
+    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService',
+    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService) {
         // reset login status
         // AuthenticationService.ClearCredentials();
 
@@ -175,8 +175,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('CreateUserController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService) {
 
         $scope.errors = [];
         $scope.messages = [];
