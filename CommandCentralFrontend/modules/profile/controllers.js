@@ -27,7 +27,7 @@ angular.module('Profiles')
         */
         $scope.loadProfile = function () {
             $scope.dataLoading = true;
-            $scope.errors = null;
+            $scope.errors = [];
 
             ProfileService.LoadProfile($routeParams.id,
                 function (response) {
