@@ -23,7 +23,9 @@ angular.module('Profiles')
         *
         *   At the same time as we request a lock, we also GetCommands. This gets the structure of all available commands, so
         *   that we can properly prompt the user with the right divisions in departments in commands, e.g., if they select
-        *   10 department at NIOC GA, we know to show them 11, 12, and 13 divisions.
+        *   10 department at NIOC GA, we know to show them 11, 12, and 13 divisions. We also use this information to fill in the command,
+        *   department, and division information in $scope.profileData, since the backend doesn't want to send it through JSON to avoid
+        *   dealing with excessive circular dependancies.
         */
         $scope.loadProfile = function () {
             $scope.dataLoading = true;
