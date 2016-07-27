@@ -103,7 +103,12 @@ angular.module('Profiles')
                         // Give our scope the commands and a function we can use to search inside them
                         $scope.commandList = response.ReturnValue;
                         
-                        $scope.command = $scope.getByName(response.ReturnValue, $scope.profileData.Command);
+                        $scope.command = $scope.getById(response.ReturnValue, $scope.profileData.Command);
+
+                        // Fill in the objects where currently only Ids exist.
+                        $scope.profileData.Command = $scope.command;
+                        $scope.profileData.Department = $scope.getById($scope.profileData.Command.Departments, $scope.profileData.Department);
+                        $scope.profileData.Division = $scope.getById($scope.profileData.Department.Divisions, $scope.profileData.Division);
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {

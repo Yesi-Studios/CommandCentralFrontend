@@ -288,7 +288,7 @@
 						<div class="form-group">
 							<label class="col-xs-2" for="command">Command</label>
 							<div class="col-xs-10">
-								<select class="form-control" id="command" ng-disabled="!canEditPersonField('Command')" ng-show="canReturnPersonField('Command')" ng-model="profileData.Command" ng-options="o as o.Value for o in commandList track by o.Id">
+								<select class="form-control" id="command" ng-disabled="canEditPersonField('Command')" ng-show="canReturnPersonField('Command')" ng-model="profileData.Command" ng-options="o as o.Value for o in commandList track by o.Id">
 								<option></option>
 								</select>
 							</div>
@@ -296,13 +296,13 @@
 						<div class="form-group">
 							<label class="col-xs-2" for="division">Division</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="division" ng-disabled="!canEditPersonField('Division')" ng-show="canReturnPersonField('Division')" ng-model="profileData.Division" ng-options="o as o.Value for o in profileData.Department.Divisions track by o.Id">
+								<select class="form-control" id="division" ng-disabled="canEditPersonField('Division')" ng-show="canReturnPersonField('Division')" ng-model="profileData.Division" ng-options="o as o.Value for o in profileData.Department.Divisions track by o.Id">
 								<option></option>
 								</select>
 							</div>
 							<label class="col-xs-2" for="department">Department</label>
 							<div class="col-xs-4">
-								<select class="form-control" id="department" ng-disabled="!canEditPersonField('Department')" ng-show="canReturnPersonField('Department')" ng-model="profileData.Department" ng-options="o as o.Value for o in profileData.Command.Departments track by o.Id">
+								<select class="form-control" id="department" ng-disabled="canEditPersonField('Department')" ng-show="canReturnPersonField('Department')" ng-model="profileData.Department" ng-options="o as o.Value for o in profileData.Command.Departments track by o.Id">
 								<option></option>
 								</select>
 							</div>
