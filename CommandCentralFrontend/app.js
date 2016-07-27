@@ -7,7 +7,7 @@ angular.module('Home', ['Authentication', 'pdf', 'Connection']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask', 'Connection']);
 angular.module('Authorization', ['Authentication', 'Connection']);
-angular.module('Administration', ['Connection']);
+angular.module('Administration', ['Authentication', 'Connection']);
 angular.module('Search', ['Authentication', 'Authorization', 'Connection']);
 angular.module('Muster', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
 

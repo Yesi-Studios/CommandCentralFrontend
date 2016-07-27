@@ -6,19 +6,44 @@
             <h4>Editing lists</h4>
         </div>
     </div>
-	<div class="row">
-        <div class="col-xs-4">
-            <div class="alert alert-info">Lists:</div>
-            <select class="form-control" id="allLists" ng-model="selectedList" ng-options="o for o in listNames track by $index"></select>
-        </div>
-        <div class="col-xs-5">
-            <div class="alert alert-info">Items in this list:</div>
-            <select class="form-control" id="listItems" ng-model="selectedItem" ng-options="{{ listItems }}"></select>
-        </div>
-	</div>
     <div class="row">
-        <div class="col-xs-offset-5 col-xs-2 text-center">
-            <button class="btn btn-primary" ng-click="updatePermissions()" role="button">Update Permissions</button>
+        <div class="col-xs-6 col-xs-offset-3">
+            <div class="alert alert-info">Lists:</div>
+            <select class="form-control" id="allLists" ng-model="selectedList" ng-options="k as k for (k, v) in lists"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <table id="emails" class="col-xs-10 table-striped contact-table">
+                <thead ng-show="selectedList.length > 0">
+                    <tr>
+                        <th>Value</th>
+                        <th>Description</th>
+                        <th>Save</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="o in lists[selectedList]">
+                        <td><input type="text" class="form-control" ng-model="o.Value" /></tdclass>
+                        <td><input type="text" class="form-control" ng-model="o.Description" /></td>
+                        <td><button type="button" class="btn btn-primary btn-xs" ng-click="updateListItem(selectedList, o)"><span class="glyphicon glyphicon-floppy-disk"></span></button></td>
+                        <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteListItem(o)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-5">
+                            <input type="text" class="form-control" ng-model="newValue" />
+                        </td>
+                        <td class="col-xs-5">
+                            <input type="text" class="form-control" ng-model="newDescription" />
+                        </td>
+                        <td class="col-xs-5">
+                            
+                        </td>
+                        <td><button type="button" class="btn btn-success btn-xs" ng-click="addListItem(selectedList, newValue, newDescription); newValue = '';newDescription =''"><span class="glyphicon glyphicon-plus"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
