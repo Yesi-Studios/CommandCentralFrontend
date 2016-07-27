@@ -29,6 +29,26 @@ angular.module('Profiles')
             $scope.dataLoading = true;
             $scope.errors = [];
 
+            $scope.getByName = function (theThings, thingName) {
+                if (theThings) {
+                    for (var i = 0, len = theThings.length; i < len; i++) {
+                        if (theThings[i].Name === thingName)
+                            return theThings[i] // Return as soon as the object is found
+                    }
+                }
+                return null; // The object was not found
+            };
+
+            $scope.getById = function (theThings, thingId) {
+                if (theThings) {
+                    for (var i = 0, len = theThings.length; i < len; i++) {
+                        if (theThings[i].Id === thingId)
+                            return theThings[i] // Return as soon as the object is found
+                    }
+                }
+                return null; // The object was not found
+            };
+
             ProfileService.LoadProfile($routeParams.id,
                 function (response) {
 
@@ -82,15 +102,7 @@ angular.module('Profiles')
                     function (response) {
                         // Give our scope the commands and a function we can use to search inside them
                         $scope.commandList = response.ReturnValue;
-                        $scope.getByName = function (theThings, thingName) {
-                            if (theThings) {
-                                for (var i = 0, len = theThings.length; i < len; i++) {
-                                    if (theThings[i].Name === thingName)
-                                        return theThings[i] // Return as soon as the object is found
-                                }
-                            }
-                            return null; // The object was not found
-                        };
+                        
                         $scope.command = $scope.getByName(response.ReturnValue, $scope.profileData.Command);
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
