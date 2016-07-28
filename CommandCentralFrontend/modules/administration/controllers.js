@@ -40,10 +40,10 @@ angular.module('Administration')
             );
         }
 
-        $scope.deleteListItem = function (listItem) {
+        $scope.deleteListItem = function (listItem, forceDelete) {
             $scope.errors = [];
             $scope.messages = [];
-            AdministrationService.DeleteListItem(listItem.Id,
+            AdministrationService.DeleteListItem(listItem.Id, forceDelete,
                 function (response) {
                     $scope.loadLists();
                     $scope.messages.push("Item successfully deleted.");

@@ -19,8 +19,8 @@ angular.module('Administration')
             return ConnectionService.RequestFromBackend('EditListItem', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'listname':listname, 'listitemid': listitemid, 'value': value, 'description': description }, success, error);
         };
 
-        service.DeleteListItem = function (listitemid, success, error) {
-            return ConnectionService.RequestFromBackend('DeleteListItem', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'listitemid': listitemid }, success, error);
+        service.DeleteListItem = function (listitemid, forcedelete, success, error) {
+            return ConnectionService.RequestFromBackend('DeleteListItem', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'forcedelete' : forcedelete, 'listitemid': listitemid }, success, error);
         };
 
       

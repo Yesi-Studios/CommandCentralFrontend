@@ -4,23 +4,29 @@
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8 text-center">
             <h4>Editing lists</h4>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Be careful!</strong> Buttons on this page immediately update the database, and actions cannot be undone.
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-6 col-xs-offset-3">
-            <div class="alert alert-info">Lists:</div>
-            <select class="form-control" id="allLists" ng-model="selectedList" ng-options="k as k for (k, v) in lists"></select>
+            <select class="form-control" id="allLists" ng-model="selectedList" ng-options="k as k for (k, v) in lists">
+                <option selected disabled value="">Select a list to edit.</option>
+            </select>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12 text-center">
-            <table id="emails" class="col-xs-10 table-striped contact-table">
-                <thead ng-show="selectedList.length > 0">
+            <table id="emails" class="col-xs-12 table table-striped contact-table">
+                <thead ng-show="selectedList">
                     <tr>
                         <th>Value</th>
                         <th>Description</th>
-                        <th>Save</th>
-                        <th>Delete</th>
+                        <th class="text-center">Save</th>
+                        <th class="text-center">Delete</th>
+                        <th class="text-center">Force</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,19 +34,22 @@
                         <td><input type="text" class="form-control" ng-model="o.Value" /></tdclass>
                         <td><input type="text" class="form-control" ng-model="o.Description" /></td>
                         <td><button type="button" class="btn btn-primary btn-xs" ng-click="updateListItem(selectedList, o)"><span class="glyphicon glyphicon-floppy-disk"></span></button></td>
-                        <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteListItem(o)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                        <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteListItem(o, forceDelete)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                        <td><label><input type="checkbox" ng-model="forceDelete" /></label></td>
                     </tr>
-                    <tr>
-                        <td class="col-xs-5">
-                            <input type="text" class="form-control" ng-model="newValue" />
+                    <tr class="info" ng-show="selectedList">
+                        <td class="col-xs-3">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="newValueAddon">New List Item:</span>
+                                <input type="text" class="form-control" ng-model="newValue" aria-describedby="newValueAddon" />
+                            </div>
                         </td>
-                        <td class="col-xs-5">
+                        <td class="col-xs-6">
                             <input type="text" class="form-control" ng-model="newDescription" />
                         </td>
-                        <td class="col-xs-5">
-                            
-                        </td>
-                        <td><button type="button" class="btn btn-success btn-xs" ng-click="addListItem(selectedList, newValue, newDescription); newValue = '';newDescription =''"><span class="glyphicon glyphicon-plus"></span></button></td>
+                        <td class="col-xs-1"></td>
+                        <td class="col-xs-1"></td>
+                        <td ckass="col-xs-1"><button type="button" class="btn btn-success btn-xs" ng-click="addListItem(selectedList, newValue, newDescription); newValue = '';newDescription =''"><span class="glyphicon glyphicon-plus"></span></button></td>
                     </tr>
                 </tbody>
             </table>
