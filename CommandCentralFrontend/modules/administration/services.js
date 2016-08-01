@@ -23,6 +23,39 @@ angular.module('Administration')
             return ConnectionService.RequestFromBackend('DeleteListItem', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'forcedelete' : forcedelete, 'listitemid': listitemid }, success, error);
         };
 
+
+        service.LoadCommands = function (success, error) {
+            return ConnectionService.RequestFromBackend('LoadCommands', { 'authenticationtoken': AuthenticationService.GetAuthToken() }, success, error);
+        };
+
+        service.AddCommand = function (value, description, success, error) {
+            return ConnectionService.RequestFromBackend('AddCommand', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'value': value, 'description': description }, success, error);
+        };
+
+        service.EditCommand = function (commandid, value, description, success, error) {
+            return ConnectionService.RequestFromBackend('EditCommand', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'commandid': commandid, 'value': value, 'description': description }, success, error);
+        };
+
+        service.DeleteCommand = function (commandid, forcedelete, success, error) {
+            return ConnectionService.RequestFromBackend('DeleteCommand', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'forcedelete': forcedelete, 'commandid': commandid }, success, error);
+        };
+
+
+        service.LoadDepartments = function (commandid, success, error) {
+            return ConnectionService.RequestFromBackend('LoadDepartmentsByCommand', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'commandid': commandid }, success, error);
+        };
+
+        service.AddDepartment = function (commandid, value, description, success, error) {
+            return ConnectionService.RequestFromBackend('AddDepartment', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'commandid': commandid, 'value': value, 'description': description }, success, error);
+        };
+
+        service.EditDepartment = function (departmentid, value, description, success, error) {
+            return ConnectionService.RequestFromBackend('EditDepartment', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'departmentid': departmentid, 'value': value, 'description': description }, success, error);
+        };
+
+        service.DeleteDepartment = function (departmentid, forcedelete, success, error) {
+            return ConnectionService.RequestFromBackend('DeleteDepartment', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'forcedelete': forcedelete, 'departmentid': departmentid }, success, error);
+        };
       
         return service;
     }]);

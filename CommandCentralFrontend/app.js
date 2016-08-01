@@ -132,6 +132,18 @@ angular.module('CommandCentral', [
 		    templateUrl: 'modules/administration/views/listeditor.html',
 		    hideMenus: true
 		})
+
+		.when('/admin/editcommands', {
+		    controller: 'CommandEditorController',
+		    templateUrl: 'modules/administration/views/commandeditor.html',
+		    hideMenus: true
+		})
+
+		.when('/admin/editcommands/:id', {
+		    controller: 'DepartmentEditorController',
+		    templateUrl: 'modules/administration/views/departmenteditor.html',
+		    hideMenus: true
+		})
  
         .otherwise({ redirectTo: '/' });
 }])
