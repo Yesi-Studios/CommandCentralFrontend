@@ -3,42 +3,40 @@
 <div class="content_panel">
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8 text-center">
-            <h4>Editing departments in {{command.Value}}</h4>
+            <h4>Editing divisions in {{department.Value}} at {{command.Value}}</h4>
             <div class="alert alert-warning alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Be careful!</strong> Buttons on this page immediately update the database, and actions cannot be undone.
             </div>
             <div>
-                <a class="btn btn-default btn-xs" ng-href="#/admin/editcommands"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>Back to command editor.</a>
+                <a class="btn btn-default btn-xs" ng-href="#/admin/editcommands/{{commandId}}"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>Back to department editor.</a>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12 text-center">
-            <table id="departments" class="col-xs-12 table table-striped contact-table">
-                <thead ng-show="departments.length > 0">
+            <table id="divisions" class="col-xs-12 table table-striped contact-table">
+                <thead ng-show="divisions.length > 0">
                     <tr>
                         <th>Value</th>
                         <th>Description</th>
                         <th class="text-center">Save</th>
                         <th class="text-center">Delete</th>
-                        <th class="text-center">Edit Divisions</th>
                         <th class="text-center">Force</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="o in departments">
+                    <tr ng-repeat="o in divisions">
                         <td><input type="text" class="form-control" ng-model="o.Value" /></tdclass>
                         <td><input type="text" class="form-control" ng-model="o.Description" /></td>
-                        <td><button type="button" class="btn btn-primary btn-xs" ng-click="updateDepartment(o.Id, o.Value, o.Description)"><span class="glyphicon glyphicon-floppy-disk"></span></button></td>
-                        <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteDepartment(o.Id, forceDelete)"><span class="glyphicon glyphicon-remove"></span></button></td>
-                        <td><a class="btn btn-primary btn-xs" ng-href="#/admin/editcommands/{{commandId}}/{{o.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                        <td><button type="button" class="btn btn-primary btn-xs" ng-click="updateDivision(o.Id, o.Value, o.Description)"><span class="glyphicon glyphicon-floppy-disk"></span></button></td>
+                        <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteDivision(o.Id, forceDelete)"><span class="glyphicon glyphicon-remove"></span></button></td>
                         <td><label><input type="checkbox" ng-model="forceDelete" /></label></td>
                     </tr>
                     <tr class="info">
                         <td class="col-xs-3">
                             <div class="input-group">
-                                <span class="input-group-addon" id="newValueAddon">New Department:</span>
+                                <span class="input-group-addon" id="newValueAddon">New Division:</span>
                                 <input type="text" class="form-control" ng-model="newValue" aria-describedby="newValueAddon" />
                             </div>
                         </td>
@@ -47,8 +45,7 @@
                         </td>
                         <td class="col-xs-1"></td>
                         <td class="col-xs-1"></td>
-                        <td class="col-xs-1"></td>
-                        <td ckass="col-xs-1"><button type="button" class="btn btn-success btn-xs" ng-click="addDepartment(newValue, newDescription); newValue = '';newDescription =''"><span class="glyphicon glyphicon-plus"></span></button></td>
+                        <td ckass="col-xs-1"><button type="button" class="btn btn-success btn-xs" ng-click="addDivision(newValue, newDescription); newValue = '';newDescription =''"><span class="glyphicon glyphicon-plus"></span></button></td>
                     </tr>
                 </tbody>
             </table>

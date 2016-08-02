@@ -95,6 +95,9 @@
     <Content Include="libs\ui-bootstrap-tpls-1.2.4.min.js" />
     <Content Include="modules\administration\controllers.js" />
     <Content Include="modules\administration\services.js" />
+    <Content Include="modules\administration\views\commandeditor.html" />
+    <Content Include="modules\administration\views\departmenteditor.html" />
+    <Content Include="modules\administration\views\divisioneditor.html" />
     <Content Include="modules\administration\views\listeditor.html" />
     <Content Include="modules\authentication\controllers.js" />
     <Content Include="modules\authentication\services.js" />

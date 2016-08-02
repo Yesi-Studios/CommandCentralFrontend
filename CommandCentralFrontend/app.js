@@ -144,6 +144,12 @@ angular.module('CommandCentral', [
 		    templateUrl: 'modules/administration/views/departmenteditor.html',
 		    hideMenus: true
 		})
+
+		.when('/admin/editcommands/:id/:depId', {
+		    controller: 'DivisionEditorController',
+		    templateUrl: 'modules/administration/views/divisioneditor.html',
+		    hideMenus: true
+		})
  
         .otherwise({ redirectTo: '/' });
 }])

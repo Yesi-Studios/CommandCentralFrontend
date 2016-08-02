@@ -97,7 +97,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.addCommand = function (value, description) {
             $scope.errors = [];
@@ -112,7 +112,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.deleteCommand = function (commandid, forceDelete) {
             $scope.errors = [];
@@ -127,7 +127,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.updateCommand = function (id, value, description) {
             $scope.errors = [];
@@ -142,7 +142,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
 
         $scope.loadCommands();
@@ -161,8 +161,18 @@ angular.module('Administration')
 
         $scope.commandId = $routeParams.id;
 
+        AdministrationService.LoadCommand($routeParams.id,
+            function (response) {
+                $scope.command = response.ReturnValue;
+            },
+            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+            function (response) {
+                ConnectionService.HandleServiceError(response, $scope, $location);
+            }
+        );
+
         $scope.loadDepartments = function () {
-            AdministrationService.LoadDepartments($routeParams.id, 
+            AdministrationService.LoadDepartments($routeParams.id,
                 function (response) {
                     $scope.errors = [];
                     $scope.dataLoading = false;
@@ -173,7 +183,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.addDepartment = function (value, description) {
             $scope.errors = [];
@@ -188,7 +198,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.deleteDepartment = function (departmentid, forceDelete) {
             $scope.errors = [];
@@ -203,7 +213,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.updateDepartment = function (id, value, description) {
             $scope.errors = [];
@@ -218,10 +228,107 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
 
         $scope.loadDepartments();
+
+    }
+    ]
+)
+.controller('DivisionEditorController',
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService) {
+        $rootScope.containsPII = false;
+        $scope.dataLoading = true;
+        $scope.errors = [];
+
+        $scope.blah = function (athing) { console.log(athing); };
+
+        $scope.departmentId = $routeParams.depId;
+        $scope.commandId = $routeParams.id;
+
+        AdministrationService.LoadDepartment($routeParams.depId,
+            function (response) {
+                $scope.department = response.ReturnValue;
+            },
+            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+            function (response) {
+                ConnectionService.HandleServiceError(response, $scope, $location);
+            }
+        );
+
+        AdministrationService.LoadCommand($routeParams.id,
+            function (response) {
+                $scope.command = response.ReturnValue;
+            },
+            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+            function (response) {
+                ConnectionService.HandleServiceError(response, $scope, $location);
+            }
+        );
+
+        $scope.loadDivisions = function () {
+            AdministrationService.LoadDivisions($routeParams.depId,
+                function (response) {
+                    $scope.errors = [];
+                    $scope.dataLoading = false;
+                    $scope.divisions = response.ReturnValue;
+                },
+                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                function (response) {
+                    ConnectionService.HandleServiceError(response, $scope, $location);
+                }
+            );
+        }
+
+        $scope.addDivision = function (value, description) {
+            $scope.errors = [];
+            $scope.messages = [];
+            AdministrationService.AddDivision($routeParams.depId, value, description,
+                function (response) {
+                    $scope.loadDivisions();
+                    $scope.messages.push("Division '" + value + "' successfully added.");
+                },
+                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                function (response) {
+                    ConnectionService.HandleServiceError(response, $scope, $location);
+                }
+            );
+        }
+
+        $scope.deleteDivision = function (divisionid, forceDelete) {
+            $scope.errors = [];
+            $scope.messages = [];
+            AdministrationService.DeleteDivision(divisionid, forceDelete,
+                function (response) {
+                    $scope.loadDivisions();
+                    $scope.messages.push("Division successfully deleted.");
+                },
+                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                function (response) {
+                    ConnectionService.HandleServiceError(response, $scope, $location);
+                }
+            );
+        }
+
+        $scope.updateDivision = function (id, value, description) {
+            $scope.errors = [];
+            $scope.messages = [];
+            AdministrationService.EditDivision(id, value, description,
+                function (response) {
+                    $scope.loadDivisions();
+                    $scope.messages.push("Division successfully updated.");
+                },
+                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                function (response) {
+                    ConnectionService.HandleServiceError(response, $scope, $location);
+                }
+            );
+        }
+
+
+        $scope.loadDivisions();
 
     }
     ]
