@@ -22,7 +22,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-offset-1 col-xs-10 text-center">
-			<div ng-repeat="field in fieldsToSearch" class="form-group col-xs-offset-2 col-xs-8">
+			<div ng-repeat="field in fieldsToSearch track by $index" class="form-group col-xs-offset-2 col-xs-8">
 			    <div class="input-group">
                     <span class="input-group-addon" id="searchAddon">{{field}}</span>
     				<input type="text" class="form-control" aria-describedby="searchAddon" ng-model="advancedSearchFilters[field]" ng-keyup="searchOnEnter($event, advancedSearchFilters, fieldsToReturn)">

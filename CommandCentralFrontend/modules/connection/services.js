@@ -148,6 +148,9 @@ angular.module('Connection')
                 // Base Case: If it's primitive or an empty object, just return it.
                 if (typeof theObject !== 'object' || !theObject) { return theObject; }
 
+                // Create a new copy of the array we were passed. This is because it's (obviously) passed by reference, and we don't want to modify the
+                // Parents array of the previous level, as we may be iterating over an array somewhere down the recursion chain, and don't want one array
+                // item's parents to affect another.
                 var theParents = oldParents.slice();
 
                 // If it is an array, it will be represented as an object with a "$values" property containing the array, and an "$id".
@@ -157,6 +160,7 @@ angular.module('Connection')
                     // ...create an array of corrected values, and use that.
                     var newArray = [];
 
+                    // Add this object/array to the Parents before we iterate over its values.
                     theParents.push(theObject["$id"]);
 
                     // Iterate through the "$values", fixing each one recursively
@@ -186,17 +190,23 @@ angular.module('Connection')
                         theObject[i] = fixTheObject(theObject[i], theParents);
                     }
 
+                    // Store this object in the array of originals for use later
                     originals[id] = theObject;
+
                     return theObject;
                 }
 
                 // If it has a "$ref" property, we have to go get it from our array of stored objects.
                 if ("$ref" in theObject) {
-                    if (theParents.indexOf(theObject["$ref"]) != -1) { return {};}
+                    // If this $ref exists in our Parents array, then we have a circular definition. Return a blank object to prevent an infinite loop.
+                    if (theParents.indexOf(theObject["$ref"]) != -1) { return {}; }
+
+                    // If not, and the $ref is in our originals array, return that.
                     if (theObject["$ref"] in originals) {
                         return originals[theObject["$ref"]];
                     }
-                    // If we didn't hit the return statement above, that means this object hasn't be discovered yet. This shouldn't happen,
+
+                    // If we didn't hit the return statements above, that means this object hasn't be discovered yet. This shouldn't happen,
                     // but we're good little programmers who protect against theoretically possible edge cases. So we store it to be fixed later.
                     failures.push(theObject);
                 }
