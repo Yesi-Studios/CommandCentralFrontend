@@ -113,16 +113,20 @@ angular.module('Muster')
         $scope.musterDate = new Date();
         $scope.musterDate.setDate($scope.musterDate.getDate() - 1);
 
+        $scope.viewBy = "division";
+
         $scope.getMuster = function (musterDate) {
             $scope.errors = [];
             MusterService.LoadMusterByDay(musterDate,
                 function (response) {
+                    console.log(response);
                     if (response.ReturnValue.length == 0) {
                         $scope.errors.push("No muster records for that date.");
                     } else {
                         $scope.command = {
                             "name": response.ReturnValue[0].Command,
-                            "departments": {}
+                            "departments": {},
+                            "uics": {}
                         }
                         for (var i in response.ReturnValue) {
                             var record = response.ReturnValue[i];
@@ -133,6 +137,13 @@ angular.module('Muster')
                                 $scope.command.departments[record.Department][record.Division] = [];
                             }
                             $scope.command.departments[record.Department][record.Division].push(record);
+
+                            if (!record.UIC) { record.UIC = "NONE";}
+                            if (!$scope.command.uics[record.UIC]) {
+                                $scope.command.uics[record.UIC] = [];
+                            }
+                            $scope.command.uics[record.UIC].push(record);
+
                         }
                     }
                 },

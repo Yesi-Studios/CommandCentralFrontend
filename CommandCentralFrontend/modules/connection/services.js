@@ -123,16 +123,13 @@ angular.module('Connection')
             var data = JSON.stringify(reqData); // Make a string out of our data
 
             return $http(config).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
-                console.log(JSON.parse(response.data));
                 success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
-                console.log(service.RestoreJsonNetReferences(JSON.parse(response.data)));
             },
             function (response) {
                 if (response.statusText == "") {
                     error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
                 } else {
                     error(service.RestoreJsonNetReferences(JSON.parse(response.data)));
-                    console.log(service.RestoreJsonNetReferences(JSON.parse(response.data)));
                 }
             });
         };
