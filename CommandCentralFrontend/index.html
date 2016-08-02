@@ -50,22 +50,30 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li ng-class="{ active: isActive('/')}"><a href="#/" ng-click="resetPIIBanner()">Home</a></li>
-                    <li ng-class="{ active: isMyProfileActive()}"><a ng-href="{{getMyProfileURL()}}" ng-click="resetPIIBanner()">My Profile</a></li>
-                    <li uib-dropdown ng-class="{ active: isActive('/search') || isActive('/searchbyfield')}">
-                        <a id="search-dropdown" uib-dropdown-toggle href>Search<span class="caret"></span></a>
+                    <li uib-dropdown ng-class="{ active: isActive('/search') || isActive('/searchbyfield') || isMyProfileActive()}">
+                        <a id="search-dropdown" uib-dropdown-toggle href>Profiles<span class="caret"></span></a>
                         <ul uib-dropdown-menu aria-labelledby="search-dropdown" class="dropdown-menu">
-                            <li><a href="#/search" ng-click="resetPIIBanner()">Search</a></li>
-                            <li><a href="#/searchbyfield" ng-click="resetPIIBanner()">Search by Field</a></li>
+                            <li ng-class="{ active: isMyProfileActive()}"><a ng-href="{{getMyProfileURL()}}" ng-click="resetPIIBanner()">My Profile</a></li>
+                            <li ng-class="{ active: isActive('/search')}"><a href="#/search" ng-click="resetPIIBanner()">Search</a></li>
+                            <li ng-class="{ active: isActive('/searchbyfield')}"><a href="#/searchbyfield" ng-click="resetPIIBanner()">Search by Field</a></li>
+                            <li ng-class="{ active: isActive('/createuser')}" ng-if="canCreatePerson()"><a href="#/createuser">Create User <span class="glyphicon glyphicon-plus"></span></a></li>
                         </ul>
                     </li>
-                    <li uib-dropdown ng-class="{ active: isActive('/muster') || isActive('/muster/archive')}">
+                    <li uib-dropdown ng-class="{ active: isActive('/muster') || isActive('/muster/archive') || isActive('/muster/finalize')}">
                         <a id="muster-dropdown" uib-dropdown-toggle href>Muster<span class="caret"></span></a>
                         <ul uib-dropdown-menu aria-labelledby="muster-dropdown" class="dropdown-menu">
-                            <li><a href="#/muster" ng-click="resetPIIBanner()">Today's Muster</a></li>
-                            <li><a href="#/muster/archive" ng-click="resetPIIBanner()">Muster Archive</a></li>
+                            <li ng-class="{ active: isActive('/muster')}"><a href="#/muster" ng-click="resetPIIBanner()">Today's Muster</a></li>
+                            <li ng-class="{ active: isActive('/muster/archive')}"><a href="#/muster/archive" ng-click="resetPIIBanner()">Muster Archive</a></li>
+                            <li ng-class="{ active: isActive('/muster/finalize')}" ng-if="canFinalizeMuster()"><a href="#/muster/finalize" ng-click="resetPIIBanner()">Finalize Muster</a></li>
                         </ul>
                     </li>
-                    <li ng-if="canCreatePerson()"><a href="#/createuser">Create User <span class="glyphicon glyphicon-plus"></span></a></li>
+                    <li uib-dropdown ng-if="canAccessAdminTools()">
+                        <a id="admin-dropdown" uib-dropdown-toggle href>Admin Tools<span class="caret"></span></a>
+                        <ul uib-dropdown-menu aria-labelledby="muster-dropdown" class="dropdown-menu">
+                            <li><a href="#/admin/editlists" ng-click="resetPIIBanner()">Edit Lists</a></li>
+                            <li><a href="#/admin/editcommands" ng-click="resetPIIBanner()">Edit Commands</a></li>
+                        </ul>
+                    </li>
 
                 </ul>
 

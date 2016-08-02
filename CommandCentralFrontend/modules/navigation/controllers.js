@@ -60,6 +60,16 @@ angular.module('Navigation')
             }
         };
 
+        $scope.canFinalizeMuster = function () {
+            // Implement this properly.
+            return true;
+        };
+
+        $scope.canAccessAdminTools = function () {
+            // Implement this properly.
+            return true;
+        };
+
         $scope.isActive = function (viewLocation) {
             return viewLocation === $location.path();
         };
