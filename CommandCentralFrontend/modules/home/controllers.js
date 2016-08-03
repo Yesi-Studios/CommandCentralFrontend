@@ -16,7 +16,6 @@ angular.module('Home')
                     $scope.dataLoading = false;
                     $scope.newsItems = response.ReturnValue;
                     $scope.loadedTime = new Date;
-
                 },
 		        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
