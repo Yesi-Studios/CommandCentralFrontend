@@ -79,6 +79,9 @@ angular.module('Search')
         };
 
         $scope.goToResults = function (filters, fields) {
+            for (var i in filters) {
+                if (filters[i] == "") delete filters[i];
+            }
             $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields));
         };
 
@@ -123,6 +126,9 @@ angular.module('Search')
             $scope.fieldsToReturn = JSON.parse($routeParams.returnFields);
             $scope.fieldsToSearch = Object.keys(JSON.parse($routeParams.searchTerms));
             $scope.advancedSearchFilters = $scope.searchByFieldTerms
+
+            console.log(JSON.parse($routeParams.searchTerms));
+            console.log(JSON.parse($routeParams.returnFields));
 
 
         }

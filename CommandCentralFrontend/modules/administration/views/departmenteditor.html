@@ -1,0 +1,57 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
+<div ng-repeat="message in messages" class="alert alert-success">{{message}}</div>
+<div class="content_panel">
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-8 text-center">
+            <h4>Editing departments in {{command.Value}}</h4>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Be careful!</strong> Buttons on this page immediately update the database, and actions cannot be undone.
+            </div>
+            <div>
+                <a class="btn btn-default btn-xs" ng-href="#/admin/editcommands"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>Back to command editor.</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <table id="departments" class="col-xs-12 table table-striped contact-table">
+                <thead ng-show="departments.length > 0">
+                    <tr>
+                        <th>Value</th>
+                        <th>Description</th>
+                        <th class="text-center">Save</th>
+                        <th class="text-center">Delete</th>
+                        <th class="text-center">Edit Divisions</th>
+                        <th class="text-center">Force</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="o in departments">
+                        <td><input type="text" class="form-control" ng-model="o.Value" /></tdclass>
+                        <td><input type="text" class="form-control" ng-model="o.Description" /></td>
+                        <td><button type="button" class="btn btn-primary btn-xs" ng-click="updateDepartment(o.Id, o.Value, o.Description)"><span class="glyphicon glyphicon-floppy-disk"></span></button></td>
+                        <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteDepartment(o.Id, forceDelete)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                        <td><a class="btn btn-primary btn-xs" ng-href="#/admin/editcommands/{{commandId}}/{{o.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                        <td><label><input type="checkbox" ng-model="forceDelete" /></label></td>
+                    </tr>
+                    <tr class="info">
+                        <td class="col-xs-3">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="newValueAddon">New Department:</span>
+                                <input type="text" class="form-control" ng-model="newValue" aria-describedby="newValueAddon" />
+                            </div>
+                        </td>
+                        <td class="col-xs-5">
+                            <input type="text" class="form-control" ng-model="newDescription" />
+                        </td>
+                        <td class="col-xs-1"></td>
+                        <td class="col-xs-1"></td>
+                        <td class="col-xs-1"></td>
+                        <td ckass="col-xs-1"><button type="button" class="btn btn-success btn-xs" ng-click="addDepartment(newValue, newDescription); newValue = '';newDescription =''"><span class="glyphicon glyphicon-plus"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

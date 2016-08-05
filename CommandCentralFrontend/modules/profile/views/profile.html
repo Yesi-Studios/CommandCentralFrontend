@@ -29,8 +29,8 @@
 						</div>						
 						<div class="form-group">
 							<label class="col-xs-4" for="suffix">Suffix</label>
-							<div class="col-xs-2">
-								<input type="text" class="form-control" id="suffix" ng-disabled="!canEditPersonField('Suffix')" ng-show="canReturnPersonField('Suffix')" ng-model="profileData.Suffix" / >
+							<div class="col-xs-3">
+								<input type="text" class="form-control" id="suffix" ng-disabled="!canEditPersonField('Suffix')" ng-show="canReturnPersonField('Suffix')" ng-model="profileData.Suffix" />
 							</div>
 						</div>
 						<div class="form-group"  ng-class="{'has-error': !isValidSSN(profileData.SSN)}">
@@ -201,7 +201,6 @@
 												<input name="zip" placeholder="Zip" class="form-control" style="float: left; width: 30%;" ng-model="newAddressZip" type="number">
 											</div>
 											<input name="country" placeholder="Country" class="form-control" style="float: left; width: 100%;" ng-model="newAddressCountry" type="text">
-											
 										</td>
 										<td><label><input type="checkbox" ng-model="newAddressHome"/><span ng-show="profileData.PhysicalAddresses.length == 0">Home Address</span></label></td>
 										<td><button type="button" class="btn btn-success btn-xs" ng-click="addNewAddress(newAddressNumber, newAddressStreet, newAddressCity, newAddressState, newAddressZip, newAddressCountry, newAddressHome); newAddressNumber = newAddressStreet = newAddressCity = newAddressState = newAddressZip = newAddressCountry = newAddressHome = null;"><span class="glyphicon glyphicon-plus"></span></button></td>

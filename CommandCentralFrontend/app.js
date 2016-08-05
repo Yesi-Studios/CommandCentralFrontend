@@ -7,12 +7,14 @@ angular.module('Home', ['Authentication', 'pdf', 'Connection']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask', 'Connection']);
 angular.module('Authorization', ['Authentication', 'Connection']);
+angular.module('Administration', ['Authentication', 'Connection']);
 angular.module('Search', ['Authentication', 'Authorization', 'Connection']);
 angular.module('Muster', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
 
 angular.module('Modals', ['angularModalService']);
 
 angular.module('CommandCentral', [
+    'Administration',
     'Authentication',
 	'Authorization',
     'Connection',
@@ -52,6 +54,11 @@ angular.module('CommandCentral', [
         .when('/muster', {
             controller: 'MusterController',
             templateUrl: 'modules/muster/views/muster.html'
+        })
+
+        .when('/muster/finalize', {
+            controller: 'FinalizeMusterController',
+            templateUrl: 'modules/muster/views/finalizemuster.html'
         })
 
         .when('/muster/archive', {
@@ -122,6 +129,30 @@ angular.module('CommandCentral', [
 		.when('/editpermissions/:id', {
 		    controller: 'EditPermissionGroupsController',
 		    templateUrl: 'modules/authorization/views/permissions.html',
+		    hideMenus: true
+		})
+
+		.when('/admin/editlists', {
+		    controller: 'ListEditorController',
+		    templateUrl: 'modules/administration/views/listeditor.html',
+		    hideMenus: true
+		})
+
+		.when('/admin/editcommands', {
+		    controller: 'CommandEditorController',
+		    templateUrl: 'modules/administration/views/commandeditor.html',
+		    hideMenus: true
+		})
+
+		.when('/admin/editcommands/:id', {
+		    controller: 'DepartmentEditorController',
+		    templateUrl: 'modules/administration/views/departmenteditor.html',
+		    hideMenus: true
+		})
+
+		.when('/admin/editcommands/:id/:depId', {
+		    controller: 'DivisionEditorController',
+		    templateUrl: 'modules/administration/views/divisioneditor.html',
 		    hideMenus: true
 		})
  

@@ -23,11 +23,33 @@ angular.module('Profiles')
         *
         *   At the same time as we request a lock, we also GetCommands. This gets the structure of all available commands, so
         *   that we can properly prompt the user with the right divisions in departments in commands, e.g., if they select
-        *   10 department at NIOC GA, we know to show them 11, 12, and 13 divisions.
+        *   10 department at NIOC GA, we know to show them 11, 12, and 13 divisions. We also use this information to fill in the command,
+        *   department, and division information in $scope.profileData, since the backend doesn't want to send it through JSON to avoid
+        *   dealing with excessive circular dependancies.
         */
         $scope.loadProfile = function () {
             $scope.dataLoading = true;
-            $scope.errors = null;
+            $scope.errors = [];
+
+            $scope.getByName = function (theThings, thingName) {
+                if (theThings) {
+                    for (var i = 0, len = theThings.length; i < len; i++) {
+                        if (theThings[i].Name === thingName)
+                            return theThings[i] // Return as soon as the object is found
+                    }
+                }
+                return null; // The object was not found
+            };
+
+            $scope.getById = function (theThings, thingId) {
+                if (theThings) {
+                    for (var i = 0, len = theThings.length; i < len; i++) {
+                        if (theThings[i].Id === thingId)
+                            return theThings[i] // Return as soon as the object is found
+                    }
+                }
+                return null; // The object was not found
+            };
 
             ProfileService.LoadProfile($routeParams.id,
                 function (response) {
@@ -82,16 +104,13 @@ angular.module('Profiles')
                     function (response) {
                         // Give our scope the commands and a function we can use to search inside them
                         $scope.commandList = response.ReturnValue;
-                        $scope.getByName = function (theThings, thingName) {
-                            if (theThings) {
-                                for (var i = 0, len = theThings.length; i < len; i++) {
-                                    if (theThings[i].Name === thingName)
-                                        return theThings[i] // Return as soon as the object is found
-                                }
-                            }
-                            return null; // The object was not found
-                        };
-                        $scope.command = $scope.getByName(response.ReturnValue, $scope.profileData.Command);
+                        
+                        $scope.command = $scope.getById(response.ReturnValue, $scope.profileData.Command);
+
+                        // Fill in the objects where currently only Ids exist.
+                        $scope.profileData.Command = $scope.command;
+                        $scope.profileData.Department = $scope.getById($scope.profileData.Command.Departments, $scope.profileData.Department);
+                        $scope.profileData.Division = $scope.getById($scope.profileData.Department.Divisions, $scope.profileData.Division);
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {

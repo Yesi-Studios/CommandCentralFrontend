@@ -10,7 +10,18 @@
             </div>
         </div>
     </div><br/>
-    <div class="row">
+    <div ng-show="command.uics" class="row">
+        <div class="col-xs-offset-4 col-xs-4">
+            View by:
+            <label class="radio-inline">
+                <input type="radio" name="viewby" id="division" value="division" ng-model="viewBy"> Division
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="viewby" id="uic" value="uic" ng-model="viewBy"> UIC
+            </label>
+        </div>
+    </div>
+    <div ng-show="viewBy=='division'" class="row">
         <div class="col-xs-12">
             <div class="panel-group" id="musterRecords" role="tablist" aria-multiselectable="true">
                 <div ng-repeat="(departmentName, department) in command['departments']" class="panel panel-default">
@@ -50,6 +61,41 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="viewBy=='uic'" class="row">
+        <div class="col-xs-12">
+            <div class="panel-group" id="musterRecordsbyUIC" role="tablist" aria-multiselectable="true">
+                <div ng-repeat="(UIC, records) in command['uics']" class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="uic{{UIC}}Heading">
+                        <h4 class="panel-title">
+                            <button data-toggle="collapse" data-target="#uic{{UIC}}" class="btn btn-default">{{UIC}}</button>
+                        </h4>
+                    </div>
+                    <div id="uic{{UIC}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="uic{{UIC}}Heading">
+                        <div class="panel-body">
+                            <table class="table-striped col-xs-12">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Muster Status</th>
+                                        <th>Mustered By</th>
+                                        <th>Muster Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="record in records track by $index" class="form-group">
+                                        <td>{{record.Musteree.FriendlyName}}<a ng-if="record.Musteree" ng-href="#/profile/{{record.Musteree.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                        <td>{{record.MusterStatus}}</td>
+                                        <td>{{record.Musterer.FriendlyName}}<span ng-if="!record.Musterer">Not mustered, set at finalization.</span><a ng-if="record.Musterer" ng-href="#/profile/{{record.Musterer.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                        <td>{{record.SubmitTime | date:'short'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
