@@ -3,14 +3,14 @@
 angular.module('Connection')
 
 .factory('ConnectionService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout',
-    function (Base64, $http, $localStorage, $rootScope, $timeout) {
-        var service = {};
+    ['Base64', '$http', '$localStorage', '$rootScope',
+        function (Base64, $http, $localStorage, $rootScope) {
+            var service = {};
 
         // Information for connecting to the database, including the URL and API key.
-        var apikey = "d7d82136-46ff-4047-b202-957c67fdcedc";
-        //var backendURL = "http://73.20.152.170";  // Atwood's IP for working at home.
-        var backendURL = "http://147.51.62.19";     // Live service IP.
+        var apikey = "90fdb89f-282b-4bd6-840b-cef597615728";
+        var backendURL = "http://73.20.152.170";  // Atwood's IP for working at home.
+        //var backendURL = "http://147.51.62.19";     // Live service IP.
 
         // Here we check to see if we have a port stored in localStorage, and if not, we use 1113.
         // If it's enabled, there's a widget at the bottom of index.html, controlled by this module,
@@ -31,19 +31,19 @@ angular.module('Connection')
         // If you can't figure out what this does, stop reading and go get an adult.
         service.GetBackendURL = function () {
             return backendURL + ":" + backendPort;
-        }
+        };
 
         // This too.
         service.SetBackendPort = function (portnumber) {
             backendPort = portnumber;
             baseurl = backendURL + ":" + backendPort;
             $localStorage.backendPort = portnumber;
-        }
+        };
 
         // Ditto
         service.GetAPIKey = function () {
             return apikey;
-        }
+        };
 
         // Login page error displaying. This seems like it should be in the Authentication module, but actually this is part of backend service error handling, and
         // belongs here. Also, keeping it here prevents a circular dependancy between Authentication and Connection.
@@ -54,15 +54,15 @@ angular.module('Connection')
             } else {
                 $rootScope.globals.loginMessages = [loginMessage];
             }
-        }
+        };
 
         service.ClearLoginMessages = function () {
             $rootScope.globals.loginMessages = [];
-        }
+        };
 
         service.GetLoginMessages = function () {
             return $rootScope.globals.loginMessages;
-        }
+        };
 
         service.AddLoginError = function (loginError) {
             if ($rootScope.globals.loginErrors) {
@@ -70,15 +70,15 @@ angular.module('Connection')
             } else {
                 $rootScope.globals.loginErrors = [loginError];
             }
-        }
+        };
 
         service.ClearLoginErrors = function () {
             $rootScope.globals.loginErrors = [];
-        }
+        };
 
         service.GetLoginErrors = function () {
             return $rootScope.globals.loginErrors;
-        }
+        };
 
 
         service.ClearCredentials = function () {
@@ -104,7 +104,7 @@ angular.module('Connection')
             }
             scope.dataLoading = false;
 
-        }
+        };
 
         service.RequestFromBackend = function (endpoint, params, success, error) {
             var reqData = { 'apikey': service.GetAPIKey() };
@@ -119,8 +119,7 @@ angular.module('Connection')
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8;'
                 }
-            }
-            var data = JSON.stringify(reqData); // Make a string out of our data
+            };
 
             return $http(config).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
                 success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
@@ -161,8 +160,8 @@ angular.module('Connection')
                     theParents.push(theObject["$id"]);
 
                     // Iterate through the "$values", fixing each one recursively
-                    for (var i in theObject["$values"]) {
-                        newArray.push(fixTheObject(theObject["$values"][i], theParents));
+                    for (var j in theObject["$values"]) {
+                        newArray.push(fixTheObject(theObject["$values"][j], theParents));
                     }
 
                     // If it's an array, it will have an $id. If it doesn't, the object isn't from JSON.net, and this code SHOULD break,
@@ -183,8 +182,8 @@ angular.module('Connection')
                     theParents.push(id);
 
                     // Fix all the properties of the object recursively
-                    for (var i in theObject) {
-                        theObject[i] = fixTheObject(theObject[i], theParents);
+                    for (var k in theObject) {
+                        theObject[k] = fixTheObject(theObject[k], theParents);
                     }
 
                     // Store this object in the array of originals for use later
@@ -224,7 +223,7 @@ angular.module('Connection')
 
             return fixTheObject(theJSON, []);
 
-        }
+        };
 
 
         return service;

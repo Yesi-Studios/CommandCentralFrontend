@@ -35,7 +35,7 @@ angular.module('Profiles')
                 if (theThings) {
                     for (var i = 0, len = theThings.length; i < len; i++) {
                         if (theThings[i].Name === thingName)
-                            return theThings[i] // Return as soon as the object is found
+                            return theThings[i]; // Return as soon as the object is found
                     }
                 }
                 return null; // The object was not found
@@ -45,7 +45,7 @@ angular.module('Profiles')
                 if (theThings) {
                     for (var i = 0, len = theThings.length; i < len; i++) {
                         if (theThings[i].Id === thingId)
-                            return theThings[i] // Return as soon as the object is found
+                            return theThings[i]; // Return as soon as the object is found
                     }
                 }
                 return null; // The object was not found
@@ -59,8 +59,8 @@ angular.module('Profiles')
                     $scope.dataLoading = false;
                     $scope.profileData = response.ReturnValue.Person;
                     $scope.isMyProfile = response.ReturnValue.IsMyProfile;
-                    $scope.returnableFields = response.ReturnValue.ReturnableFields;
-                    $scope.editableFields = response.ReturnValue.EditableFields;
+                    $scope.returnableFields = response.ReturnValue.ResolvedPermissions.ReturnableFields.Main.Person;
+                    $scope.editableFields = response.ReturnValue.ResolvedPermissions.EditableFields.Main.Person;
 
                     // Set up all the dates to be actual Dates
                     $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
@@ -71,10 +71,10 @@ angular.module('Profiles')
 
                     $scope.canSearchPersonField = function (field) {
                         return ('currentUser' in $scope.globals) && ($scope.globals.currentUser.permissions.searchable.indexOf(field) > -1);
-                    }
+                    };
                     $scope.canReturnPersonField = function (field) {
                         return $scope.returnableFields.indexOf(field) > -1;
-                    }
+                    };
                     $scope.canEditPersonField = function (field) {
                         return $scope.editableFields.indexOf(field) > -1;
                     }
@@ -132,7 +132,7 @@ angular.module('Profiles')
             }
         );
 
-        ProfileService.GetPermissionGroups(
+        /*ProfileService.GetPermissionGroups(
             // If we succeed, this is our callback.
             function (response) {
                 $scope.permissionGroups = response.ReturnValue;
@@ -142,7 +142,7 @@ angular.module('Profiles')
             function (response) {
                 ConnectionService.HandleServiceError(response, $scope, $location);
             }
-	    );
+	    );*/
         $scope.loadProfile();
 
         $scope.loadFullAccountHistory = function () {
