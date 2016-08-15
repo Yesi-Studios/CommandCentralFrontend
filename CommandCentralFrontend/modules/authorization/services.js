@@ -22,24 +22,39 @@ angular.module('Authorization')
         service.GetPermissionGroups = function (success, error) {
             return ConnectionService.RequestFromBackend('LoadPermissionGroups', { 'authenticationtoken': AuthenticationService.GetAuthToken() }, success, error);
         };
-		
-		service.CanCreatePerson = function () {
-		    if ($rootScope.canCreatePerson) {
-		        return $rootScope.canCreatePerson;
-		    } else {
-		        return false;
-		    }
-		};
 
-		service.SetCanCreatePerson = function (newValue) {
-		    $rootScope.canCreatePerson = newValue;
-		}
+        /** @return Boolean **/
+        service.CanCreatePerson = function () {
+            try {
+                return $rootScope.globals.currentUser.permissions.AccessibleSubmodules.indexOf('CreatePerson') != -1;
 
-        service.SetPermissions = function (searchableperms, returnableperms) {
-            $rootScope.globals.currentUser.permissions = {
-                searchable: searchableperms,
-				returnable: returnableperms,
-            };
+            } catch (err){
+                return false;
+            }
+        };
+
+        /** @return Boolean **/
+        service.CanEditNews = function () {
+            try {
+                return $rootScope.globals.currentUser.permissions.AccessibleSubmodules.indexOf('EditNews') != -1;
+
+            } catch (err){
+                return false;
+            }
+        };
+
+        /** @return Boolean **/
+        service.CanUseAdminTools = function () {
+            try {
+                return $rootScope.globals.currentUser.permissions.AccessibleSubmodules.indexOf('AdminTools') != -1;
+
+            } catch (err){
+                return false;
+            }
+        };
+
+        service.SetPermissions = function (newPermissions) {
+            $rootScope.globals.currentUser.permissions = newPermissions;
  
             $localStorage.globals = $rootScope.globals;
         };
@@ -51,12 +66,12 @@ angular.module('Authorization')
         };
 		
 		service.GetSearchableFields = function() {
-			return $rootScope.globals.currentUser.permissions.searchable;
-		}
+			return $rootScope.globals.currentUser.permissions.ReturnableFields.Main.Person;
+		};
 		
 		service.GetReturnableFields = function() {
-			return $rootScope.globals.currentUser.permissions.returnable;
-		}
+			return $rootScope.globals.currentUser.permissions.ReturnableFields.Main.Person;
+		};
 
  
         return service;

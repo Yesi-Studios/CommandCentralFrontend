@@ -3,8 +3,8 @@
 angular.module('Home')
 
 .controller('HomeController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'HomeService','ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, HomeService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'HomeService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, HomeService, ConnectionService) {
 
         $scope.pdfUrl = "/img/pow.pdf";
 
@@ -39,17 +39,7 @@ angular.module('Home')
             );
         };
 
-        $scope.userCanEditNews = function () {
-            if ($rootScope.globals.currentUser && $rootScope.globals.currentUser.permissionGroups) {
-                for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++) {
-                    if ($rootScope.globals.currentUser.permissionGroups[i].SpecialPermissions.indexOf("ManageNews") > -1) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        };
-
+        $scope.userCanEditNews = function () { return AuthorizationService.CanEditNews(); };
         $scope.refreshNews();
 
     }])

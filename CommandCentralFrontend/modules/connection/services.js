@@ -123,6 +123,8 @@ angular.module('Connection')
 
             return $http(config).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
                 success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
+                console.log(endpoint);
+                console.log(service.RestoreJsonNetReferences(response.data));
             },
             function (response) {
                 if (response.statusText == "") {
