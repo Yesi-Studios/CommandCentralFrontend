@@ -11,8 +11,8 @@ angular.module('Authorization')
             return ConnectionService.RequestFromBackend('LoadPermissionGroupsByPerson', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);
         };
 
-        service.UpdateUserPermissionGroups = function (personid, groupids, success, error) {
-            return ConnectionService.RequestFromBackend('UpdatePermissionGroupsByPerson', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid, 'permissionslist': groupids }, success, error);
+        service.UpdateUserPermissionGroups = function (personid, groups, success, error) {
+            return ConnectionService.RequestFromBackend('UpdatePermissionGroupsByPerson', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid, 'permissiongroups': groups }, success, error);
         };
 
         service.GetPersonMetadata = function (success, error) {

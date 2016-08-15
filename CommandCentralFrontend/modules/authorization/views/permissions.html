@@ -17,8 +17,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="group in allPermissionGroups track by group.Id">
-                        <td>{{group.Name}}</td>
+                    <tr ng-repeat="group in allPermissionGroups track by $index">
+                        <td>{{group}}</td>
                         <td><button type="button" class="btn btn-success btn-xs" ng-disabled="!canEditPermissionGroup(group)" ng-click="givePermissionGroup(group)"><span class="glyphicon glyphicon-plus"></span></button></td>
                     </tr>
                 </tbody>
@@ -34,8 +34,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="group in userPermissionGroups track by group.Id">
-                        <td>{{group.Name}}</td>
+                    <tr ng-repeat="group in userPermissionGroups track by $index">
+                        <td>{{group}}</td>
                         <td><button type="button" class="btn btn-danger btn-xs" ng-disabled="!canEditPermissionGroup(group)" ng-click="removePermissionGroup(group)"><span class="glyphicon glyphicon-remove"></span></button></td>
                     </tr>
                     <tr ng-if="userPermissionGroups.length == 0"><td>No permission groups.</td></tr>
