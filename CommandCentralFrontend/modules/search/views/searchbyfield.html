@@ -25,7 +25,8 @@
 			<div ng-repeat="field in fieldsToSearch track by $index" class="form-group col-xs-offset-2 col-xs-8">
 			    <div class="input-group">
                     <span class="input-group-addon" id="searchAddon">{{field}}</span>
-    				<input type="text" class="form-control" aria-describedby="searchAddon" ng-model="advancedSearchFilters[field]" ng-keyup="searchOnEnter($event, advancedSearchFilters, fieldsToReturn)">
+    				<!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" aria-describedby="searchAddon" ng-model="advancedSearchFilters[field]" ng-keyup="searchOnEnter($event, advancedSearchFilters, fieldsToReturn)">
                 </div>
 			</div>
 		</div>
@@ -33,6 +34,7 @@
     <div class="row">
         <div class="text-center">
 
+            <!--suppress HtmlUnknownAttribute -->
             <button class="btn btn-primary" type="button" ng-click="goToResults(advancedSearchFilters, fieldsToReturn)" ng-disabled="!fieldsToReturn || !fieldsToReturn">Search</button>
 
         </div>
@@ -52,7 +54,8 @@
                     <tbody>
                         <tr ng-repeat="result in results | orderBy: orderKey" ng-click="goToProfile(result.Id)">
                             <td ng-repeat="field in searchByFieldReturns">{{result[field]}}</td>
-                            <td><a ng-href="#/profile/{{result.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                            <td><!--suppress HtmlUnknownAttribute -->
+                                <a ng-href="#/profile/{{result.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                         </tr>
                     </tbody>
                 </table>

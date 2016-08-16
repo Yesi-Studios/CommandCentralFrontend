@@ -48,7 +48,7 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
                             }
                         }
                         return false;
-                    }
+                    };
 
                     $scope.updatePermissions = function () {
                         $scope.errors = [];

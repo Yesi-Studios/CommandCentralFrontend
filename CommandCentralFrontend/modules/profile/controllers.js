@@ -233,7 +233,7 @@ angular.module('Profiles')
         };
 
         $scope.isValidSSN = function (number) {
-            var re = /^\d{3}-?\d{2}-?\d{4}$/
+            var re = /^\d{3}-?\d{2}-?\d{4}$/;
             return re.test(number);
         };
 

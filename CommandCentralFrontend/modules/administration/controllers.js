@@ -23,7 +23,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.addListItem = function (listname, value, description) {
             $scope.errors = [];
@@ -38,7 +38,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.deleteListItem = function (listItem, forceDelete) {
             $scope.errors = [];
@@ -53,7 +53,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.updateListItem = function (list, listItem) {
             $scope.errors = [];
@@ -68,7 +68,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
 
         $scope.loadLists();
@@ -280,7 +280,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.addDivision = function (value, description) {
             $scope.errors = [];
@@ -295,7 +295,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.deleteDivision = function (divisionid, forceDelete) {
             $scope.errors = [];
@@ -310,7 +310,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
         $scope.updateDivision = function (id, value, description) {
             $scope.errors = [];
@@ -325,7 +325,7 @@ angular.module('Administration')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
 
 
         $scope.loadDivisions();

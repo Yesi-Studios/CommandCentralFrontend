@@ -36,7 +36,7 @@ angular.module('Search')
             } else {
                 $scope.orderKey = theKey;
             }
-        }
+        };
 
         // Define how we do a simple search first, so we can do it whenever
         var simpleSearch = function (terms) {
@@ -99,7 +99,7 @@ angular.module('Search')
             } else {
                 $scope.orderKey = theKey;
             }
-        }
+        };
 
         var searchByField = function (filters, returnFields) {
             $scope.dataLoading = true;
@@ -118,14 +118,14 @@ angular.module('Search')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 }
             );
-        }
+        };
         if ($routeParams.searchTerms && $routeParams.returnFields) {
             searchByField(JSON.parse($routeParams.searchTerms), JSON.parse($routeParams.returnFields));
             $scope.searchByFieldTerms = JSON.parse($routeParams.searchTerms);
             $scope.searchByFieldReturns = JSON.parse($routeParams.returnFields);
             $scope.fieldsToReturn = JSON.parse($routeParams.returnFields);
             $scope.fieldsToSearch = Object.keys(JSON.parse($routeParams.searchTerms));
-            $scope.advancedSearchFilters = $scope.searchByFieldTerms
+            $scope.advancedSearchFilters = $scope.searchByFieldTerms;
 
             console.log(JSON.parse($routeParams.searchTerms));
             console.log(JSON.parse($routeParams.returnFields));

@@ -35,7 +35,7 @@ angular.module('Modals')
 .controller('ModalController', ['$scope', 'close', function ($scope, close) {
 
     $scope.close = function (result) {
-        close(result, 250) // close, but give 500ms for bootstrap to animate
+        close(result, 250); // close, but give 500ms for bootstrap to animate
         $('.modal-backdrop').hide(); 
     };
 

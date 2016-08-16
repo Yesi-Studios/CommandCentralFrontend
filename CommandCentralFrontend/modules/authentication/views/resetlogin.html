@@ -1,6 +1,7 @@
 <div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
 <div class="content_panel">
-<form name="form" ng-submit="login()" role="form">
+<!--suppress HtmlUnknownAttribute -->
+    <form name="form" ng-submit="login()" role="form">
     <div class="form-group">
         <label for="username">Username
 			<span ng-show="form.username.$dirty && form.username.$error.required" class="label label-danger">Username is required</span>
@@ -17,6 +18,7 @@
         
     </div>
     <div class="form-actions">
+        <!--suppress HtmlUnknownAttribute -->
         <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary" style="margin-right: 5px">Login</button>
 		<div class="pull-right">
 			<a href="#/register" class="text-right label label-primary">Register</a>

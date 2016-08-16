@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="o in lists[selectedList]">
-                        <td><input type="text" class="form-control" ng-model="o.Value" /></tdclass>
+                        <td><input type="text" class="form-control" ng-model="o.Value" /></td>
                         <td><input type="text" class="form-control" ng-model="o.Description" /></td>
                         <td><button type="button" class="btn btn-primary btn-xs" ng-click="updateListItem(selectedList, o)"><span class="glyphicon glyphicon-floppy-disk"></span></button></td>
                         <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteListItem(o, forceDelete)"><span class="glyphicon glyphicon-remove"></span></button></td>
@@ -49,6 +49,7 @@
                         </td>
                         <td class="col-xs-1"></td>
                         <td class="col-xs-1"></td>
+                        <!--suppress HtmlUnknownAttribute -->
                         <td ckass="col-xs-1"><button type="button" class="btn btn-success btn-xs" ng-click="addListItem(selectedList, newValue, newDescription); newValue = '';newDescription =''"><span class="glyphicon glyphicon-plus"></span></button></td>
                     </tr>
                 </tbody>

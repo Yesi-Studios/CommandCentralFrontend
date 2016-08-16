@@ -243,7 +243,7 @@ angular.module('CommandCentral', [
             var $wrapper1 = element.find('.wrapper1'),
                 $div1 = element.find('.div1'),
                 $wrapper2 = element.find('.wrapper2'),
-                $div2 = element.find('.div2')
+                $div2 = element.find('.div2');
 
             // force our virtual scrollbar to work the way we want.
             $wrapper1.css({
@@ -251,16 +251,16 @@ angular.module('CommandCentral', [
                 border: "none 0px rgba(0, 0, 0, 0)",
                 overflowX: "scroll",
                 overflowY: "hidden",
-                height: "20px",
+                height: "20px"
             });
 
             $div1.css({
-                height: "20px",
+                height: "20px"
             });
 
             $wrapper2.css({
                 width: "100%",
-                overflowX: "scroll",
+                overflowX: "scroll"
             });
 
             listener = setInterval(function () {
@@ -275,7 +275,7 @@ angular.module('CommandCentral', [
         restrict: 'E',
         require: '^ngModel',
         scope: {
-            ngModel: '=',
+            ngModel: '='
         },
         template: '<div class="input-group">'+
                         '<input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />' +

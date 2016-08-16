@@ -6,6 +6,7 @@
 			<div class="panel panel-primary" ng-repeat="item in newsItems">
 				<div class="panel-heading">
 					<div class="panel-title">{{item.Title}}
+                        <!--suppress HtmlUnknownAttribute -->
                         <a ng-href="#/updatenews/{{item.Id}}" class="btn btn-xs btn-info pull-right" ng-show="userCanEditNews()">Edit <span class="glyphicon glyphicon-edit"></span></a>
                         <a href="" class="btn btn-xs btn-danger pull-right" ng-click="item.showDeleteWarning=true" ng-show="!item.showDeleteWarning && userCanEditNews()">Delete <span class="glyphicon glyphicon-remove"></span></a>
                         <span ng-show="item.showDeleteWarning" class="pull-right">Really delete?<a href="" ng-click="deleteNewsItem(item.Id)" class="btn btn-xs btn-danger">Yes</a><a href="" ng-click="item.showDeleteWarning=false" class="btn btn-xs btn-success">No</a></span>
@@ -30,7 +31,8 @@
 			
 	<div class="row">
 		<div class="col-xs-6 center-block">
-			<a ng-click="refreshNews()" ng-disabled="dataLoading" id="singlebutton" name="singlebutton" class="btn btn-primary">
+			<!--suppress HtmlUnknownAttribute -->
+            <a ng-click="refreshNews()" ng-disabled="dataLoading" id="singlebutton" name="singlebutton" class="btn btn-primary">
 				Reload news <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
 								
 			</a>
