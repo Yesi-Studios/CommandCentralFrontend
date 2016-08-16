@@ -91,7 +91,7 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/search/views/searchbyfield.html'
         })
 		
-		.when('/searchbyfield/:searchTerms/:returnFields', {
+		.when('/searchbyfield/:searchTerms/:returnFields/:searchLevel', {
             controller: 'SearchByFieldController',
             templateUrl: 'modules/search/views/searchbyfield.html'
         })

@@ -3,8 +3,8 @@
 angular.module('Profiles')
  
 .factory('ProfileService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
-    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
+    ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
+    function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
 		
         service.GetAllLists = function (success, error) {

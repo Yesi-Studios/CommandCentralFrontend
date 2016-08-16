@@ -3,8 +3,8 @@
 angular.module('Authorization')
  
 .factory('AuthorizationService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
-    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
+    ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
+    function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
 
         service.GetUserPermissionGroups = function (personid, success, error) {
@@ -64,15 +64,25 @@ angular.module('Authorization')
 
             $localStorage.globals = $rootScope.globals;
         };
-		
-		service.GetSearchableFields = function() {
-			return $rootScope.globals.currentUser.permissions.ReturnableFields.Main.Person;
-		};
-		
-		service.GetReturnableFields = function() {
-			return $rootScope.globals.currentUser.permissions.ReturnableFields.Main.Person;
-		};
 
+        /**
+         *
+         * @param {String} level
+         * @returns {string|Array.<T>}
+         *
+         */
+		service.GetReturnableFields = function(level) {
+            var universalFields = $scope.globals.currentUser.permissions.ReturnableFields.Main.Person;
+            var specificFields = $scope.globals.currentUser.permissions.PrivelegedReturnableFields.Main[level];
+            var combinedFields = universalFields.concat(specificFields.filter(function (item) {
+                return a.indexOf(item) < 0;
+            }));
+            var levelIndex = combinedFields.indexOf(level);
+            if( index >= 0) {
+                combinedFields.splice(levelIndex, 1);
+            }
+			return combinedFields;
+		};
  
         return service;
     }]);

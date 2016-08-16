@@ -3,8 +3,8 @@
 angular.module('Authentication')
  
 .factory('AuthenticationService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'ConnectionService',
-    function (Base64, $http, $localStorage, $rootScope, $timeout, ConnectionService) {
+    ['$http', '$localStorage', '$rootScope', '$timeout', 'ConnectionService',
+    function ($http, $localStorage, $rootScope, $timeout, ConnectionService) {
         var service = {};
 
         /**

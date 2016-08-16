@@ -31,6 +31,7 @@ angular.module('Authentication')
                         AuthenticationService.Login($scope.username, $scope.password,
                             // If we succeed this is our call back
                             function (response) {
+                                console.log(response);
                                 AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonId);
                                 AuthorizationService.SetPermissions(response.ReturnValue.ResolvedPermissions);
                                 AuthorizationService.GetPermissionGroups(

@@ -69,20 +69,28 @@ angular.module('Search')
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService) {
 
         $rootScope.containsPII = true;
+        $scope.searchLevels = ["Command", "Department", "Division"];
+        $scope.selectedLevel = "Command";
 
-        $scope.searchableFields = AuthorizationService.GetSearchableFields();
-        $scope.returnableFields = AuthorizationService.GetReturnableFields();
+        $scope.getSearchableFields = function (level) {
+            return AuthorizationService.GetReturnableFields(level);
+        };
+
+        $scope.getReturnableFields = function (level) {
+            return AuthorizationService.GetReturnableFields(level);
+        };
+
         $scope.advancedSearchFilters = {};
 
         $scope.goToProfile = function (id) {
             $location.path('/profile/' + id);
         };
 
-        $scope.goToResults = function (filters, fields) {
+        $scope.goToResults = function (filters, fields, level) {
             for (var i in filters) {
                 if (filters[i] == "") delete filters[i];
             }
-            $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields));
+            $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields) + '/' + JSON.stringify(level));
         };
 
         $scope.searchOnEnter = function ($event, filters, fields) {
@@ -101,10 +109,10 @@ angular.module('Search')
             }
         };
 
-        var searchByField = function (filters, returnFields) {
+        var searchByField = function (filters, returnFields, searchLevel) {
             $scope.dataLoading = true;
             $scope.errors = null;
-            SearchService.DoAdvancedSearch(filters, returnFields,
+            SearchService.DoAdvancedSearch(filters, returnFields, searchLevel,
                 // If we succeed, this is our callback
                 function (response) {
                     // We're done loading, drop the results and a list of fields in them on the scope.
@@ -119,13 +127,14 @@ angular.module('Search')
                 }
             );
         };
-        if ($routeParams.searchTerms && $routeParams.returnFields) {
-            searchByField(JSON.parse($routeParams.searchTerms), JSON.parse($routeParams.returnFields));
+        if ($routeParams.searchTerms && $routeParams.returnFields && $routeParams.searchLevel) {
+            searchByField(JSON.parse($routeParams.searchTerms), JSON.parse($routeParams.returnFields), JSON.parse($routeParams.searchLevel));
             $scope.searchByFieldTerms = JSON.parse($routeParams.searchTerms);
             $scope.searchByFieldReturns = JSON.parse($routeParams.returnFields);
             $scope.fieldsToReturn = JSON.parse($routeParams.returnFields);
             $scope.fieldsToSearch = Object.keys(JSON.parse($routeParams.searchTerms));
             $scope.advancedSearchFilters = $scope.searchByFieldTerms;
+            $scope.selectedLevel = JSON.parse($routeParams.searchLevel);
 
             console.log(JSON.parse($routeParams.searchTerms));
             console.log(JSON.parse($routeParams.returnFields));

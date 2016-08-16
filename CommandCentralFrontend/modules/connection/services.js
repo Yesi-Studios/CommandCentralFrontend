@@ -3,8 +3,8 @@
 angular.module('Connection')
 
     .factory('ConnectionService',
-        ['Base64', '$http', '$localStorage', '$rootScope',
-            function (Base64, $http, $localStorage, $rootScope) {
+        ['$http', '$localStorage', '$rootScope',
+            function ($http, $localStorage, $rootScope) {
                 var service = {};
 
                 // Information for connecting to the database, including the URL and API key.
