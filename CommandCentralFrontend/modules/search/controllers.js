@@ -73,6 +73,7 @@ angular.module('Search')
         $scope.selectedLevel = "Command";
 
         $scope.getSearchableFields = function (level) {
+            console.log(AuthorizationService.GetReturnableFields(level));
             return AuthorizationService.GetReturnableFields(level);
         };
 

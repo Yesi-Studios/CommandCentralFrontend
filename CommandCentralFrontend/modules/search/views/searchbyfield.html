@@ -8,8 +8,7 @@
     <div class="row text-center">
         <div class="col-xs-offset-3 col-xs-6">
             <label for="selectedLevel">Search at this level:</label>
-            <select class="form-control" id="selectedLevel" ng-model="selectedLevel" ng-options="o as 'My ' + o for o in searchLevels track by $index">
-                <option></option>
+            <select class="form-control" id="selectedLevel" ng-model="selectedLevel" ng-options="o as 'My ' + o for o in searchLevels" required>
             </select>
         </div>
     </div>
@@ -17,7 +16,7 @@
         <div class="col-xs-offset-1 col-xs-5">
             <div class="form-group">
                 <label for="fieldsToSearch">Fields to Search</label>
-                <select class="form-control" size="10" id="fieldsToSearch" ng-model="fieldsToSearch" ng-options="o for o in getReturnableFields(selectedLevel)" multiple>
+                <select class="form-control" size="10" id="fieldsToSearch" ng-model="fieldsToSearch" ng-options="o for o in getSearchableFields(selectedLevel)" multiple>
                 </select>
             </div>
         </div>
