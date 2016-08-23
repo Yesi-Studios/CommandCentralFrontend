@@ -88,6 +88,12 @@ angular.module('Search')
         };
 
         $scope.goToResults = function (filters, fields, level) {
+            if (level == null) {
+                level = $routeParams.searchLevel;
+                if (level == null) {
+                    level = "Command";
+                }
+            }
             for (var i in filters) {
                 if (filters[i] == "") delete filters[i];
             }
@@ -113,6 +119,9 @@ angular.module('Search')
         var searchByField = function (filters, returnFields, searchLevel) {
             $scope.dataLoading = true;
             $scope.errors = null;
+            if (searchLevel == null) {
+                searchLevel = "Command";
+            }
             SearchService.DoAdvancedSearch(filters, returnFields, searchLevel,
                 // If we succeed, this is our callback
                 function (response) {
