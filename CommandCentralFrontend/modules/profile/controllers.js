@@ -69,12 +69,6 @@ angular.module('Profiles')
                             $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
                             $scope.profileData.ClaimTime = new Date(response.ReturnValue.Person.ClaimTime);
 
-                            for (var n in $scope.profileData.NECAssignments) {
-                                if ($scope.profileData.NECAssignments[n].IsPrimary) {
-                                    $scope.profileData.primarynec = $scope.profileData.NECAssignments[n];
-                                }
-                            }
-
                             $scope.canSearchPersonField = function (field) {
                                 return ('currentUser' in $scope.globals) && ($scope.globals.currentUser.permissions.searchable.indexOf(field) > -1);
                             };
@@ -130,9 +124,6 @@ angular.module('Profiles')
                     // If we succeed, this is our call back
                     function (response) {
                         $scope.lists = response.ReturnValue;
-                        for (var o in $scope.lists['NEC']) {
-                            $scope.lists['NEC'][o] = { "NEC": $scope.lists['NEC'][o], "IsPrimary" : false };
-                            }
 
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
@@ -173,13 +164,6 @@ angular.module('Profiles')
                     $scope.dataLoading = true;
                     // Update the profile with the data currently on this page (used when "Save Profile" button is clicked)
 
-                    for (var p in $scope.profileData.NECAssignments) {
-                        if ($scope.profileData.primarynec.NEC.Id == $scope.profileData.NECAssignments[p].NEC.Id) {
-                            $scope.profileData.NECAssignments[p].IsPrimary = true;
-                        } else {
-                            $scope.profileData.NECAssignments[p].IsPrimary = false;
-                        }
-                    }
                     ProfileService.UpdateMyProfile($scope.profileData,
                         // If we succeed, this is our callback
                         function (response) {

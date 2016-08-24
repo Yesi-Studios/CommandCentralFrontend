@@ -296,17 +296,17 @@
                                 <!--suppress HtmlUnknownAttribute -->
                                 <ng-custom-date-picker ng-disabled="!canEditPersonField('EAOS')" ng-show="canReturnPersonField('EAOS')" ng-model="profileData.EAOS"></ng-custom-date-picker>
                             </div>
-                            <label class="col-xs-2" for="necs">NECs</label>
+                            <label class="col-xs-2" for="necs">Secondary NECs</label>
                             <div class="col-xs-4">
                                 <!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="necs" ng-disabled="!canEditPersonField('NECAssignments')" ng-show="canReturnPersonField('NECAssignments')" ng-model="profileData.NECAssignments" ng-options="o as o.NEC.Value for o in lists['NEC'] |orderBy: 'NEC.Value' track by o.NEC.Value" multiple></select>
+                                <select class="form-control" id="necs" ng-disabled="!canEditPersonField('SecondaryNECs')" ng-show="canReturnPersonField('SecondaryNECs')" ng-model="profileData.SecondaryNECs" ng-options="o as o.Value for o in lists['NEC'] |orderBy: 'Value' track by o.Id" multiple></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-offset-6 col-xs-2" for="necs">NECs</label>
+                            <label class="col-xs-offset-6 col-xs-2" for="necs">Primary NEC</label>
                             <div class="col-xs-4">
                                 <!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="primarynec" ng-disabled="!canEditPersonField('NECAssignments')" ng-show="canReturnPersonField('NECAssignments')" ng-model="profileData.primarynec" ng-options="o as o.NEC.Value for o in profileData.NECAssignments | orderBy: 'NEC.Value' track by o.NEC.Value" ></select>
+                                <select class="form-control" id="primarynec" ng-disabled="!canEditPersonField('PrimaryNEC')" ng-show="canReturnPersonField('PrimaryNEC')" ng-model="profileData.PrimaryNEC" ng-options="o as o.Value for o in lists['NEC'] | orderBy: 'Value' track by o.Id" ></select>
                             </div>
                         </div>
 					</div>
