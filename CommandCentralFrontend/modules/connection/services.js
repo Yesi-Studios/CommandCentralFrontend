@@ -10,8 +10,9 @@ angular.module('Connection')
                 // Information for connecting to the database, including the URL and API key.
                 var apikey = "90fdb89f-282b-4bd6-840b-cef597615728";
                 //var backendURL = "http://73.20.152.170";  // Atwood's IP for working at home.
-                //var backendURL = "http://147.51.62.19";     // Live service IP.
-                var backendURL = "https://192.168.1.234";
+                var backendURL = "http://147.51.62.19";     // Dev service IP.
+                //var backendURL = "http://147.51.62.48";     // Live service IP.
+                //var backendURL = "https://192.168.1.234";
 
                 // Here we check to see if we have a port stored in localStorage, and if not, we use 1113.
                 // If it's enabled, there's a widget at the bottom of index.html, controlled by this module,
