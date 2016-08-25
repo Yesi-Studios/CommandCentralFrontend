@@ -8,16 +8,10 @@ angular.module('Navigation')
 
         $scope.resetPIIBanner = function () {
             $rootScope.containsPII = false;
-        }
-        $scope.canCreatePerson = function () { return AuthorizationService.CanCreatePerson(); };
-        if ($rootScope.globals && $rootScope.globals.currentUser && $rootScope.globals.currentUser.permissionGroups) {
-            for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++) {
-                if ($rootScope.globals.currentUser.permissionGroups[i].SpecialPermissions.indexOf("CreatePerson") != -1) {
-                    AuthorizationService.SetCanCreatePerson(true);
+        };
 
-                }
-            }
-        }
+        $scope.canCreatePerson = function () { return AuthorizationService.CanCreatePerson(); };
+        $scope.canUseAdminTools = function () { return AuthorizationService.CanUseAdminTools(); };
 
         $scope.createNewPerson = function () {
             ProfileService.CreatePerson(
@@ -50,7 +44,7 @@ angular.module('Navigation')
         };
         $scope.isMyProfileActive = function () {
             return $routeParams.id === AuthenticationService.GetCurrentUserID();
-        }
+        };
 
         $scope.getMyProfileURL = function () {
             if (AuthenticationService.GetCurrentUserID()) {
@@ -61,11 +55,6 @@ angular.module('Navigation')
         };
 
         $scope.canFinalizeMuster = function () {
-            // Implement this properly.
-            return true;
-        };
-
-        $scope.canAccessAdminTools = function () {
             // Implement this properly.
             return true;
         };

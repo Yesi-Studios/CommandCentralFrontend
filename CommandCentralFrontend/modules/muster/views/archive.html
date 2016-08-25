@@ -5,7 +5,8 @@
         <div class="form-group text-center">
             <div class="col-xs-offset-4 col-xs-4">
                 Select Date:
-                <ng-custom-date-picker name="musterDate" ng-model="musterDate" /><br/>
+                <!--suppress HtmlUnknownAttribute -->
+                <ng-custom-date-picker name="musterDate" ng-model="musterDate" ></ng-custom-date-picker><br/>
                 <button class="btn btn-primary" ng-click="getMuster(musterDate)">Get Muster</button><br/>
             </div>
         </div>
@@ -51,9 +52,11 @@
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="record in division track by $index" class="form-group">
-                                                    <td>{{record.Musteree.FriendlyName}}<a ng-if="record.Musteree" ng-href="#/profile/{{record.Musteree.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                                    <td>{{record.Musteree.FriendlyName}}<!--suppress HtmlUnknownAttribute -->
+                                                        <a ng-if="record.Musteree" ng-href="#/profile/{{record.Musteree.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                                                     <td>{{record.MusterStatus}}</td>
-                                                    <td>{{record.Musterer.FriendlyName}}<span ng-if="!record.Musterer">Not mustered, set at finalization.</span><a ng-if="record.Musterer" ng-href="#/profile/{{record.Musterer.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                                    <td>{{record.Musterer.FriendlyName}}<span ng-if="!record.Musterer">Not mustered, set at finalization.</span><!--suppress HtmlUnknownAttribute -->
+                                                        <a ng-if="record.Musterer" ng-href="#/profile/{{record.Musterer.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                                                     <td>{{record.SubmitTime | date:'short'}}</td>
                                                 </tr>
                                             </tbody>
@@ -89,9 +92,11 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="record in records track by $index" class="form-group">
-                                        <td>{{record.Musteree.FriendlyName}}<a ng-if="record.Musteree" ng-href="#/profile/{{record.Musteree.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                        <td>{{record.Musteree.FriendlyName}}<!--suppress HtmlUnknownAttribute -->
+                                            <a ng-if="record.Musteree" ng-href="#/profile/{{record.Musteree.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                                         <td>{{record.MusterStatus}}</td>
-                                        <td>{{record.Musterer.FriendlyName}}<span ng-if="!record.Musterer">Not mustered, set at finalization.</span><a ng-if="record.Musterer" ng-href="#/profile/{{record.Musterer.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                        <td>{{record.Musterer.FriendlyName}}<span ng-if="!record.Musterer">Not mustered, set at finalization.</span><!--suppress HtmlUnknownAttribute -->
+                                            <a ng-if="record.Musterer" ng-href="#/profile/{{record.Musterer.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                                         <td>{{record.SubmitTime | date:'short'}}</td>
                                     </tr>
                                 </tbody>

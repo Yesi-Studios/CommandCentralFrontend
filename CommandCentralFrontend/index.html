@@ -67,7 +67,7 @@
                             <li ng-class="{ active: isActive('/muster/finalize')}" ng-if="canFinalizeMuster()"><a href="#/muster/finalize" ng-click="resetPIIBanner()">Finalize Muster</a></li>
                         </ul>
                     </li>
-                    <li uib-dropdown ng-if="canAccessAdminTools()">
+                    <li uib-dropdown ng-if="canUseAdminTools()">
                         <a id="admin-dropdown" uib-dropdown-toggle href>Admin Tools<span class="caret"></span></a>
                         <ul uib-dropdown-menu aria-labelledby="muster-dropdown" class="dropdown-menu">
                             <li><a href="#/admin/editlists" ng-click="resetPIIBanner()">Edit Lists</a></li>
@@ -128,7 +128,6 @@
     <script src="modules/home/controllers.js"></script>
     <script src="modules/home/services.js"></script>
     <script src="modules/navigation/controllers.js"></script>
-    <script src="modules/navigation/services.js"></script>
     <script src="modules/profile/controllers.js"></script>
     <script src="modules/profile/services.js"></script>
     <script src="modules/search/controllers.js"></script>

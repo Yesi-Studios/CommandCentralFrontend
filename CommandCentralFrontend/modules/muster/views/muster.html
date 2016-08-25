@@ -62,7 +62,8 @@
                                 <option ng-repeat="o in musterStatuses track by $index" ng-value="o">{{o}}</option>
                             </select>
                         </td>
-						<td><a ng-href="#/profile/{{sailor.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+						<td><!--suppress HtmlUnknownAttribute -->
+                            <a ng-href="#/profile/{{sailor.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
 					</tr>
 				</tbody>
 			</table>
