@@ -3,16 +3,16 @@
 angular.module('Search')
  
 .factory('SearchService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
-    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
+    ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
+    function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
 		
         service.DoSimpleSearch = function (terms, success, error) {
             return ConnectionService.RequestFromBackend('SimpleSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'searchterm': terms }, success, error);
         };
 		
-        service.DoAdvancedSearch = function (filters, returnFields, success, error) {
-            return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': filters, 'returnfields': returnFields }, success, error);
+        service.DoAdvancedSearch = function (filters, returnFields, searchLevel, success, error) {
+            return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': filters, 'returnfields': returnFields, 'searchLevel' : searchLevel }, success, error);
         };
 		
         return service;

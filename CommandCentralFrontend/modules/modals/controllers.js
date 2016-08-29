@@ -6,10 +6,22 @@ angular.module('Modals')
     ['$scope', 'ModalService',
     function ($scope, ModalService) {
         $scope.show = function () {
-            ModalService.showModal({
+            return ModalService.showModal({
                 templateUrl: 'modules/modals/views/pii.html',
                 controller: "ModalController"
             }).then(function (modal) {
+                modal.element.modal();
+                modal.close.then(function (result) {
+                    $scope.message = "You said " + result;
+                });
+            },
+            function (modal) {
+                modal.element.modal();
+                modal.close.then(function (result) {
+                    $scope.message = "You said " + result;
+                });
+            },
+            function (modal) {
                 modal.element.modal();
                 modal.close.then(function (result) {
                     $scope.message = "You said " + result;
@@ -24,6 +36,7 @@ angular.module('Modals')
 
     $scope.close = function (result) {
         close(result, 250); // close, but give 500ms for bootstrap to animate
+        $('.modal-backdrop').hide(); 
     };
 
 }]);

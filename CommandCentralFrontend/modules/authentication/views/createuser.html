@@ -1,6 +1,7 @@
 ﻿<div ng-show="errors" ng-repeat="error in errors" class="alert alert-danger status_message">{{error}}</div>
 <div ng-show="messages" ng-repeat="message in messages" class="alert alert-success status_message">{{message}}</div>
 <div class="content_panel">
+    <!--suppress HtmlUnknownAttribute -->
     <form name="form" ng-submit="createUser()" role="form">
         <div class="row" ng-if="form.$invalid">
             <div class="col-xs-8">
@@ -64,6 +65,7 @@
             <div class="form-group" ng-class="{'has-error': !isValidSSN(newUser.SSN)}">
                 <label class="col-xs-4" for="ssn">SSN</label>
                 <div class="col-xs-4">
+                    <!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute -->
                     <input type="text" class="form-control" id="ssn" ng-model="newUser.SSN" ui-mask="999-99-9999" ui-mask-placeholder ui-mask-placeholder-char="_" required />
                 </div>
             </div>
@@ -72,7 +74,8 @@
             <div class="form-group" ng-class="{'has-error': form.dateOfArrival.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
                 <label class="col-xs-4" for="dateOfArrival">Date of Arrival</label>
                 <div class="col-xs-4">
-                    <ng-custom-date-picker name="dateOfArrival" ng-model="newUser.DateOfArrival"/>
+                    <!--suppress HtmlUnknownAttribute -->
+                    <ng-custom-date-picker name="dateOfArrival" ng-model="newUser.DateOfArrival"></ng-custom-date-picker>
                 </div>
             </div>
         </div>
@@ -81,7 +84,8 @@
             <div class="form-group" ng-class="{'has-error': form.eaos.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
                 <label class="col-xs-4" for="eaos">EAOS</label>
                 <div class="col-xs-4">
-                    <ng-custom-date-picker name="eaos" ng-model="newUser.EAOS"/>
+                    <!--suppress HtmlUnknownAttribute -->
+                    <ng-custom-date-picker name="eaos" ng-model="newUser.EAOS"></ng-custom-date-picker>
                 </div>
             </div>
         </div>
@@ -91,7 +95,8 @@
             <div class="form-group" ng-class="{'has-error': form.dateOfBirth.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
                 <label class="col-xs-4" for="dateOfBirth">Date Of Birth</label>
                 <div class="col-xs-4">
-                    <ng-custom-date-picker name="dateOfBirth" ng-model="newUser.DateOfBirth"/>
+                    <!--suppress HtmlUnknownAttribute -->
+                    <ng-custom-date-picker name="dateOfBirth" ng-model="newUser.DateOfBirth"></ng-custom-date-picker>
                 </div>
             </div>
         </div>
@@ -145,6 +150,7 @@
             <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
         </div-->
         <div class="form-actions">
+            <!--suppress HtmlUnknownAttribute -->
             <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Create User</button>
             <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>

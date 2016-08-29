@@ -3,16 +3,18 @@
 // declare modules
 angular.module('Connection', []);
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles', 'Connection']);
-angular.module('Home', ['Authentication', 'pdf', 'Connection']);
+angular.module('Authorization', ['Authentication', 'Connection']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask', 'Connection']);
-angular.module('Authorization', ['Authentication', 'Connection']);
+angular.module('Home', ['Authentication', 'Authorization', 'pdf', 'Connection']);
+angular.module('Administration', ['Authentication', 'Connection']);
 angular.module('Search', ['Authentication', 'Authorization', 'Connection']);
 angular.module('Muster', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
 
 angular.module('Modals', ['angularModalService']);
 
 angular.module('CommandCentral', [
+    'Administration',
     'Authentication',
 	'Authorization',
     'Connection',
@@ -54,6 +56,16 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/muster/views/muster.html'
         })
 
+        .when('/muster/finalize', {
+            controller: 'FinalizeMusterController',
+            templateUrl: 'modules/muster/views/finalizemuster.html'
+        })
+
+        .when('/muster/archive/:musterDate', {
+            controller: 'MusterArchiveController',
+            templateUrl: 'modules/muster/views/archive.html'
+        })
+
         .when('/muster/archive', {
             controller: 'MusterArchiveController',
             templateUrl: 'modules/muster/views/archive.html'
@@ -84,7 +96,7 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/search/views/searchbyfield.html'
         })
 		
-		.when('/searchbyfield/:searchTerms/:returnFields', {
+		.when('/searchbyfield/:searchTerms/:returnFields/:searchLevel', {
             controller: 'SearchByFieldController',
             templateUrl: 'modules/search/views/searchbyfield.html'
         })
@@ -122,6 +134,30 @@ angular.module('CommandCentral', [
 		.when('/editpermissions/:id', {
 		    controller: 'EditPermissionGroupsController',
 		    templateUrl: 'modules/authorization/views/permissions.html',
+		    hideMenus: true
+		})
+
+		.when('/admin/editlists', {
+		    controller: 'ListEditorController',
+		    templateUrl: 'modules/administration/views/listeditor.html',
+		    hideMenus: true
+		})
+
+		.when('/admin/editcommands', {
+		    controller: 'CommandEditorController',
+		    templateUrl: 'modules/administration/views/commandeditor.html',
+		    hideMenus: true
+		})
+
+		.when('/admin/editcommands/:id', {
+		    controller: 'DepartmentEditorController',
+		    templateUrl: 'modules/administration/views/departmenteditor.html',
+		    hideMenus: true
+		})
+
+		.when('/admin/editcommands/:id/:depId', {
+		    controller: 'DivisionEditorController',
+		    templateUrl: 'modules/administration/views/divisioneditor.html',
 		    hideMenus: true
 		})
  
@@ -212,7 +248,7 @@ angular.module('CommandCentral', [
             var $wrapper1 = element.find('.wrapper1'),
                 $div1 = element.find('.div1'),
                 $wrapper2 = element.find('.wrapper2'),
-                $div2 = element.find('.div2')
+                $div2 = element.find('.div2');
 
             // force our virtual scrollbar to work the way we want.
             $wrapper1.css({
@@ -220,16 +256,16 @@ angular.module('CommandCentral', [
                 border: "none 0px rgba(0, 0, 0, 0)",
                 overflowX: "scroll",
                 overflowY: "hidden",
-                height: "20px",
+                height: "20px"
             });
 
             $div1.css({
-                height: "20px",
+                height: "20px"
             });
 
             $wrapper2.css({
                 width: "100%",
-                overflowX: "scroll",
+                overflowX: "scroll"
             });
 
             listener = setInterval(function () {
@@ -244,7 +280,7 @@ angular.module('CommandCentral', [
         restrict: 'E',
         require: '^ngModel',
         scope: {
-            ngModel: '=',
+            ngModel: '='
         },
         template: '<div class="input-group">'+
                         '<input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />' +

@@ -19,20 +19,51 @@
 			<table ng-show="displaySailorsList" class="table-striped col-xs-12">
 				<thead>
 					<tr>
-						<th ng-repeat="field in fields track by $index" ng-click="setOrder(field)"><button ng-class="{'btn-primary': orderKey==field || orderKey=='-'+field}">{{field}}<span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-'+field"></span><span class="glyphicon glyphicon-chevron-down" ng-if="orderKey==field"></span></button></th>
+                        <th ng-click="setOrder('FriendlyName')">
+                            <button ng-class="{'btn-primary': orderKey=='FriendlyName' || orderKey=='-FriendlyName'}">
+                                Name
+                                <span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-FriendlyName'"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='FriendlyName'"></span>
+                            </button>
+                        </th>
+                        <th ng-click="setOrder('Paygrade')">
+                            <button ng-class="{'btn-primary': orderKey=='Paygrade' || orderKey=='-Paygrade'}">
+                                Paygrade
+                                <span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-Paygrade'"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='Paygrade'"></span>
+                            </button>
+                        </th>
+                        <th ng-click="setOrder('Division')">
+                            <button ng-class="{'btn-primary': orderKey=='Division' || orderKey=='-Division'}">
+                                Division
+                                <span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-Division'"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='Division'"></span>
+                            </button>
+                        </th>
+                        <th ng-click="setOrder('HasBeenMustered')">
+                            <button ng-class="{'btn-primary': orderKey=='HasBeenMustered' || orderKey=='-HasBeenMustered'}">
+                                Mustered Today?
+                                <span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-HasBeenMustered'"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='HasBeenMustered'"></span>
+                            </button>
+                        </th>
 						<th>Muster Status</th>
                         <th>Profile</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="sailor in displaySailorsList | orderBy: orderKey track by $index" ng-click="goToProfile(result.Id)" class="form-group">
-						<td ng-repeat="field in fields track by $index">{{sailor[field]}}</td>
+                        <td>{{sailor['FriendlyName']}}</td>
+                        <td>{{sailor['Paygrade']}}</td>
+                        <td>{{sailor['Division']}}</td>
+                        <td>{{sailor['HasBeenMustered'] | yesNo }}</td>
                         <td>
                             <select name="{{sailor.Id}}MusterStatus" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus">
                                 <option ng-repeat="o in musterStatuses track by $index" ng-value="o">{{o}}</option>
                             </select>
                         </td>
-						<td><a ng-href="#/profile/{{sailor.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+						<td><!--suppress HtmlUnknownAttribute -->
+                            <a ng-href="#/profile/{{sailor.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
 					</tr>
 				</tbody>
 			</table>

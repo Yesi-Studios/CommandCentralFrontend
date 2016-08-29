@@ -18,12 +18,14 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
                     $scope.messages = [];
                     $scope.friendlyName = response.ReturnValue.FriendlyName;
                     $scope.allPermissionGroups = response.ReturnValue.AllPermissionGroups;
+                    console.log($scope.allPermissionGroups);
                     $scope.userPermissionGroups = response.ReturnValue.CurrentPermissionGroups;
+                    console.log($scope.userPermissionGroups);
                     $scope.editablePermissionGroups = response.ReturnValue.EditablePermissionGroups;
 
                     $scope.givePermissionGroup = function (group) {
                         for (var i = 0; i < $scope.userPermissionGroups.length; i++) {
-                            if ($scope.userPermissionGroups[i].Id == group.Id) {
+                            if ($scope.userPermissionGroups[i] == group) {
                                 $scope.errors.push('User already has this permission.');
                                 return;
                             }
@@ -33,7 +35,7 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
 
                     $scope.removePermissionGroup = function (group) {
                         for (var i = 0; i < $scope.userPermissionGroups.length; i++) {
-                            if ($scope.userPermissionGroups[i].Id == group.Id) {
+                            if ($scope.userPermissionGroups[i] == group) {
                                 $scope.userPermissionGroups.splice(i, 1);
                             }
                         }
@@ -41,21 +43,18 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
 
                     $scope.canEditPermissionGroup = function (group) {
                         for (var i = 0; i < $scope.editablePermissionGroups.length; i++) {
-                            if ($scope.editablePermissionGroups[i].Id == group.Id) {
+                            if ($scope.editablePermissionGroups[i] == group) {
                                 return true;
                             }
                         }
                         return false;
-                    }
+                    };
 
                     $scope.updatePermissions = function () {
                         $scope.errors = [];
                         $scope.messages = [];
-                        var groupIDs = [];
-                        for (var i = 0; i < $scope.userPermissionGroups.length; i++) {
-                            groupIDs.push($scope.userPermissionGroups[i].Id);
-                        }
-                        AuthorizationService.UpdateUserPermissionGroups($routeParams.id, groupIDs,
+
+                        AuthorizationService.UpdateUserPermissionGroups($routeParams.id, $scope.userPermissionGroups,
                             function (response) {
                                 $scope.messages.push('Permissions successfully updated.');
                                 if (response.ReturnValue.WasSelf) {

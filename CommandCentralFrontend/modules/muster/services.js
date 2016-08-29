@@ -3,8 +3,8 @@
 angular.module('Muster')
  
 .factory('MusterService',
-    ['Base64', '$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
-    function (Base64, $http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
+    ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
+    function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
         
         service.LoadTodaysMuster = function (success, error) {
@@ -17,6 +17,10 @@ angular.module('Muster')
 
         service.LoadMusterByDay = function (musterDate, success, error) {
             return ConnectionService.RequestFromBackend('LoadMusterRecordsByMusterDay', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'musterdate': musterDate }, success, error);
+        };
+
+        service.FinalizeMuster = function (success, error) {
+            return ConnectionService.RequestFromBackend('FinalizeMuster', { 'authenticationtoken': AuthenticationService.GetAuthToken() }, success, error);
         };
 
         return service;

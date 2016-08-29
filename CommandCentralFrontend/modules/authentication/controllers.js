@@ -31,38 +31,22 @@ angular.module('Authentication')
                         AuthenticationService.Login($scope.username, $scope.password,
                             // If we succeed this is our call back
                             function (response) {
+                                console.log(response);
                                 AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonId);
-                                AuthorizationService.GetPersonMetadata(
-                                    function (response) {
-                                        AuthorizationService.SetPermissions(response.ReturnValue.SearchableFields, response.ReturnValue.ReturnableFields);
-
-                                    },
-                                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                                    function (response) {
-                                        ConnectionService.HandleServiceError(response, $scope, $location);
-                                    }).then(
-                                    function () {
-                                        AuthorizationService.GetPermissionGroups(
-                                            // If we succeed, this is our callback
-                                            function (response) {
-                                                AuthorizationService.SetPermissionGroups(response.ReturnValue);
-                                            },
-                                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                                            function (response) {
-                                                ConnectionService.HandleServiceError(response, $scope, $location);
-                                            }
-                                        )
-                                        .then(function () {
-                                            $location.path('/');
-                                            if ($rootScope.globals && $rootScope.globals.currentUser && $rootScope.globals.currentUser.permissionGroups) {
-                                                for (var i = 0; i < $rootScope.globals.currentUser.permissionGroups.length; i++) {
-                                                    if ($rootScope.globals.currentUser.permissionGroups[i].SpecialPermissions.indexOf("CreatePerson") != -1) {
-                                                        AuthorizationService.SetCanCreatePerson(true);
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    })
+                                AuthorizationService.SetPermissions(response.ReturnValue.ResolvedPermissions);
+                                AuthorizationService.GetPermissionGroups(
+                                        // If we succeed, this is our callback
+                                        function (response) {
+                                            AuthorizationService.SetPermissionGroups(response.ReturnValue);
+                                        },
+                                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                                        function (response) {
+                                            ConnectionService.HandleServiceError(response, $scope, $location);
+                                        }
+                                    )
+                                    .then(function () {
+                                        $location.path('/');
+                                    });
                             },
                             // If we fail, this is our call back. This one must differ from the convenience function in Connection service because we
                             // are already on the login page. 
@@ -95,8 +79,8 @@ angular.module('Authentication')
         };
     }])
 .controller('RegisterController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService',
-    function ($scope, $rootScope, $location, AuthenticationService) {
+    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService',
+    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService) {
         // reset login status
         //AuthenticationService.ClearCredentials();
         $scope.accepted = null;
@@ -117,8 +101,8 @@ angular.module('Authentication')
     }])
 
 .controller('FinishRegisterController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService) {
         $scope.finishRegistration = function () {
             $scope.dataLoading = true;
             AuthenticationService.FinishRegistration($scope.username, $scope.password, $routeParams.id,
@@ -135,8 +119,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('ForgotController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService',
-    function ($scope, $rootScope, $location, AuthenticationService) {
+    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService',
+    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService) {
         // reset login status
         // AuthenticationService.ClearCredentials();
 
@@ -175,8 +159,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('CreateUserController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService) {
 
         $scope.errors = [];
         $scope.messages = [];
@@ -200,7 +184,7 @@ angular.module('Authentication')
         };
 
         $scope.isValidSSN = function (number) {
-            var re = /^\d{3}-?\d{2}-?\d{4}$/
+            var re = /^\d{3}-?\d{2}-?\d{4}$/;
             return re.test(number);
         };
 
