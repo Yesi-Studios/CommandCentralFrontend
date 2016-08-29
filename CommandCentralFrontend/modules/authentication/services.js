@@ -41,7 +41,7 @@ angular.module('Authentication')
 		};
 
 		service.BeginRegistration = function (ssn, success, error) {
-		    return ConnectionService.RequestFromBackend('BeginRegistration', { 'ssn': ssn, 'continuelink' : 'http://127.0.0.1:63342/CommandCentralFrontend/CommandCentralFrontend/index.html?_ijt=e1df7pk3ivipdtv8jreojnj6nm#/finishregistration/'}, success, error);
+		    return ConnectionService.RequestFromBackend('BeginRegistration', { 'ssn': ssn, 'continuelink' : 'https://commandcentral/#/finishregistration/'}, success, error);
 		};
 
 		service.CreateUser = function (person, success, error) {
@@ -49,7 +49,7 @@ angular.module('Authentication')
 		};
 		
 		service.ForgotPassword = function (email, ssn, success, error) {
-		    return ConnectionService.RequestFromBackend('BeginPasswordReset', { 'email': email, 'ssn': ssn }, success, error);
+		    return ConnectionService.RequestFromBackend('BeginPasswordReset', { 'email': email, 'ssn': ssn, 'continuelink' : 'https://commandcentral/#/finishreset/' }, success, error);
 		};
 		
 		service.FinishReset = function (password, id, success, error) {
