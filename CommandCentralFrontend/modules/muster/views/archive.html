@@ -7,10 +7,21 @@
                 Select Date:
                 <!--suppress HtmlUnknownAttribute -->
                 <ng-custom-date-picker name="musterDate" ng-model="musterDate" ></ng-custom-date-picker><br/>
-                <button class="btn btn-primary" ng-click="getMuster(musterDate)">Get Muster</button><br/>
+                <button class="btn btn-primary" ng-click="goToMuster(musterDate)">Get Muster</button><br/>
             </div>
         </div>
     </div><br/>
+    <div ng-show="showProgress" class="row">
+        <div class="col-xs-offset-1 col-xs-10 text-center">
+            <span class="label label-success">{{musterCounts.Present}} ({{musterCounts.Present/musterCounts.Total*100 | number:2}}%) Present</span>
+            <span class="label label-warning">{{musterCounts.SIQ}} ({{musterCounts.SIQ/musterCounts.Total*100 | number:2}}%) SIQ</span>
+            <span class="label label-primary">{{musterCounts.Leave}} ({{musterCounts.Leave/musterCounts.Total*100 | number:2}}%) On Leave</span>
+            <span class="label label-info">{{musterCounts.Terminal_Leave}} ({{musterCounts.Terminal_Leave/musterCounts.Total*100 | number:2}}%) Terminal Leave</span>
+            <span class="label label-default">{{musterCounts.Transferred}} ({{musterCounts.Transferred/musterCounts.Total*100 | number:2}}%) Transferred</span>
+            <span class="label label-danger">{{musterCounts.UA}} ({{musterCounts.UA/musterCounts.Total*100 | number:2}}%)UA</span>
+
+        </div>
+    </div>
     <div ng-show="command.uics" class="row">
         <div class="col-xs-offset-4 col-xs-4">
             View by:

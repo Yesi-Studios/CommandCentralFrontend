@@ -117,7 +117,10 @@ angular.module('Muster')
 
                 $scope.viewBy = "division";
 
-                $scope.getMuster = function (musterDate) {
+                $scope.goToMuster = function (filters, fields, level) {
+                        $location.path('/muster/archive/' + $scope.musterDate);
+                };
+                var getMuster = function (musterDate) {
                     $scope.errors = [];
                     MusterService.LoadMusterByDay(musterDate,
                         function (response) {
@@ -125,6 +128,16 @@ angular.module('Muster')
                             if (response.ReturnValue.length == 0) {
                                 $scope.errors.push("No muster records for that date.");
                             } else {
+                                $scope.showProgress = true;
+                                $scope.musterCounts = {
+                                    "Present" : 0,
+                                    "Terminal_Leave" : 0,
+                                    "Leave" : 0,
+                                    "UA" : 0,
+                                    "SIQ" : 0,
+                                    "Transferred" : 0,
+                                    "Total" : response.ReturnValue.length
+                                };
                                 $scope.command = {
                                     "name": response.ReturnValue[0].Command,
                                     "departments": {},
@@ -132,6 +145,7 @@ angular.module('Muster')
                                 };
                                 for (var i in response.ReturnValue) {
                                     var record = response.ReturnValue[i];
+                                    $scope.musterCounts[record["MusterStatus"]] += 1;
                                     if (!$scope.command.departments[record.Department]) {
                                         $scope.command.departments[record.Department] = {};
                                     }
@@ -155,6 +169,11 @@ angular.module('Muster')
                         }
                     );
                 };
+
+                if($routeParams.musterDate) {
+                    $scope.musterDate = new Date($routeParams.musterDate.replace(/\"/g, ""));
+                }
+                getMuster($scope.musterDate);
             }
         ])
     .controller('FinalizeMusterController',
