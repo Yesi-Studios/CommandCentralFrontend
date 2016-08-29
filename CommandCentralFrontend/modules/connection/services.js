@@ -11,7 +11,7 @@ angular.module('Connection')
                 var apikey = "90fdb89f-282b-4bd6-840b-cef597615728";
                 //var backendURL = "http://73.20.152.170";  // Atwood's IP for working at home.
                 //var backendURL = "http://147.51.62.19";     // Dev service IP.
-                var backendURL = "https://147.51.62.48:1337";     // Live service IP.
+                var backendURL = "https://147.51.62.48";     // Live service IP.
                 //var backendURL = "http://192.168.1.234";
 
                 // Here we check to see if we have a port stored in localStorage, and if not, we use 1113.
@@ -25,7 +25,7 @@ angular.module('Connection')
                     backendPort = "1113";
                 }
                 // Uncomment this before release to make sure the right port is set for the end user.
-                // backendPort = "1113";
+                backendPort = "1337";
 
                 // Create the base URL for all REST calls
                 var baseurl = backendURL + ":" + backendPort;
