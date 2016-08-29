@@ -4,22 +4,22 @@
     <!--suppress HtmlUnknownAttribute -->
     <form name="form" ng-submit="createUser()" role="form">
         <div class="row" ng-if="form.$invalid">
-            <div class="col-xs-8">
+            <div class="col-md-8">
                 <div class="alert alert-danger" role="alert"><h4>All fields are required.</h4></div>
             </div>
         </div>
         <div class="row">
             <div class="form-group" ng-class="{'has-error': trimString(newUser.FirstName)==''}">
-                <label class="col-xs-4" for="firstName">First Name</label>
-                <div class="col-xs-4">
+                <label class="col-md-4" for="firstName">First Name</label>
+                <div class="col-md-4">
                     <input type="text" class="form-control" name="firstName" id="firstName" ng-model="newUser.FirstName" required />
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="form-group" ng-class="{'has-error': trimString(newUser.LastName)==''}">
-                <label class="col-xs-4" for="lastName">Last Name</label>
-                <div class="col-xs-4">
+                <label class="col-md-4" for="lastName">Last Name</label>
+                <div class="col-md-4">
                     <input type="text" class="form-control" name="lastName" id="lastName" ng-model="newUser.LastName" required />
                 </div>
             </div>
@@ -27,8 +27,8 @@
 
         <div class="row">
             <div class="form-group">
-                <label class="col-xs-4" for="sex">Sex</label>
-                <div class="col-xs-8">
+                <label class="col-md-4" for="sex">Sex</label>
+                <div class="col-md-8">
                     <label class="radio-inline">
                         <input type="radio" name="sex" id="male" value="Male" ng-model="newUser.Sex" required> Male
                     </label>
@@ -41,8 +41,8 @@
 
         <div class="row">
             <div class="form-group">
-                <label class="col-xs-4" for="dutyStatus">Duty Status</label>
-                <div class="col-xs-4">
+                <label class="col-md-4" for="dutyStatus">Duty Status</label>
+                <div class="col-md-4">
                     <select class="form-control" id="dutyStatus" ng-model="newUser.DutyStatus" ng-options="o as o for o in lists['DutyStatuses']" required>
                         <option></option>
                     </select>
@@ -52,8 +52,8 @@
 
         <div class="row">
             <div class="form-group">
-                <label class="col-xs-4" for="paygrade">Paygrade</label>
-                <div class="col-xs-4">
+                <label class="col-md-4" for="paygrade">Paygrade</label>
+                <div class="col-md-4">
                     <select class="form-control" id="paygrade" ng-model="newUser.Paygrade" ng-options="o as o for o in lists['Paygrades']" required>
                         <option></option>
                     </select>
@@ -63,8 +63,8 @@
 
         <div class="row">
             <div class="form-group" ng-class="{'has-error': !isValidSSN(newUser.SSN)}">
-                <label class="col-xs-4" for="ssn">SSN</label>
-                <div class="col-xs-4">
+                <label class="col-md-4" for="ssn">SSN</label>
+                <div class="col-md-4">
                     <!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute -->
                     <input type="text" class="form-control" id="ssn" ng-model="newUser.SSN" ui-mask="999-99-9999" ui-mask-placeholder ui-mask-placeholder-char="_" required />
                 </div>
@@ -72,8 +72,8 @@
         </div>
         <div class="row">
             <div class="form-group" ng-class="{'has-error': form.dateOfArrival.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
-                <label class="col-xs-4" for="dateOfArrival">Date of Arrival</label>
-                <div class="col-xs-4">
+                <label class="col-md-4" for="dateOfArrival">Date of Arrival</label>
+                <div class="col-md-4">
                     <!--suppress HtmlUnknownAttribute -->
                     <ng-custom-date-picker name="dateOfArrival" ng-model="newUser.DateOfArrival"></ng-custom-date-picker>
                 </div>
@@ -82,8 +82,8 @@
 
         <div class="row">
             <div class="form-group" ng-class="{'has-error': form.eaos.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
-                <label class="col-xs-4" for="eaos">EAOS</label>
-                <div class="col-xs-4">
+                <label class="col-md-4" for="eaos">EAOS</label>
+                <div class="col-md-4">
                     <!--suppress HtmlUnknownAttribute -->
                     <ng-custom-date-picker name="eaos" ng-model="newUser.EAOS"></ng-custom-date-picker>
                 </div>
@@ -93,8 +93,8 @@
 
         <div class="row">
             <div class="form-group" ng-class="{'has-error': form.dateOfBirth.$invalid}" ng-pattern='/^\d{4}-?\d{2}-?\d{2}$/'>
-                <label class="col-xs-4" for="dateOfBirth">Date Of Birth</label>
-                <div class="col-xs-4">
+                <label class="col-md-4" for="dateOfBirth">Date Of Birth</label>
+                <div class="col-md-4">
                     <!--suppress HtmlUnknownAttribute -->
                     <ng-custom-date-picker name="dateOfBirth" ng-model="newUser.DateOfBirth"></ng-custom-date-picker>
                 </div>
