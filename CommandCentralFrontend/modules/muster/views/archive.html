@@ -3,7 +3,7 @@
 <div class="content_panel">
     <div class="row">
         <div class="form-group text-center">
-            <div class="col-xs-offset-4 col-xs-4">
+            <div class="col-md-offset-4 col-md-4">
                 Select Date:
                 <!--suppress HtmlUnknownAttribute -->
                 <ng-custom-date-picker name="musterDate" ng-model="musterDate" ></ng-custom-date-picker><br/>
@@ -12,7 +12,7 @@
         </div>
     </div><br/>
     <div ng-show="showProgress" class="row">
-        <div class="col-xs-offset-1 col-xs-10 text-center">
+        <div class="col-md-offset-1 col-md-10 text-center">
             <span class="label label-success">{{musterCounts.Present}} ({{musterCounts.Present/musterCounts.Total*100 | number:2}}%) Present</span>
             <span class="label label-warning">{{musterCounts.SIQ}} ({{musterCounts.SIQ/musterCounts.Total*100 | number:2}}%) SIQ</span>
             <span class="label label-primary">{{musterCounts.Leave}} ({{musterCounts.Leave/musterCounts.Total*100 | number:2}}%) On Leave</span>
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div ng-show="command.uics" class="row">
-        <div class="col-xs-offset-4 col-xs-4">
+        <div class="col-md-offset-4 col-md-4">
             View by:
             <label class="radio-inline">
                 <input type="radio" name="viewby" id="division" value="division" ng-model="viewBy"> Division
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div ng-show="viewBy=='division'" class="row">
-        <div class="col-xs-12">
+        <div class="col-md-12">
             <div class="panel-group" id="musterRecords" role="tablist" aria-multiselectable="true">
                 <div ng-repeat="(departmentName, department) in command['departments']" class="panel panel-default">
                     <div class="panel-heading" role="tab" id="department{{departmentName}}Heading">
@@ -52,7 +52,7 @@
                                 </div>
                                 <div id="division{{departmentName}}{{divisionName}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="division{{departmentName}}{{divisionName}}Heading">
                                     <div class="panel-body">
-                                        <table class="table-striped col-xs-12">
+                                        <table class="table-striped col-md-12">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
@@ -82,7 +82,7 @@
         </div>
     </div>
     <div ng-show="viewBy=='uic'" class="row">
-        <div class="col-xs-12">
+        <div class="col-md-12">
             <div class="panel-group" id="musterRecordsbyUIC" role="tablist" aria-multiselectable="true">
                 <div ng-repeat="(UIC, records) in command['uics']" class="panel panel-default">
                     <div class="panel-heading" role="tab" id="uic{{UIC}}Heading">
@@ -92,7 +92,7 @@
                     </div>
                     <div id="uic{{UIC}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="uic{{UIC}}Heading">
                         <div class="panel-body">
-                            <table class="table-striped col-xs-12">
+                            <table class="table-striped col-md-12">
                                 <thead>
                                     <tr>
                                         <th>Name</th>

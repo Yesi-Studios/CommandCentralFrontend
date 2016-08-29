@@ -12,38 +12,38 @@
 			<uib-tab heading="Personal Data">
 				<br />
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div class="form-group" ng-class="{'has-error': trimString(profileData.FirstName)==''}">
-							<label class="col-xs-4" for="firstName">First Name</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="firstName">First Name</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<input type="text" class="form-control" name="firstName" id="firstName" ng-disabled="!canEditPersonField('FirstName')" ng-show="canReturnPersonField('FirstName')" ng-model="profileData.FirstName" required/>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-4" for="middleName">Middle Name</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="middleName">Middle Name</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<input type="text" class="form-control" id="middleName" ng-disabled="!canEditPersonField('MiddleName')" ng-show="canReturnPersonField('MiddleName')" ng-model="profileData.MiddleName" />
 							</div>
 						</div>
 						<div class="form-group"  ng-class="{'has-error': trimString(profileData.LastName)==''}">
-							<label class="col-xs-4" for="lastName">Last Name</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="lastName">Last Name</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<input type="text" class="form-control" id="lastName" ng-disabled="!canEditPersonField('LastName')" ng-show="canReturnPersonField('LastName')" ng-model="profileData.LastName" required/>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-4" for="suffix">Suffix</label>
-							<div class="col-xs-3">
+							<label class="col-md-4" for="suffix">Suffix</label>
+							<div class="col-md-3">
 								<!--suppress HtmlUnknownAttribute -->
 								<input type="text" class="form-control" id="suffix" ng-disabled="!canEditPersonField('Suffix')" ng-show="canReturnPersonField('Suffix')" ng-model="profileData.Suffix" />
 							</div>
 						</div>
 						<div class="form-group"  ng-class="{'has-error': !isValidSSN(profileData.SSN)}">
-							<label class="col-xs-4" for="ssn">SSN</label>
-							<div class="input-group col-xs-8">
+							<label class="col-md-4" for="ssn">SSN</label>
+							<div class="input-group col-md-8">
 								<a href="" ng-click="showSSN=true" class="btn btn-warning" ng-hide="!canReturnPersonField('SSN')||showSSN">Show SSN</a>
 								<!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute, HtmlUnknownAttribute -->
 								<input type="text" class="form-control" id="ssn" ng-disabled="!canEditPersonField('SSN')" ng-show="canReturnPersonField('SSN') && showSSN " ng-model="profileData.SSN" ui-mask="999-99-9999" ui-mask-placeholder ui-mask-placeholder-char="_" /><!-- ng-pattern='/^\d{3}-?\d{2}-?\d{4}$/'/>-->
@@ -53,17 +53,17 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div class="form-group">
-							<label class="col-xs-4" for="dob">Date of Birth</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="dob">Date of Birth</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<ng-custom-date-picker id="dob" ng-disabled="!canEditPersonField('DateOfBirth')" ng-show="canReturnPersonField('DateOfBirth')" ng-model="profileData.DateOfBirth"></ng-custom-date-picker>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-4" for="ethnicity">Ethnicity</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="ethnicity">Ethnicity</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o.Value for o in lists['Ethnicity'] track by o.Id">
 									<option></option>
@@ -71,8 +71,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-4" for="religiousPreference">Religious Preference</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="religiousPreference">Religious Preference</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o.Value for o in lists['ReligiousPreference'] track by o.Id">
 									<option></option>
@@ -80,8 +80,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-4" for="sex">Sex</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="sex">Sex</label>
+							<div class="col-md-8">
 								<label class="radio-inline">
 									<!--suppress HtmlUnknownAttribute -->
 									<input type="radio" name="sex" id="male" value="Male" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex"> Male
@@ -93,8 +93,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-4" for="remarks">Remarks</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="remarks">Remarks</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<textarea class="form-control" id="remarks" rows="2" ng-disabled="!canEditPersonField('Remarks')" ng-show="canReturnPersonField('Remarks')" ng-model="profileData.Remarks"></textarea>
 							</div>
@@ -108,11 +108,11 @@
 			<uib-tab heading="Contact Infomation">
 				<br />
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<div class="form-group">
-							<label class="col-xs-3" for="emails">Emails</label>
+							<label class="col-md-3" for="emails">Emails</label>
 							<!--suppress HtmlUnknownAttribute -->
-							<table id="emails" class="col-xs-8 table-striped contact-table" ng-disabled="!canEditPersonField('EmailAddresses')" ng-show="canReturnPersonField('EmailAddresses')">
+							<table id="emails" class="col-md-8 table-striped contact-table" ng-disabled="!canEditPersonField('EmailAddresses')" ng-show="canReturnPersonField('EmailAddresses')">
 								<thead ng-show="profileData.EmailAddresses.length > 0">
 								<tr>
 									<th>Address</th>
@@ -129,7 +129,7 @@
 									<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses.splice(profileData.EmailAddresses.indexOf(email), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
 								</tr>
 								<tr>
-									<td class="col-xs-5">
+									<td class="col-md-5">
 										<div class="input-group">
 											<span class="input-group-addon" id="newEmailAddon">New Email:</span>
 											<input type="text" class="form-control" aria-describedby="newEmailAddon" ng-model="newEmail"/>
@@ -145,9 +145,9 @@
 						</div>
 						<hr>
 						<div class="form-group">
-							<label class="col-xs-3" for="phoneNumbers">Phone Numbers</label>
+							<label class="col-md-3" for="phoneNumbers">Phone Numbers</label>
 							<!--suppress HtmlUnknownAttribute -->
-							<table id="phoneNumbers" class="table-striped contact-table col-xs-8" ng-disabled="!canEditPersonField('PhoneNumbers')" ng-show="canReturnPersonField('PhoneNumbers')">
+							<table id="phoneNumbers" class="table-striped contact-table col-md-8" ng-disabled="!canEditPersonField('PhoneNumbers')" ng-show="canReturnPersonField('PhoneNumbers')">
 								<thead ng-show="profileData.PhoneNumbers.length > 0">
 								<tr>
 									<th>Number</th>
@@ -171,7 +171,7 @@
 									<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers.splice(profileData.PhoneNumbers.indexOf(number), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
 								</tr>
 								<tr>
-									<td class="col-xs-5">
+									<td class="col-md-5">
 										<div class="input-group">
 											<span class="input-group-addon" id="newNumberAddon">New Number:</span>
 											<!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute -->
@@ -195,9 +195,9 @@
 						</div>
 						<hr>
 						<div class="form-group">
-							<label class="col-xs-3" for="address">Physical Addresses</label>
+							<label class="col-md-3" for="address">Physical Addresses</label>
 							<!--suppress HtmlUnknownAttribute -->
-							<table id="addresses" class="col-xs-8 table-striped contact-table" ng-disabled="!canEditPersonField('PhysicalAddresses')" ng-show="canReturnPersonField('PhysicalAddresses')">
+							<table id="addresses" class="col-md-8 table-striped contact-table" ng-disabled="!canEditPersonField('PhysicalAddresses')" ng-show="canReturnPersonField('PhysicalAddresses')">
 								<thead ng-show="profileData.PhysicalAddresses.length > 0">
 								<tr>
 									<th>Address</th>
@@ -214,7 +214,7 @@
 									<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses.splice(profileData.PhysicalAddresses.indexOf(address), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
 								</tr>
 								<tr>
-									<td class="col-xs-5">
+									<td class="col-md-5">
 										<div class="input-group">
 											<input name="number" placeholder="Number" class="form-control" style="float: left; width: 30%;" ng-model="newAddressNumber" type="number">
 											<input name="street" placeholder="Street" class="form-control" style="float: left; width: 70%;" ng-model="newAddressStreet" type="text">
@@ -234,15 +234,15 @@
 						</div>
 						<hr>
 						<div class="form-group">
-							<label class="col-xs-3" for="emergencyContactInstructions">Emergency Contact Instructions</label>
-							<div class="col-xs-8">
+							<label class="col-md-3" for="emergencyContactInstructions">Emergency Contact Instructions</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<textarea class="form-control" id="emergencyContactInstructions" rows="2" ng-disabled="!canEditPersonField('EmergencyContactInstructions')" ng-show="canReturnPersonField('EmergencyContactInstructions')" ng-model="profileData.EmergencyContactInstructions"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-3" for="contactRemarks">Contact Remarks</label>
-							<div class="col-xs-8">
+							<label class="col-md-3" for="contactRemarks">Contact Remarks</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<textarea class="form-control" id="contactRemarks" rows="2" ng-disabled="!canEditPersonField('ContactRemarks')" ng-show="canReturnPersonField('ContactRemarks')" ng-model="profileData.ContactRemarks"></textarea>
 							</div>
@@ -256,71 +256,71 @@
 			<uib-tab heading="Work Information">
 				<br />
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div class="form-group">
-							<label class="col-xs-4" for="jobTitle">Job Title</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="jobTitle">Job Title</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<input type="text" class="form-control" id="jobTitle" ng-disabled="!canEditPersonField('JobTitle')" ng-show="canReturnPersonField('JobTitle')" ng-model="profileData.JobTitle" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-4" for="shift">Shift</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="shift">Shift</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<input type="text" class="form-control" id="shift" ng-disabled="!canEditPersonField('Shift')" ng-show="canReturnPersonField('Shift')" ng-model="profileData.Shift" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-4" for="workRoom">Work Room</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="workRoom">Work Room</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<input type="text" class="form-control" id="workRoom" ng-disabled="!canEditPersonField('WorkRoom')" ng-show="canReturnPersonField('WorkRoom')" ng-model="profileData.WorkRoom" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-2" for="dateOfArrival">Date of Arrival</label>
-							<div class="col-xs-4">
+							<label class="col-md-2" for="dateOfArrival">Date of Arrival</label>
+							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
 								<ng-custom-date-picker id="dateOfArrival" ng-disabled="!canEditPersonField('DateOfArrival')" ng-show="canReturnPersonField('DateOfArrival')" ng-model="profileData.DateOfArrival" ></ng-custom-date-picker>
 							</div>
-							<label class="col-xs-2" for="dateOfDeparture">Date of Departure</label>
-							<div class="col-xs-4">
+							<label class="col-md-2" for="dateOfDeparture">Date of Departure</label>
+							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
 								<ng-custom-date-picker ng-disabled ="!canEditPersonField('DateOfDeparture')" ng-show="canReturnPersonField('DateOfDeparture')" ng-model="profileData.DateOfDeparture" ></ng-custom-date-picker>
 							</div>
 						</div>
                         <div class="form-group">
-                            <label class="col-xs-2" for="eaos">EAOS</label>
-                            <div class="col-xs-4">
+                            <label class="col-md-2" for="eaos">EAOS</label>
+                            <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
                                 <ng-custom-date-picker ng-disabled="!canEditPersonField('EAOS')" ng-show="canReturnPersonField('EAOS')" ng-model="profileData.EAOS"></ng-custom-date-picker>
                             </div>
-                            <label class="col-xs-2" for="necs">Secondary NECs</label>
-                            <div class="col-xs-4">
+                            <label class="col-md-2" for="necs">Secondary NECs</label>
+                            <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
                                 <select class="form-control" id="necs" ng-disabled="!canEditPersonField('SecondaryNECs')" ng-show="canReturnPersonField('SecondaryNECs')" ng-model="profileData.SecondaryNECs" ng-options="o as o.Value for o in lists['NEC'] |orderBy: 'Value' track by o.Id" multiple></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-offset-6 col-xs-2" for="necs">Primary NEC</label>
-                            <div class="col-xs-4">
+                            <label class="col-md-offset-6 col-md-2" for="necs">Primary NEC</label>
+                            <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
                                 <select class="form-control" id="primarynec" ng-disabled="!canEditPersonField('PrimaryNEC')" ng-show="canReturnPersonField('PrimaryNEC')" ng-model="profileData.PrimaryNEC" ng-options="o as o.Value for o in lists['NEC'] | orderBy: 'Value' track by o.Id" ></select>
                             </div>
                         </div>
 					</div>
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div class="form-group">
-							<label class="col-xs-2" for="rate">Rate</label>
-							<div class="col-xs-4">
+							<label class="col-md-2" for="rate">Rate</label>
+							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
 								<select class="form-control" id="rate" ng-disabled="!canEditPersonField('Designation')" ng-show="canReturnPersonField('Designation')" ng-model="profileData.Designation" ng-options="o as o.Value for o in lists['Designation'] track by o.Id">
 									<option></option>
 								</select>
 							</div>
-							<label class="col-xs-2" for="rank">Rank</label>
-							<div class="col-xs-4">
+							<label class="col-md-2" for="rank">Rank</label>
+							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
 								<select class="form-control" id="rank" ng-disabled="!canEditPersonField('Paygrade')" ng-show="canReturnPersonField('Paygrade')" ng-model="profileData.Paygrade" ng-options="o as o for o in lists['Paygrades']">
 									<option></option>
@@ -328,8 +328,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-2" for="command">Command</label>
-							<div class="col-xs-10">
+							<label class="col-md-2" for="command">Command</label>
+							<div class="col-md-10">
 								<!--suppress HtmlUnknownAttribute -->
 								<select class="form-control" id="command" ng-disabled="!canEditPersonField('Command')" ng-show="canReturnPersonField('Command')" ng-model="profileData.Command" ng-options="o as o.Value for o in commandList track by o.Id">
 									<option></option>
@@ -337,15 +337,15 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-2" for="division">Division</label>
-							<div class="col-xs-4">
+							<label class="col-md-2" for="division">Division</label>
+							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
 								<select class="form-control" id="division" ng-disabled="!canEditPersonField('Division')" ng-show="canReturnPersonField('Division')" ng-model="profileData.Division" ng-options="o as o.Value for o in profileData.Department.Divisions track by o.Id">
 									<option></option>
 								</select>
 							</div>
-							<label class="col-xs-2" for="department">Department</label>
-							<div class="col-xs-4">
+							<label class="col-md-2" for="department">Department</label>
+							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
 								<select class="form-control" id="department" ng-disabled="!canEditPersonField('Department')" ng-show="canReturnPersonField('Department')" ng-model="profileData.Department" ng-options="o as o.Value for o in profileData.Command.Departments track by o.Id">
 									<option></option>
@@ -353,15 +353,15 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-2" for="dutyStatus">Duty Status</label>
-							<div class="col-xs-4">
+							<label class="col-md-2" for="dutyStatus">Duty Status</label>
+							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
 								<select class="form-control" id="dutyStatus" ng-disabled="!canEditPersonField('DutyStatus')" ng-show="canReturnPersonField('DutyStatus')" ng-model="profileData.DutyStatus" ng-options="o as o for o in lists['DutyStatuses']">
 									<option></option>
 								</select>
 							</div>
-							<label class="col-xs-2" for="uic">UIC</label>
-							<div class="col-xs-4">
+							<label class="col-md-2" for="uic">UIC</label>
+							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
 								<select class="form-control" id="uic" ng-disabled="!canEditPersonField('UIC')" ng-show="canReturnPersonField('UIC')" ng-model="profileData.UIC" ng-options="o as o.Value for o in lists['UIC'] track by o.Id">
 									<option></option>
@@ -369,8 +369,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-4" for="workRemarks">Work Remarks</label>
-							<div class="col-xs-8">
+							<label class="col-md-4" for="workRemarks">Work Remarks</label>
+							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
 								<textarea class="form-control" id="workRemarks" rows="2" ng-disabled="!canEditPersonField('WorkRemarks')" ng-show="canReturnPersonField('WorkRemarks')" ng-model="profileData.WorkRemarks"></textarea>
 							</div>
@@ -384,12 +384,12 @@
 			<!--suppress HtmlUnknownTag, HtmlUnknownTag -->
 			<uib-tab heading="Account">
 				<div class="row">
-					<div class="col-xs-6 text-center">
+					<div class="col-md-6 text-center">
 						<!--suppress HtmlUnknownAttribute -->
 						<div class="form-group" height="400px" style="overflow: auto; height: 250px !important;">
-							<label class="col-xs-4" for="accountHistory">Account History</label>
+							<label class="col-md-4" for="accountHistory">Account History</label>
 							<!--suppress HtmlUnknownAttribute -->
-							<table id="accountHistory" class="col-xs-7 table-striped contact-table" ng-disabled="!canEditPersonField('AccountHistory')" ng-show="canReturnPersonField('AccountHistory')">
+							<table id="accountHistory" class="col-md-7 table-striped contact-table" ng-disabled="!canEditPersonField('AccountHistory')" ng-show="canReturnPersonField('AccountHistory')">
 								<thead>
 								<tr>
 									<th>Type of Event</th>
@@ -406,11 +406,11 @@
 						</div>
 						<a href="" class="btn btn-primary" ng-click="loadFullAccountHistory()">Load Full History</a>
 					</div>
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div class="form-group">
-							<label class="col-xs-4" for="permissionGroups">Permission Groups <!--suppress HtmlUnknownAttribute -->
+							<label class="col-md-4" for="permissionGroups">Permission Groups <!--suppress HtmlUnknownAttribute -->
 								<a class="btn btn-primary btn-sm" ng-href="#/editpermissions/{{profileData.Id}}">Edit</a></label>
-							<div class="col-xs-8">
+							<div class="col-md-8">
 								<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroups')" ng-model="profileData.PermissionGroups" ng-options="o as o.Name for o in permissionGroups track by o.Id" multiple>
 								</select>
 							</div>
