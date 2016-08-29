@@ -117,7 +117,10 @@ angular.module('Muster')
 
                 $scope.viewBy = "division";
 
-                $scope.getMuster = function (musterDate) {
+                $scope.goToMuster = function (filters, fields, level) {
+                        $location.path('/muster/archive/' + $scope.musterDate);
+                };
+                var getMuster = function (musterDate) {
                     $scope.errors = [];
                     MusterService.LoadMusterByDay(musterDate,
                         function (response) {
@@ -166,6 +169,11 @@ angular.module('Muster')
                         }
                     );
                 };
+
+                if($routeParams.musterDate) {
+                    $scope.musterDate = new Date($routeParams.musterDate.replace(/\"/g, ""));
+                }
+                getMuster($scope.musterDate);
             }
         ])
     .controller('FinalizeMusterController',

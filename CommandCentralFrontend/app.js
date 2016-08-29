@@ -61,6 +61,11 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/muster/views/finalizemuster.html'
         })
 
+        .when('/muster/archive/:musterDate', {
+            controller: 'MusterArchiveController',
+            templateUrl: 'modules/muster/views/archive.html'
+        })
+
         .when('/muster/archive', {
             controller: 'MusterArchiveController',
             templateUrl: 'modules/muster/views/archive.html'
