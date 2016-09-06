@@ -29,10 +29,23 @@ angular.module('CommandCentral', [
     'ngStorage',
 	'ui.bootstrap',
     'ui.mask',
-	'pdf'
+	'pdf',
+    'leaflet-directive'
 ])
- 
-.config(['$routeProvider', function ($routeProvider) {
+
+ /*   .controller("LTestController", ["$scope", function($scope){
+
+        $scope.marker = {
+            lat: 33.474508,
+            lng: -82.139006
+        };
+
+        }])
+
+ */
+.config(['$routeProvider', '$logProvider', function ($routeProvider, $logProvider) {
+
+    // $logProvider.debugEnabled(false);
 
     $routeProvider
         .when('/login', {
@@ -283,11 +296,11 @@ angular.module('CommandCentral', [
             ngModel: '='
         },
         template: '<div class="input-group">'+
-                        '<input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />' +
-                        '<span class="input-group-btn">'+
-                            '<button type="button" class="btn btn-default" ng-click="openPicker()"><i class="glyphicon glyphicon-calendar"></i></button>'+
-                        '</span>'+
-                  '</div>',
+        '<input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />' +
+        '<span class="input-group-btn">'+
+        '<button type="button" class="btn btn-default" ng-click="openPicker()"><i class="glyphicon glyphicon-calendar"></i></button>'+
+        '</span>'+
+        '</div>',
         controller: ['$scope', function ($scope) {
             $scope.opened = false;
 
@@ -300,6 +313,41 @@ angular.module('CommandCentral', [
             };
 
         }]
+    }
+}).directive('ngCustomLeaflet', function () {
+    return {
+        restrict: 'E',
+        require: '^ngModel',
+        scope: {
+            ngModel: '='
+        },
+        template: '<leaflet width="100%" height="240px" markers="markers" center="center"></leaflet>',
+        controller: ['$scope', '$element', function ($scope, $element) {
+            $scope.markers = {
+                addressLocation: {
+                    lat: $scope.ngModel.lat,
+                    lng: $scope.ngModel.lng,
+                    message: "Please make sure this location is correct.",
+                    focus: true,
+                    draggable: true
+                }
+            };
+            $scope.center = {
+                lat: $scope.ngModel.lat,
+                lng: $scope.ngModel.lng,
+                zoom: 15
+            };
+
+            $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+                $scope.ngModel.lat = args.model.lat;
+                $scope.ngModel.lng = args.model.lng;
+            });
+
+        }]//,
+        // link: ['$scope', 'ngModel', function($scope){
+        //     $scope.lat = ngModel.lat;
+        //     $scope.lng = ngModel.lng;
+        // }]
     }
 })
     /*.controller('DatepickerPopupCtrl', function ($scope) {
