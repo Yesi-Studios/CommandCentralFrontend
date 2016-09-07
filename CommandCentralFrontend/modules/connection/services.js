@@ -12,7 +12,7 @@ angular.module('Connection')
                 //var backendURL = "http://73.20.152.170";  // Atwood's IP for working at home.
                 //var backendURL = "http://147.51.62.19";     // Dev service IP.
                 //var backendURL = "https://147.51.62.48";     // Live service IP. Does not work due to DNS errors.
-                var backendURL = "https://gorda0nncg01.mi.ds.army.mil" // Live service URL.
+                var backendURL = "https://gorda0nncg01.mi.ds.army.mil"; // Live service URL.
                 //var backendURL = "http://192.168.1.234";
 
                 // Here we check to see if we have a port stored in localStorage, and if not, we use 1113.
