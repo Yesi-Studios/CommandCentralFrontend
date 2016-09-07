@@ -3,8 +3,8 @@
 angular.module('Connection')
 
     .factory('ConnectionService',
-        ['$http', '$localStorage', '$rootScope',
-            function ($http, $localStorage, $rootScope) {
+        ['$http', '#httpParamSerializer', '$localStorage', '$rootScope',
+            function ($http, $httpParamSerializer, $localStorage, $rootScope) {
                 var service = {};
 
                 // Information for connecting to the database, including the URL and API key.
@@ -133,7 +133,8 @@ angular.module('Connection')
                         }
                     };
 
-                    return $http(config).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
+                    return $http(config).then( // The return here is important. $http returns a promise, and the controllers need that.
+                        function (response) {
                             success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
                             console.log(endpoint);
                             console.log(service.RestoreJsonNetReferences(response.data));
@@ -145,6 +146,27 @@ angular.module('Connection')
                                 error(service.RestoreJsonNetReferences(JSON.parse(response.data)));
                             }
                         });
+                };
+
+                service.GeocodingRequest = function(address, success, error) {
+                    var params = $httpParamSerializer({
+                        'address': address,
+                        'benchmark': 'Public_AR_Current',
+                        'format': 'json'
+                    });
+
+                    var config = {
+                        method: 'GET',
+                        url: 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?' + params
+                    };
+
+                    return $http(config).then(
+                        function(response){
+                            success(JSON.parse(response.data))
+                        },
+                        function (response){
+                            error(JSON.parse(response.data))
+                        })
                 };
 
                 service.RestoreJsonNetReferences = function (theJSON) {
