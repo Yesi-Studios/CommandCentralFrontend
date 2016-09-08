@@ -1,12 +1,5 @@
 ﻿<!DOCTYPE html>
 <html>
-<script type="text/javascript">
-    if (window.location.protocol != "https:") {
-        document.write("Redirecting to https...");
-        window.stop();
-        // window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
-    }
-</script>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Pray for IE to work -->
@@ -151,3 +144,12 @@
 </body>
 
 </html>
+
+<script type="text/javascript">
+    if (window.location.protocol != "https:") {
+        document.documentElement.innerHTML = "Redirecting to https...";
+        setTimeout(function() {
+            window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+        }, 1000);
+    }
+</script>
