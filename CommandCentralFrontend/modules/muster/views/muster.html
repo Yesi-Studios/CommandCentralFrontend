@@ -54,7 +54,7 @@
 				<tbody>
 					<tr ng-repeat="sailor in displaySailorsList | orderBy: orderKey track by $index" ng-click="goToProfile(result.Id)" class="form-group">
                         <td>{{sailor['FriendlyName']}}</td>
-                        <td>{{sailor['Paygrade']}}</td>
+                        <td>{{sailor['Paygrade']["Value"]}}</td>
                         <td>{{sailor['Division']}}</td>
                         <td>{{sailor['HasBeenMustered'] | yesNo }}</td>
                         <td>
