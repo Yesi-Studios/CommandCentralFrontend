@@ -384,16 +384,16 @@
 			<!--suppress HtmlUnknownTag, HtmlUnknownTag -->
 			<uib-tab heading="Account">
 				<div class="row">
-					<div class="col-md-6 text-center">
+					<div class="col-md-offset-1 col-md-6 text-center">
 						<!--suppress HtmlUnknownAttribute -->
 						<div class="form-group" height="400px" style="overflow: auto; height: 250px !important;">
-							<label class="col-md-4" for="accountHistory">Account History</label>
+							<label for="accountHistory">Account History</label>
 							<!--suppress HtmlUnknownAttribute -->
-							<table id="accountHistory" class="col-md-7 table-striped contact-table" ng-disabled="!canEditPersonField('AccountHistory')" ng-show="canReturnPersonField('AccountHistory')">
+							<table id="accountHistory" class="table-striped contact-table" ng-disabled="!canEditPersonField('AccountHistory')" ng-show="canReturnPersonField('AccountHistory')">
 								<thead>
 								<tr>
-									<th>Type of Event</th>
-									<th>Time</th>
+									<th class="text-center">Type of Event</th>
+									<th class="text-center">Time</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -406,14 +406,17 @@
 						</div>
 						<a href="" class="btn btn-primary" ng-click="loadFullAccountHistory()">Load Full History</a>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-offset-1 col-md-3 text-center">
 						<div class="form-group">
-							<label class="col-md-4" for="permissionGroups">Permission Groups <!--suppress HtmlUnknownAttribute -->
+							<label for="permissionGroups">Permission Groups <!--suppress HtmlUnknownAttribute -->
 								<a class="btn btn-primary btn-sm" ng-href="#/editpermissions/{{profileData.Id}}">Edit</a></label>
-							<div class="col-md-8">
-								<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroups')" ng-model="profileData.PermissionGroups" ng-options="o as o.Name for o in permissionGroups track by o.Id" multiple>
-								</select>
-							</div>
+
+								<!--<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroupNames')" ng-model="profileData.PermissionGroupNames" ng-options="o as o.Name for o in permissionGroups track by o.Id" multiple>-->
+								<!--</select>-->
+								<ul id="permissionGroups" class="list-group">
+									<li class="list-group-item" ng-repeat="perm in profileData.PermissionGroupNames">{{perm}}</li>
+								</ul>
+
 						</div>
 					</div>
 				</div>
