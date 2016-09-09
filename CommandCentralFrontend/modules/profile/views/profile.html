@@ -375,6 +375,13 @@
 								<textarea class="form-control" id="workRemarks" rows="2" ng-disabled="!canEditPersonField('WorkRemarks')" ng-show="canReturnPersonField('WorkRemarks')" ng-model="profileData.WorkRemarks"></textarea>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-md-4" for="currentMusterStatus">Current Muster Status</label>
+							<div class="col-md-8">
+								<!--suppress HtmlUnknownAttribute -->
+								<span class="label label-default" id="currentMusterStatus" ng-if="canReturnPersonField('CurrentMusterStatus')">{{profileData.CurrentMusterStatus.MusterStatus}}<span ng-if="!profileData.CurrentMusterStatus.HasBeenSubmitted">(Not Mustered Yet)</span></span>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="row"><!--suppress HtmlUnknownAttribute -->
