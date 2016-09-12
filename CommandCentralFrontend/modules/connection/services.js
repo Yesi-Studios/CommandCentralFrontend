@@ -6,7 +6,7 @@ angular.module('Connection')
         ['$http', '$localStorage', '$rootScope',
             function ($http, $localStorage, $rootScope) {
                 var service = {};
-
+                var redirectURL = '';
                 // Information for connecting to the database, including the URL and API key.
                 var apikey = "90fdb89f-282b-4bd6-840b-cef597615728";
                 //var backendURL = "http://73.20.152.170";  // Atwood's IP for working at home.
@@ -72,6 +72,20 @@ angular.module('Connection')
                     return $rootScope.globals.loginMessages;
                 };
 
+                service.SetRedirectURL = function (url) {
+                    redirectURL = url;
+                };
+                service.ClearRedirectURL = function () {
+                    redirectURL = '';
+                };
+
+                /**
+                 * @return {string}
+                 */
+                service.GetRedirectURL = function () {
+                    return redirectURL;
+                };
+
                 service.AddLoginError = function (loginError) {
                     if ($rootScope.globals.loginErrors) {
                         $rootScope.globals.loginErrors.push(loginError);
@@ -105,6 +119,7 @@ angular.module('Connection')
                             service.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                         }
                         service.ClearCredentials();
+                        service.SetRedirectURL($location.url());
                         location.path('/login');
                     } else {
                         // If it's any other type of error, we can just show it to them on this page.

@@ -45,7 +45,10 @@ angular.module('Authentication')
                                         }
                                     )
                                     .then(function () {
-                                        $location.path('/');
+                                        var test = ConnectionService.GetRedirectURL();
+                                        ConnectionService.ClearRedirectURL();
+                                        console.log(test);
+                                        $location.path(test);
                                     });
                             },
                             // If we fail, this is our call back. This one must differ from the convenience function in Connection service because we
