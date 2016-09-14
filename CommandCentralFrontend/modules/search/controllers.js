@@ -9,6 +9,21 @@ angular.module('Search')
         // This scope will just about always contain PII
         $rootScope.containsPII = true;
 
+        $scope.itemsPerPage = 50;
+        $scope.currentPage = 1;
+        $scope.results = [];
+
+        $scope.pageCount = function () {
+            return Math.ceil($scope.friends.length / $scope.itemsPerPage);
+        };
+
+        $scope.$watch('currentPage + itemsPerPage', function() {
+            var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                end = begin + $scope.itemsPerPage;
+
+            $scope.filteredResults = $scope.results.slice(begin, end);
+        });
+
         // This is the url for a profile
         $scope.goToProfile = function (id) {
             $location.path('/profile/' + id);
@@ -47,7 +62,10 @@ angular.module('Search')
                     $scope.dataLoading = false;
                     $scope.results = response.ReturnValue.Results;
                     $scope.fields = response.ReturnValue.Fields;
+                    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                        end = begin + $scope.itemsPerPage;
 
+                    $scope.filteredResults = $scope.results.slice(begin, end);
                 },
 			    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
@@ -71,6 +89,31 @@ angular.module('Search')
         $rootScope.containsPII = true;
         $scope.searchLevels = ["Command", "Department", "Division"];
         $scope.selectedLevel = "Command";
+
+        $scope.orderKey = "LastName";
+
+        $scope.setOrder = function (theKey) {
+            if ($scope.orderKey == theKey) {
+                $scope.orderKey = "-" + theKey;
+            } else {
+                $scope.orderKey = theKey;
+            }
+        };
+
+        $scope.itemsPerPage = 50;
+        $scope.currentPage = 1;
+        $scope.results = [];
+
+        $scope.pageCount = function () {
+            return Math.ceil($scope.friends.length / $scope.itemsPerPage);
+        };
+
+        $scope.$watch('currentPage + itemsPerPage + setOrder', function() {
+            var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                end = begin + $scope.itemsPerPage;
+
+            $scope.filteredResults = $scope.results.slice(begin, end);
+        });
 
         $scope.getSearchableFields = function (level) {
             console.log(AuthorizationService.GetReturnableFields(level));
@@ -105,17 +148,6 @@ angular.module('Search')
                 $scope.goToResults(filters, fields);
             }
         };
-
-        $scope.orderKey = "LastName";
-
-        $scope.setOrder = function (theKey) {
-            if ($scope.orderKey == theKey) {
-                $scope.orderKey = "-" + theKey;
-            } else {
-                $scope.orderKey = theKey;
-            }
-        };
-
         var searchByField = function (filters, returnFields, searchLevel) {
             $scope.dataLoading = true;
             $scope.errors = null;
@@ -129,6 +161,10 @@ angular.module('Search')
                     $scope.dataLoading = false;
                     $scope.results = response.ReturnValue.Results;
                     $scope.fields = response.ReturnValue.Fields;
+                    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                        end = begin + $scope.itemsPerPage;
+
+                    $scope.filteredResults = $scope.results.slice(begin, end);
 
                 },
 			    // If we fail, this is our call back. We use a convenience function in the ConnectionService.

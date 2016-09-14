@@ -14,9 +14,9 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<h3 class="text-center" ng-show="results">Showing {{results.length}} results.</h3>
-			<h4 class="text-center" ng-show="results">Click a column to sort by it.</h4>
-			<table ng-show="results" class="table-striped col-md-12">
+			<h3 class="text-center" ng-show="results.length">Showing {{itemsPerPage}}/{{results.length}} results.</h3>
+			<h4 class="text-center" ng-show="results.length">Click a column to sort by it.</h4>
+			<table ng-show="results.length" class="table-striped col-md-12">
 				<thead>
 					<tr>
 						<th ng-repeat="field in fields" ng-click="setOrder(field)"><button ng-class="{'btn-primary': orderKey==field || orderKey=='-'+field}">{{field}}<span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-'+field"></span><span class="glyphicon glyphicon-chevron-down" ng-if="orderKey==field"></span></button></th>
@@ -24,13 +24,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="result in results | orderBy: orderKey" ng-click="goToProfile(result.Id)">
+					<tr ng-repeat="result in filteredResults | orderBy: orderKey" ng-click="goToProfile(result.Id)">
 						<td ng-repeat="field in fields">{{result[field]}}</td>
 						<td><!--suppress HtmlUnknownAttribute -->
                             <a ng-href="#/profile/{{result.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
 					</tr>
 				</tbody>
 			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<uib-pagination ng-show="results.length" total-items="results.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
 		</div>
 	</div>
 </div>

@@ -59,7 +59,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="result in results | orderBy: orderKey" ng-click="goToProfile(result.Id)">
+                    <tr ng-repeat="result in filteredResults | orderBy: orderKey" ng-click="goToProfile(result.Id)">
                         <td ng-repeat="field in searchByFieldReturns">{{result[field]}}</td>
                         <td><!--suppress HtmlUnknownAttribute -->
                             <a ng-href="#/profile/{{result.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
@@ -67,6 +67,11 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <uib-pagination total-items="results.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
         </div>
     </div>
 </div>

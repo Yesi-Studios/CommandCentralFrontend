@@ -52,7 +52,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="sailor in displaySailorsList | orderBy: orderKey track by $index" ng-click="goToProfile(result.Id)" class="form-group">
+					<tr ng-repeat="sailor in filteredDisplaySailorsList | orderBy: orderKey track by $index" ng-click="goToProfile(result.Id)" class="form-group">
                         <td>{{sailor['FriendlyName']}}</td>
                         <td>{{sailor['Paygrade']["Value"]}}</td>
                         <td>{{sailor['Division']}}</td>
@@ -69,6 +69,11 @@
 			</table>
 		</div>
 	</div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <uib-pagination ng-show="displaySailorsList.length" total-items="displaySailorsList.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-offset-10 col-md-2">
             <button class="btn btn-primary" type="button" ng-click="submitMuster(displaySailorsList)">Save</button>

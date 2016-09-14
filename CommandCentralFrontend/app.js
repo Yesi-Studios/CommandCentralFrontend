@@ -8,7 +8,7 @@ angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
 angular.module('Profiles', ['Authentication', 'ui.bootstrap', 'ui.mask', 'Connection']);
 angular.module('Home', ['Authentication', 'Authorization', 'pdf', 'Connection']);
 angular.module('Administration', ['Authentication', 'Connection']);
-angular.module('Search', ['Authentication', 'Authorization', 'Connection']);
+angular.module('Search', ['Authentication', 'Authorization', 'Connection', 'ui.bootstrap']);
 angular.module('Muster', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
 
 angular.module('Modals', ['angularModalService']);

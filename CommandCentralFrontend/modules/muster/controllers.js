@@ -15,6 +15,20 @@ angular.module('Muster')
 
                 var originalMusterList = [];
 
+                $scope.itemsPerPage = 50;
+                $scope.currentPage = 1;
+                $scope.displaySailorsList = [];
+
+                $scope.pageCount = function () {
+                    return Math.ceil($scope.friends.length / $scope.itemsPerPage);
+                };
+
+                $scope.$watch('currentPage + itemsPerPage + setOrder', function() {
+                    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                        end = begin + $scope.itemsPerPage;
+
+                    $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
+                });
                 // The default sorting key
                 $scope.orderKey = "Division";
                 $scope.selectedDivision = "All";
@@ -65,6 +79,10 @@ angular.module('Muster')
                                 }
                             }
                         }
+                        var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                            end = begin + $scope.itemsPerPage;
+
+                        $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {
