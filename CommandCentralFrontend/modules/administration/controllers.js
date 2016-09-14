@@ -43,7 +43,7 @@ angular.module('Administration')
         $scope.deleteListItem = function (listItem, forceDelete) {
             $scope.errors = [];
             $scope.messages = [];
-            AdministrationService.DeleteListItem(listItem.Id, forceDelete,
+            AdministrationService.DeleteListItem(listItem.Id, $scope.selectedList, forceDelete,
                 function (response) {
                     $scope.loadLists();
                     $scope.messages.push("Item successfully deleted.");

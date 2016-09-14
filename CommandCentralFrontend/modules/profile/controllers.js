@@ -121,7 +121,7 @@ angular.module('Profiles')
                                 // Give our scope the commands and a function we can use to search inside them
                                 $scope.commandList = response.ReturnValue.Command;
 
-                                $scope.command = $scope.getById(response.ReturnValue, $scope.profileData.Command);
+                                $scope.command = $scope.getById(response.ReturnValue.Command, $scope.profileData.Command);
 
                                 // Fill in the objects where currently only Ids exist.
                                 $scope.profileData.Command = $scope.command;
@@ -129,7 +129,11 @@ angular.module('Profiles')
                                     $scope.profileData.Department = $scope.getById($scope.profileData.Command.Departments, $scope.profileData.Department);
                                     if ($scope.profileData.Department) {
                                         $scope.profileData.Division = $scope.getById($scope.profileData.Department.Divisions, $scope.profileData.Division);
+                                    } else {
+                                        $scope.profileData.Division = {};
                                     }
+                                } else {
+                                    $scope.profileData.Department = {};
                                 }
                                 console.log($scope.form.$error);
                             },

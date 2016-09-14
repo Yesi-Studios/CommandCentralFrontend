@@ -12,20 +12,20 @@ angular.module('Administration')
         };
 
         service.AddListItem = function (listname, value, description, success, error) {
-            return ConnectionService.RequestFromBackend('UpdateOrInsertReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'enitityname': listname, 'item': {'value': value, 'description': description} }, success, error);
+            return ConnectionService.RequestFromBackend('UpdateOrInsertReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entityname': listname, 'item': {'value': value, 'description': description} }, success, error);
         };
 
         service.EditListItem = function (listitemid, value, description, listname, success, error) {
-            return ConnectionService.RequestFromBackend('UpdateOrInsertReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'enitityname':listname, 'id': listitemid, 'item': {'value': value, 'description': description} }, success, error);
+            return ConnectionService.RequestFromBackend('UpdateOrInsertReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entityname':listname, 'item': {'value': value, 'description': description, 'id': listitemid } }, success, error);
         };
 
-        service.DeleteListItem = function (listitemid, forcedelete, success, error) {
-            return ConnectionService.RequestFromBackend('DeleteReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'forcedelete' : forcedelete, 'id': listitemid }, success, error);
+        service.DeleteListItem = function (listitemid, listname, forcedelete, success, error) {
+            return ConnectionService.RequestFromBackend('DeleteReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'forcedelete' : forcedelete, 'entityname':listname, 'id': listitemid }, success, error);
         };
 
 
         service.LoadCommands = function (success, error) {
-            return ConnectionService.RequestFromBackend('LoadReferenceLists', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'enititynames':['Command'] }, success, error);
+            return ConnectionService.RequestFromBackend('LoadReferenceLists', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entitynames':['Command'] }, success, error);
         };
 
         service.AddCommand = function (value, description, success, error) {
