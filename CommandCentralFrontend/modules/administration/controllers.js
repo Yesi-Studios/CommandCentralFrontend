@@ -251,7 +251,7 @@ angular.module('Administration')
 
         AdministrationService.LoadDepartment($routeParams.depId,
             function (response) {
-                $scope.department = response.ReturnValue;
+                $scope.department = response.ReturnValue.Department[0];
             },
             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
             function (response) {
@@ -274,7 +274,7 @@ angular.module('Administration')
                 function (response) {
                     $scope.errors = [];
                     $scope.dataLoading = false;
-                    $scope.divisions = response.ReturnValue;
+                    $scope.divisions = response.ReturnValue.Division;
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
@@ -316,7 +316,7 @@ angular.module('Administration')
         $scope.updateDivision = function (id, value, description) {
             $scope.errors = [];
             $scope.messages = [];
-            AdministrationService.EditDivision(id, value, description,
+            AdministrationService.EditDivision($routeParams.depId, id, value, description,
                 function (response) {
                     $scope.loadDivisions();
                     $scope.messages.push("Division successfully updated.");

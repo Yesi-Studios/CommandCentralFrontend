@@ -33,7 +33,7 @@ angular.module('Administration')
         };
 
         service.EditCommand = function (commandid, value, description, success, error) {
-            return ConnectionService.RequestFromBackend('UpdateOrInsertReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entityname': 'Command', 'id': commandid, 'item': {'value': value, 'description': description} }, success, error);
+            return ConnectionService.RequestFromBackend('UpdateOrInsertReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entityname': 'Command', 'id': commandid, 'item': {'value': value, 'description': description,  'id': commandid} }, success, error);
         };
 
         service.DeleteCommand = function (commandid, forcedelete, success, error) {
@@ -58,32 +58,31 @@ angular.module('Administration')
         };
 
         service.DeleteDepartment = function (departmentid, forcedelete, success, error) {
-            return ConnectionService.RequestFromBackend('DeleteReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), entityname:'Department', 'forcedelete': forcedelete, 'id': departmentid }, success, error);
+            return ConnectionService.RequestFromBackend('DeleteReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entityname' :'Department', 'forcedelete': forcedelete, 'id': departmentid }, success, error);
         };
 
         service.LoadDepartment = function (departmentid, success, error) {
-            return ConnectionService.RequestFromBackend('LoadDepartment', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'departmentid': departmentid }, success, error);
+            return ConnectionService.RequestFromBackend('LoadReferenceLists', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entitynames':['Department'], 'id': departmentid }, success, error);
         };
 
-
         service.LoadDivisions = function (departmentid, success, error) {
-            return ConnectionService.RequestFromBackend('LoadDivisionsByDepartment', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'departmentid': departmentid }, success, error);
+            return ConnectionService.RequestFromBackend('LoadReferenceLists', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entitynames':['Division'], 'departmentid': departmentid }, success, error);
         };
 
         service.AddDivision = function (departmentid, value, description, success, error) {
-            return ConnectionService.RequestFromBackend('AddDivision', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'departmentid': departmentid, 'value': value, 'description': description }, success, error);
+            return ConnectionService.RequestFromBackend('UpdateOrInsertReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entityname':'Division', 'item': {'departmentid': departmentid, 'value': value, 'description': description }}, success, error);
         };
 
-        service.EditDivision = function (divisionid, value, description, success, error) {
-            return ConnectionService.RequestFromBackend('EditDivision', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'divisionid': divisionid, 'value': value, 'description': description }, success, error);
+        service.EditDivision = function (departmentid, divisionid, value, description, success, error) {
+            return ConnectionService.RequestFromBackend('UpdateOrInsertReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entityname':'Division', 'item': {'value': value, 'description': description, 'id': divisionid, 'departmentid':departmentid} }, success, error);
         };
 
         service.DeleteDivision = function (divisionid, forcedelete, success, error) {
-            return ConnectionService.RequestFromBackend('DeleteDivision', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'forcedelete': forcedelete, 'divisionid': divisionid }, success, error);
+            return ConnectionService.RequestFromBackend('DeleteReferenceList', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entityname' :'Division', 'forcedelete': forcedelete, 'id': divisionid }, success, error);
         };
 
         service.LoadDivision = function (divisionid, success, error) {
-            return ConnectionService.RequestFromBackend('LoadDivision', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'divisionid': divisionid }, success, error);
+            return ConnectionService.RequestFromBackend('LoadReferenceLists', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'entitynames':['Division'], 'id': divisionid }, success, error);
         };
       
         return service;
