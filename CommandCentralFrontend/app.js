@@ -291,7 +291,7 @@ angular.module('CommandCentral', [
             ngModel: '='
         },
         template: '<div class="input-group">'+
-                        '<input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />' +
+                        '<input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="opened" datepicker-options="dateOptions" close-text="Close" />' +
                         '<span class="input-group-btn">'+
                             '<button type="button" class="btn btn-default" ng-click="openPicker()"><i class="glyphicon glyphicon-calendar"></i></button>'+
                         '</span>'+
