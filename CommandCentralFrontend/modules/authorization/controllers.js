@@ -16,6 +16,7 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
                 function (response) {
                     $scope.errors = [];
                     $scope.messages = [];
+                    $scope.personId = $routeParams.id;
                     $scope.friendlyName = response.ReturnValue.FriendlyName;
                     $scope.allPermissionGroups = response.ReturnValue.AllPermissionGroups;
                     console.log($scope.allPermissionGroups);
