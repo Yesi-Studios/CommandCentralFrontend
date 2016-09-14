@@ -8,14 +8,14 @@ angular.module('Profiles')
         var service = {};
 		
         service.GetAllLists = function (success, error) {
-            return ConnectionService.RequestFromBackend('LoadLists', {}, success, error);
+            return ConnectionService.RequestFromBackend('LoadReferenceLists', {'enititynames': []}, success, error);
         };
         service.GetPermissionGroups = function (success, error) {
             return ConnectionService.RequestFromBackend('LoadPermissionGroups', {}, success, error);
         };
 		
         service.GetCommands = function (success, error) {
-            return ConnectionService.RequestFromBackend('LoadCommands', { 'acceptcachedresults': true }, success, error);
+            return ConnectionService.RequestFromBackend('LoadReferenceLists', { 'acceptcachedresults': true, 'entitynames':['Command'] }, success, error);
         };
 
         service.UpdateMyProfile = function (person, success, error) {

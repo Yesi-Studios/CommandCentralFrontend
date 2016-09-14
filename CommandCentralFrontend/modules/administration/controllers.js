@@ -90,7 +90,7 @@ angular.module('Administration')
                 function (response) {
                     $scope.errors = [];
                     $scope.dataLoading = false;
-                    $scope.commands = response.ReturnValue;
+                    $scope.commands = response.ReturnValue.Command;
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
@@ -163,7 +163,7 @@ angular.module('Administration')
 
         AdministrationService.LoadCommand($routeParams.id,
             function (response) {
-                $scope.command = response.ReturnValue;
+                $scope.command = response.ReturnValue.Command;
             },
             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
             function (response) {
@@ -176,7 +176,8 @@ angular.module('Administration')
                 function (response) {
                     $scope.errors = [];
                     $scope.dataLoading = false;
-                    $scope.departments = response.ReturnValue;
+                    $scope.departments = response.ReturnValue.Department;
+                    console.log(response.ReturnValue.Department);
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
@@ -218,7 +219,7 @@ angular.module('Administration')
         $scope.updateDepartment = function (id, value, description) {
             $scope.errors = [];
             $scope.messages = [];
-            AdministrationService.EditDepartment(id, value, description,
+            AdministrationService.EditDepartment($routeParams.id, id, value, description,
                 function (response) {
                     $scope.loadDepartments();
                     $scope.messages.push("Department successfully updated.");
