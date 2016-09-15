@@ -3,18 +3,18 @@
 angular.module('Connection')
 
     .factory('ConnectionService',
-        ['$http', '$localStorage', '$rootScope',
-            function ($http, $localStorage, $rootScope) {
+        ['$http', '$localStorage', '$rootScope', 'config',
+            function ($http, $localStorage, $rootScope, config) {
                 var service = {};
                 var redirectURL = '';
                 // Information for connecting to the database, including the URL and API key.
-                var apikey = "90fdb89f-282b-4bd6-840b-cef597615728";
+                var apikey = config.apiKey;
                 //var backendURL = "http://73.20.152.170";  // Atwood's IP for working at home.
                 //var backendURL = "http://147.51.62.19";     // Dev service IP.
                 //var backendURL = "https://147.51.62.48:1337";     // Live service IP.
                 //var backendURL = "http://192.168.1.234";
-                //var backendURL = "http://localhost";
-                var backendURL = "http://192.168.1.196";
+                var backendURL = config.backendURL;
+                //var backendURL = "http://192.168.1.196";
 
                 // Here we check to see if we have a port stored in localStorage, and if not, we use 1113.
                 // If it's enabled, there's a widget at the bottom of index.html, controlled by this module,
@@ -24,10 +24,10 @@ angular.module('Connection')
                 if ($localStorage.backendPort) {
                     backendPort = $localStorage.backendPort;
                 } else {
-                    backendPort = "1113";
+                    backendPort = config.backendPort;
                 }
                 // Uncomment this before release to make sure the right port is set for the end user.
-                // backendPort = "1113";
+                // backendPort = config.backendPort;
 
                 // Create the base URL for all REST calls
                 var baseurl = backendURL + ":" + backendPort;
