@@ -9,13 +9,13 @@ module.exports = function(grunt) {
         concat: {
             options: {
                 // Separator to make sure lines end.
-                separator: '; // File division'
+                separator: '\n/*****************\n File division\n*****************/\n'
             },
             dist: {
                 // files to concat
                 src: ['app.js', 'modules/**/**.js'],
                 // the js file we're creating
-                dest: '<%= pkg.name %>.js'
+                dest: 'currentbuild/<%= pkg.name %>.js'
             }
         },
         uglify: {
@@ -23,8 +23,8 @@ module.exports = function(grunt) {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                src: '<%= pkg.name %>.js',
-                dest: '<%= pkg.name %>.min.js'
+                src: 'currentbuild/<%= pkg.name %>.js',
+                dest: 'currentbuild/<%= pkg.name %>.min.js'
             }
         },
         jshint: {

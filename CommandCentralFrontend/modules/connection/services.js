@@ -121,7 +121,7 @@ angular.module('Connection')
                             service.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
                         }
                         service.ClearCredentials();
-                        service.SetRedirectURL($location.url());
+                        service.SetRedirectURL(location.url());
                         location.path('/login');
                     } else {
                         // If it's any other type of error, we can just show it to them on this page.
