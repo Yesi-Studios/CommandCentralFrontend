@@ -3,8 +3,8 @@
 angular.module('Profiles')
 
     .controller('ProfileController',
-        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService',
-            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService) {
+        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService, config) {
 
                 /*
                  *   This function chain is a little hefty, so a preface is warranted.
@@ -73,8 +73,6 @@ angular.module('Profiles')
                             $scope.returnableFields = response.ReturnValue.ResolvedPermissions.ReturnableFields.Main.Person;
                             $scope.editableFields = response.ReturnValue.ResolvedPermissions.EditableFields.Main.Person;
 
-                            console.log($scope.profileData.DateOfBirth);
-                            console.log($scope.profileData.EAOS);
                             // Set up all the dates to be actual Dates
                             $scope.profileData.DateOfBirth = parseDate(response.ReturnValue.Person.DateOfBirth);
                             $scope.profileData.DateOfArrival = parseDate(response.ReturnValue.Person.DateOfArrival);
@@ -82,8 +80,6 @@ angular.module('Profiles')
                             $scope.profileData.EAOS = parseDate(response.ReturnValue.Person.EAOS);
                             $scope.profileData.ClaimTime = parseDate(response.ReturnValue.Person.ClaimTime);
 
-                            console.log($scope.profileData.DateOfBirth);
-                            console.log($scope.profileData.EAOS);
 
                             $scope.canSearchPersonField = function (field) {
                                 return ('currentUser' in $scope.globals) && ($scope.globals.currentUser.permissions.searchable.indexOf(field) > -1);
@@ -135,7 +131,7 @@ angular.module('Profiles')
                                 } else {
                                     $scope.profileData.Department = {};
                                 }
-                                console.log($scope.form.$error);
+                                if(config.debugMode) console.log($scope.form.$error);
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                             function (response) {

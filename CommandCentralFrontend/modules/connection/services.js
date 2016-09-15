@@ -141,7 +141,7 @@ angular.module('Connection')
 
                     var serviceurl = service.GetBackendURL() + "/" + endpoint; // Make the url we need
 
-                    var config = {
+                    var request = {
                         method: 'POST',
                         url: serviceurl,
                         data: reqData,
@@ -150,10 +150,10 @@ angular.module('Connection')
                         }
                     };
 
-                    return $http(config).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
+                    return $http(request).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
                             success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
-                            console.log(endpoint);
-                            console.log(service.RestoreJsonNetReferences(response.data));
+                            if(config.debugMode) console.log(endpoint);
+                            if(config.debugMode) console.log(service.RestoreJsonNetReferences(response.data));
                         },
                         function (response) {
                             if (response.statusText == "") {

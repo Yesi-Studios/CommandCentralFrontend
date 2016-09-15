@@ -3,8 +3,8 @@
 angular.module('Authentication')
 
 .controller('LoginController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ModalService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ModalService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ModalService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ModalService, ConnectionService, config) {
         // Reset login status
         AuthenticationService.ClearCredentials();
 
@@ -31,7 +31,7 @@ angular.module('Authentication')
                         AuthenticationService.Login($scope.username, $scope.password,
                             // If we succeed this is our call back
                             function (response) {
-                                console.log(response);
+                                if(config.debugMode) console.log(response);
                                 AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonId);
                                 AuthorizationService.SetPermissions(response.ReturnValue.ResolvedPermissions);
                                 AuthorizationService.GetPermissionGroups(
@@ -47,7 +47,7 @@ angular.module('Authentication')
                                     .then(function () {
                                         var test = ConnectionService.GetRedirectURL();
                                         ConnectionService.ClearRedirectURL();
-                                        console.log(test);
+                                        if(config.debugMode) console.log(test);
                                         $location.path(test);
                                     });
                             },
@@ -82,8 +82,8 @@ angular.module('Authentication')
         };
     }])
 .controller('RegisterController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
         // reset login status
         //AuthenticationService.ClearCredentials();
         $scope.accepted = null;
@@ -104,8 +104,8 @@ angular.module('Authentication')
     }])
 
 .controller('FinishRegisterController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService, config) {
         $scope.finishRegistration = function () {
             $scope.dataLoading = true;
             AuthenticationService.FinishRegistration($scope.username, $scope.password, $routeParams.id,
@@ -122,8 +122,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('ForgotController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
         // reset login status
         // AuthenticationService.ClearCredentials();
 
@@ -144,8 +144,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('FinishResetController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService, config) {
         $scope.finishReset = function () {
             $scope.dataLoading = true;
             AuthenticationService.FinishReset($scope.password, $routeParams.id,
@@ -162,8 +162,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('CreateUserController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService, config) {
 
         $scope.errors = [];
         $scope.messages = [];

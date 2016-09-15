@@ -408,18 +408,18 @@ angular.module('CommandCentral', [
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Administration')
 
 .controller('ListEditorController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService, config) {
         $rootScope.containsPII = false;
         $scope.dataLoading = true;
         $scope.errors = [];
 
-        $scope.blah = function (athing) { console.log(athing); };
+        $scope.blah = function (athing) { if(config.debugMode) console.log(athing); };
 
         $scope.loadLists = function () {
             AdministrationService.LoadEditableLists(
@@ -487,13 +487,13 @@ angular.module('Administration')
     ]
 )
 .controller('CommandEditorController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService, config) {
         $rootScope.containsPII = false;
         $scope.dataLoading = true;
         $scope.errors = [];
 
-        $scope.blah = function (athing) { console.log(athing); };
+        $scope.blah = function (athing) { if(config.debugMode) console.log(athing); };
 
         $scope.loadCommands = function () {
             AdministrationService.LoadCommands(
@@ -561,13 +561,13 @@ angular.module('Administration')
     ]
 )
 .controller('DepartmentEditorController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService, config) {
         $rootScope.containsPII = false;
         $scope.dataLoading = true;
         $scope.errors = [];
 
-        $scope.blah = function (athing) { console.log(athing); };
+        $scope.blah = function (athing) { if(config.debugMode) console.log(athing); };
 
         $scope.commandId = $routeParams.id;
 
@@ -587,7 +587,7 @@ angular.module('Administration')
                     $scope.errors = [];
                     $scope.dataLoading = false;
                     $scope.departments = response.ReturnValue.Department;
-                    console.log(response.ReturnValue.Department);
+                    if(config.debugMode) console.log(response.ReturnValue.Department);
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
@@ -648,13 +648,13 @@ angular.module('Administration')
     ]
 )
 .controller('DivisionEditorController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService, config) {
         $rootScope.containsPII = false;
         $scope.dataLoading = true;
         $scope.errors = [];
 
-        $scope.blah = function (athing) { console.log(athing); };
+        $scope.blah = function (athing) { if(config.debugMode) console.log(athing); };
 
         $scope.departmentId = $routeParams.depId;
         $scope.commandId = $routeParams.id;
@@ -747,7 +747,7 @@ angular.module('Administration')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
  
 angular.module('Administration')
  
@@ -839,13 +839,13 @@ angular.module('Administration')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Authentication')
 
 .controller('LoginController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ModalService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ModalService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ModalService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ModalService, ConnectionService, config) {
         // Reset login status
         AuthenticationService.ClearCredentials();
 
@@ -872,7 +872,7 @@ angular.module('Authentication')
                         AuthenticationService.Login($scope.username, $scope.password,
                             // If we succeed this is our call back
                             function (response) {
-                                console.log(response);
+                                if(config.debugMode) console.log(response);
                                 AuthenticationService.SetCredentials($scope.username, response.ReturnValue.AuthenticationToken, response.ReturnValue.PersonId);
                                 AuthorizationService.SetPermissions(response.ReturnValue.ResolvedPermissions);
                                 AuthorizationService.GetPermissionGroups(
@@ -888,7 +888,7 @@ angular.module('Authentication')
                                     .then(function () {
                                         var test = ConnectionService.GetRedirectURL();
                                         ConnectionService.ClearRedirectURL();
-                                        console.log(test);
+                                        if(config.debugMode) console.log(test);
                                         $location.path(test);
                                     });
                             },
@@ -923,8 +923,8 @@ angular.module('Authentication')
         };
     }])
 .controller('RegisterController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
         // reset login status
         //AuthenticationService.ClearCredentials();
         $scope.accepted = null;
@@ -945,8 +945,8 @@ angular.module('Authentication')
     }])
 
 .controller('FinishRegisterController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService, config) {
         $scope.finishRegistration = function () {
             $scope.dataLoading = true;
             AuthenticationService.FinishRegistration($scope.username, $scope.password, $routeParams.id,
@@ -963,8 +963,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('ForgotController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
         // reset login status
         // AuthenticationService.ClearCredentials();
 
@@ -985,8 +985,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('FinishResetController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService, config) {
         $scope.finishReset = function () {
             $scope.dataLoading = true;
             AuthenticationService.FinishReset($scope.password, $routeParams.id,
@@ -1003,8 +1003,8 @@ angular.module('Authentication')
         };
     }])
 	.controller('CreateUserController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService, config) {
 
         $scope.errors = [];
         $scope.messages = [];
@@ -1053,7 +1053,7 @@ angular.module('Authentication')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
  
 angular.module('Authentication')
  
@@ -1159,7 +1159,7 @@ angular.module('Authentication')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Authorization')
 
@@ -1171,8 +1171,8 @@ angular.module('Authorization')
     ]
 )
 .controller('EditPermissionGroupsController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ConnectionService',
-function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ConnectionService', 'config',
+function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ConnectionService, config) {
             AuthorizationService.GetUserPermissionGroups($routeParams.id,
                 function (response) {
                     $scope.errors = [];
@@ -1180,9 +1180,9 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
                     $scope.personId = $routeParams.id;
                     $scope.friendlyName = response.ReturnValue.FriendlyName;
                     $scope.allPermissionGroups = response.ReturnValue.AllPermissionGroups;
-                    console.log($scope.allPermissionGroups);
+                    if(config.debugMode) console.log($scope.allPermissionGroups);
                     $scope.userPermissionGroups = response.ReturnValue.CurrentPermissionGroups;
-                    console.log($scope.userPermissionGroups);
+                    if(config.debugMode) console.log($scope.userPermissionGroups);
                     $scope.editablePermissionGroups = response.ReturnValue.EditablePermissionGroups;
 
                     $scope.givePermissionGroup = function (group) {
@@ -1247,13 +1247,13 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
  
 angular.module('Authorization')
  
 .factory('AuthorizationService',
-    ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
-    function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
+    ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService, config) {
         var service = {};
 
         service.GetUserPermissionGroups = function (personid, success, error) {
@@ -1327,8 +1327,8 @@ angular.module('Authorization')
                 return universalFields.indexOf(item) < 0;
             }));
             var levelIndex = combinedFields.indexOf(level);
-            console.log(level);
-            console.log(levelIndex);
+            if(config.debugMode) console.log(level);
+            if(config.debugMode) console.log(levelIndex);
             if( levelIndex >= 0) {
                 combinedFields.splice(levelIndex, 1);
             }
@@ -1340,7 +1340,7 @@ angular.module('Authorization')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Connection')
 
@@ -1355,7 +1355,7 @@ angular.module('Connection')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Connection')
 
@@ -1498,7 +1498,7 @@ angular.module('Connection')
 
                     var serviceurl = service.GetBackendURL() + "/" + endpoint; // Make the url we need
 
-                    var config = {
+                    var request = {
                         method: 'POST',
                         url: serviceurl,
                         data: reqData,
@@ -1507,10 +1507,10 @@ angular.module('Connection')
                         }
                     };
 
-                    return $http(config).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
+                    return $http(request).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
                             success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
-                            console.log(endpoint);
-                            console.log(service.RestoreJsonNetReferences(response.data));
+                            if(config.debugMode) console.log(endpoint);
+                            if(config.debugMode) console.log(service.RestoreJsonNetReferences(response.data));
                         },
                         function (response) {
                             if (response.statusText == "") {
@@ -1624,7 +1624,7 @@ angular.module('Connection')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Home')
 
@@ -1726,7 +1726,7 @@ angular.module('Home')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
  
 angular.module('Home')
  
@@ -1760,7 +1760,7 @@ angular.module('Home')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Modals')
 
@@ -1805,7 +1805,7 @@ angular.module('Modals')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Muster')
 
@@ -1908,7 +1908,7 @@ angular.module('Muster')
 
                     $scope.messages = [];
                     $scope.errors = [];
-                    console.log(dtoMuster);
+                    if(config.debugMode) console.log(dtoMuster);
                     if (JSON.stringify(dtoMuster) === JSON.stringify({})) {
                         $scope.errors.push("No muster records altered");
                         return;
@@ -1949,7 +1949,7 @@ angular.module('Muster')
                     $scope.errors = [];
                     MusterService.LoadMusterByDay(musterDate,
                         function (response) {
-                            console.log(response);
+                            if(config.debugMode) console.log(response);
                             if (response.ReturnValue.length == 0) {
                                 $scope.errors.push("No muster records for that date.");
                             } else {
@@ -2031,7 +2031,7 @@ angular.module('Muster')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
  
 angular.module('Muster')
  
@@ -2061,7 +2061,7 @@ angular.module('Muster')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Navigation')
 
@@ -2129,13 +2129,13 @@ angular.module('Navigation')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Profiles')
 
     .controller('ProfileController',
-        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService',
-            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService) {
+        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService, config) {
 
                 /*
                  *   This function chain is a little hefty, so a preface is warranted.
@@ -2204,8 +2204,6 @@ angular.module('Profiles')
                             $scope.returnableFields = response.ReturnValue.ResolvedPermissions.ReturnableFields.Main.Person;
                             $scope.editableFields = response.ReturnValue.ResolvedPermissions.EditableFields.Main.Person;
 
-                            console.log($scope.profileData.DateOfBirth);
-                            console.log($scope.profileData.EAOS);
                             // Set up all the dates to be actual Dates
                             $scope.profileData.DateOfBirth = parseDate(response.ReturnValue.Person.DateOfBirth);
                             $scope.profileData.DateOfArrival = parseDate(response.ReturnValue.Person.DateOfArrival);
@@ -2213,8 +2211,6 @@ angular.module('Profiles')
                             $scope.profileData.EAOS = parseDate(response.ReturnValue.Person.EAOS);
                             $scope.profileData.ClaimTime = parseDate(response.ReturnValue.Person.ClaimTime);
 
-                            console.log($scope.profileData.DateOfBirth);
-                            console.log($scope.profileData.EAOS);
 
                             $scope.canSearchPersonField = function (field) {
                                 return ('currentUser' in $scope.globals) && ($scope.globals.currentUser.permissions.searchable.indexOf(field) > -1);
@@ -2266,7 +2262,7 @@ angular.module('Profiles')
                                 } else {
                                     $scope.profileData.Department = {};
                                 }
-                                console.log($scope.form.$error);
+                                if(config.debugMode) console.log($scope.form.$error);
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                             function (response) {
@@ -2404,7 +2400,7 @@ angular.module('Profiles')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
  
 angular.module('Profiles')
  
@@ -2449,13 +2445,13 @@ angular.module('Profiles')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
 
 angular.module('Search')
 
 .controller('SearchController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, config) {
 
         // This scope will just about always contain PII
         $rootScope.containsPII = true;
@@ -2534,8 +2530,8 @@ angular.module('Search')
     }])
 
 	.controller('SearchByFieldController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, config) {
 
         $rootScope.containsPII = true;
         $scope.searchLevels = ["Command", "Department", "Division"];
@@ -2567,7 +2563,7 @@ angular.module('Search')
         });
 
         $scope.getSearchableFields = function (level) {
-            console.log(AuthorizationService.GetReturnableFields(level));
+            if(config.debugMode) console.log(AuthorizationService.GetReturnableFields(level));
             return AuthorizationService.GetReturnableFields(level);
         };
 
@@ -2633,8 +2629,8 @@ angular.module('Search')
             $scope.advancedSearchFilters = $scope.searchByFieldTerms;
             $scope.selectedLevel = JSON.parse($routeParams.searchLevel);
 
-            console.log(JSON.parse($routeParams.searchTerms));
-            console.log(JSON.parse($routeParams.returnFields));
+            if(config.debugMode) console.log(JSON.parse($routeParams.searchTerms));
+            if(config.debugMode) console.log(JSON.parse($routeParams.returnFields));
 
 
         }
@@ -2643,7 +2639,7 @@ angular.module('Search')
 /*****************
  File division
 *****************/
- 'use strict';
+'use strict';
  
 angular.module('Search')
  

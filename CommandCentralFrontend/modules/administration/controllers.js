@@ -3,13 +3,13 @@
 angular.module('Administration')
 
 .controller('ListEditorController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService, config) {
         $rootScope.containsPII = false;
         $scope.dataLoading = true;
         $scope.errors = [];
 
-        $scope.blah = function (athing) { console.log(athing); };
+        $scope.blah = function (athing) { if(config.debugMode) console.log(athing); };
 
         $scope.loadLists = function () {
             AdministrationService.LoadEditableLists(
@@ -77,13 +77,13 @@ angular.module('Administration')
     ]
 )
 .controller('CommandEditorController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService, config) {
         $rootScope.containsPII = false;
         $scope.dataLoading = true;
         $scope.errors = [];
 
-        $scope.blah = function (athing) { console.log(athing); };
+        $scope.blah = function (athing) { if(config.debugMode) console.log(athing); };
 
         $scope.loadCommands = function () {
             AdministrationService.LoadCommands(
@@ -151,13 +151,13 @@ angular.module('Administration')
     ]
 )
 .controller('DepartmentEditorController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService, config) {
         $rootScope.containsPII = false;
         $scope.dataLoading = true;
         $scope.errors = [];
 
-        $scope.blah = function (athing) { console.log(athing); };
+        $scope.blah = function (athing) { if(config.debugMode) console.log(athing); };
 
         $scope.commandId = $routeParams.id;
 
@@ -177,7 +177,7 @@ angular.module('Administration')
                     $scope.errors = [];
                     $scope.dataLoading = false;
                     $scope.departments = response.ReturnValue.Department;
-                    console.log(response.ReturnValue.Department);
+                    if(config.debugMode) console.log(response.ReturnValue.Department);
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
@@ -238,13 +238,13 @@ angular.module('Administration')
     ]
 )
 .controller('DivisionEditorController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AdministrationService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AdministrationService, ConnectionService, config) {
         $rootScope.containsPII = false;
         $scope.dataLoading = true;
         $scope.errors = [];
 
-        $scope.blah = function (athing) { console.log(athing); };
+        $scope.blah = function (athing) { if(config.debugMode) console.log(athing); };
 
         $scope.departmentId = $routeParams.depId;
         $scope.commandId = $routeParams.id;

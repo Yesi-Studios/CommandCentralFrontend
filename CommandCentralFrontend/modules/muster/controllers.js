@@ -101,7 +101,7 @@ angular.module('Muster')
 
                     $scope.messages = [];
                     $scope.errors = [];
-                    console.log(dtoMuster);
+                    if(config.debugMode) console.log(dtoMuster);
                     if (JSON.stringify(dtoMuster) === JSON.stringify({})) {
                         $scope.errors.push("No muster records altered");
                         return;
@@ -142,7 +142,7 @@ angular.module('Muster')
                     $scope.errors = [];
                     MusterService.LoadMusterByDay(musterDate,
                         function (response) {
-                            console.log(response);
+                            if(config.debugMode) console.log(response);
                             if (response.ReturnValue.length == 0) {
                                 $scope.errors.push("No muster records for that date.");
                             } else {
