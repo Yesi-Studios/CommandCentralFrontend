@@ -82,14 +82,13 @@
 						<div class="form-group">
 							<label class="col-md-4" for="sex">Sex</label>
 							<div class="col-md-8">
-								<label class="radio-inline">
-									<!--suppress HtmlUnknownAttribute -->
-									<input type="radio" name="sex" id="male" value="Male" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex"> Male
-								</label>
-								<label class="radio-inline">
-									<!--suppress HtmlUnknownAttribute -->
-									<input type="radio" name="sex" id="female" value="Female" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex"> Female
-								</label>
+								<!--<label class="radio-inline" ng-repeat="o in lists['Sex']">-->
+									<!--&lt;!&ndash;suppress HtmlUnknownAttribute &ndash;&gt;-->
+									<!--<input type="radio" name="sex" id="{{o.Id}}" ng-value="o.Id == profileData.Sex.Id" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex"> {{o.Value}}-->
+								<!--</label>-->
+								<!--suppress HtmlUnknownAttribute -->
+								<select class="form-control" id="sex" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex" ng-options="o as o.Value for o in lists['Sex'] track by o.Id">
+								</select>
 							</div>
 						</div>
 						<div class="form-group">

@@ -13,7 +13,8 @@ angular.module('Connection')
                 //var backendURL = "http://147.51.62.19";     // Dev service IP.
                 //var backendURL = "https://147.51.62.48:1337";     // Live service IP.
                 //var backendURL = "http://192.168.1.234";
-                var backendURL = "http://localhost";
+                //var backendURL = "http://localhost";
+                var backendURL = "http://192.168.1.196";
 
                 // Here we check to see if we have a port stored in localStorage, and if not, we use 1113.
                 // If it's enabled, there's a widget at the bottom of index.html, controlled by this module,

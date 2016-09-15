@@ -119,14 +119,23 @@ angular.module('Profiles')
                             // If we succeed, this is our callback
                             function (response) {
                                 // Give our scope the commands and a function we can use to search inside them
-                                $scope.commandList = response.ReturnValue;
+                                $scope.commandList = response.ReturnValue.Command;
 
-                                $scope.command = $scope.getById(response.ReturnValue, $scope.profileData.Command);
+                                $scope.command = $scope.getById(response.ReturnValue.Command, $scope.profileData.Command);
 
                                 // Fill in the objects where currently only Ids exist.
                                 $scope.profileData.Command = $scope.command;
-                                $scope.profileData.Department = $scope.getById($scope.profileData.Command.Departments, $scope.profileData.Department);
-                                $scope.profileData.Division = $scope.getById($scope.profileData.Department.Divisions, $scope.profileData.Division);
+                                if($scope.profileData.Command) {
+                                    $scope.profileData.Department = $scope.getById($scope.profileData.Command.Departments, $scope.profileData.Department);
+                                    if ($scope.profileData.Department) {
+                                        $scope.profileData.Division = $scope.getById($scope.profileData.Department.Divisions, $scope.profileData.Division);
+                                    } else {
+                                        $scope.profileData.Division = {};
+                                    }
+                                } else {
+                                    $scope.profileData.Department = {};
+                                }
+                                console.log($scope.form.$error);
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                             function (response) {
