@@ -161,7 +161,7 @@
 									<td>{{number.Number}}</td>
 									<!--<td>{{number.Carrier}}</td>-->
 									<td>
-										<select class="form-control" id="phoneType" ng-model="number.PhoneType" ng-options="o as o for o in lists['PhoneNumberTypes']">
+										<select class="form-control" id="phoneType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType']">
 											<option></option>
 										</select>
 									</td>
@@ -178,7 +178,7 @@
 										</div>
 									</td>
 									<td>
-										<select name="newNumberType" class="form-control" id="newNumberType" ng-model="newNumberType" ng-options="o as o for o in lists['PhoneNumberTypes']">
+										<select name="newNumberType" class="form-control" id="newNumberType" ng-model="newNumberType" ng-options="o as o.Value for o in lists['PhoneNumberType']">
 											<option ng-if="profileData.PhoneNumbers.length == 0" value="" disabled selected hidden><!--suppress HtmlUnknownTag, HtmlUnknownTag -->
 												<strong>Phone Type</strong></option>
 											<option ng-if="profileData.PhoneNumbers.length != 0" disabled selected hidden></option>
@@ -321,7 +321,7 @@
 							<label class="col-md-2" for="rank">Rank</label>
 							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="rank" ng-disabled="!canEditPersonField('Paygrade')" ng-show="canReturnPersonField('Paygrade')" ng-model="profileData.Paygrade" ng-options="o as o.Value for o in lists['Paygrades'] track by o.Id">
+								<select class="form-control" id="rank" ng-disabled="!canEditPersonField('Paygrade')" ng-show="canReturnPersonField('Paygrade')" ng-model="profileData.Paygrade" ng-options="o as o.Value for o in lists['Paygrade'] track by o.Id">
 									<option></option>
 								</select>
 							</div>
@@ -355,7 +355,7 @@
 							<label class="col-md-2" for="dutyStatus">Duty Status</label>
 							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="dutyStatus" ng-disabled="!canEditPersonField('DutyStatus')" ng-show="canReturnPersonField('DutyStatus')" ng-model="profileData.DutyStatus" ng-options="o as o for o in lists['DutyStatuses']">
+								<select class="form-control" id="dutyStatus" ng-disabled="!canEditPersonField('DutyStatus')" ng-show="canReturnPersonField('DutyStatus')" ng-model="profileData.DutyStatus" ng-options="o as o.Value for o in lists['DutyStatus'] track by o.Id">
 									<option></option>
 								</select>
 							</div>

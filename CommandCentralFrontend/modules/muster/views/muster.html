@@ -58,8 +58,7 @@
                         <td>{{sailor['Division']}}</td>
                         <td>{{sailor['HasBeenMustered'] | yesNo }}</td>
                         <td>
-                            <select name="{{sailor.Id}}MusterStatus" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus">
-                                <option ng-repeat="o in musterStatuses track by $index" ng-value="o">{{o}}</option>
+                            <select name="{{sailor.Id}}MusterStatus" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus" ng-options="o as o.Value for o in musterStatuses">
                             </select>
                         </td>
 						<td><!--suppress HtmlUnknownAttribute -->
