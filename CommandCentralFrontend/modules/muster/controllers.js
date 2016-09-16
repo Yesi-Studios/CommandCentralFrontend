@@ -3,8 +3,8 @@
 angular.module('Muster')
 
     .controller('MusterController',
-        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'MusterService', 'ProfileService', 'ConnectionService',
-            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, MusterService, ProfileService, ConnectionService) {
+        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'MusterService', 'ProfileService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, MusterService, ProfileService, ConnectionService, config) {
 
                 // This scope will just about always contain PII
                 $rootScope.containsPII = true;
@@ -50,7 +50,7 @@ angular.module('Muster')
                 ProfileService.GetAllLists(
                     // If we succeed, this is our call back
                     function (response) {
-                        $scope.musterStatuses = response.ReturnValue.MusterStatuses;
+                        $scope.musterStatuses = response.ReturnValue.MusterStatus;
 
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
@@ -93,9 +93,10 @@ angular.module('Muster')
 
                 $scope.submitMuster = function (musterList) {
                     var dtoMuster = {};
+                    console.log(musterList);
                     for (var i = 0; i < musterList.length; i++) {
                         if (musterList[i].CurrentMusterStatus.MusterStatus != null && musterList[i].CurrentMusterStatus.MusterStatus != originalMusterList[i].CurrentMusterStatus.MusterStatus) {
-                            dtoMuster[musterList[i].Id] = musterList[i].CurrentMusterStatus.MusterStatus;
+                            dtoMuster[musterList[i].Id] = { "status":musterList[i].CurrentMusterStatus.MusterStatus.Id, "remarks" : "NOT IMPLEMENTED" };
                         }
                     }
 
@@ -128,8 +129,8 @@ angular.module('Muster')
             }
         ])
     .controller('MusterArchiveController',
-        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'MusterService', 'ProfileService', 'ConnectionService',
-            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, MusterService, ProfileService, ConnectionService) {
+        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'MusterService', 'ProfileService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, MusterService, ProfileService, ConnectionService, config) {
                 $scope.musterDate = new Date();
                 $scope.musterDate.setDate($scope.musterDate.getDate() - 1);
 
@@ -195,8 +196,8 @@ angular.module('Muster')
             }
         ])
     .controller('FinalizeMusterController',
-        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'MusterService', 'ProfileService', 'ConnectionService',
-            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, MusterService, ProfileService, ConnectionService) {
+        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'MusterService', 'ProfileService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, MusterService, ProfileService, ConnectionService, config) {
                 $scope.errors = [];
                 $scope.messages = [];
                 $scope.finalizeMuster = function () {
