@@ -3,59 +3,18 @@
  */
 'use strict';
 
+var constants = {
+    backendURL: 'http://localhost',
+    backendPort: '1337',
+    apiKey: "90fdb89f-282b-4bd6-840b-cef597615728",
+    debugMode: false
 
-var backendURL = 'http://localhost';
-var backendPort = '1337';
-var apiKey = "90fdb89f-282b-4bd6-840b-cef597615728";
-var debugMode = true;
+};
 
-
-angular.module('Connection').constant('config', {
-    backendURL: backendURL,
-    backendPort: backendPort,
-    apiKey: apiKey,
-    debugMode: debugMode
-
-});
-angular.module('Administration').constant('config', {
-    backendURL: backendURL,
-    backendPort: backendPort,
-    apiKey: apiKey,
-    debugMode: debugMode
-
-});
-angular.module('Authentication').constant('config', {
-    backendURL: backendURL,
-    backendPort: backendPort,
-    apiKey: apiKey,
-    debugMode: debugMode
-
-});
-angular.module('Authorization').constant('config', {
-    backendURL: backendURL,
-    backendPort: backendPort,
-    apiKey: apiKey,
-    debugMode: debugMode
-
-});
-angular.module('Muster').constant('config', {
-    backendURL: backendURL,
-    backendPort: backendPort,
-    apiKey: apiKey,
-    debugMode: debugMode
-
-});
-angular.module('Profiles').constant('config', {
-    backendURL: backendURL,
-    backendPort: backendPort,
-    apiKey: apiKey,
-    debugMode: debugMode
-
-});
-angular.module('Search').constant('config', {
-    backendURL: backendURL,
-    backendPort: backendPort,
-    apiKey: apiKey,
-    debugMode: debugMode
-
-});
+angular.module('Connection').constant('config', constants);
+angular.module('Administration').constant('config', constants);
+angular.module('Authentication').constant('config', constants);
+angular.module('Authorization').constant('config', constants);
+angular.module('Muster').constant('config', constants);
+angular.module('Profiles').constant('config', constants);
+angular.module('Search').constant('config', constants);
