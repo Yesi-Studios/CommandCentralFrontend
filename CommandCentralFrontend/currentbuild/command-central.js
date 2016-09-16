@@ -2185,17 +2185,6 @@ angular.module('Profiles')
                     ProfileService.LoadProfile($routeParams.id,
                         function (response) {
 
-                            // A function to parse my dates properly...
-                            function parseDate(input) {
-                                if(input && input.indexOf("T") >= 0){
-                                    input = input.split('T')[0];
-                                }
-                                if(input && input.indexOf('-') >= 0) {
-                                    var parts = input.split('-');
-                                    return new Date(parts[0], parts[1] - 1, parts[2]); // Note: months are 0-based
-                                }
-                                return null;
-                            }
                             // Set all the scope variables that matter the most.
                             $rootScope.containsPII = true;
                             $scope.dataLoading = false;
@@ -2205,11 +2194,11 @@ angular.module('Profiles')
                             $scope.editableFields = response.ReturnValue.ResolvedPermissions.EditableFields.Main.Person;
 
                             // Set up all the dates to be actual Dates
-                            $scope.profileData.DateOfBirth = parseDate(response.ReturnValue.Person.DateOfBirth);
-                            $scope.profileData.DateOfArrival = parseDate(response.ReturnValue.Person.DateOfArrival);
-                            $scope.profileData.DateOfDeparture = parseDate(response.ReturnValue.Person.DateOfDeparture);
-                            $scope.profileData.EAOS = parseDate(response.ReturnValue.Person.EAOS);
-                            $scope.profileData.ClaimTime = parseDate(response.ReturnValue.Person.ClaimTime);
+                            $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
+                            $scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
+                            $scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
+                            $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
+                            $scope.profileData.ClaimTime = new Date(response.ReturnValue.Person.ClaimTime);
 
 
                             $scope.canSearchPersonField = function (field) {
