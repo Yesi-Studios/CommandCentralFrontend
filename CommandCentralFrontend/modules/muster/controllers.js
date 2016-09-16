@@ -96,7 +96,7 @@ angular.module('Muster')
                     console.log(musterList);
                     for (var i = 0; i < musterList.length; i++) {
                         if (musterList[i].CurrentMusterStatus.MusterStatus != null && musterList[i].CurrentMusterStatus.MusterStatus != originalMusterList[i].CurrentMusterStatus.MusterStatus) {
-                            dtoMuster[musterList[i].Id] = { "status":musterList[i].CurrentMusterStatus.MusterStatus.Id, "remarks" : "NOT IMPLEMENTED" };
+                            dtoMuster[musterList[i].Id] = musterList[i].CurrentMusterStatus.MusterStatus.Value;
                         }
                     }
 
