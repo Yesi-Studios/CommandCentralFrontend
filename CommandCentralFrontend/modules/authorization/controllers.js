@@ -10,8 +10,8 @@ angular.module('Authorization')
     ]
 )
 .controller('EditPermissionGroupsController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ConnectionService',
-function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ConnectionService', 'config',
+function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ConnectionService, config) {
             AuthorizationService.GetUserPermissionGroups($routeParams.id,
                 function (response) {
                     $scope.errors = [];
@@ -19,9 +19,9 @@ function ($scope, $rootScope, $location, $routeParams, AuthenticationService, Au
                     $scope.personId = $routeParams.id;
                     $scope.friendlyName = response.ReturnValue.FriendlyName;
                     $scope.allPermissionGroups = response.ReturnValue.AllPermissionGroups;
-                    console.log($scope.allPermissionGroups);
+                    if(config.debugMode) console.log($scope.allPermissionGroups);
                     $scope.userPermissionGroups = response.ReturnValue.CurrentPermissionGroups;
-                    console.log($scope.userPermissionGroups);
+                    if(config.debugMode) console.log($scope.userPermissionGroups);
                     $scope.editablePermissionGroups = response.ReturnValue.EditablePermissionGroups;
 
                     $scope.givePermissionGroup = function (group) {

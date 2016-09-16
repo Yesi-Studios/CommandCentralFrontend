@@ -3,8 +3,8 @@
 angular.module('Authorization')
  
 .factory('AuthorizationService',
-    ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
-    function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
+    ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService', 'config',
+    function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService, config) {
         var service = {};
 
         service.GetUserPermissionGroups = function (personid, success, error) {
@@ -78,8 +78,8 @@ angular.module('Authorization')
                 return universalFields.indexOf(item) < 0;
             }));
             var levelIndex = combinedFields.indexOf(level);
-            console.log(level);
-            console.log(levelIndex);
+            if(config.debugMode) console.log(level);
+            if(config.debugMode) console.log(levelIndex);
             if( levelIndex >= 0) {
                 combinedFields.splice(levelIndex, 1);
             }

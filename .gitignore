@@ -8,6 +8,8 @@ old/
 livebeta/
 TestFrontend/
 Development/
+CommandCentralFrontend/node_modules/
+CommandCentralFrontend/config.js
 
 # User-specific files
 *.suo

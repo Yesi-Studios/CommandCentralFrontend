@@ -3,8 +3,8 @@
 angular.module('Search')
 
 .controller('SearchController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, config) {
 
         // This scope will just about always contain PII
         $rootScope.containsPII = true;
@@ -83,8 +83,8 @@ angular.module('Search')
     }])
 
 	.controller('SearchByFieldController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, config) {
 
         $rootScope.containsPII = true;
         $scope.searchLevels = ["Command", "Department", "Division"];
@@ -116,7 +116,7 @@ angular.module('Search')
         });
 
         $scope.getSearchableFields = function (level) {
-            console.log(AuthorizationService.GetReturnableFields(level));
+            if(config.debugMode) console.log(AuthorizationService.GetReturnableFields(level));
             return AuthorizationService.GetReturnableFields(level);
         };
 
@@ -182,8 +182,8 @@ angular.module('Search')
             $scope.advancedSearchFilters = $scope.searchByFieldTerms;
             $scope.selectedLevel = JSON.parse($routeParams.searchLevel);
 
-            console.log(JSON.parse($routeParams.searchTerms));
-            console.log(JSON.parse($routeParams.returnFields));
+            if(config.debugMode) console.log(JSON.parse($routeParams.searchTerms));
+            if(config.debugMode) console.log(JSON.parse($routeParams.returnFields));
 
 
         }

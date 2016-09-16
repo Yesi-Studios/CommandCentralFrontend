@@ -101,7 +101,7 @@
         </div>
     </div>
     <div class="container" ng-controller="SetPortController">
-        <div class="row">
+        <div ng-if="showPortController" class="row">
             <form class="form-inline">
                 <div class="form-group">
                     <label for="portInput">Current URL: {{currentURL}}</label>
@@ -122,25 +122,8 @@
     <script src="libs/angular-modal-service.js"></script>
     <script src="libs/ngStorage.min.js"></script>
     <script src="libs/ui-bootstrap-tpls-1.2.4.min.js"></script>
-    <script src="app.js"></script>
-    <script src="modules/authentication/services.js"></script>
-    <script src="modules/authentication/controllers.js"></script>
-    <script src="modules/home/controllers.js"></script>
-    <script src="modules/home/services.js"></script>
-    <script src="modules/navigation/controllers.js"></script>
-    <script src="modules/profile/controllers.js"></script>
-    <script src="modules/profile/services.js"></script>
-    <script src="modules/search/controllers.js"></script>
-    <script src="modules/search/services.js"></script>
-    <script src="modules/modals/controllers.js"></script>
-    <script src="modules/authorization/services.js"></script>
-    <script src="modules/authorization/controllers.js"></script>
-    <script src="modules/connection/services.js"></script>
-    <script src="modules/connection/controllers.js"></script>
-    <script src="modules/muster/services.js"></script>
-    <script src="modules/muster/controllers.js"></script>
-    <script src="modules/administration/services.js"></script>
-    <script src="modules/administration/controllers.js"></script>
+    <script src="currentbuild/command-central.min.js"></script>
+    <script src="config.js"></script>
 </body>
 
 </html>

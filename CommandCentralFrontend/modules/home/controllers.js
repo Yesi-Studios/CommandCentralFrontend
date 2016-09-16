@@ -7,7 +7,6 @@ angular.module('Home')
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, HomeService, ConnectionService) {
 
         $scope.pdfUrl = "/img/pow.pdf";
-
         $scope.refreshNews = function () {
             $scope.dataLoading = true;
             $scope.errors = null;

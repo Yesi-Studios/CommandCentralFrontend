@@ -1,0 +1,18 @@
+{
+  "name": "command-central",
+  "version": "1.0.0",
+  "description": "The Command Central frontend developed at NIOC GA tool to help commands manage their sailors, in conjuction with the command central backend.",
+  "author": "CTI2(IDW) Angus McLean <anguslmm@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yesi-Studios/CommandCentralFrontend.git"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-concat": "~1.0.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-watch": "~1.0.0"
+  }
+}
