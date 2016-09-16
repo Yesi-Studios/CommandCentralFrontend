@@ -404,7 +404,7 @@
 								</thead>
 								<tbody>
 								<tr ng-repeat="event in profileData.AccountHistory">
-									<td>{{event.AccountHistoryEventType}}</td>
+									<td>{{event.AccountHistoryEventType.Value}}</td>
 									<td>{{event.EventTime | date:'medium'}}</td>
 								</tr>
 								</tbody>
