@@ -9,6 +9,7 @@ angular.module('Search')
         // This scope will just about always contain PII
         $rootScope.containsPII = true;
 
+        $scope.Math = window.Math;
         $scope.itemsPerPage = 50;
         $scope.currentPage = 1;
         $scope.results = [];
