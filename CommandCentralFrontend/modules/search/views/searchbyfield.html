@@ -33,7 +33,7 @@
                 <div class="input-group">
                     <span class="input-group-addon" id="searchAddon">{{field}}</span>
                     <!--suppress HtmlUnknownAttribute -->
-                    <input type="text" class="form-control" aria-describedby="searchAddon" ng-model="advancedSearchFilters[field]" ng-keyup="searchOnEnter($event, advancedSearchFilters, fieldsToReturn)">
+                    <input type="text" class="form-control" aria-describedby="searchAddon" ng-model="advancedSearchFilters[field]" ng-keyup="searchOnEnter($event, advancedSearchFilters, fieldsToReturn, selectedLevel)">
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
         <div class="text-center">
 
             <!--suppress HtmlUnknownAttribute -->
-            <button class="btn btn-primary" type="button" ng-click="goToResults(advancedSearchFilters, fieldsToReturn, selectedLevel)" ng-disabled="!fieldsToReturn || !fieldsToReturn">Search</button>
+            <button class="btn btn-primary" type="button" ng-click="goToResults(advancedSearchFilters, fieldsToReturn, selectedLevel)" ng-disabled="!fieldsToSearch || !fieldsToReturn || !selectedLevel">Search</button>
 
         </div>
     </div>
