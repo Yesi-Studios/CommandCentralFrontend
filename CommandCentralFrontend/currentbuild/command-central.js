@@ -1629,8 +1629,8 @@ angular.module('Connection')
 angular.module('Home')
 
 .controller('HomeController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'HomeService', 'ConnectionService',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, HomeService, ConnectionService) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'HomeService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, HomeService, ConnectionService, config) {
 
         $scope.pdfUrl = "/img/pow.pdf";
         $scope.refreshNews = function () {
@@ -2355,13 +2355,13 @@ angular.module('Profiles')
 
                 };
 
-                $scope.addNewAddress = function (number, street, city, state, zip, country, home) {
+                $scope.addNewAddress = function (street, city, state, zip, country, home) {
                     if (home) {
                         for (var i = 0; i < $scope.profileData.PhysicalAddresses.length; ++i) {
                             $scope.profileData.PhysicalAddresses[i].IsHomeAddress = false;
                         }
                     }
-                    $scope.profileData.PhysicalAddresses.push({ "StreetNumber": number, "Route": street, "City": city, "State": state, "ZipCode": zip, "Country": country, "IsHomeAddress": home });
+                    $scope.profileData.PhysicalAddresses.push({ "address": street, "City": city, "State": state, "ZipCode": zip, "Country": country, "IsHomeAddress": home });
 
                 };
 
