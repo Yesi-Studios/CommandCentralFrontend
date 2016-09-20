@@ -23,7 +23,7 @@ angular.module('Muster')
                     return Math.ceil($scope.friends.length / $scope.itemsPerPage);
                 };
 
-                $scope.$watch('currentPage + itemsPerPage + setOrder', function() {
+                $scope.$watch('currentPage + itemsPerPage + setOrder + displaySailorsList', function() {
                     var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                         end = begin + $scope.itemsPerPage;
 

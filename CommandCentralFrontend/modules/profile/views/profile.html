@@ -65,7 +65,7 @@
 							<label class="col-md-4" for="ethnicity">Ethnicity</label>
 							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o.Value for o in lists['Ethnicity'] track by o.Id">
+								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o.Value for o in lists['Ethnicity'] | orderBy:'Value' track by o.Id">
 									<option></option>
 								</select>
 							</div>
@@ -74,7 +74,7 @@
 							<label class="col-md-4" for="religiousPreference">Religious Preference</label>
 							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o.Value for o in lists['ReligiousPreference'] track by o.Id">
+								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o.Value for o in lists['ReligiousPreference'] | orderBy:'Value' track by o.Id">
 									<option></option>
 								</select>
 							</div>
@@ -161,7 +161,7 @@
 									<td>{{number.Number}}</td>
 									<!--<td>{{number.Carrier}}</td>-->
 									<td>
-										<select class="form-control" id="phoneType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType']">
+										<select class="form-control" id="phoneType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType'] track by o.Id">
 											<option></option>
 										</select>
 									</td>

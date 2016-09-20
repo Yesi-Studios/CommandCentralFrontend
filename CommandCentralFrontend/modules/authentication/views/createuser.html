@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label class="col-md-4" for="dutyStatus">Duty Status</label>
                 <div class="col-md-4">
-                    <select class="form-control" id="dutyStatus" ng-model="newUser.DutyStatus" ng-options="o as o for o in lists['DutyStatuses']" required>
+                    <select class="form-control" id="dutyStatus" ng-model="newUser.DutyStatus" ng-options="o as o.Value for o in lists['DutyStatus'] | orderBy:'Value'" required>
                         <option></option>
                     </select>
                 </div>
@@ -54,7 +54,7 @@
             <div class="form-group">
                 <label class="col-md-4" for="paygrade">Paygrade</label>
                 <div class="col-md-4">
-                    <select class="form-control" id="paygrade" ng-model="newUser.Paygrade" ng-options="o as o for o in lists['Paygrades']" required>
+                    <select class="form-control" id="paygrade" ng-model="newUser.Paygrade" ng-options="o as o.Value for o in lists['Paygrade'] | orderBy:'Value'" required>
                         <option></option>
                     </select>
                 </div>

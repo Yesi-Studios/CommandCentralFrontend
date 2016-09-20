@@ -16,14 +16,14 @@
         <div class="col-md-offset-1 col-md-5">
             <div class="form-group">
                 <label for="fieldsToSearch">Fields to Search</label>
-                <select class="form-control" size="10" id="fieldsToSearch" ng-model="fieldsToSearch" ng-options="o for o in getSearchableFields(selectedLevel)" multiple>
+                <select class="form-control" size="10" id="fieldsToSearch" ng-model="fieldsToSearch" ng-options="o for o in getSearchableFields(selectedLevel) | orderBy:'toString()'" multiple>
                 </select>
             </div>
         </div>
         <div class="col-md-5">
             <div class="form-group">
                 <label for="fieldsToReturn">Fields to Return</label>
-                <select class="form-control" size="10" id="fieldsToReturn" ng-model="fieldsToReturn" ng-options="o for o in getReturnableFields(selectedLevel)" multiple></select>
+                <select class="form-control" size="10" id="fieldsToReturn" ng-model="fieldsToReturn" ng-options="o for o in getReturnableFields(selectedLevel) | orderBy:'toString()'" multiple></select>
             </div>
         </div>
     </div>

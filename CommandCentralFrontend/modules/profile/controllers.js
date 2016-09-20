@@ -229,7 +229,7 @@ angular.module('Profiles')
                             $scope.profileData.PhysicalAddresses[i].IsHomeAddress = false;
                         }
                     }
-                    $scope.profileData.PhysicalAddresses.push({ "address": street, "City": city, "State": state, "ZipCode": zip, "Country": country, "IsHomeAddress": home });
+                    $scope.profileData.PhysicalAddresses.push({ "Address": street, "City": city, "State": state, "ZipCode": zip, "Country": country, "IsHomeAddress": home });
 
                 };
 

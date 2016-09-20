@@ -1830,7 +1830,7 @@ angular.module('Muster')
                     return Math.ceil($scope.friends.length / $scope.itemsPerPage);
                 };
 
-                $scope.$watch('currentPage + itemsPerPage + setOrder', function() {
+                $scope.$watch('currentPage + itemsPerPage + setOrder + displaySailorsList', function() {
                     var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                         end = begin + $scope.itemsPerPage;
 
@@ -2361,7 +2361,7 @@ angular.module('Profiles')
                             $scope.profileData.PhysicalAddresses[i].IsHomeAddress = false;
                         }
                     }
-                    $scope.profileData.PhysicalAddresses.push({ "address": street, "City": city, "State": state, "ZipCode": zip, "Country": country, "IsHomeAddress": home });
+                    $scope.profileData.PhysicalAddresses.push({ "Address": street, "City": city, "State": state, "ZipCode": zip, "Country": country, "IsHomeAddress": home });
 
                 };
 
