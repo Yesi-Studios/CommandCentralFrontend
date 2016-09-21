@@ -1,7 +1,6 @@
 <div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
 <div ng-show="profileUpdateSuccess" class="alert alert-success status_message">Profile updated successfully.</div>
 <div class="content_panel">
-	<!--suppress HtmlUnknownAttribute -->
 	<form name="form" role="form" class="form-horizontal" ng-submit="updateProfile()">
 		<h3>Profile for {{friendlyName}}.</h3>
 		<!--suppress HtmlUnknownTag, HtmlUnknownTag -->
@@ -302,7 +301,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-offset-6 col-md-2" for="necs">Primary NEC</label>
+							<label class="col-md-2" for="prd">PRD</label>
+							<div class="col-md-4">
+								<!--suppress HtmlUnknownAttribute -->
+								<ng-custom-date-picker ng-disabled="!canEditPersonField('PRD')" ng-show="canReturnPersonField('PRD')" ng-model="profileData.PRD"></ng-custom-date-picker>
+							</div>
+                            <label class="col-md-2" for="necs">Primary NEC</label>
                             <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
                                 <select class="form-control" id="primarynec" ng-disabled="!canEditPersonField('PrimaryNEC')" ng-show="canReturnPersonField('PrimaryNEC')" ng-model="profileData.PrimaryNEC" ng-options="o as o.Value for o in lists['NEC'] | orderBy: 'Value' track by o.Id" ></select>
