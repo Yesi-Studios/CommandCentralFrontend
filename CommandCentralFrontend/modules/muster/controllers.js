@@ -3,8 +3,8 @@
 angular.module('Muster')
 
     .controller('MusterController',
-        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'MusterService', 'ProfileService', 'ConnectionService', 'config',
-            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, MusterService, ProfileService, ConnectionService, config) {
+        ['$scope', '$filter', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'MusterService', 'ProfileService', 'ConnectionService', 'config',
+            function ($scope, $filter, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, MusterService, ProfileService, ConnectionService, config) {
 
                 // This scope will just about always contain PII
                 $rootScope.containsPII = true;
@@ -23,10 +23,11 @@ angular.module('Muster')
                     return Math.ceil($scope.friends.length / $scope.itemsPerPage);
                 };
 
-                $scope.$watch('currentPage + itemsPerPage + setOrder + displaySailorsList', function() {
+                $scope.$watch('currentPage + itemsPerPage + setOrder + displaySailorsList + orderKey', function() {
                     var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                         end = begin + $scope.itemsPerPage;
 
+                    $scope.displaySailorsList = $filter('orderBy')($scope.displaySailorsList, $scope.orderKey);
                     $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
                 });
                 // The default sorting key
@@ -82,6 +83,7 @@ angular.module('Muster')
                         var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                             end = begin + $scope.itemsPerPage;
 
+                        $scope.displaySailorsList = $filter('orderBy')($scope.displaySailorsList, $scope.orderKey);
                         $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.

@@ -3,14 +3,14 @@
 angular.module('Search')
 
 .controller('SearchController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'config',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, config) {
+    ['$scope', '$filter', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'config',
+    function ($scope, $filter, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, config) {
 
         // This scope will just about always contain PII
         $rootScope.containsPII = true;
 
         $scope.Math = window.Math;
-        $scope.itemsPerPage = 50;
+        $scope.itemsPerPage = 1;
         $scope.currentPage = 1;
         $scope.results = [];
 
@@ -18,10 +18,11 @@ angular.module('Search')
             return Math.ceil($scope.friends.length / $scope.itemsPerPage);
         };
 
-        $scope.$watch('currentPage + itemsPerPage', function() {
+        $scope.$watch('currentPage + itemsPerPage + setOrder + orderKey', function() {
             var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                 end = begin + $scope.itemsPerPage;
 
+            $scope.results = $filter('orderBy')($scope.results, $scope.orderKey);
             $scope.filteredResults = $scope.results.slice(begin, end);
         });
 
@@ -66,6 +67,7 @@ angular.module('Search')
                     var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                         end = begin + $scope.itemsPerPage;
 
+                    $scope.results = $filter('orderBy')($scope.results, $scope.orderKey);
                     $scope.filteredResults = $scope.results.slice(begin, end);
                 },
 			    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
@@ -84,8 +86,8 @@ angular.module('Search')
     }])
 
 	.controller('SearchByFieldController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'ConnectionService', 'config',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, ConnectionService, config) {
+    ['$scope', '$filter', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'ConnectionService', 'config',
+    function ($scope, $filter, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, ConnectionService, config) {
 
         $rootScope.containsPII = true;
         $scope.searchLevels = ["Command", "Department", "Division"];
@@ -109,11 +111,11 @@ angular.module('Search')
             return Math.ceil($scope.friends.length / $scope.itemsPerPage);
         };
 
-        $scope.$watch('currentPage + itemsPerPage + setOrder', function() {
+        $scope.$watch('currentPage + itemsPerPage + setOrder + orderKey', function() {
             var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                 end = begin + $scope.itemsPerPage;
-
-            $scope.filteredResults = $scope.results.slice(begin, end);
+                $scope.results = $filter('orderBy')($scope.results, $scope.orderKey);
+                $scope.filteredResults = $scope.results.slice(begin, end);
         });
 
         $scope.getSearchableFields = function (level) {
@@ -167,6 +169,7 @@ angular.module('Search')
                     var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                         end = begin + $scope.itemsPerPage;
 
+                    $scope.results = $filter('orderBy')($scope.results, $scope.orderKey);
                     $scope.filteredResults = $scope.results.slice(begin, end);
 
                 },
