@@ -2194,6 +2194,7 @@ angular.module('Profiles')
                             // Set all the scope variables that matter the most.
                             $rootScope.containsPII = true;
                             $scope.dataLoading = false;
+                            $scope.friendlyName = response.ReturnValue.FriendlyName;
                             $scope.profileData = response.ReturnValue.Person;
                             $scope.isMyProfile = response.ReturnValue.IsMyProfile;
                             $scope.returnableFields = response.ReturnValue.ResolvedPermissions.ReturnableFields.Main.Person;
@@ -2309,13 +2310,14 @@ angular.module('Profiles')
 
                 $scope.updateProfile = function () {
                     $scope.dataLoading = true;
+                    $scope.profileUpdateSuccess = false;
                     // Update the profile with the data currently on this page (used when "Save Profile" button is clicked)
 
                     ProfileService.UpdateMyProfile($scope.profileData,
                         // If we succeed, this is our callback
                         function (response) {
-                            $scope.loadProfile();
-
+                            $scope.profileUpdateSuccess = true;
+                            $scope.loadProfile()
                         },
                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                         function (response) {
