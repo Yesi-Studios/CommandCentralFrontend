@@ -2254,10 +2254,10 @@ angular.module('Profiles')
                                     if ($scope.profileData.Department) {
                                         $scope.profileData.Division = $scope.getById($scope.profileData.Department.Divisions, $scope.profileData.Division);
                                     } else {
-                                        $scope.profileData.Division = {};
+                                        $scope.profileData.Division = null;
                                     }
                                 } else {
-                                    $scope.profileData.Department = {};
+                                    $scope.profileData.Department = null;
                                 }
                                 if(config.debugMode) console.log($scope.form.$error);
                             },

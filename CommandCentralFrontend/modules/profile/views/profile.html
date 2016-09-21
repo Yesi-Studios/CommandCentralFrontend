@@ -222,7 +222,7 @@
 											<input name="state" placeholder="State" class="form-control" style="float: left; width: 20%;" ng-model="newAddressState" type="text">
 											<input name="zip" placeholder="Zip" class="form-control" style="float: left; width: 30%;" ng-model="newAddressZip" type="number">
 										</div>
-										<!--<input name="country" placeholder="Country" class="form-control" style="float: left; width: 100%;" ng-model="newAddressCountry" type="text">-->
+										<input name="country" placeholder="Country" class="form-control" style="float: left; width: 100%;" ng-model="newAddressCountry" type="text">
 									</td>
 									<td><label><input type="checkbox" ng-model="newAddressHome"/><span ng-show="profileData.PhysicalAddresses.length == 0">Home Address</span></label></td>
 									<td><button type="button" class="btn btn-success btn-xs" ng-click="addNewAddress(newAddressStreet, newAddressCity, newAddressState, newAddressZip, newAddressCountry, newAddressHome); newAddressNumber = newAddressStreet = newAddressCity = newAddressState = newAddressZip = newAddressCountry = newAddressHome = null;"><span class="glyphicon glyphicon-plus"></span></button></td>
