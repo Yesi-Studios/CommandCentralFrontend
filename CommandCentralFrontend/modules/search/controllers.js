@@ -58,7 +58,7 @@ angular.module('Search')
         // Define how we do a simple search first, so we can do it whenever
         var simpleSearch = function (terms) {
             $scope.dataLoading = true;
-            $scope.errors = null;
+            $scope.errors = [];
             SearchService.DoSimpleSearch(terms,
                 function (response) {
                     $scope.dataLoading = false;
@@ -69,6 +69,9 @@ angular.module('Search')
 
                     $scope.results = $filter('orderBy')($scope.results, $scope.orderKey);
                     $scope.filteredResults = $scope.results.slice(begin, end);
+                    if($scope.results.length == 0) {
+                        $scope.errors.push("No results for that query.");
+                    }
                 },
 			    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
@@ -155,7 +158,7 @@ angular.module('Search')
         };
         var searchByField = function (filters, returnFields, searchLevel) {
             $scope.dataLoading = true;
-            $scope.errors = null;
+            $scope.errors = [];
             if (searchLevel == null) {
                 searchLevel = "Command";
             }
@@ -172,6 +175,9 @@ angular.module('Search')
                     $scope.results = $filter('orderBy')($scope.results, $scope.orderKey);
                     $scope.filteredResults = $scope.results.slice(begin, end);
 
+                    if($scope.results.length == 0) {
+                        $scope.errors.push("No results for that query.");
+                    }
                 },
 			    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {

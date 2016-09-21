@@ -8,8 +8,9 @@
                 <input type="text" class="form-control" placeholder="Enter Search Terms..." aria-describedby="searchAddon" ng-model="simpleSearchTerms" ng-keyup="searchOnEnter($event, simpleSearchTerms)">
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="button" ng-click="goToResults(simpleSearchTerms)">Search</button>
-			  </span>
+			  	</span>
 			</div>
+			<div class="text-center" ng-show="dataLoading"><br/><img src="img/loading.gif" height="32" width="32"/><br/>Loading...</div>
 		</div>
 	</div>
 	<div class="row">

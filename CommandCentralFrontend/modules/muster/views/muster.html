@@ -14,6 +14,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
+            <div class="text-center" ng-show="dataLoading"><br/><img src="img/loading.gif" height="32" width="32"/><br/>Loading...</div>
 			<h3 class="text-center" ng-show="displaySailorsList">Showing {{displaySailorsList.length}} sailors in {{selectedDivision}}.</h3>
 			<h4 class="text-center" ng-show="displaySailorsList">Click a column to sort by it.</h4>
 			<table ng-show="displaySailorsList" class="table-striped col-md-12">

@@ -60,8 +60,11 @@ angular.module('Muster')
                     }
                 );
 
+                $scope.dataLoading = true;
                 MusterService.LoadTodaysMuster(
                     function (response) {
+
+                        $scope.dataLoading = false;
                         // Create the divisions array
                         for (var j = 0; j < response.ReturnValue.Musters.length; j++) {
                             if ($scope.divisions.indexOf(response.ReturnValue.Musters[j].Division) == -1) {

@@ -43,14 +43,14 @@
 
             <!--suppress HtmlUnknownAttribute -->
             <button class="btn btn-primary" type="button" ng-click="goToResults(advancedSearchFilters, fieldsToReturn, selectedLevel)" ng-disabled="!fieldsToSearch || !fieldsToReturn || !selectedLevel">Search</button>
-
+            <div ng-show="dataLoading"><br/><img src="img/loading.gif" height="32" width="32"/><br/>Loading...</div>
         </div>
     </div>
-    <div class="row">
+    <div>
         <div class="col-md-12">
-            <h3 class="text-center" ng-show="results">Showing {{results.length}} results.</h3>
-            <h4 class="text-center" ng-show="results">Click a column to sort by it.</h4>
-            <div class="table-responsive" style="height: 500px !important; overflow: scroll">
+            <h3 class="text-center" ng-show="results.length">Showing {{results.length}} results.</h3>
+            <h4 class="text-center" ng-show="results.length">Click a column to sort by it.</h4>
+            <div ng-show="results.length" class="table-responsive" style="height: 500px !important; overflow: scroll">
                 <table ng-show="results" class="table-striped col-md-12">
                     <thead>
                     <tr>
@@ -70,8 +70,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 text-center">
+        <div ng-show="results.length" class="col-md-12 text-center">
             <uib-pagination total-items="results.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
         </div>
+
     </div>
 </div>
