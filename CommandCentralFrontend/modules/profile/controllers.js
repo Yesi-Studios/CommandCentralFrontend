@@ -64,11 +64,12 @@ angular.module('Profiles')
                             $scope.editableFields = response.ReturnValue.ResolvedPermissions.EditableFields.Main.Person;
 
                             // Set up all the dates to be actual Dates
-                            $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
-                            $scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
-                            $scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
-                            $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
-                            $scope.profileData.ClaimTime = new Date(response.ReturnValue.Person.ClaimTime);
+                            if(response.ReturnValue.Person.DateOfBirth) $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
+                            if(response.ReturnValue.Person.DateOfArrival) $scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
+                            if(response.ReturnValue.Person.DateOfDeparture) $scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
+                            if(response.ReturnValue.Person.EAOS) $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
+                            if(response.ReturnValue.Person.PRD) $scope.profileData.PRD = new Date(response.ReturnValue.Person.PRD);
+                            if(response.ReturnValue.Person.ClaimTime) $scope.profileData.ClaimTime = new Date(response.ReturnValue.Person.ClaimTime);
 
 
                             $scope.canSearchPersonField = function (field) {
@@ -180,6 +181,7 @@ angular.module('Profiles')
                         // If we succeed, this is our callback
                         function (response) {
                             $scope.profileUpdateSuccess = true;
+                            $scope.form.$setPristine();
                             $scope.loadProfile()
                         },
                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
