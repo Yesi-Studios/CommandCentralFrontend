@@ -757,7 +757,7 @@ angular.module('Administration')
         var service = {};
 
         service.LoadEditableLists = function (success, error) {
-            return ConnectionService.RequestFromBackend('LoadReferenceLists', {'editable':true}, success, error);
+            return ConnectionService.RequestFromBackend('LoadReferenceLists', {'editable':true, 'exclude':true, 'entitynames':['Division', 'Department', 'Command']}, success, error);
         };
 
         service.AddListItem = function (listname, value, description, success, error) {
