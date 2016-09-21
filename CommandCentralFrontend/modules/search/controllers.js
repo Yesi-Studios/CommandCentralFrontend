@@ -9,6 +9,7 @@ angular.module('Search')
         // This scope will just about always contain PII
         $rootScope.containsPII = true;
 
+        $scope.Math = window.Math;
         $scope.itemsPerPage = 50;
         $scope.currentPage = 1;
         $scope.results = [];
@@ -83,8 +84,8 @@ angular.module('Search')
     }])
 
 	.controller('SearchByFieldController',
-    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'config',
-    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, config) {
+    ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'ConnectionService', 'config',
+    function ($scope, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, ConnectionService, config) {
 
         $rootScope.containsPII = true;
         $scope.searchLevels = ["Command", "Department", "Division"];
@@ -137,15 +138,17 @@ angular.module('Search')
                     level = "Command";
                 }
             }
+            level = level.replace(/['"]+/g, '');
+
             for (var i in filters) {
-                if (filters[i] == "") delete filters[i];
+                if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1) delete filters[i];
             }
             $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields) + '/' + JSON.stringify(level));
         };
 
-        $scope.searchOnEnter = function ($event, filters, fields) {
+        $scope.searchOnEnter = function ($event, filters, fields, level) {
             if ($event.keyCode === 13) {
-                $scope.goToResults(filters, fields);
+                $scope.goToResults(filters, fields, level);
             }
         };
         var searchByField = function (filters, returnFields, searchLevel) {

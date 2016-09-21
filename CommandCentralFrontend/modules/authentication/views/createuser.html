@@ -28,13 +28,10 @@
         <div class="row">
             <div class="form-group">
                 <label class="col-md-4" for="sex">Sex</label>
-                <div class="col-md-8">
-                    <label class="radio-inline">
-                        <input type="radio" name="sex" id="male" value="Male" ng-model="newUser.Sex" required> Male
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="sex" id="female" value="Female" ng-model="newUser.Sex" required> Female
-                    </label>
+                <div class="col-md-4">
+                    <select class="form-control" id="sex" ng-model="newUser.Sex" ng-options="o as o.Value for o in lists['Sex']" required>
+                        <option></option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -43,7 +40,7 @@
             <div class="form-group">
                 <label class="col-md-4" for="dutyStatus">Duty Status</label>
                 <div class="col-md-4">
-                    <select class="form-control" id="dutyStatus" ng-model="newUser.DutyStatus" ng-options="o as o for o in lists['DutyStatuses']" required>
+                    <select class="form-control" id="dutyStatus" ng-model="newUser.DutyStatus" ng-options="o as o.Value for o in lists['DutyStatus'] | orderBy:'Value'" required>
                         <option></option>
                     </select>
                 </div>
@@ -54,7 +51,7 @@
             <div class="form-group">
                 <label class="col-md-4" for="paygrade">Paygrade</label>
                 <div class="col-md-4">
-                    <select class="form-control" id="paygrade" ng-model="newUser.Paygrade" ng-options="o as o for o in lists['Paygrades']" required>
+                    <select class="form-control" id="paygrade" ng-model="newUser.Paygrade" ng-options="o as o.Value for o in lists['Paygrade'] | orderBy:'Value'" required>
                         <option></option>
                     </select>
                 </div>

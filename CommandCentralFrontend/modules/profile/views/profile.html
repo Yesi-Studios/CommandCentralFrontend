@@ -65,7 +65,7 @@
 							<label class="col-md-4" for="ethnicity">Ethnicity</label>
 							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o.Value for o in lists['Ethnicity'] track by o.Id">
+								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o.Value for o in lists['Ethnicity'] | orderBy:'Value' track by o.Id">
 									<option></option>
 								</select>
 							</div>
@@ -74,7 +74,7 @@
 							<label class="col-md-4" for="religiousPreference">Religious Preference</label>
 							<div class="col-md-8">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o.Value for o in lists['ReligiousPreference'] track by o.Id">
+								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o.Value for o in lists['ReligiousPreference'] | orderBy:'Value' track by o.Id">
 									<option></option>
 								</select>
 							</div>
@@ -161,7 +161,7 @@
 									<td>{{number.Number}}</td>
 									<!--<td>{{number.Carrier}}</td>-->
 									<td>
-										<select class="form-control" id="phoneType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType']">
+										<select class="form-control" id="phoneType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType'] track by o.Id">
 											<option></option>
 										</select>
 									</td>
@@ -206,7 +206,7 @@
 								</thead>
 								<tbody>
 								<tr ng-repeat="address in profileData.PhysicalAddresses">
-									<td>{{address.StreetNumber}} {{address.Route}} <br />
+									<td>{{address.Address}}<br />
 										{{address.City}}, {{address.State}} {{address.ZipCode}}<br />
 										{{address.Country}}<br /></td>
 									<td><button ng-if="!address.IsHomeAddress" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses = makeHome(profileData.PhysicalAddresses, address)">No</button><button ng-if="address.IsHomeAddress" type="button" class="btn btn-success btn-xs" ng-click="address.IsHomeAddress = false">Yes</button></td>
@@ -214,19 +214,16 @@
 								</tr>
 								<tr>
 									<td class="col-md-5">
-										<div class="input-group">
-											<input name="number" placeholder="Number" class="form-control" style="float: left; width: 30%;" ng-model="newAddressNumber" type="number">
-											<input name="street" placeholder="Street" class="form-control" style="float: left; width: 70%;" ng-model="newAddressStreet" type="text">
-										</div>
+										<input name="street" placeholder="Number and Street" class="form-control" style="float: left; width: 100%;" ng-model="newAddressStreet" type="text">
 										<div class="input-group">
 											<input name="city" placeholder="City" class="form-control" style="float: left; width: 50%;" ng-model="newAddressCity" type="text">
 											<input name="state" placeholder="State" class="form-control" style="float: left; width: 20%;" ng-model="newAddressState" type="text">
 											<input name="zip" placeholder="Zip" class="form-control" style="float: left; width: 30%;" ng-model="newAddressZip" type="number">
 										</div>
-										<input name="country" placeholder="Country" class="form-control" style="float: left; width: 100%;" ng-model="newAddressCountry" type="text">
+										<!--<input name="country" placeholder="Country" class="form-control" style="float: left; width: 100%;" ng-model="newAddressCountry" type="text">-->
 									</td>
 									<td><label><input type="checkbox" ng-model="newAddressHome"/><span ng-show="profileData.PhysicalAddresses.length == 0">Home Address</span></label></td>
-									<td><button type="button" class="btn btn-success btn-xs" ng-click="addNewAddress(newAddressNumber, newAddressStreet, newAddressCity, newAddressState, newAddressZip, newAddressCountry, newAddressHome); newAddressNumber = newAddressStreet = newAddressCity = newAddressState = newAddressZip = newAddressCountry = newAddressHome = null;"><span class="glyphicon glyphicon-plus"></span></button></td>
+									<td><button type="button" class="btn btn-success btn-xs" ng-click="addNewAddress(newAddressStreet, newAddressCity, newAddressState, newAddressZip, newAddressCountry, newAddressHome); newAddressNumber = newAddressStreet = newAddressCity = newAddressState = newAddressZip = newAddressCountry = newAddressHome = null;"><span class="glyphicon glyphicon-plus"></span></button></td>
 								</tr>
 								</tbody>
 							</table>

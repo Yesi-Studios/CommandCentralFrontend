@@ -223,13 +223,13 @@ angular.module('Profiles')
 
                 };
 
-                $scope.addNewAddress = function (number, street, city, state, zip, country, home) {
+                $scope.addNewAddress = function (street, city, state, zip, country, home) {
                     if (home) {
                         for (var i = 0; i < $scope.profileData.PhysicalAddresses.length; ++i) {
                             $scope.profileData.PhysicalAddresses[i].IsHomeAddress = false;
                         }
                     }
-                    $scope.profileData.PhysicalAddresses.push({ "StreetNumber": number, "Route": street, "City": city, "State": state, "ZipCode": zip, "Country": country, "IsHomeAddress": home });
+                    $scope.profileData.PhysicalAddresses.push({ "Address": street, "City": city, "State": state, "ZipCode": zip, "Country": country, "IsHomeAddress": home });
 
                 };
 
