@@ -315,19 +315,19 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="col-md-2" for="rate">Rate</label>
+                            <label class="col-md-2" for="designation">Designation</label>
 							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="rate" ng-disabled="!canEditPersonField('Designation')" ng-show="canReturnPersonField('Designation')" ng-model="profileData.Designation" ng-options="o as o.Value for o in lists['Designation'] track by o.Id">
-									<option></option>
-								</select>
+                                <select class="form-control" id="designation" ng-disabled="!canEditPersonField('Designation')" ng-show="canReturnPersonField('Designation')" ng-model="profileData.Designation" ng-options="o as o.Value for o in lists['Designation'] | orderBy: 'Value' track by o.Id">
+                                    <option></option>
+                                </select>
 							</div>
-							<label class="col-md-2" for="rank">Rank</label>
+                            <label class="col-md-2" for="paygrade">Paygrade</label>
 							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="rank" ng-disabled="!canEditPersonField('Paygrade')" ng-show="canReturnPersonField('Paygrade')" ng-model="profileData.Paygrade" ng-options="o as o.Value for o in lists['Paygrade'] track by o.Id">
-									<option></option>
-								</select>
+                                <select class="form-control" id="paygrade" ng-disabled="!canEditPersonField('Paygrade')" ng-show="canReturnPersonField('Paygrade')" ng-model="profileData.Paygrade" ng-options="o as o.Value for o in lists['Paygrade'] | orderBy: 'Value' track by o.Id">
+                                    <option></option>
+                                </select>
 							</div>
 						</div>
 						<div class="form-group">
@@ -343,32 +343,32 @@
 							<label class="col-md-2" for="division">Division</label>
 							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="division" ng-disabled="!canEditPersonField('Division')" ng-show="canReturnPersonField('Division')" ng-model="profileData.Division" ng-options="o as o.Value for o in profileData.Department.Divisions track by o.Id">
-									<option></option>
-								</select>
+                                <select class="form-control" id="division" ng-disabled="!canEditPersonField('Division')" ng-show="canReturnPersonField('Division')" ng-model="profileData.Division" ng-options="o as o.Value for o in profileData.Department.Divisions | orderBy: 'Value' track by o.Id">
+                                    <option></option>
+                                </select>
 							</div>
 							<label class="col-md-2" for="department">Department</label>
 							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="department" ng-disabled="!canEditPersonField('Department')" ng-show="canReturnPersonField('Department')" ng-model="profileData.Department" ng-options="o as o.Value for o in profileData.Command.Departments track by o.Id">
-									<option></option>
-								</select>
+                                <select class="form-control" id="department" ng-disabled="!canEditPersonField('Department')" ng-show="canReturnPersonField('Department')" ng-model="profileData.Department" ng-options="o as o.Value for o in profileData.Command.Departments | orderBy: 'Value' track by o.Id">
+                                    <option></option>
+                                </select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-2" for="dutyStatus">Duty Status</label>
 							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="dutyStatus" ng-disabled="!canEditPersonField('DutyStatus')" ng-show="canReturnPersonField('DutyStatus')" ng-model="profileData.DutyStatus" ng-options="o as o.Value for o in lists['DutyStatus'] track by o.Id">
-									<option></option>
-								</select>
+                                <select class="form-control" id="dutyStatus" ng-disabled="!canEditPersonField('DutyStatus')" ng-show="canReturnPersonField('DutyStatus')" ng-model="profileData.DutyStatus" ng-options="o as o.Value for o in lists['DutyStatus'] | orderBy: 'Value' track by o.Id">
+                                    <option></option>
+                                </select>
 							</div>
 							<label class="col-md-2" for="uic">UIC</label>
 							<div class="col-md-4">
 								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="uic" ng-disabled="!canEditPersonField('UIC')" ng-show="canReturnPersonField('UIC')" ng-model="profileData.UIC" ng-options="o as o.Value for o in lists['UIC'] track by o.Id">
-									<option></option>
-								</select>
+                                <select class="form-control" id="uic" ng-disabled="!canEditPersonField('UIC')" ng-show="canReturnPersonField('UIC')" ng-model="profileData.UIC" ng-options="o as o.Value for o in lists['UIC'] | orderBy: 'Value' track by o.Id">
+                                    <option></option>
+                                </select>
 							</div>
 						</div>
 						<div class="form-group">
