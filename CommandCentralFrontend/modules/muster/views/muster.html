@@ -34,6 +34,13 @@
                                 <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='Paygrade'"></span>
                             </button>
                         </th>
+                        <th ng-click="setOrder('Designation')">
+                            <button ng-class="{'btn-primary': orderKey=='Designation' || orderKey=='-Designation'}">
+                                Designation
+                                <span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-Designation'"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='Designation'"></span>
+                            </button>
+                        </th>
                         <th ng-click="setOrder('Division')">
                             <button ng-class="{'btn-primary': orderKey=='Division' || orderKey=='-Division'}">
                                 Division
@@ -55,7 +62,8 @@
 				<tbody>
 					<tr ng-repeat="sailor in filteredDisplaySailorsList | orderBy: orderKey track by $index" ng-click="goToProfile(result.Id)" class="form-group">
                         <td>{{sailor['FriendlyName']}}</td>
-                        <td>{{sailor['Paygrade']["Value"]}}</td>
+                        <td>{{sailor['Paygrade']}}</td>
+                        <td>{{sailor['Designation']}}</td>
                         <td>{{sailor['Division']}}</td>
                         <td>{{sailor['HasBeenMustered'] | yesNo }}</td>
                         <td>
