@@ -1383,8 +1383,8 @@ angular.module('Connection')
                 } else {
                     backendPort = config.backendPort;
                 }
-                // Uncomment this before release to make sure the right port is set for the end user.
-                // backendPort = config.backendPort;
+
+                if(!config.debugMode) backendPort = config.backendPort;
 
                 // Create the base URL for all REST calls
                 var baseurl = backendURL + ":" + backendPort;
@@ -2142,7 +2142,7 @@ angular.module('Profiles')
     .controller('ProfileController',
         ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService', 'config',
             function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService, config) {
-
+                
                 /*
                  *   This function chain is a little hefty, so a preface is warranted.
                  *
@@ -2232,6 +2232,17 @@ angular.module('Profiles')
                             function (response) {
                                 // Hey, we have a lock. Sweet.
                                 $scope.haveLock = true;
+
+                                // Hey, let's save that lock. Sweet.
+                                $scope.profileLock = response.ReturnValue;
+
+                                $scope.$on('$locationChangeStart', function (event) {
+                                    ProfileService.ReleaseLock($scope.profileLock.Id, false, function (response) {
+                                        $scope.profileLock = null;
+                                    }, function (response) {
+                                        ConnectionService.HandleServiceError(response, $scope, $location);                                        
+                                    });
+                                });
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                             function (response) {
@@ -2425,11 +2436,15 @@ angular.module('Profiles')
 
         service.CreatePerson = function (success, error) {
             return ConnectionService.RequestFromBackend('CreatePerson', { 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
-		};
-		
+        };
+
         service.TakeLock = function (personid, success, error) {
             return ConnectionService.RequestFromBackend('TakeProfileLock', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);
-		};
+        };
+
+        service.ReleaseLock = function (profileLockId, force, success, error) {
+            return ConnectionService.RequestFromBackend('ReleaseProfileLock', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'profilelockid': profileLockId, 'forcerelease' : force }, success, error);
+        };
 
 		service.LoadProfile = function (personid, success, error) {
 		    return ConnectionService.RequestFromBackend('LoadPerson', {'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);

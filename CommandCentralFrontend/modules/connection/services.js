@@ -26,8 +26,8 @@ angular.module('Connection')
                 } else {
                     backendPort = config.backendPort;
                 }
-                // Uncomment this before release to make sure the right port is set for the end user.
-                // backendPort = config.backendPort;
+
+                if(!config.debugMode) backendPort = config.backendPort;
 
                 // Create the base URL for all REST calls
                 var baseurl = backendURL + ":" + backendPort;

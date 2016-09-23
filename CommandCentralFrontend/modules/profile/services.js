@@ -24,11 +24,15 @@ angular.module('Profiles')
 
         service.CreatePerson = function (success, error) {
             return ConnectionService.RequestFromBackend('CreatePerson', { 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
-		};
-		
+        };
+
         service.TakeLock = function (personid, success, error) {
             return ConnectionService.RequestFromBackend('TakeProfileLock', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);
-		};
+        };
+
+        service.ReleaseLock = function (profileLockId, force, success, error) {
+            return ConnectionService.RequestFromBackend('ReleaseProfileLock', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'profilelockid': profileLockId, 'forcerelease' : force }, success, error);
+        };
 
 		service.LoadProfile = function (personid, success, error) {
 		    return ConnectionService.RequestFromBackend('LoadPerson', {'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);

@@ -5,7 +5,7 @@ angular.module('Profiles')
     .controller('ProfileController',
         ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService', 'config',
             function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService, config) {
-
+                
                 /*
                  *   This function chain is a little hefty, so a preface is warranted.
                  *
@@ -95,6 +95,17 @@ angular.module('Profiles')
                             function (response) {
                                 // Hey, we have a lock. Sweet.
                                 $scope.haveLock = true;
+
+                                // Hey, let's save that lock. Sweet.
+                                $scope.profileLock = response.ReturnValue;
+
+                                $scope.$on('$locationChangeStart', function (event) {
+                                    ProfileService.ReleaseLock($scope.profileLock.Id, false, function (response) {
+                                        $scope.profileLock = null;
+                                    }, function (response) {
+                                        ConnectionService.HandleServiceError(response, $scope, $location);                                        
+                                    });
+                                });
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                             function (response) {
