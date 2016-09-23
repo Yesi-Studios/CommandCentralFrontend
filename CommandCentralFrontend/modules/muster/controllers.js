@@ -23,12 +23,23 @@ angular.module('Muster')
                     return Math.ceil($scope.friends.length / $scope.itemsPerPage);
                 };
 
-                $scope.$watch('currentPage + itemsPerPage + setOrder + displaySailorsList + orderKey', function() {
+                $scope.$watch('currentPage + itemsPerPage + setOrder + displaySailorsList + orderKey + showUnmustered', function () {
                     var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                         end = begin + $scope.itemsPerPage;
 
                     $scope.displaySailorsList = $filter('orderBy')($scope.displaySailorsList, $scope.orderKey);
-                    $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
+                    if ($scope.showUnmustered) {
+                        $scope.filteredDisplaySailorsList = $filter('filter')($scope.displaySailorsList, { HasBeenMustered: false }).slice(begin, end)
+                    } else {
+                        $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
+                    }
+
+                    $scope.unmusteredSailorsList = [];
+                    for (var i in $scope.displaySailorsList) {
+                        if (!$scope.displaySailorsList[i].HasBeenMustered) {
+                            $scope.unmusteredSailorsList.push($scope.displaySailorsList[i]);
+                        }
+                    }
                 });
                 // The default sorting key
                 $scope.orderKey = "Division";
@@ -88,6 +99,13 @@ angular.module('Muster')
 
                         $scope.displaySailorsList = $filter('orderBy')($scope.displaySailorsList, $scope.orderKey);
                         $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
+
+                        $scope.unmusteredSailorsList = [];
+                        for (var i in $scope.displaySailorsList) {
+                            if (!$scope.displaySailorsList[i].HasBeenMustered) {
+                                $scope.unmusteredSailorsList.push($scope.displaySailorsList[i]);
+                            }
+                        }
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {

@@ -6,7 +6,7 @@
 			<div class="form-group">
                 <select name="divisionDropdown" id="divisionDropdown" class="form-control" ng-model="selectedDivision" ng-change="setDivision(selectedDivision)">
                     <option value="All">All</option>
-                    <option ng-repeat="o in divisions track by $index" ng-value="o">{{o}}</option>
+                    <option ng-repeat="o in divisions | orderBy:'toString()' track by $index" ng-value="o">{{o}}</option>
                 </select>
                 <label for="divisionDropdown">Select group to show.</label>
 			</div>
@@ -15,7 +15,21 @@
 	<div class="row">
 		<div class="col-md-12">
             <div class="text-center" ng-show="dataLoading"><br/><img src="img/loading.gif" height="32" width="32"/><br/>Loading...</div>
-			<h3 class="text-center" ng-show="displaySailorsList">Showing {{displaySailorsList.length}} sailors in {{selectedDivision}}.</h3>
+			<h3 class="text-center" ng-show="displaySailorsList.length">Showing {{displaySailorsList.length}} sailors in {{selectedDivision}}.</h3>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{100*(1-unmusteredSailorsList.length/displaySailorsList.length)}}"
+                     aria-valuemin="0" aria-valuemax="100" style="min-width: 4em; width:{{100*(1-unmusteredSailorsList.length/displaySailorsList.length)}}%">
+                    {{100*(1-unmusteredSailorsList.length/displaySailorsList.length) | number: 2}}% Mustered
+                </div>
+            </div>
+            <div class="text-center">
+                {{displaySailorsList.length-unmusteredSailorsList.length}}/{{displaySailorsList.length}} Sailors mustered.
+            </div>
+            <div ng-show="displaySailorsList.length" class="text-center checkbox">
+                <label>
+                    <input ng-model="showUnmustered" type="checkbox"> Show only unmustered sailors
+                </label>
+            </div>
 			<h4 class="text-center" ng-show="displaySailorsList">Click a column to sort by it.</h4>
 			<table ng-show="displaySailorsList" class="table-striped col-md-12">
 				<thead>
