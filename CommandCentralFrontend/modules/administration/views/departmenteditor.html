@@ -28,13 +28,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="o in departments">
+                    <tr ng-repeat="o in departments | orderBy: 'Value'">
                         <td><input type="text" class="form-control" ng-model="o.Value" /></td>
                         <td><input type="text" class="form-control" ng-model="o.Description" /></td>
                         <td><button type="button" class="btn btn-primary btn-xs" ng-click="updateDepartment(o.Id, o.Value, o.Description)"><span class="glyphicon glyphicon-floppy-disk"></span></button></td>
                         <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteDepartment(o.Id, forceDelete)"><span class="glyphicon glyphicon-remove"></span></button></td>
-                        <td><!--suppress HtmlUnknownAttribute -->
-                            <a class="btn btn-primary btn-xs" ng-href="#/admin/editcommands/{{commandId}}/{{o.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                        <td>
+                            <!--suppress HtmlUnknownAttribute -->
+                            <a class="btn btn-primary btn-xs" ng-href="#/admin/editcommands/{{commandId}}/{{o.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+                        </td>
                         <td><label><input type="checkbox" ng-model="forceDelete" /></label></td>
                     </tr>
                     <tr class="info">

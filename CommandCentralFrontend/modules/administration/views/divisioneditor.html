@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="o in divisions">
+                    <tr ng-repeat="o in divisions | orderBy: 'Value'">
                         <td><input type="text" class="form-control" ng-model="o.Value" /></td>
                         <td><input type="text" class="form-control" ng-model="o.Description" /></td>
                         <td><button type="button" class="btn btn-primary btn-xs" ng-click="updateDivision(o.Id, o.Value, o.Description)"><span class="glyphicon glyphicon-floppy-disk"></span></button></td>

@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="o in commands">
+                    <tr ng-repeat="o in commands | orderBy: 'Value'">
                         <td><input type="text" class="form-control" ng-model="o.Value" /></td>
                         <td><input type="text" class="form-control" ng-model="o.Description" /></td>
                         <td><button type="button" class="btn btn-primary btn-xs" ng-click="updateCommand(o.Id, o.Value, o.Description)"><span class="glyphicon glyphicon-floppy-disk"></span></button></td>
