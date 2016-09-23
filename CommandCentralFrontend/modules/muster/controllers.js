@@ -119,7 +119,7 @@ angular.module('Muster')
                     console.log(musterList);
                     for (var i = 0; i < musterList.length; i++) {
                         if (musterList[i].CurrentMusterStatus.MusterStatus != null && musterList[i].CurrentMusterStatus.MusterStatus != originalMusterList[i].CurrentMusterStatus.MusterStatus) {
-                            dtoMuster[musterList[i].Id] = musterList[i].CurrentMusterStatus.MusterStatus.Value;
+                            dtoMuster[musterList[i].Id] = musterList[i].CurrentMusterStatus.MusterStatus;
                         }
                     }
 

@@ -10,7 +10,7 @@ angular.module('Search')
         $rootScope.containsPII = true;
 
         $scope.Math = window.Math;
-        $scope.itemsPerPage = 1;
+        $scope.itemsPerPage = 50;
         $scope.currentPage = 1;
         $scope.results = [];
 

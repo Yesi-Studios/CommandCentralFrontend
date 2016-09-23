@@ -1926,7 +1926,7 @@ angular.module('Muster')
                     console.log(musterList);
                     for (var i = 0; i < musterList.length; i++) {
                         if (musterList[i].CurrentMusterStatus.MusterStatus != null && musterList[i].CurrentMusterStatus.MusterStatus != originalMusterList[i].CurrentMusterStatus.MusterStatus) {
-                            dtoMuster[musterList[i].Id] = musterList[i].CurrentMusterStatus.MusterStatus.Value;
+                            dtoMuster[musterList[i].Id] = musterList[i].CurrentMusterStatus.MusterStatus;
                         }
                     }
 
@@ -2255,11 +2255,15 @@ angular.module('Profiles')
                                 $scope.profileLock = response.ReturnValue;
 
                                 $scope.$on('$locationChangeStart', function (event) {
-                                    ProfileService.ReleaseLock($scope.profileLock.Id, false, function (response) {
+                                    if ($scope.profileLock) {
+                                        var lockId = $scope.profileLock.Id;
                                         $scope.profileLock = null;
-                                    }, function (response) {
-                                        ConnectionService.HandleServiceError(response, $scope, $location);                                        
-                                    });
+                                        ProfileService.ReleaseLock(lockId, false, function (response) {
+                                            return;
+                                        }, function (response) {
+                                            ConnectionService.HandleServiceError(response, $scope, $location);
+                                        });
+                                    }
                                 });
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
@@ -2489,7 +2493,7 @@ angular.module('Search')
         $rootScope.containsPII = true;
 
         $scope.Math = window.Math;
-        $scope.itemsPerPage = 1;
+        $scope.itemsPerPage = 50;
         $scope.currentPage = 1;
         $scope.results = [];
 

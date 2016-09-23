@@ -100,11 +100,15 @@ angular.module('Profiles')
                                 $scope.profileLock = response.ReturnValue;
 
                                 $scope.$on('$locationChangeStart', function (event) {
-                                    ProfileService.ReleaseLock($scope.profileLock.Id, false, function (response) {
+                                    if ($scope.profileLock) {
+                                        var lockId = $scope.profileLock.Id;
                                         $scope.profileLock = null;
-                                    }, function (response) {
-                                        ConnectionService.HandleServiceError(response, $scope, $location);                                        
-                                    });
+                                        ProfileService.ReleaseLock(lockId, false, function (response) {
+                                            return;
+                                        }, function (response) {
+                                            ConnectionService.HandleServiceError(response, $scope, $location);
+                                        });
+                                    }
                                 });
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.

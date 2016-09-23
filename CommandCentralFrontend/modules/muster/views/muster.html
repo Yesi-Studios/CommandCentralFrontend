@@ -81,7 +81,7 @@
                         <td>{{sailor['Division']}}</td>
                         <td>{{sailor['HasBeenMustered'] | yesNo }}</td>
                         <td>
-                            <select name="{{sailor.Id}}MusterStatus" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus" ng-options="o as o.Value for o in musterStatuses">
+                            <select name="{{sailor.Id}}MusterStatus" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus" ng-options="o.Value as o.Value for o in musterStatuses">
                             </select>
                         </td>
 						<td><!--suppress HtmlUnknownAttribute -->
@@ -98,7 +98,7 @@
     </div>
     <div class="row">
         <div class="col-md-offset-10 col-md-2">
-            <button class="btn btn-primary" type="button" ng-click="submitMuster(displaySailorsList)">Save</button>
+            <button class="btn btn-primary" type="button" ng-click="submitMuster(filteredDisplaySailorsList)">Save</button>
         </div>
     </div>
 </div>
