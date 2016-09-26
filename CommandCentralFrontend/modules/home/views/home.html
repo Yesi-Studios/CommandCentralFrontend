@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2>News<a href="#/createnews" ng-if="!dataLoading && userCanEditNews()" class="btn btn-primary pull-right" style="margin-right: 5px;">New News Item <span class="glyphicon glyphicon-pencil"></span></a></h2>
-			<div class="panel panel-primary" ng-repeat="item in newsItems">
+			<div class="panel panel-primary" ng-repeat="item in newsItems | orderBy: '-CreationTime'">
 				<div class="panel-heading">
 					<div class="panel-title">{{item.Title}}
                         <!--suppress HtmlUnknownAttribute -->
