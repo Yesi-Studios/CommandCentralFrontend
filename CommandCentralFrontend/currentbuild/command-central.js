@@ -1877,8 +1877,10 @@ angular.module('Muster')
                     }
                 );
 
-                $scope.dataLoading = true;
-                MusterService.LoadTodaysMuster(
+
+                var loadMuster = function() {
+                    $scope.dataLoading = true;
+                    MusterService.LoadTodaysMuster(
                     function (response) {
 
                         $scope.dataLoading = false;
@@ -1918,7 +1920,9 @@ angular.module('Muster')
                         ConnectionService.HandleServiceError(response, $scope, $location);
                     }
 
-                );
+                );};
+
+                loadMuster();
 
                 $scope.submitMuster = function (musterList) {
                     var dtoMuster = {};
@@ -1938,7 +1942,8 @@ angular.module('Muster')
                     }
                     MusterService.SubmitMuster(dtoMuster,
                         function (response) {
-                            $scope.messages.push("Muster successfully submitted.")
+                            $scope.messages.push("Muster successfully submitted. Please wait for updated muster to load before submitting more changes.");
+                            loadMuster();
                         },
                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                         function (response) {

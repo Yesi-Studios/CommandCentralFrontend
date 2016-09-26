@@ -8,7 +8,7 @@
                     <option value="All">All</option>
                     <option ng-repeat="o in divisions | orderBy:'toString()' track by $index" ng-value="o">{{o}}</option>
                 </select>
-                <label for="divisionDropdown">Select group to show.</label>
+                <label for="divisionDropdown">Select group to show. (IMPORTANT NOTE: Muster will only be submitted for the selected group.)</label>
 			</div>
 		</div>
 	</div>
@@ -110,7 +110,7 @@
     </div>
     <div class="row">
         <div class="col-md-offset-10 col-md-2">
-            <button class="btn btn-primary" type="button" ng-show="filteredResults.length" ng-click="submitMuster(filteredDisplaySailorsList)">Save</button>
+            <button class="btn btn-primary" type="button" ng-show="displaySailorsList.length" ng-click="submitMuster(displaySailorsList)">Save</button>
         </div>
     </div>
 </div>
