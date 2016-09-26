@@ -19,7 +19,8 @@
 			<div class="row">
 				<div class="col-md-offset-4 col-md-4"><h4 div="text-center" ng-show="filteredResults.length">Click a column to sort by it.</h4></div>
 				<div class="col-md-offset-2 col-md-2">
-					<select ng-model="itemsPerPage" ng-init="itemsPerPage='50'" ng-show="filteredResults.length" class="pull-right form-control">
+					<label ng-show="filteredResults.length" for="itemsPerPageSelect">Items per page:</label>
+					<select id="itemsPerPageSelect" ng-model="itemsPerPage" ng-init="itemsPerPage='50'" ng-show="filteredResults.length" class="pull-right form-control">
 						<option value="10">10</option>
 						<option value="25">25</option>
 						<option value="50">50</option>
