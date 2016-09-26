@@ -81,7 +81,13 @@
                                 <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='HasBeenMustered'"></span>
                             </button>
                         </th>
-						<th>Muster Status</th>
+                        <th ng-click="setOrder('CurrentMusterStatus.MusterStatus.toString()')">
+                            <button ng-class="{'btn-primary': orderKey=='CurrentMusterStatus.MusterStatus.Value' || orderKey=='-CurrentMusterStatus.MusterStatus.toString()'}">
+                                Muster Status
+                                <span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-CurrentMusterStatus.MusterStatus.toString()'"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='CurrentMusterStatus.MusterStatus.toString()'"></span>
+                            </button>
+                        </th>
                         <th>Profile</th>
 					</tr>
 				</thead>
