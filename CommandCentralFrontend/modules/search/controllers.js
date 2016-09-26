@@ -19,12 +19,13 @@ angular.module('Search')
         };
 
         $scope.$watch('currentPage + itemsPerPage + setOrder + orderKey', function() {
-            var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-                end = begin + $scope.itemsPerPage;
+            var begin = (parseInt($scope.currentPage, 10) - 1) * parseInt($scope.itemsPerPage, 10);
+            var end = parseInt(begin, 10) + parseInt($scope.itemsPerPage, 10);
 
             $scope.results = $filter('orderBy')($scope.results, $scope.orderKey);
             $scope.filteredResults = $scope.results.slice(begin, end);
         });
+
 
         // This is the url for a profile
         $scope.goToProfile = function (id) {
@@ -115,10 +116,11 @@ angular.module('Search')
         };
 
         $scope.$watch('currentPage + itemsPerPage + setOrder + orderKey', function() {
-            var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-                end = begin + $scope.itemsPerPage;
-                $scope.results = $filter('orderBy')($scope.results, $scope.orderKey);
-                $scope.filteredResults = $scope.results.slice(begin, end);
+            var begin = (parseInt($scope.currentPage, 10) - 1) * parseInt($scope.itemsPerPage, 10);
+            var end = parseInt(begin, 10) + parseInt($scope.itemsPerPage, 10);
+
+            $scope.results = $filter('orderBy')($scope.results, $scope.orderKey);
+            $scope.filteredResults = $scope.results.slice(begin, end);
         });
 
         $scope.getSearchableFields = function (level) {

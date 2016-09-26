@@ -24,9 +24,8 @@ angular.module('Muster')
                 };
 
                 $scope.$watch('currentPage + itemsPerPage + setOrder + displaySailorsList + orderKey + showUnmustered', function () {
-                    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-                        end = begin + $scope.itemsPerPage;
-
+                    var begin = (parseInt($scope.currentPage, 10) - 1) * parseInt($scope.itemsPerPage, 10);
+                    var end = parseInt(begin, 10) + parseInt($scope.itemsPerPage, 10);
                     $scope.displaySailorsList = $filter('orderBy')($scope.displaySailorsList, $scope.orderKey);
                     if ($scope.showUnmustered) {
                         $scope.filteredDisplaySailorsList = $filter('filter')($scope.displaySailorsList, { HasBeenMustered: false }).slice(begin, end)

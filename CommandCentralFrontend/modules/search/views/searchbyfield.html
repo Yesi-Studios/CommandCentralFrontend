@@ -82,9 +82,8 @@
         </div>
     </div>
     <div class="row">
-        <div ng-show="results.length" class="col-md-12 text-center">
-            <uib-pagination total-items="results.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
+        <div class="col-md-12 text-center">
+            <uib-pagination ng-show="results.length" total-items="results.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="7" class="pagination-sm" boundary-links="true" force-ellipses="true"></uib-pagination>
         </div>
-
     </div>
 </div>

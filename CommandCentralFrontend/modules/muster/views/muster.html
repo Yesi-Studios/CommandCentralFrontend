@@ -34,7 +34,7 @@
                 <div class="col-md-offset-4 col-md-4"><h4 div="text-center" ng-show="filteredDisplaySailorsList.length">Click a column to sort by it.</h4></div>
                 <div class="col-md-offset-2 col-md-2">
                     <label ng-show="filteredResults.length" for="itemsPerPageSelect">Items per page:</label>
-                    <select id="itemsPerPageSelect" ng-model="itemsPerPage" ng-init="itemsPerPage='50'" ng-show="filteredResults.length" class="pull-right form-control">
+                    <select id="itemsPerPageSelect" ng-model="itemsPerPage" ng-init="itemsPerPage='50'" ng-show="filteredDisplaySailorsList.length" class="pull-right form-control">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
@@ -105,7 +105,7 @@
 	</div>
     <div class="row">
         <div class="col-md-12 text-center">
-            <uib-pagination ng-show="displaySailorsList.length" total-items="displaySailorsList.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
+            <uib-pagination ng-show="displaySailorsList.length" total-items="displaySailorsList.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="7" class="pagination-sm" boundary-links="true" force-ellipses="true"></uib-pagination>
         </div>
     </div>
     <div class="row">
