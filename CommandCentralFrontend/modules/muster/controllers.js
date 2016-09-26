@@ -15,7 +15,7 @@ angular.module('Muster')
 
                 var originalMusterList = [];
 
-                $scope.itemsPerPage = 50;
+                $scope.itemsPerPage = "50";
                 $scope.currentPage = 1;
                 $scope.displaySailorsList = [];
 

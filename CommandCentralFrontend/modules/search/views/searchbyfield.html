@@ -49,8 +49,19 @@
     <div>
         <div class="col-md-12">
             <h3 class="text-center" ng-show="results.length">Showing {{results.length}} results.</h3>
-            <h4 class="text-center" ng-show="results.length">Click a column to sort by it.</h4>
-            <div ng-show="results.length" class="table-responsive" style="height: 500px !important; overflow: scroll">
+            <div class="row">
+                <div class="col-md-offset-4 col-md-4"><h4 div="text-center" ng-show="filteredResults.length">Click a column to sort by it.</h4></div>
+                <div class="col-md-offset-2 col-md-2">
+                    <select ng-model="itemsPerPage" ng-init="itemsPerPage='50'" ng-show="filteredResults.length" class="pull-right form-control">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                    </select>
+                </div>
+            </div>
+            <div ng-show="results.length" class="table-responsive">
                 <table ng-show="results" class="table-striped col-md-12">
                     <thead>
                     <tr>

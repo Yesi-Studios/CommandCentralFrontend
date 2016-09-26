@@ -16,13 +16,13 @@
 		<div class="col-md-12">
             <div class="text-center" ng-show="dataLoading"><br/><img src="img/loading.gif" height="32" width="32"/><br/>Loading...</div>
 			<h3 class="text-center" ng-show="displaySailorsList.length">Showing {{displaySailorsList.length}} sailors in {{selectedDivision}}.</h3>
-            <div class="progress">
+            <div class="progress" ng-show="filteredDisplaySailorsList.length" >
                 <div class="progress-bar" role="progressbar" aria-valuenow="{{100*(1-unmusteredSailorsList.length/displaySailorsList.length)}}"
                      aria-valuemin="0" aria-valuemax="100" style="min-width: 4em; width:{{100*(1-unmusteredSailorsList.length/displaySailorsList.length)}}%">
                     {{100*(1-unmusteredSailorsList.length/displaySailorsList.length) | number: 2}}% Mustered
                 </div>
             </div>
-            <div class="text-center">
+            <div class="text-center" ng-show="filteredDisplaySailorsList.length" >
                 {{displaySailorsList.length-unmusteredSailorsList.length}}/{{displaySailorsList.length}} Sailors mustered.
             </div>
             <div ng-show="displaySailorsList.length" class="text-center checkbox">
@@ -30,8 +30,19 @@
                     <input ng-model="showUnmustered" type="checkbox"> Show only unmustered sailors
                 </label>
             </div>
-			<h4 class="text-center" ng-show="displaySailorsList">Click a column to sort by it.</h4>
-			<table ng-show="displaySailorsList" class="table-striped col-md-12">
+            <div class="row">
+                <div class="col-md-offset-4 col-md-4"><h4 div="text-center" ng-show="filteredDisplaySailorsList.length">Click a column to sort by it.</h4></div>
+                <div class="col-md-offset-2 col-md-2">
+                    <select ng-model="itemsPerPage" ng-init="itemsPerPage='50'" ng-show="filteredDisplaySailorsList.length" class="pull-right form-control">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                    </select>
+                </div>
+            </div>
+			<table ng-show="filteredDisplaySailorsList.length" class="table-striped col-md-12">
 				<thead>
 					<tr>
                         <th ng-click="setOrder('FriendlyName')">
