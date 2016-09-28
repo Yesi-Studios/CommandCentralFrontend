@@ -35,6 +35,7 @@
     </div>
     <div ng-show="viewBy=='division'" class="row">
         <div class="col-md-12">
+            <div class="text-center" ng-show="dataLoading"><br/><img src="img/loading.gif" height="32" width="32"/><br/>Loading...</div>
             <div class="panel-group" id="musterRecords" role="tablist" aria-multiselectable="true">
                 <div ng-repeat="(departmentName, department) in command['departments']" class="panel panel-default">
                     <div class="panel-heading" role="tab" id="department{{departmentName}}Heading">

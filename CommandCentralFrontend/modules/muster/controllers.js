@@ -168,8 +168,10 @@ angular.module('Muster')
                 };
                 var getMuster = function (musterDate) {
                     $scope.errors = [];
+                    $scope.dataLoading = true;
                     MusterService.LoadMusterByDay(musterDate,
                         function (response) {
+                            $scope.dataLoading = false;
                             if(config.debugMode) console.log(response);
                             if (response.ReturnValue.length == 0) {
                                 $scope.errors.push("No muster records for that date.");
