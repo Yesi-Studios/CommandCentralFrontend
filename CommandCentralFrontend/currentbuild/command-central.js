@@ -103,7 +103,7 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/search/views/searchbyfield.html'
         })
 		
-		.when('/searchbyfield/:searchTerms/:returnFields/:searchLevel', {
+		.when('/searchbyfield/:searchTerms/:returnFields/:searchLevel/:showHidden', {
             controller: 'SearchByFieldController',
             templateUrl: 'modules/search/views/searchbyfield.html'
         })
@@ -2594,6 +2594,12 @@ angular.module('Search')
 
         $scope.orderKey = "LastName";
 
+        if($routeParams.showHidden){
+            $scope.showHidden = JSON.parse($routeParams.showHidden);
+        } else {
+            $scope.showHidden = false;
+        }
+
         $scope.setOrder = function (theKey) {
             if ($scope.orderKey == theKey) {
                 $scope.orderKey = "-" + theKey;
@@ -2645,7 +2651,7 @@ angular.module('Search')
             for (var i in filters) {
                 if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1) delete filters[i];
             }
-            $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields) + '/' + JSON.stringify(level));
+            $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields) + '/' + JSON.stringify(level) + '/' + JSON.stringify($scope.showHidden));
         };
 
         $scope.searchOnEnter = function ($event, filters, fields, level) {
