@@ -93,7 +93,7 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/search/views/search.html'
         })
 		
-		.when('/search/:searchTerms', {
+		.when('/search/:searchTerms/:showHidden', {
             controller: 'SearchController',
             templateUrl: 'modules/search/views/search.html'
         })

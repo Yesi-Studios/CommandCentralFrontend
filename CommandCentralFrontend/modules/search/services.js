@@ -7,12 +7,12 @@ angular.module('Search')
     function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
 		
-        service.DoSimpleSearch = function (terms, success, error) {
-            return ConnectionService.RequestFromBackend('SimpleSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'searchterm': terms }, success, error);
+        service.DoSimpleSearch = function (terms, showHidden, success, error) {
+            return ConnectionService.RequestFromBackend('SimpleSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'searchterm': terms, 'showhidden': showHidden }, success, error);
         };
 		
-        service.DoAdvancedSearch = function (filters, returnFields, searchLevel, success, error) {
-            return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': filters, 'returnfields': returnFields, 'searchLevel' : searchLevel }, success, error);
+        service.DoAdvancedSearch = function (filters, returnFields, searchLevel, showHidden, success, error) {
+            return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': filters, 'returnfields': returnFields, 'searchLevel' : searchLevel, 'showhidden': showHidden }, success, error);
         };
 		
         return service;

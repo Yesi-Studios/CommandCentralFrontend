@@ -10,6 +10,11 @@
 					<button class="btn btn-default" type="button" ng-click="goToResults(simpleSearchTerms)">Search</button>
 			  	</span>
 			</div>
+			<div class="checkbox text-center">
+				<label>
+					<input type="checkbox" ng-model="showHidden"> Show hidden Sailors (e.g. Duty Status is "Loss")
+				</label>
+			</div>
 			<div class="text-center" ng-show="dataLoading"><br/><img src="img/loading.gif" height="32" width="32"/><br/>Loading...</div>
 		</div>
 	</div>

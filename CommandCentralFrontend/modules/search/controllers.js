@@ -14,6 +14,12 @@ angular.module('Search')
         $scope.currentPage = 1;
         $scope.results = [];
 
+        if($routeParams.showHidden){
+            $scope.showHidden = JSON.parse($routeParams.showHidden);
+        } else {
+            $scope.showHidden = false;
+        }
+
         $scope.pageCount = function () {
             return Math.ceil($scope.friends.length / $scope.itemsPerPage);
         };
@@ -34,7 +40,7 @@ angular.module('Search')
 
         // This is the url we send them to so they can see their search results
         $scope.goToResults = function (terms) {
-            $location.path('/search/' + terms);
+            $location.path('/search/' + terms + "/" + JSON.stringify($scope.showHidden));
         };
 
         // This enables the user to hit enter when they're done typing to initiate the search
@@ -57,10 +63,10 @@ angular.module('Search')
         };
 
         // Define how we do a simple search first, so we can do it whenever
-        var simpleSearch = function (terms) {
+        var simpleSearch = function (terms, showHidden) {
             $scope.dataLoading = true;
             $scope.errors = [];
-            SearchService.DoSimpleSearch(terms,
+            SearchService.DoSimpleSearch(terms, $scope.showHidden,
                 function (response) {
                     $scope.dataLoading = false;
                     $scope.results = response.ReturnValue.Results;
@@ -164,7 +170,7 @@ angular.module('Search')
             if (searchLevel == null) {
                 searchLevel = "Command";
             }
-            SearchService.DoAdvancedSearch(filters, returnFields, searchLevel,
+            SearchService.DoAdvancedSearch(filters, returnFields, searchLevel, $scope.showHidden,
                 // If we succeed, this is our callback
                 function (response) {
                     // We're done loading, drop the results and a list of fields in them on the scope.

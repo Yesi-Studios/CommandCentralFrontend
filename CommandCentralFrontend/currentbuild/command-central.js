@@ -93,7 +93,7 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/search/views/search.html'
         })
 		
-		.when('/search/:searchTerms', {
+		.when('/search/:searchTerms/:showHidden', {
             controller: 'SearchController',
             templateUrl: 'modules/search/views/search.html'
         })
@@ -1975,8 +1975,10 @@ angular.module('Muster')
                 };
                 var getMuster = function (musterDate) {
                     $scope.errors = [];
+                    $scope.dataLoading = true;
                     MusterService.LoadMusterByDay(musterDate,
                         function (response) {
+                            $scope.dataLoading = false;
                             if(config.debugMode) console.log(response);
                             if (response.ReturnValue.length == 0) {
                                 $scope.errors.push("No muster records for that date.");
@@ -2501,6 +2503,12 @@ angular.module('Search')
         $scope.currentPage = 1;
         $scope.results = [];
 
+        if($routeParams.showHidden){
+            $scope.showHidden = JSON.parse($routeParams.showHidden);
+        } else {
+            $scope.showHidden = false;
+        }
+
         $scope.pageCount = function () {
             return Math.ceil($scope.friends.length / $scope.itemsPerPage);
         };
@@ -2521,7 +2529,7 @@ angular.module('Search')
 
         // This is the url we send them to so they can see their search results
         $scope.goToResults = function (terms) {
-            $location.path('/search/' + terms);
+            $location.path('/search/' + terms + "/" + JSON.stringify($scope.showHidden));
         };
 
         // This enables the user to hit enter when they're done typing to initiate the search
@@ -2544,10 +2552,10 @@ angular.module('Search')
         };
 
         // Define how we do a simple search first, so we can do it whenever
-        var simpleSearch = function (terms) {
+        var simpleSearch = function (terms, showHidden) {
             $scope.dataLoading = true;
             $scope.errors = [];
-            SearchService.DoSimpleSearch(terms,
+            SearchService.DoSimpleSearch(terms, $scope.showHidden,
                 function (response) {
                     $scope.dataLoading = false;
                     $scope.results = response.ReturnValue.Results;
@@ -2651,7 +2659,7 @@ angular.module('Search')
             if (searchLevel == null) {
                 searchLevel = "Command";
             }
-            SearchService.DoAdvancedSearch(filters, returnFields, searchLevel,
+            SearchService.DoAdvancedSearch(filters, returnFields, searchLevel, $scope.showHidden,
                 // If we succeed, this is our callback
                 function (response) {
                     // We're done loading, drop the results and a list of fields in them on the scope.
@@ -2702,12 +2710,12 @@ angular.module('Search')
     function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
 		
-        service.DoSimpleSearch = function (terms, success, error) {
-            return ConnectionService.RequestFromBackend('SimpleSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'searchterm': terms }, success, error);
+        service.DoSimpleSearch = function (terms, showHidden, success, error) {
+            return ConnectionService.RequestFromBackend('SimpleSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'searchterm': terms, 'showhidden': showHidden }, success, error);
         };
 		
-        service.DoAdvancedSearch = function (filters, returnFields, searchLevel, success, error) {
-            return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': filters, 'returnfields': returnFields, 'searchLevel' : searchLevel }, success, error);
+        service.DoAdvancedSearch = function (filters, returnFields, searchLevel, showHidden, success, error) {
+            return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': filters, 'returnfields': returnFields, 'searchLevel' : searchLevel, 'showhidden': showHidden }, success, error);
         };
 		
         return service;
