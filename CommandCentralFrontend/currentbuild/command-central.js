@@ -294,12 +294,13 @@ angular.module('CommandCentral', [
         restrict: 'E',
         require: '^ngModel',
         scope: {
-            ngModel: '='
+            ngModel: '=',
+            disabled: '=ngDisabled'
         },
         template: '<div class="input-group">'+
-                        '<input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="opened" datepicker-options="dateOptions" close-text="Close" />' +
+                        '<input type="text" class="form-control" ng-disabled="disabled" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="opened" datepicker-options="dateOptions" close-text="Close" />' +
                         '<span class="input-group-btn">'+
-                            '<button type="button" class="btn btn-default" ng-click="openPicker()"><i class="glyphicon glyphicon-calendar"></i></button>'+
+                            '<button type="button" class="btn btn-default" ng-disabled="disabled" ng-click="openPicker()"><i class="glyphicon glyphicon-calendar"></i></button>'+
                         '</span>'+
                   '</div>',
         controller: ['$scope', function ($scope) {
