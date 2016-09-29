@@ -119,12 +119,18 @@ angular.module('CommandCentral', [
 			templateUrl: 'modules/authentication/views/finishregister.html',
 			hideMenus: true
 		})
-		
-		.when('/forgotpassword', {
-			controller: 'ForgotController',
-			templateUrl: 'modules/authentication/views/forgotpassword.html',
-			hideMenus: true
-		})
+
+        .when('/forgotpassword', {
+            controller: 'ForgotController',
+            templateUrl: 'modules/authentication/views/forgotpassword.html',
+            hideMenus: true
+        })
+
+        .when('/changepassword', {
+            controller: 'ChangePasswordController',
+            templateUrl: 'modules/authentication/views/changepassword.html',
+            hideMenus: true
+        })
 
 		.when('/finishreset/:id', {
 		    controller: 'FinishResetController',

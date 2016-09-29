@@ -51,9 +51,13 @@ angular.module('Authentication')
 		service.ForgotPassword = function (email, ssn, success, error) {
 		    return ConnectionService.RequestFromBackend('BeginPasswordReset', { 'email': email, 'ssn': ssn, 'continuelink' : 'https://commandcentral/#/finishreset/' }, success, error);
 		};
-		
+
 		service.FinishReset = function (password, id, success, error) {
-		    return ConnectionService.RequestFromBackend('CompletePasswordReset', { 'PasswordResetid': id, 'Password': password }, success, error);
+			return ConnectionService.RequestFromBackend('CompletePasswordReset', { 'PasswordResetid': id, 'Password': password }, success, error);
+		};
+
+		service.ChangePassword = function (oldPassword, newPassword, success, error) {
+			return ConnectionService.RequestFromBackend('ChangePassword', { 'authenticationtoken': service.GetAuthToken(), 'oldpassword': oldPassword, 'newpassword': newPassword }, success, error);
 		};
 		
         service.SetCredentials = function (username, authtoken, userID) {

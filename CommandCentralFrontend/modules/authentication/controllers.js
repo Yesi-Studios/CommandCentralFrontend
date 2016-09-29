@@ -121,28 +121,24 @@ angular.module('Authentication')
             );
         };
     }])
-	.controller('ForgotController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
-    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
-        // reset login status
-        // AuthenticationService.ClearCredentials();
+    .controller('ChangePasswordController',
+        ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
+                $scope.changePassword = function () {
+                    $scope.dataLoading = true;
+                    AuthenticationService.ChangePassword($scope.oldPassword, $scope.newPassword,
+                        function (response) {
+                            ConnectionService.AddLoginMessage("Password successfully changed. Please log in with your new password.");
+                            $location.path('/login');
 
-        $scope.forgotpassword = function () {
-            $scope.dataLoading = true;
-            $scope.errors = null;
-            AuthenticationService.ForgotPassword($scope.email, $scope.ssn,
-                function (response) {
-                    $scope.confirmation = "Got it. Check your .mil email for further instructions.";
-                    $scope.dataLoading = false;
-
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
-        };
-    }])
+                        },
+                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                        function (response) {
+                            ConnectionService.HandleServiceError(response, $scope, $location);
+                        }
+                    );
+                };
+            }])
 	.controller('FinishResetController',
     ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService', 'config',
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService, config) {

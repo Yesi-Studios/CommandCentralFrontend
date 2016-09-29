@@ -119,12 +119,18 @@ angular.module('CommandCentral', [
 			templateUrl: 'modules/authentication/views/finishregister.html',
 			hideMenus: true
 		})
-		
-		.when('/forgotpassword', {
-			controller: 'ForgotController',
-			templateUrl: 'modules/authentication/views/forgotpassword.html',
-			hideMenus: true
-		})
+
+        .when('/forgotpassword', {
+            controller: 'ForgotController',
+            templateUrl: 'modules/authentication/views/forgotpassword.html',
+            hideMenus: true
+        })
+
+        .when('/changepassword', {
+            controller: 'ChangePasswordController',
+            templateUrl: 'modules/authentication/views/changepassword.html',
+            hideMenus: true
+        })
 
 		.when('/finishreset/:id', {
 		    controller: 'FinishResetController',
@@ -962,28 +968,24 @@ angular.module('Authentication')
             );
         };
     }])
-	.controller('ForgotController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
-    function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
-        // reset login status
-        // AuthenticationService.ClearCredentials();
+    .controller('ChangePasswordController',
+        ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
+                $scope.changePassword = function () {
+                    $scope.dataLoading = true;
+                    AuthenticationService.ChangePassword($scope.oldPassword, $scope.newPassword,
+                        function (response) {
+                            ConnectionService.AddLoginMessage("Password successfully changed. Please log in with your new password.");
+                            $location.path('/login');
 
-        $scope.forgotpassword = function () {
-            $scope.dataLoading = true;
-            $scope.errors = null;
-            AuthenticationService.ForgotPassword($scope.email, $scope.ssn,
-                function (response) {
-                    $scope.confirmation = "Got it. Check your .mil email for further instructions.";
-                    $scope.dataLoading = false;
-
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
-        };
-    }])
+                        },
+                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                        function (response) {
+                            ConnectionService.HandleServiceError(response, $scope, $location);
+                        }
+                    );
+                };
+            }])
 	.controller('FinishResetController',
     ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ConnectionService', 'config',
     function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ConnectionService, config) {
@@ -1106,9 +1108,13 @@ angular.module('Authentication')
 		service.ForgotPassword = function (email, ssn, success, error) {
 		    return ConnectionService.RequestFromBackend('BeginPasswordReset', { 'email': email, 'ssn': ssn, 'continuelink' : 'https://commandcentral/#/finishreset/' }, success, error);
 		};
-		
+
 		service.FinishReset = function (password, id, success, error) {
-		    return ConnectionService.RequestFromBackend('CompletePasswordReset', { 'PasswordResetid': id, 'Password': password }, success, error);
+			return ConnectionService.RequestFromBackend('CompletePasswordReset', { 'PasswordResetid': id, 'Password': password }, success, error);
+		};
+
+		service.ChangePassword = function (oldPassword, newPassword, success, error) {
+			return ConnectionService.RequestFromBackend('ChangePassword', { 'authenticationtoken': service.GetAuthToken(), 'oldpassword': oldPassword, 'newpassword': newPassword }, success, error);
 		};
 		
         service.SetCredentials = function (username, authtoken, userID) {
