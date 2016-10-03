@@ -99,7 +99,7 @@
                         <td>{{sailor['Division']}}</td>
                         <td>{{sailor['HasBeenMustered'] | yesNo }}</td>
                         <td>
-                            <select name="{{sailor.Id}}MusterStatus" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus" ng-options="o.Value as o.Value for o in musterStatuses">
+                            <select name="{{sailor.Id}}MusterStatus" tabindex="{{$index+1000}}" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus" ng-options="o.Value as o.Value for o in musterStatuses | orderBy: 'Value'">
                             </select>
                         </td>
 						<td><!--suppress HtmlUnknownAttribute -->
