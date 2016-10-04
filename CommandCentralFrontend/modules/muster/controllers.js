@@ -88,6 +88,13 @@ angular.module('Muster')
                         $scope.allSailorsList = response.ReturnValue.Musters;
 
 
+                        var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                            end = begin + $scope.itemsPerPage;
+
+                        $scope.displaySailorsList = $filter('orderBy')($scope.displaySailorsList, $scope.orderKey);
+                        $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
+
+                        originalMusterList = [];
                         for (var i in $scope.displaySailorsList) {
                             originalMusterList[i] = {
                                 "CurrentMusterStatus": {
@@ -95,11 +102,6 @@ angular.module('Muster')
                                 }
                             }
                         }
-                        var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-                            end = begin + $scope.itemsPerPage;
-
-                        $scope.displaySailorsList = $filter('orderBy')($scope.displaySailorsList, $scope.orderKey);
-                        $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
 
                         $scope.unmusteredSailorsList = [];
                         for (var i in $scope.displaySailorsList) {
