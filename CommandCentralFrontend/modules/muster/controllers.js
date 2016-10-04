@@ -84,9 +84,18 @@ angular.module('Muster')
                             }
                         }
 
-                        $scope.displaySailorsList = response.ReturnValue.Musters;
                         $scope.allSailorsList = response.ReturnValue.Musters;
 
+                        $scope.displaySailorsList = [];
+                        if ($scope.selectedDivision == "All") {
+                            $scope.displaySailorsList = $scope.allSailorsList;
+                        } else {
+                            for (var i = 0; i < $scope.allSailorsList.length; i++) {
+                                if ($scope.allSailorsList[i].Division == $scope.selectedDivision) {
+                                    $scope.displaySailorsList.push($scope.allSailorsList[i]);
+                                }
+                            }
+                        }
 
                         var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                             end = begin + $scope.itemsPerPage;
