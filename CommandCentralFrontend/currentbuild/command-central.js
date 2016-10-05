@@ -2401,36 +2401,6 @@ angular.module('Profiles')
                     return listOfItems;
                 };
 
-                $scope.addNewNumber = function (number, phoneType, contactable, preferred) {
-                    if (preferred) {
-                        for (var i = 0; i < $scope.profileData.PhoneNumbers.length; ++i) {
-                            $scope.profileData.PhoneNumbers[i].IsPreferred = false;
-                        }
-                    }
-                    $scope.profileData.PhoneNumbers.push({ "Number": number, "PhoneType": phoneType, "IsContactable": contactable, "IsPreferred": preferred });
-
-                };
-
-                $scope.addNewEmail = function (email, contactable, preferred) {
-                    if (preferred) {
-                        for (var i = 0; i < $scope.profileData.EmailAddresses.length; ++i) {
-                            $scope.profileData.EmailAddresses[i].IsPreferred = false;
-                        }
-                    }
-                    $scope.profileData.EmailAddresses.push({ "Address": email, "IsContactable": contactable, "IsPreferred": preferred });
-
-                };
-
-                $scope.addNewAddress = function (street, city, state, zip, country, home) {
-                    if (home) {
-                        for (var i = 0; i < $scope.profileData.PhysicalAddresses.length; ++i) {
-                            $scope.profileData.PhysicalAddresses[i].IsHomeAddress = false;
-                        }
-                    }
-                    $scope.profileData.PhysicalAddresses.push({ "Address": street, "City": city, "State": state, "ZipCode": zip, "Country": country, "IsHomeAddress": home });
-
-                };
-
                 $scope.isValidEmail = function (email) {
                     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return re.test(email);
