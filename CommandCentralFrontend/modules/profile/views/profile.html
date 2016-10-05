@@ -124,22 +124,19 @@
 								</thead>
 								<tbody>
 								<tr ng-repeat="email in profileData.EmailAddresses">
-									<td>{{email.Address}}</td>
-									<td><button ng-if="!email.IsContactable" type="button" class="btn btn-danger btn-xs" ng-click="email.IsContactable=true">No</button><button ng-if="email.IsContactable" type="button" class="btn btn-success btn-xs" ng-click="email.IsContactable=false">Yes</button></td>
-									<td><button ng-if="!email.IsPreferred" type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses = makePreferred(profileData.EmailAddresses, email)">No</button><button ng-if="email.IsPreferred" type="button" class="btn btn-success btn-xs" ng-click="email.IsPreferred = false">Yes</button></td>
-									<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses.splice(profileData.EmailAddresses.indexOf(email), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
+									<td class="col-md-6">
+										<input ng-disabled="!canEditPersonField('EmailAddresses')" type="text" class="form-control" ng-model="email.Address"/>
+									</td>
+									<td><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="!email.IsContactable" type="button" class="btn btn-danger btn-xs" ng-click="email.IsContactable=true">No</button><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="email.IsContactable" type="button" class="btn btn-success btn-xs" ng-click="email.IsContactable=false">Yes</button></td>
+									<td><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="!email.IsPreferred" type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses = makePreferred(profileData.EmailAddresses, email)">No</button><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="email.IsPreferred" type="button" class="btn btn-success btn-xs" ng-click="email.IsPreferred = false">Yes</button></td>
+									<td><button ng-disabled="!canEditPersonField('EmailAddresses')" type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses.splice(profileData.EmailAddresses.indexOf(email), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
 								</tr>
 								<tr>
-									<td class="col-md-5">
-										<div class="input-group">
-											<span class="input-group-addon" id="newEmailAddon">New Email:</span>
-											<input type="text" class="form-control" aria-describedby="newEmailAddon" ng-model="newEmail"/>
-										</div>
-									</td>
-									<td><label><input type="checkbox" ng-model="newEmailContactable"/><span ng-show="profileData.EmailAddresses.length == 0">Usable for Contact</span></label></td>
-									<td><label><input type="checkbox" ng-model="newEmailPreferred"/><span ng-show="profileData.EmailAddresses.length == 0">Preferred</span></label></td>
+									<td></td>
+									<td></td>
+									<td></td>
 									<td><!--suppress HtmlUnknownAttribute -->
-										<button type="button" class="btn btn-success btn-xs" ng-disabled="!isValidEmail(newEmail)" ng-click="addNewEmail(newEmail, newEmailContactable, newEmailPreferred); newEmailContactable = newEmailPreferred = false; newEmail = ''"><span class="glyphicon glyphicon-plus"></span></button></td>
+										<button ng-disabled="!canEditPersonField('EmailAddresses')" type="button" class="btn btn-success btn-xs" ng-click="profileData.EmailAddresses.push({Address:'', IsContactable:false, IsPreferred:false})"><span class="glyphicon glyphicon-plus"></span></button></td>
 								</tr>
 								</tbody>
 							</table>
@@ -160,43 +157,34 @@
 								</thead>
 								<tbody>
 								<tr ng-repeat="number in profileData.PhoneNumbers">
-									<td>{{number.Number}}</td>
-									<!--<td>{{number.Carrier}}</td>-->
-									<td>
-										<select class="form-control" id="phoneType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType'] track by o.Id">
-											<option></option>
-										</select>
-									</td>
-									<td><button ng-if="!number.IsContactable" type="button" class="btn btn-danger btn-xs" ng-click="number.IsContactable=true">No</button><button ng-if="number.IsContactable" type="button" class="btn btn-success btn-xs" ng-click="number.IsContactable=false">Yes</button></td>
-									<td><button ng-if="!number.IsPreferred" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers = makePreferred(profileData.PhoneNumbers, number)">No</button><button ng-if="number.IsPreferred" type="button" class="btn btn-success btn-xs">Yes</button></td>
-									<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers.splice(profileData.PhoneNumbers.indexOf(number), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
-								</tr>
-								<tr>
 									<td class="col-md-5">
-										<div class="input-group">
-											<span class="input-group-addon" id="newNumberAddon">New Number:</span>
-											<!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute -->
-											<input name="newNumber" id="newNumber" type="text" class="form-control" aria-describedby="newNumberAddon" ng-model="newNumber" ui-mask="(999)-999-9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
-										</div>
+										<input ng-disabled="!canEditPersonField('PhoneNumbers')" name="newNumber" id="newNumber" type="text" class="form-control" aria-describedby="newNumberAddon" ng-model="number.Number" ui-mask="(999)-999-9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
 									</td>
 									<td>
-										<select name="newNumberType" class="form-control" id="newNumberType" ng-model="newNumberType" ng-options="o as o.Value for o in lists['PhoneNumberType']">
+										<select ng-disabled="!canEditPersonField('PhoneNumbers')" name="newNumberType" class="form-control" id="newNumberType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType'] track by o.Id">
 											<option ng-if="profileData.PhoneNumbers.length == 0" value="" disabled selected hidden><!--suppress HtmlUnknownTag, HtmlUnknownTag -->
 												<strong>Phone Type</strong></option>
 											<option ng-if="profileData.PhoneNumbers.length != 0" disabled selected hidden></option>
 										</select>
 									</td>
-									<td><label><input name="newNumberContactable" type="checkbox" ng-model="newNumberContactable"/><span ng-show="profileData.PhoneNumbers.length == 0">Usable for Contact</span></label></td>
-									<td><label><input name="newNumberPreferred" type="checkbox" ng-model="newNumberPreferred"/><span ng-show="profileData.PhoneNumbers.length == 0">Preferred</span></label></td>
+									<td><button ng-disabled="!canEditPersonField('PhoneNumbers')" ng-if="!number.IsContactable" type="button" class="btn btn-danger btn-xs" ng-click="number.IsContactable=true">No</button><button ng-disabled="!canEditPersonField('PhoneNumbers')" ng-if="number.IsContactable" type="button" class="btn btn-success btn-xs" ng-click="number.IsContactable=false">Yes</button></td>
+									<td><button ng-disabled="!canEditPersonField('PhoneNumbers')" ng-if="!number.IsPreferred" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers = makePreferred(profileData.PhoneNumbers, number)">No</button><button ng-disabled="!canEditPersonField('PhoneNumbers')" ng-if="number.IsPreferred" type="button" class="btn btn-success btn-xs">Yes</button></td>
+									<td><button ng-disabled="!canEditPersonField('PhoneNumbers')" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers.splice(profileData.PhoneNumbers.indexOf(number), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
+								</tr>
+								<tr>
+									<td class="col-md-5"></td>
+									<td></td>
+									<td></td>
+									<td></td>
 									<td><!--suppress HtmlUnknownAttribute -->
-										<button name="insertPhoneNumber" type="button" class="btn btn-success btn-xs" ng-disabled="!(newNumberType && isValidPhoneNumber(newNumber))" ng-click="addNewNumber(newNumber, newNumberType, newNumberContactable, newNumberPreferred); newNumberContactable = newNumberPreferred = false; newNumberType = newNumber = ''"><span class="glyphicon glyphicon-plus"></span></button></td>
+										<button ng-disabled="!canEditPersonField('PhoneNumbers')" name="insertPhoneNumber" type="button" class="btn btn-success btn-xs" ng-click="profileData.PhoneNumbers.push({Number:'', PhoneType:{}, IsContactable:false, IsPreferred:false})"><span class="glyphicon glyphicon-plus"></span></button></td>
 								</tr>
 								</tbody>
 							</table>
 						</div>
 						<hr>
 						<div class="form-group">
-							<label class="col-md-3" for="address">Physical Addresses</label>
+							<label class="col-md-3" for="addresses">Physical Addresses</label>
 							<!--suppress HtmlUnknownAttribute -->
 							<table id="addresses" class="col-md-8 table-striped contact-table" ng-disabled="!canEditPersonField('PhysicalAddresses')" ng-show="canReturnPersonField('PhysicalAddresses')">
 								<thead ng-show="profileData.PhysicalAddresses.length > 0">
@@ -208,24 +196,22 @@
 								</thead>
 								<tbody>
 								<tr ng-repeat="address in profileData.PhysicalAddresses">
-									<td>{{address.Address}}<br />
-										{{address.City}}, {{address.State}} {{address.ZipCode}}<br />
-										{{address.Country}}<br /></td>
-									<td><button ng-if="!address.IsHomeAddress" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses = makeHome(profileData.PhysicalAddresses, address)">No</button><button ng-if="address.IsHomeAddress" type="button" class="btn btn-success btn-xs" ng-click="address.IsHomeAddress = false">Yes</button></td>
-									<td><button type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses.splice(profileData.PhysicalAddresses.indexOf(address), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
+									<td class="col-md-5">
+										<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="street" placeholder="Number and Street" class="form-control" style="float: left; width: 100%;" ng-model="address.Address" type="text">
+										<div class="input-group">
+											<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="city" placeholder="City" class="form-control" style="float: left; width: 50%;" ng-model="address.City" type="text">
+											<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="state" placeholder="State" class="form-control" style="float: left; width: 20%;" ng-model="address.State" type="text">
+											<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="zip" placeholder="Zip" class="form-control" style="float: left; width: 30%;" ng-model="address.ZipCode" type="text">
+										</div>
+										<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="country" placeholder="Country" class="form-control" style="float: left; width: 100%;" ng-model="address.Country" type="text">
+									</td>
+									<td><button ng-disabled="!canEditPersonField('PhysicalAddresses')" id ="makeHome"ng-if="!address.IsHomeAddress" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses = makeHome(profileData.PhysicalAddresses, address); form.$pristine = false;">No</button><button ng-disabled="!canEditPersonField('PhysicalAddresses')" ng-if="address.IsHomeAddress" type="button" class="btn btn-success btn-xs" ng-click="address.IsHomeAddress = false; form.$pristine=false;">Yes</button></td>
+									<td><button ng-disabled="!canEditPersonField('PhysicalAddresses')" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses.splice(profileData.PhysicalAddresses.indexOf(address), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
 								</tr>
 								<tr>
-									<td class="col-md-5">
-										<input name="street" placeholder="Number and Street" class="form-control" style="float: left; width: 100%;" ng-model="newAddressStreet" type="text">
-										<div class="input-group">
-											<input name="city" placeholder="City" class="form-control" style="float: left; width: 50%;" ng-model="newAddressCity" type="text">
-											<input name="state" placeholder="State" class="form-control" style="float: left; width: 20%;" ng-model="newAddressState" type="text">
-											<input name="zip" placeholder="Zip" class="form-control" style="float: left; width: 30%;" ng-model="newAddressZip" type="number">
-										</div>
-										<input name="country" placeholder="Country" class="form-control" style="float: left; width: 100%;" ng-model="newAddressCountry" type="text">
-									</td>
-									<td><label><input type="checkbox" ng-model="newAddressHome"/><span ng-show="profileData.PhysicalAddresses.length == 0">Home Address</span></label></td>
-									<td><button type="button" class="btn btn-success btn-xs" ng-click="addNewAddress(newAddressStreet, newAddressCity, newAddressState, newAddressZip, newAddressCountry, newAddressHome); newAddressNumber = newAddressStreet = newAddressCity = newAddressState = newAddressZip = newAddressCountry = newAddressHome = null;"><span class="glyphicon glyphicon-plus"></span></button></td>
+									<td></td>
+									<td></td>
+									<td><button type="button" class="btn btn-success btn-xs" ng-click="profileData.PhysicalAddresses.push({Address:'', City:'', State:'', ZipCode:'', Country:''})"><span class="glyphicon glyphicon-plus"></span></button></td>
 								</tr>
 								</tbody>
 							</table>
