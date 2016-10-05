@@ -430,8 +430,14 @@
 						</div>
 					</div>
 				</div>
+				<div ng-if="isMyProfile" class="row">
+					<div class="col-md-offset-8 col-md-4 text-right">
+						<a href="#/changepassword" class="btn btn-sm btn-default">Change My Password</a>
+					</div>
+				</div><br/>
 				<div class="row"><!--suppress HtmlUnknownAttribute -->
-					<button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
+					<button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button>
+				</div><br/>
 				<div class="alert alert-info">Use the Ctrl key to select multiple Permission Groups.</div>
 			</uib-tab>
 		</uib-tabset>
