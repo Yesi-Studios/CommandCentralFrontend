@@ -393,7 +393,7 @@
 								</tr>
 								</thead>
 								<tbody>
-								<tr ng-repeat="event in profileData.AccountHistory">
+								<tr ng-repeat="event in profileData.AccountHistory | orderBy: '-EventTime'">
 									<td>{{event.AccountHistoryEventType.Value}}</td>
 									<td>{{event.EventTime | date:'medium'}}</td>
 								</tr>
