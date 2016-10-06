@@ -206,6 +206,21 @@ angular.module('Profiles')
                     );
                 };
 
+                $scope.canDeleteEmail = function (email) {
+                    if(email.substr(email.length-4)!='.mil') {return true;}
+
+                    var c = 0;
+                    for (var i in $scope.profileData.EmailAddresses){
+                        if($scope.profileData.EmailAddresses[i].Address.substr($scope.profileData.EmailAddresses[i].Address.length-4) == '.mil') {
+                            c += 1;
+                        }
+                    }
+
+                    if(c != 1){
+                        return true;
+                    }
+                    return false;
+                };
                 $scope.makePreferred = function (listOfItems, preferredOne) {
                     for (var i = 0; i < listOfItems.length; ++i) {
                         listOfItems[i].IsPreferred = false;

@@ -129,7 +129,7 @@
 									</td>
 									<td><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="!email.IsContactable" type="button" class="btn btn-danger btn-xs" ng-click="email.IsContactable=true; form.$pristine = false;">No</button><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="email.IsContactable" type="button" class="btn btn-success btn-xs" ng-click="email.IsContactable=false; form.$pristine = false;">Yes</button></td>
 									<td><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="!email.IsPreferred" type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses = makePreferred(profileData.EmailAddresses, email); form.$pristine = false;">No</button><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="email.IsPreferred" type="button" class="btn btn-success btn-xs" ng-click="email.IsPreferred = false; form.$pristine = false;">Yes</button></td>
-									<td><button ng-disabled="!canEditPersonField('EmailAddresses')" type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses.splice(profileData.EmailAddresses.indexOf(email), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
+									<td><button ng-disabled="!canEditPersonField('EmailAddresses')||!canDeleteEmail(email.Address)" type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses.splice(profileData.EmailAddresses.indexOf(email), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
 								</tr>
 								<tr>
 									<td></td>
