@@ -1,6 +1,6 @@
 {
   "name": "command-central",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "The Command Central frontend developed at NIOC GA tool to help commands manage their sailors, in conjuction with the command central backend.",
   "author": "CTI2(IDW) Angus McLean <anguslmm@gmail.com>",
   "repository": {
