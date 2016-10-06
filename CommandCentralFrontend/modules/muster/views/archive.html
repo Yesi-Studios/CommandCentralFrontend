@@ -37,21 +37,21 @@
         <div class="col-md-12">
             <div class="text-center" ng-show="dataLoading"><br/><img src="img/loading.gif" height="32" width="32"/><br/>Loading...</div>
             <div class="panel-group" id="musterRecords" role="tablist" aria-multiselectable="true">
-                <div ng-repeat="(departmentName, department) in command['departments']" class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="department{{departmentName}}Heading">
+                <div ng-repeat="department in command['departments'] | orderBy: 'Value'" class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="department{{department.Value}}Heading">
                         <h4 class="panel-title">
-                            <button data-toggle="collapse" data-target="#department{{departmentName}}" class="btn btn-default">{{departmentName}}</button>
+                            <button data-toggle="collapse" data-target="#department{{department.Value}}" class="btn btn-default">{{department.Value}}</button>
                         </h4>
                     </div>
-                    <div id="department{{departmentName}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="department{{departmentName}}Heading">
+                    <div id="department{{department.Value}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="department{{department.Value}}Heading">
                         <div class="panel-body">
-                            <div ng-repeat="(divisionName, division) in department" class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="division{{departmentName}}{{divisionName}}Heading">
+                            <div ng-repeat="division in department.Divisions" class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="division{{department.Value}}{{division.Value}}Heading">
                                     <h4 class="panel-title">
-                                        <button data-toggle="collapse" data-target="#division{{departmentName}}{{divisionName}}" class="btn btn-default">{{divisionName}}</button>
+                                        <button data-toggle="collapse" data-target="#division{{department.Value}}{{division.Value}}" class="btn btn-default">{{division.Value}}</button>
                                     </h4>
                                 </div>
-                                <div id="division{{departmentName}}{{divisionName}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="division{{departmentName}}{{divisionName}}Heading">
+                                <div id="division{{department.Value}}{{division.Value}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="division{{department.Value}}{{division.Value}}Heading">
                                     <div class="panel-body">
                                         <table class="table-striped col-md-12">
                                             <thead>
@@ -63,7 +63,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="record in division track by $index" class="form-group">
+                                                <tr ng-repeat="record in division.Sailors track by $index" class="form-group">
                                                     <td>{{record.Musteree.FriendlyName}}<!--suppress HtmlUnknownAttribute -->
                                                         <a ng-if="record.Musteree" ng-href="#/profile/{{record.Musteree.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                                                     <td>{{record.MusterStatus}}</td>

@@ -174,6 +174,15 @@ angular.module('Muster')
 
                 $scope.viewBy = "division";
 
+                var getIndexByValue = function(list, name){
+                    for(var i in list) {
+                        if(list[i].Value == name){
+                            return i;
+                        }
+                    }
+                    return -1;
+                };
+
                 $scope.goToMuster = function (filters, fields, level) {
                         $location.path('/muster/archive/' + $scope.musterDate);
                 };
@@ -199,27 +208,38 @@ angular.module('Muster')
                                 };
                                 $scope.command = {
                                     "name": response.ReturnValue[0].Command,
-                                    "departments": {},
-                                    "uics": {}
+                                    "departments": [],
+                                    "uics": []
                                 };
                                 for (var i in response.ReturnValue) {
                                     var record = response.ReturnValue[i];
                                     $scope.musterCounts[record["MusterStatus"]] += 1;
-                                    if (!$scope.command.departments[record.Department]) {
-                                        $scope.command.departments[record.Department] = {};
+                                    var depId = getIndexByValue($scope.command.departments, record.Department);
+                                    if (depId == -1) {
+                                        $scope.command.departments.push(
+                                            {
+                                                Value: record.Department,
+                                                Divisions : []
+                                            });
+                                        depId = getIndexByValue($scope.command.departments, record.Department);
                                     }
-                                    if (!$scope.command.departments[record.Department][record.Division]) {
-                                        $scope.command.departments[record.Department][record.Division] = [];
+                                    var divId = getIndexByValue($scope.command.departments[depId].Divisions, record.Division);
+                                    if (divId == -1) {
+                                        $scope.command.departments[depId].Divisions.push(
+                                            {
+                                                Value: record.Division,
+                                                Sailors : []
+                                            });
+                                        divId = getIndexByValue($scope.command.departments[depId].Divisions, record.Division);
                                     }
-                                    $scope.command.departments[record.Department][record.Division].push(record);
-
+                                    $scope.command.departments[depId].Divisions[divId].Sailors.push(record);
                                     if (!record.UIC) { record.UIC = "NONE";}
                                     if (!$scope.command.uics[record.UIC]) {
                                         $scope.command.uics[record.UIC] = [];
                                     }
                                     $scope.command.uics[record.UIC].push(record);
 
-                                }
+                                } console.log($scope.command);
                             }
                         },
                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
