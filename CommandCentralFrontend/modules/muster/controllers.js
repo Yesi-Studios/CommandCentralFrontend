@@ -70,7 +70,6 @@ angular.module('Muster')
                     }
                 );
 
-
                 var loadMuster = function() {
                     $scope.dataLoading = true;
                     MusterService.LoadTodaysMuster(
