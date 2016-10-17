@@ -9,54 +9,55 @@ angular.module('Muster')
                 // This scope will just about always contain PII
                 $rootScope.containsPII = true;
                 $scope.divisions = [];
-                $scope.fields = ['FriendlyName', 'Paygrade', 'Division', 'HasBeenMustered'];
+                //$scope.fields = ['FriendlyName', 'Paygrade', 'Division', 'HasBeenMustered'];
                 $scope.errors = [];
                 $scope.messages = [];
 
-                var originalMusterList = [];
-
+                var oldStatusList = [];
                 $scope.itemsPerPage = "50";
                 $scope.currentPage = 1;
-                $scope.displaySailorsList = [];
+                $scope.newStatusList = [];
+                $scope.groupCount = 0;
+
+                // The default sorting key
+                $scope.orderKey = "Division";
+                $scope.selectedDivision = "All";
 
                 $scope.pageCount = function () {
                     return Math.ceil($scope.friends.length / $scope.itemsPerPage);
                 };
 
-                $scope.$watch('currentPage + itemsPerPage + setOrder + displaySailorsList + orderKey + showUnmustered', function () {
+                $scope.makeDisplayList = function() {
                     var begin = (parseInt($scope.currentPage, 10) - 1) * parseInt($scope.itemsPerPage, 10);
                     var end = parseInt(begin, 10) + parseInt($scope.itemsPerPage, 10);
-                    $scope.displaySailorsList = $filter('orderBy')($scope.displaySailorsList, $scope.orderKey);
-                    if ($scope.showUnmustered) {
-                        $scope.filteredDisplaySailorsList = $filter('filter')($scope.displaySailorsList, { HasBeenMustered: false }).slice(begin, end)
-                    } else {
-                        $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
-                    }
+                    $scope.newStatusList = $filter('orderBy')($scope.newStatusList, $scope.orderKey);
 
-                    $scope.unmusteredSailorsList = [];
-                    for (var i in $scope.displaySailorsList) {
-                        if (!$scope.displaySailorsList[i].HasBeenMustered) {
-                            $scope.unmusteredSailorsList.push($scope.displaySailorsList[i]);
+
+
+                    // FILTER FOR GROUP HERE
+                    if ($scope.selectedDivision == 'All') {
+                        $scope.groupCount = $scope.newStatusList.length;
+                        $scope.unmusteredSailorsList = $filter('filter')($scope.newStatusList, { HasBeenMustered: false });
+                        if ($scope.showUnmustered) {
+                            $scope.displayList = $scope.unmusteredSailorsList.slice(begin, end)
+                        } else {
+                            $scope.displayList = $scope.newStatusList.slice(begin, end);
+                        }
+                    } else {
+                        var sailorsInThisGroup = $filter('filter')($scope.newStatusList, { Division : $scope.selectedDivision });
+                        $scope.groupCount = sailorsInThisGroup.length;
+                        $scope.unmusteredSailorsList = $filter('filter')(sailorsInThisGroup, { HasBeenMustered: false });
+                        if ($scope.showUnmustered) {
+                            $scope.displayList = $scope.unmusteredSailorsList.slice(begin, end)
+                        } else {
+                            $scope.displayList = sailorsInThisGroup.slice(begin, end);
                         }
                     }
-                });
-                // The default sorting key
-                $scope.orderKey = "Division";
-                $scope.selectedDivision = "All";
 
-                $scope.setDivision = function (selectedDivision) {
-                    $scope.displaySailorsList = [];
-                    if (selectedDivision == "All") {
-                        $scope.displaySailorsList = $scope.allSailorsList;
-                    } else {
-                        for (var i = 0; i < $scope.allSailorsList.length; i++) {
-                            if ($scope.allSailorsList[i].Division == selectedDivision) {
-                                $scope.displaySailorsList.push($scope.allSailorsList[i]);
-                            }
-                        }
-                    }
                 };
-
+                $scope.$watch('currentPage + itemsPerPage + setOrder + newStatusList + orderKey + showUnmustered', function () {
+                    $scope.makeDisplayList();
+                });
 
                 ProfileService.GetAllLists(
                     // If we succeed, this is our call back
@@ -84,40 +85,12 @@ angular.module('Muster')
                             }
                         }
 
-                        $scope.allSailorsList = response.ReturnValue.Musters;
+                        $scope.newStatusList = response.ReturnValue.Musters;
 
-                        $scope.displaySailorsList = [];
-                        if ($scope.selectedDivision == "All") {
-                            $scope.displaySailorsList = $scope.allSailorsList;
-                        } else {
-                            for (var i = 0; i < $scope.allSailorsList.length; i++) {
-                                if ($scope.allSailorsList[i].Division == $scope.selectedDivision) {
-                                    $scope.displaySailorsList.push($scope.allSailorsList[i]);
-                                }
-                            }
-                        }
+                        oldStatusList = angular.copy(response.ReturnValue.Musters);
 
-                        var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-                            end = begin + $scope.itemsPerPage;
+                        $scope.makeDisplayList();
 
-                        $scope.displaySailorsList = $filter('orderBy')($scope.displaySailorsList, $scope.orderKey);
-                        $scope.filteredDisplaySailorsList = $scope.displaySailorsList.slice(begin, end);
-
-                        originalMusterList = [];
-                        for (var i in $scope.displaySailorsList) {
-                            originalMusterList[i] = {
-                                "CurrentMusterStatus": {
-                                    "MusterStatus": $scope.displaySailorsList[i].CurrentMusterStatus.MusterStatus
-                                }
-                            }
-                        }
-
-                        $scope.unmusteredSailorsList = [];
-                        for (var i in $scope.displaySailorsList) {
-                            if (!$scope.displaySailorsList[i].HasBeenMustered) {
-                                $scope.unmusteredSailorsList.push($scope.displaySailorsList[i]);
-                            }
-                        }
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {
@@ -130,9 +103,8 @@ angular.module('Muster')
 
                 $scope.submitMuster = function (musterList) {
                     var dtoMuster = {};
-                    console.log(musterList);
                     for (var i = 0; i < musterList.length; i++) {
-                        if (musterList[i].CurrentMusterStatus.MusterStatus != null && musterList[i].CurrentMusterStatus.MusterStatus != originalMusterList[i].CurrentMusterStatus.MusterStatus) {
+                        if (musterList[i].CurrentMusterStatus.MusterStatus != null && musterList[i].CurrentMusterStatus.MusterStatus != $filter('filter')(oldStatusList, {Id: musterList[i].Id})[0].CurrentMusterStatus.MusterStatus) {
                             dtoMuster[musterList[i].Id] = musterList[i].CurrentMusterStatus.MusterStatus;
                         }
                     }
@@ -172,6 +144,7 @@ angular.module('Muster')
                 $scope.musterDate = new Date();
                 $scope.musterDate.setDate($scope.musterDate.getDate() - 1);
 
+                // Default sorting
                 $scope.viewBy = "division";
 
                 var getIndexByValue = function(list, name){
