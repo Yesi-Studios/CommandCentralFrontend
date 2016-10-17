@@ -53,8 +53,8 @@ angular.module('Muster')
                             $scope.displayList = sailorsInThisGroup.slice(begin, end);
                         }
                     }
-
                 };
+
                 $scope.$watch('currentPage + itemsPerPage + setOrder + newStatusList + orderKey + showUnmustered', function () {
                     $scope.makeDisplayList();
                 });

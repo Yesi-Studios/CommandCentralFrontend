@@ -1867,8 +1867,8 @@ angular.module('Muster')
                             $scope.displayList = sailorsInThisGroup.slice(begin, end);
                         }
                     }
-
                 };
+
                 $scope.$watch('currentPage + itemsPerPage + setOrder + newStatusList + orderKey + showUnmustered', function () {
                     $scope.makeDisplayList();
                 });
@@ -1891,6 +1891,8 @@ angular.module('Muster')
                     function (response) {
 
                         $scope.dataLoading = false;
+                        $scope.errors = [];
+                        $scope.messages= [];
                         // Create the divisions array
                         for (var j = 0; j < response.ReturnValue.Musters.length; j++) {
                             if ($scope.divisions.indexOf(response.ReturnValue.Musters[j].Division) == -1) {
