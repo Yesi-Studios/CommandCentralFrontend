@@ -15,9 +15,9 @@
         <div class="col-md-offset-1 col-md-10 text-center">
             <span class="label label-success">{{musterCounts.Present}} ({{musterCounts.Present/musterCounts.Total*100 | number:2}}%) Present</span>
             <span class="label label-warning">{{musterCounts.SIQ}} ({{musterCounts.SIQ/musterCounts.Total*100 | number:2}}%) SIQ</span>
-            <span class="label label-primary">{{musterCounts.Leave}} ({{musterCounts.Leave/musterCounts.Total*100 | number:2}}%) On Leave</span>
-            <span class="label label-info">{{musterCounts.Terminal_Leave}} ({{musterCounts.Terminal_Leave/musterCounts.Total*100 | number:2}}%) Terminal Leave</span>
-            <span class="label label-default">{{musterCounts.Transferred}} ({{musterCounts.Transferred/musterCounts.Total*100 | number:2}}%) Transferred</span>
+            <span class="label label-primary">{{musterCounts.Leave + musterCounts["Terminal Leave"]}} ({{(musterCounts.Leave + musterCounts["Terminal_Leave"])/musterCounts.Total*100 | number:2}}%) Leave/Terminal Leave</span>
+            <span class="label label-info">{{musterCounts.TAD + musterCounts.Deployed}} ({{(musterCounts.TAD + musterCounts.Deployed)/musterCounts.Total*100 | number:2}}%) TAD/Deployed</span>
+            <span class="label label-default">{{musterCounts.AA}} ({{musterCounts.AA/musterCounts.Total*100 | number:2}}%) AA</span>
             <span class="label label-danger">{{musterCounts.UA}} ({{musterCounts.UA/musterCounts.Total*100 | number:2}}%)UA</span>
 
         </div>

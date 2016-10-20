@@ -2007,13 +2007,16 @@ angular.module('Muster')
                                 $scope.errors.push("No muster records for that date.");
                             } else {
                                 $scope.showProgress = true;
+                                $scope.fieldThing = {};
                                 $scope.musterCounts = {
                                     "Present" : 0,
-                                    "Terminal_Leave" : 0,
+                                    "Terminal Leave" : 0,
                                     "Leave" : 0,
+                                    "AA" : 0,
                                     "UA" : 0,
                                     "SIQ" : 0,
-                                    "Transferred" : 0,
+                                    "TAD" : 0,
+                                    "Deployed" :0,
                                     "Total" : response.ReturnValue.length
                                 };
                                 $scope.command = {
@@ -2024,6 +2027,7 @@ angular.module('Muster')
                                 for (var i in response.ReturnValue) {
                                     var record = response.ReturnValue[i];
                                     $scope.musterCounts[record["MusterStatus"]] += 1;
+                                    $scope.fieldThing[record["MusterStatus"]] = "thing";
                                     var depId = getIndexByValue($scope.command.departments, record.Department);
                                     if (depId == -1) {
                                         $scope.command.departments.push(
@@ -2050,6 +2054,7 @@ angular.module('Muster')
                                     $scope.command.uics[record.UIC].push(record);
 
                                 } console.log($scope.command);
+                                console.log($scope.fieldThing);
                             }
                         },
                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
