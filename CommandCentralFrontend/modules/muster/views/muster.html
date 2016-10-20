@@ -19,7 +19,7 @@
                 {{selectedDivision}}.</h3>
             <div class="progress" ng-show="displayList.length" >
                 <div class="progress-bar" role="progressbar" aria-valuenow="{{100*(1-unmusteredSailorsList.length/groupCount)}}"
-                     aria-valuemin="0" aria-valuemax="100" style="min-width: 4em; width:{{100*(1-unmusteredSailorsList.length/groupCount)}}%">
+                     aria-valuemin="0" aria-valuemax="100" ng-style="{'min-width': '4em', 'width': 100*(1-unmusteredSailorsList.length/groupCount)+'%'}">
                     {{100*(1-unmusteredSailorsList.length/groupCount) | number: 2}}% Mustered
                 </div>
             </div>
