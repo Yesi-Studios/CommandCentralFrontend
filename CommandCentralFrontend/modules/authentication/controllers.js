@@ -121,6 +121,28 @@ angular.module('Authentication')
             );
         };
     }])
+    .controller('ForgotController',
+        ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
+                // reset login status
+                // AuthenticationService.ClearCredentials();
+
+                $scope.forgotpassword = function () {
+                    $scope.dataLoading = true;
+                    $scope.errors = null;
+                    AuthenticationService.ForgotPassword($scope.email, $scope.ssn,
+                        function (response) {
+                            $scope.confirmation = "Got it. Check your .mil email for further instructions.";
+                            $scope.dataLoading = false;
+
+                        },
+                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                        function (response) {
+                            ConnectionService.HandleServiceError(response, $scope, $location);
+                        }
+                    );
+                };
+            }])
     .controller('ChangePasswordController',
         ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
             function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
