@@ -3,8 +3,8 @@
 angular.module('Profiles')
 
     .controller('ProfileController',
-        ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'ConnectionService', 'config',
-            function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, ConnectionService, config) {
+        ['$scope', '$rootScope', '$location', '$routeParams', '$filter', 'AuthenticationService', 'ProfileService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, $routeParams, $filter, AuthenticationService, ProfileService, ConnectionService, config) {
                 
                 /*
                  *   This function chain is a little hefty, so a preface is warranted.
@@ -151,6 +151,7 @@ angular.module('Profiles')
                     // If we succeed, this is our call back
                     function (response) {
                         $scope.lists = response.ReturnValue;
+                        $scope.defaultPhoneType = $filter('filter')(response.ReturnValue.PhoneNumberType, { Value: "Home" })[0];
 
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.

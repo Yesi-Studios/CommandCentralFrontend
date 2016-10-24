@@ -161,7 +161,7 @@
 										<input ng-disabled="!canEditPersonField('PhoneNumbers')" name="newNumber" id="newNumber" type="text" class="form-control" aria-describedby="newNumberAddon" ng-model="number.Number" ui-mask="(999)-999-9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
 									</td>
 									<td>
-										<select ng-disabled="!canEditPersonField('PhoneNumbers')" name="newNumberType" class="form-control" id="newNumberType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType'] track by o.Id">
+										<select ng-disabled="!canEditPersonField('PhoneNumbers')" name="newNumberType" class="form-control" id="newNumberType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType'] track by o.Id" required>
 											<option ng-if="profileData.PhoneNumbers.length == 0" value="" disabled selected hidden><!--suppress HtmlUnknownTag, HtmlUnknownTag -->
 												<strong>Phone Type</strong></option>
 											<option ng-if="profileData.PhoneNumbers.length != 0" disabled selected hidden></option>
@@ -177,7 +177,7 @@
 									<td></td>
 									<td></td>
 									<td><!--suppress HtmlUnknownAttribute -->
-										<button ng-disabled="!canEditPersonField('PhoneNumbers')" name="insertPhoneNumber" type="button" class="btn btn-success btn-xs" ng-click="profileData.PhoneNumbers.push({Number:'', PhoneType:{}, IsContactable:false, IsPreferred:false})"><span class="glyphicon glyphicon-plus"></span></button></td>
+										<button ng-disabled="!canEditPersonField('PhoneNumbers')" name="insertPhoneNumber" type="button" class="btn btn-success btn-xs" ng-click="profileData.PhoneNumbers.push({Number:'', PhoneType:defaultPhoneType, IsContactable:false, IsPreferred:false})"><span class="glyphicon glyphicon-plus"></span></button></td>
 								</tr>
 								</tbody>
 							</table>
