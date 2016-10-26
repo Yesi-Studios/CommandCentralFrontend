@@ -1873,7 +1873,7 @@ angular.module('Muster')
                     // FILTER FOR GROUP HERE
                     if ($scope.selectedDivision == 'All') {
                         $scope.groupCount = $scope.newStatusList.length;
-                        $scope.unmusteredSailorsList = $filter('filter')($scope.newStatusList, { HasBeenMustered: false });
+                        $scope.unmusteredSailorsList = $filter('filter')($scope.newStatusList, { HasBeenMustered: false }, true);
                         if ($scope.showUnmustered) {
                             $scope.displayList = $scope.unmusteredSailorsList.slice(begin, end)
                         } else {
