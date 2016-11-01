@@ -326,9 +326,9 @@ angular.module('CommandCentral', [
             fieldName: '@'
         },
         template: '<div class="input-group">' +
-        '<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}</span>'+
+        '<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}<span ng-if="fieldType == \'DateTime\'"><br>(From/To)</span></span>'+
         '<input ng-if="fieldType == \'String\'" type="text" class="form-control" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName]">' +
-        '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'From\']"></ng-custom-date-picker>'+
+        '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'From\']"></ng-custom-date-picker> '+
         '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'To\']"></ng-custom-date-picker>'+
         '<input ng-if="fieldType != \'String\' && fieldType != \'DateTime\'" type="text" value="This field is not searchable" class="form-control" aria-describedby="searchAddon{{fieldName}}" disabled>'+
         '</div>',
