@@ -322,8 +322,8 @@ angular.module('CommandCentral', [
         require: '^ngModel',
         scope: {
             ngModel: '=',
-            fieldType: '@',
-            fieldName: '@'
+            fieldType: '=',
+            fieldName: '='
         },
         template: '<div class="input-group">' +
         '<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}<span ng-if="fieldType == \'DateTime\'"><br>(From/To)</span></span>'+
@@ -331,16 +331,19 @@ angular.module('CommandCentral', [
         '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'From\']"></ng-custom-date-picker> '+
         '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'To\']"></ng-custom-date-picker>'+
         '<input ng-if="fieldType != \'String\' && fieldType != \'DateTime\'" type="text" value="This field is not searchable" class="form-control" aria-describedby="searchAddon{{fieldName}}" disabled>'+
-        '</div>',
+        '</div>{{fieldType}}',
         controller: ['$scope', function ($scope) {
-            $scope.s = "String";
-            $scope.dt = "DateTime";
-            console.log($scope.fieldType);
-            console.log($scope.fieldName);
-            console.log($scope.ngModel);
+            console.log($scope['fieldName']);
+            if($scope.fieldName.indexOf('Date') != -1) { // TODO: figure out why the damn fieldName variable shows up when logging $scope, but not when called directly
+                if($scope.ngModel[$scope.fieldName] && $scope.ngModel[$scope.fieldName][0]) {
+                    console.log($scope.ngModel[$scope.fieldName][0]);
+                    $scope.ngModel[$scope.fieldName][0] = { 'From': new Date($scope.ngModel[$scope.fieldName][0].From), 'To' : new Date($scope.ngModel[$scope.fieldName][0].To) };
+                    console.log($scope.ngModel[$scope.fieldName][0]);
+                    console.log("SCORE");
+                } else {
+                    $scope.ngModel[$scope.fieldName] = [];
+                }
 
-            if($scope.fieldType == 'DateTime') {
-                $scope.ngModel[$scope.fieldName] = [];
             }
 
         }]

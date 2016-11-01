@@ -217,6 +217,8 @@ angular.module('Search')
             $scope.fieldsToReturn = JSON.parse($routeParams.returnFields);
             $scope.fieldsToSearch = Object.keys(JSON.parse($routeParams.searchTerms));
             $scope.advancedSearchFilters = $scope.searchByFieldTerms;
+            console.log("HERE");
+            console.log($scope.advancedSearchFilters);
             $scope.selectedLevel = JSON.parse($routeParams.searchLevel);
 
             if(config.debugMode) console.log(JSON.parse($routeParams.searchTerms));

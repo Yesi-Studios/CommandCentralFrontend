@@ -32,7 +32,7 @@
             <div ng-repeat="field in fieldsToSearch track by $index" class="form-group col-md-offset-2 col-md-8">
                 <span ng-keyup="searchOnEnter($event, advancedSearchFilters, fieldsToReturn, selectedLevel)">
 
-                    <ng-search-field ng-model="advancedSearchFilters" data-field-name="{{field}}" data-field-type="{{fieldTypes[field]['SearchDataType']}}"></ng-search-field>
+                    <ng-search-field ng-model="advancedSearchFilters" data-field-name="field" data-field-type="fieldTypes[field]['SearchDataType']"></ng-search-field>
                 </span>
             </div>
         </div>

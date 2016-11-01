@@ -322,8 +322,8 @@ angular.module('CommandCentral', [
         require: '^ngModel',
         scope: {
             ngModel: '=',
-            fieldType: '@',
-            fieldName: '@'
+            fieldType: '=',
+            fieldName: '='
         },
         template: '<div class="input-group">' +
         '<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}<span ng-if="fieldType == \'DateTime\'"><br>(From/To)</span></span>'+
@@ -331,16 +331,19 @@ angular.module('CommandCentral', [
         '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'From\']"></ng-custom-date-picker> '+
         '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'To\']"></ng-custom-date-picker>'+
         '<input ng-if="fieldType != \'String\' && fieldType != \'DateTime\'" type="text" value="This field is not searchable" class="form-control" aria-describedby="searchAddon{{fieldName}}" disabled>'+
-        '</div>',
+        '</div>{{fieldType}}',
         controller: ['$scope', function ($scope) {
-            $scope.s = "String";
-            $scope.dt = "DateTime";
-            console.log($scope.fieldType);
-            console.log($scope.fieldName);
-            console.log($scope.ngModel);
+            console.log($scope['fieldName']);
+            if($scope.fieldName.indexOf('Date') != -1) { // TODO: figure out why the damn fieldName variable shows up when logging $scope, but not when called directly
+                if($scope.ngModel[$scope.fieldName] && $scope.ngModel[$scope.fieldName][0]) {
+                    console.log($scope.ngModel[$scope.fieldName][0]);
+                    $scope.ngModel[$scope.fieldName][0] = { 'From': new Date($scope.ngModel[$scope.fieldName][0].From), 'To' : new Date($scope.ngModel[$scope.fieldName][0].To) };
+                    console.log($scope.ngModel[$scope.fieldName][0]);
+                    console.log("SCORE");
+                } else {
+                    $scope.ngModel[$scope.fieldName] = [];
+                }
 
-            if($scope.fieldType == 'DateTime') {
-                $scope.ngModel[$scope.fieldName] = [];
             }
 
         }]
@@ -2294,6 +2297,7 @@ angular.module('Profiles')
 
                             // Set up all the dates to be actual Dates
                             if(response.ReturnValue.Person.DateOfBirth) $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
+                            console.log(response.ReturnValue.Person.DateOfBirth);
                             if(response.ReturnValue.Person.DateOfArrival) $scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
                             if(response.ReturnValue.Person.DateOfDeparture) $scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
                             if(response.ReturnValue.Person.EAOS) $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
@@ -2760,6 +2764,8 @@ angular.module('Search')
             $scope.fieldsToReturn = JSON.parse($routeParams.returnFields);
             $scope.fieldsToSearch = Object.keys(JSON.parse($routeParams.searchTerms));
             $scope.advancedSearchFilters = $scope.searchByFieldTerms;
+            console.log("HERE");
+            console.log($scope.advancedSearchFilters);
             $scope.selectedLevel = JSON.parse($routeParams.searchLevel);
 
             if(config.debugMode) console.log(JSON.parse($routeParams.searchTerms));
