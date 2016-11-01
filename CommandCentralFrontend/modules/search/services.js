@@ -6,7 +6,11 @@ angular.module('Search')
     ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
     function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
-		
+
+        service.GetFieldTypes = function (success, error) {
+            return ConnectionService.RequestFromBackend('GetPersonMetaData', { 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+        };
+
         service.DoSimpleSearch = function (terms, showHidden, success, error) {
             return ConnectionService.RequestFromBackend('SimpleSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'searchterm': terms, 'showhidden': showHidden }, success, error);
         };

@@ -30,11 +30,10 @@
     <div class="row">
         <div class="col-md-offset-1 col-md-10 text-center">
             <div ng-repeat="field in fieldsToSearch track by $index" class="form-group col-md-offset-2 col-md-8">
-                <div class="input-group">
-                    <span class="input-group-addon" id="searchAddon">{{field}}</span>
-                    <!--suppress HtmlUnknownAttribute -->
-                    <input type="text" class="form-control" aria-describedby="searchAddon" ng-model="advancedSearchFilters[field]" ng-keyup="searchOnEnter($event, advancedSearchFilters, fieldsToReturn, selectedLevel)">
-                </div>
+                <span ng-keyup="searchOnEnter($event, advancedSearchFilters, fieldsToReturn, selectedLevel)">
+
+                    <ng-search-field ng-model="advancedSearchFilters[field]" data-field-name="{{field}}" data-field-type="{{fieldTypes[field]['SearchDataType']}}"></ng-search-field>
+                </span>
             </div>
         </div>
     </div>

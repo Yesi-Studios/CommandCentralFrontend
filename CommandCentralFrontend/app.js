@@ -316,6 +316,29 @@ angular.module('CommandCentral', [
 
         }]
     }
+}).directive('ngSearchField', function(){
+    return {
+        restrict: 'E',
+        require: '^ngModel',
+        scope: {
+            ngModel: '=',
+            fieldType: '@',
+            fieldName: '@'
+        },
+        template: '<div class="input-group">' +
+        '<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}</span>'+
+        '<input ng-if="fieldType == \'String\'" type="text" class="form-control" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel">' +
+        '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel"></ng-custom-date-picker>'+
+        '</div>',
+        controller: ['$scope', function ($scope) {
+            $scope.s = "String";
+            $scope.dt = "DateTime";
+            console.log($scope.fieldType);
+            console.log($scope.fieldName);
+            console.log($scope.ngModel);
+
+        }]
+    }
 })
     /*.controller('DatepickerPopupCtrl', function ($scope) {
     $scope.today = function () {

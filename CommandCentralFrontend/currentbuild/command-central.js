@@ -316,6 +316,29 @@ angular.module('CommandCentral', [
 
         }]
     }
+}).directive('ngSearchField', function(){
+    return {
+        restrict: 'E',
+        require: '^ngModel',
+        scope: {
+            ngModel: '=',
+            fieldType: '@',
+            fieldName: '@'
+        },
+        template: '<div class="input-group">' +
+        '<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}</span>'+
+        '<input ng-if="fieldType == \'String\'" type="text" class="form-control" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel">' +
+        '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel"></ng-custom-date-picker>'+
+        '</div>',
+        controller: ['$scope', function ($scope) {
+            $scope.s = "String";
+            $scope.dt = "DateTime";
+            console.log($scope.fieldType);
+            console.log($scope.fieldName);
+            console.log($scope.ngModel);
+
+        }]
+    }
 })
     /*.controller('DatepickerPopupCtrl', function ($scope) {
     $scope.today = function () {
@@ -2637,6 +2660,16 @@ angular.module('Search')
         $scope.currentPage = 1;
         $scope.results = [];
 
+        SearchService.GetFieldTypes(
+            function(response){
+                $scope.fieldTypes = response.ReturnValue;
+                console.log($scope.fieldTypes);
+            },
+            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+            function (response) {
+                ConnectionService.HandleServiceError(response, $scope, $location);
+            }
+        );
         $scope.pageCount = function () {
             return Math.ceil($scope.friends.length / $scope.itemsPerPage);
         };
@@ -2650,7 +2683,7 @@ angular.module('Search')
         });
 
         $scope.getSearchableFields = function (level) {
-            if(config.debugMode) console.log(AuthorizationService.GetReturnableFields(level));
+            //if(config.debugMode) console.log(AuthorizationService.GetReturnableFields(level));
             return AuthorizationService.GetReturnableFields(level);
         };
 
@@ -2665,6 +2698,7 @@ angular.module('Search')
         };
 
         $scope.goToResults = function (filters, fields, level) {
+            console.log($scope.advancedSearchFilters);
             if (level == null) {
                 level = $routeParams.searchLevel;
                 if (level == null) {
@@ -2740,7 +2774,11 @@ angular.module('Search')
     ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
     function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
-		
+
+        service.GetFieldTypes = function (success, error) {
+            return ConnectionService.RequestFromBackend('GetPersonMetaData', { 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+        };
+
         service.DoSimpleSearch = function (terms, showHidden, success, error) {
             return ConnectionService.RequestFromBackend('SimpleSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'searchterm': terms, 'showhidden': showHidden }, success, error);
         };
