@@ -328,7 +328,8 @@ angular.module('CommandCentral', [
         template: '<div class="input-group">' +
         '<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}</span>'+
         '<input ng-if="fieldType == \'String\'" type="text" class="form-control" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName]">' +
-        '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName]"></ng-custom-date-picker>'+
+        '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'From\']"></ng-custom-date-picker>'+
+        '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'To\']"></ng-custom-date-picker>'+
         '<input ng-if="fieldType != \'String\' && fieldType != \'DateTime\'" type="text" value="This field is not searchable" class="form-control" aria-describedby="searchAddon{{fieldName}}" disabled>'+
         '</div>',
         controller: ['$scope', function ($scope) {
@@ -337,6 +338,10 @@ angular.module('CommandCentral', [
             console.log($scope.fieldType);
             console.log($scope.fieldName);
             console.log($scope.ngModel);
+
+            if($scope.fieldType == 'DateTime') {
+                $scope.ngModel[$scope.fieldName] = [];
+            }
 
         }]
     }
