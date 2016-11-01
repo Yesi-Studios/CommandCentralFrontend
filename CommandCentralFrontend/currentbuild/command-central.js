@@ -329,6 +329,7 @@ angular.module('CommandCentral', [
         '<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}</span>'+
         '<input ng-if="fieldType == \'String\'" type="text" class="form-control" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName]">' +
         '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName]"></ng-custom-date-picker>'+
+        '<input ng-if="fieldType != \'String\' && fieldType != \'DateTime\'" type="text" value="This field is not searchable" class="form-control" aria-describedby="searchAddon{{fieldName}}" disabled>'+
         '</div>',
         controller: ['$scope', function ($scope) {
             $scope.s = "String";
