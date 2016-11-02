@@ -333,13 +333,14 @@ angular.module('CommandCentral', [
         '<input ng-if="fieldType != \'String\' && fieldType != \'DateTime\'" type="text" value="This field is not searchable" class="form-control" aria-describedby="searchAddon{{fieldName}}" disabled>'+
         '</div>{{fieldType}}',
         controller: ['$scope', function ($scope) {
-            console.log($scope['fieldName']);
             if($scope.fieldName.indexOf('Date') != -1) { // TODO: figure out why the damn fieldName variable shows up when logging $scope, but not when called directly
                 if($scope.ngModel[$scope.fieldName] && $scope.ngModel[$scope.fieldName][0]) {
-                    console.log($scope.ngModel[$scope.fieldName][0]);
-                    $scope.ngModel[$scope.fieldName][0] = { 'From': new Date($scope.ngModel[$scope.fieldName][0].From), 'To' : new Date($scope.ngModel[$scope.fieldName][0].To) };
-                    console.log($scope.ngModel[$scope.fieldName][0]);
-                    console.log("SCORE");
+
+                    if($scope.ngModel[$scope.fieldName][0].From) $scope.ngModel[$scope.fieldName][0].From = new Date($scope.ngModel[$scope.fieldName][0].From);
+                    if($scope.ngModel[$scope.fieldName][0].To) $scope.ngModel[$scope.fieldName][0].To = new Date($scope.ngModel[$scope.fieldName][0].To);
+
+                    console.log(JSON.stringify($scope.ngModel[$scope.fieldName][0].To));
+                    console.log("ASLKIDJHOFASLJKDHFASDFHJ")
                 } else {
                     $scope.ngModel[$scope.fieldName] = [];
                 }
