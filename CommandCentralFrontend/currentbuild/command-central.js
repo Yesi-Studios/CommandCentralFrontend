@@ -120,6 +120,12 @@ angular.module('CommandCentral', [
 			hideMenus: true
 		})
 
+        .when('/forgotusername', {
+            controller: 'ForgotUsernameController',
+            templateUrl: 'modules/authentication/views/forgotusername.html',
+            hideMenus: true
+        })
+
         .when('/forgotpassword', {
             controller: 'ForgotController',
             templateUrl: 'modules/authentication/views/forgotpassword.html',
@@ -194,7 +200,7 @@ angular.module('CommandCentral', [
 			$rootScope.showNav = $location.path().indexOf('/login') == -1 && $location.path().indexOf('/register') == -1 && $location.path().indexOf('/finishregistration') == -1 && $location.path().indexOf('/forgotpassword') == -1 &&$location.path().indexOf('/finishreset') == -1;
 
             // redirect to login page if not logged in
-            if ($location.path().indexOf('/login') == -1 && $location.path() !== '/resetlogin' && $location.path() !== '/register' && $location.path().indexOf('/finishregistration') == -1 && $location.path() !== '/forgotpassword' && $location.path().indexOf('/finishreset') == -1 && !$rootScope.globals.currentUser) {
+            if ($location.path().indexOf('/login') == -1 && $location.path() !== '/resetlogin' && $location.path() !== '/register' && $location.path().indexOf('/finishregistration') == -1 && $location.path() !== '/forgotpassword' && $location.path() !== '/forgotusername' && $location.path().indexOf('/finishreset') == -1 && !$rootScope.globals.currentUser) {
                 ConnectionService.AddLoginError("You must log in to see that page");
                 ConnectionService.SetRedirectURL($location.url());
 				$location.path('/login');
@@ -991,6 +997,29 @@ angular.module('Authentication')
                     );
                 };
             }])
+    .controller('ForgotUsernameController',
+        ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
+            function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
+                // reset login status
+                // AuthenticationService.ClearCredentials();
+
+                $scope.forgotusername = function () {
+                    $scope.dataLoading = true;
+                    $scope.errors = null;
+                    AuthenticationService.ForgotUsername($scope.ssn,
+                        function (response) {
+
+                            ConnectionService.AddLoginMessage("Your username was sent to your .mil email.");
+                            $location.path('/login');
+
+                        },
+                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                        function (response) {
+                            ConnectionService.HandleServiceError(response, $scope, $location);
+                        }
+                    );
+                };
+            }])
     .controller('ChangePasswordController',
         ['$scope', '$rootScope', '$location', 'AuthenticationService', 'ConnectionService', 'config',
             function ($scope, $rootScope, $location, AuthenticationService, ConnectionService, config) {
@@ -1127,9 +1156,13 @@ angular.module('Authentication')
 		service.CreateUser = function (person, success, error) {
 		    return ConnectionService.RequestFromBackend('CreatePerson', { 'authenticationtoken': service.GetAuthToken(), 'person': person }, success, error);
 		};
-		
+
 		service.ForgotPassword = function (email, ssn, success, error) {
-		    return ConnectionService.RequestFromBackend('BeginPasswordReset', { 'email': email, 'ssn': ssn, 'continuelink' : 'https://commandcentral/#/finishreset/' }, success, error);
+			return ConnectionService.RequestFromBackend('BeginPasswordReset', { 'email': email, 'ssn': ssn, 'continuelink' : 'https://commandcentral/#/finishreset/' }, success, error);
+		};
+
+		service.ForgotUsername = function (ssn, success, error) {
+			return ConnectionService.RequestFromBackend('ForgotUsername', { 'ssn': ssn }, success, error);
 		};
 
 		service.FinishReset = function (password, id, success, error) {

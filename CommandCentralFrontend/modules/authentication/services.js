@@ -47,9 +47,13 @@ angular.module('Authentication')
 		service.CreateUser = function (person, success, error) {
 		    return ConnectionService.RequestFromBackend('CreatePerson', { 'authenticationtoken': service.GetAuthToken(), 'person': person }, success, error);
 		};
-		
+
 		service.ForgotPassword = function (email, ssn, success, error) {
-		    return ConnectionService.RequestFromBackend('BeginPasswordReset', { 'email': email, 'ssn': ssn, 'continuelink' : 'https://commandcentral/#/finishreset/' }, success, error);
+			return ConnectionService.RequestFromBackend('BeginPasswordReset', { 'email': email, 'ssn': ssn, 'continuelink' : 'https://commandcentral/#/finishreset/' }, success, error);
+		};
+
+		service.ForgotUsername = function (ssn, success, error) {
+			return ConnectionService.RequestFromBackend('ForgotUsername', { 'ssn': ssn }, success, error);
 		};
 
 		service.FinishReset = function (password, id, success, error) {

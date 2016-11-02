@@ -120,6 +120,12 @@ angular.module('CommandCentral', [
 			hideMenus: true
 		})
 
+        .when('/forgotusername', {
+            controller: 'ForgotUsernameController',
+            templateUrl: 'modules/authentication/views/forgotusername.html',
+            hideMenus: true
+        })
+
         .when('/forgotpassword', {
             controller: 'ForgotController',
             templateUrl: 'modules/authentication/views/forgotpassword.html',
@@ -194,7 +200,7 @@ angular.module('CommandCentral', [
 			$rootScope.showNav = $location.path().indexOf('/login') == -1 && $location.path().indexOf('/register') == -1 && $location.path().indexOf('/finishregistration') == -1 && $location.path().indexOf('/forgotpassword') == -1 &&$location.path().indexOf('/finishreset') == -1;
 
             // redirect to login page if not logged in
-            if ($location.path().indexOf('/login') == -1 && $location.path() !== '/resetlogin' && $location.path() !== '/register' && $location.path().indexOf('/finishregistration') == -1 && $location.path() !== '/forgotpassword' && $location.path().indexOf('/finishreset') == -1 && !$rootScope.globals.currentUser) {
+            if ($location.path().indexOf('/login') == -1 && $location.path() !== '/resetlogin' && $location.path() !== '/register' && $location.path().indexOf('/finishregistration') == -1 && $location.path() !== '/forgotpassword' && $location.path() !== '/forgotusername' && $location.path().indexOf('/finishreset') == -1 && !$rootScope.globals.currentUser) {
                 ConnectionService.AddLoginError("You must log in to see that page");
                 ConnectionService.SetRedirectURL($location.url());
 				$location.path('/login');
