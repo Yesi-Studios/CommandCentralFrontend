@@ -331,16 +331,23 @@ angular.module('CommandCentral', [
         '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'From\']"></ng-custom-date-picker> '+
         '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'To\']"></ng-custom-date-picker>'+
         '<input ng-if="fieldType != \'String\' && fieldType != \'DateTime\'" type="text" value="This field is not searchable" class="form-control" aria-describedby="searchAddon{{fieldName}}" disabled>'+
-        '</div>{{fieldType}}',
+        '</div>',
         controller: ['$scope', function ($scope) {
             if($scope.fieldName.indexOf('Date') != -1) { // TODO: figure out why the damn fieldName variable shows up when logging $scope, but not when called directly
                 if($scope.ngModel[$scope.fieldName] && $scope.ngModel[$scope.fieldName][0]) {
 
-                    if($scope.ngModel[$scope.fieldName][0].From) $scope.ngModel[$scope.fieldName][0].From = new Date($scope.ngModel[$scope.fieldName][0].From);
-                    if($scope.ngModel[$scope.fieldName][0].To) $scope.ngModel[$scope.fieldName][0].To = new Date($scope.ngModel[$scope.fieldName][0].To);
-
-                    console.log(JSON.stringify($scope.ngModel[$scope.fieldName][0].To));
-                    console.log("ASLKIDJHOFASLJKDHFASDFHJ")
+                    if($scope.ngModel[$scope.fieldName][0].From){
+                        $scope.ngModel[$scope.fieldName][0].From = new Date($scope.ngModel[$scope.fieldName][0].From);
+                    } else {
+                        $scope.ngModel[$scope.fieldName][0].From = null;
+                        delete $scope.ngModel[$scope.fieldName][0].From;
+                    }
+                    if($scope.ngModel[$scope.fieldName][0].To){
+                        $scope.ngModel[$scope.fieldName][0].To = new Date($scope.ngModel[$scope.fieldName][0].To);
+                    } else {
+                        $scope.ngModel[$scope.fieldName][0].To = null;
+                        delete $scope.ngModel[$scope.fieldName][0].To;
+                    }
                 } else {
                     $scope.ngModel[$scope.fieldName] = [];
                 }
@@ -2719,8 +2726,28 @@ angular.module('Search')
             level = level.replace(/['"]+/g, '');
 
             for (var i in filters) {
-                if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1) delete filters[i];
+                if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1){
+                    delete filters[i];
+                } else {
+                    console.log(i);
+                    console.log($scope.fieldTypes[i]);
+                    console.log(filters[i]);
+                    if ($scope.fieldTypes[i].SearchDataType == "DateTime") {
+                        var newFilter = [];
+                        for ( var j in filters[i])  {
+                            newFilter.push({});
+                            if (filters[i][j].To != null) newFilter[j].To = filters[i][j].To;
+                            if (filters[i][j].From != null) newFilter[j].From = filters[i][j].From;
+
+                        }
+                        filters[i] = newFilter;
+                        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%");
+                        console.log(filters[i]);
+                    }
+                }
             }
+            console.log(filters);
+            console.log("***********************");
             $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields) + '/' + JSON.stringify(level) + '/' + JSON.stringify($scope.showHidden));
         };
 
