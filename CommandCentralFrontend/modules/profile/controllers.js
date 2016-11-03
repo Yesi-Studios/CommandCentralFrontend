@@ -192,6 +192,13 @@ angular.module('Profiles')
                 $scope.updateProfile = function () {
                     $scope.dataLoading = true;
                     $scope.profileUpdateSuccess = false;
+                    // Check to see if the Primary NEC is also one of the Secondary NECs. If it is, remove it.
+                    for (var i in $scope.profileData.SecondaryNECs) {
+                        if($scope.profileData.SecondaryNECs[i].Id == $scope.profileData.PrimaryNEC.Id){
+                            $scope.profileData.SecondaryNECs.splice(i,1);
+                        }
+                    }
+
                     // Update the profile with the data currently on this page (used when "Save Profile" button is clicked)
 
                     ProfileService.UpdateMyProfile($scope.profileData,
