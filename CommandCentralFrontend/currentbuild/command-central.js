@@ -322,6 +322,46 @@ angular.module('CommandCentral', [
 
         }]
     }
+}).directive('ngSearchField', function(){
+    return {
+        restrict: 'E',
+        require: '^ngModel',
+        scope: {
+            ngModel: '=',
+            fieldType: '=',
+            fieldName: '='
+        },
+        template: '<div class="input-group">' +
+        '<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}<span ng-if="fieldType == \'DateTime\'"><br>(From/To)</span></span>'+
+        '<input ng-if="fieldType == \'String\'" type="text" class="form-control" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName]">' +
+        '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'From\']"></ng-custom-date-picker> '+
+        '<ng-custom-date-picker ng-if="fieldType == \'DateTime\'" aria-describedby="searchAddon{{fieldName}}" ng-model="ngModel[fieldName][0][\'To\']"></ng-custom-date-picker>'+
+        '<input ng-if="fieldType != \'String\' && fieldType != \'DateTime\'" type="text" value="This field is not searchable" class="form-control" aria-describedby="searchAddon{{fieldName}}" disabled>'+
+        '</div>',
+        controller: ['$scope', function ($scope) {
+            if($scope.fieldName.indexOf('Date') != -1) { // TODO: figure out why the damn fieldName variable shows up when logging $scope, but not when called directly
+                if($scope.ngModel[$scope.fieldName] && $scope.ngModel[$scope.fieldName][0]) {
+
+                    if($scope.ngModel[$scope.fieldName][0].From){
+                        $scope.ngModel[$scope.fieldName][0].From = new Date($scope.ngModel[$scope.fieldName][0].From);
+                    } else {
+                        $scope.ngModel[$scope.fieldName][0].From = null;
+                        delete $scope.ngModel[$scope.fieldName][0].From;
+                    }
+                    if($scope.ngModel[$scope.fieldName][0].To){
+                        $scope.ngModel[$scope.fieldName][0].To = new Date($scope.ngModel[$scope.fieldName][0].To);
+                    } else {
+                        $scope.ngModel[$scope.fieldName][0].To = null;
+                        delete $scope.ngModel[$scope.fieldName][0].To;
+                    }
+                } else {
+                    $scope.ngModel[$scope.fieldName] = [];
+                }
+
+            }
+
+        }]
+    }
 })
     /*.controller('DatepickerPopupCtrl', function ($scope) {
     $scope.today = function () {
@@ -2298,6 +2338,7 @@ angular.module('Profiles')
 
                             // Set up all the dates to be actual Dates
                             if(response.ReturnValue.Person.DateOfBirth) $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
+                            console.log(response.ReturnValue.Person.DateOfBirth);
                             if(response.ReturnValue.Person.DateOfArrival) $scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
                             if(response.ReturnValue.Person.DateOfDeparture) $scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
                             if(response.ReturnValue.Person.EAOS) $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
@@ -2424,6 +2465,13 @@ angular.module('Profiles')
                 $scope.updateProfile = function () {
                     $scope.dataLoading = true;
                     $scope.profileUpdateSuccess = false;
+                    // Check to see if the Primary NEC is also one of the Secondary NECs. If it is, remove it.
+                    for (var i in $scope.profileData.SecondaryNECs) {
+                        if($scope.profileData.SecondaryNECs[i].Id == $scope.profileData.PrimaryNEC.Id){
+                            $scope.profileData.SecondaryNECs.splice(i,1);
+                        }
+                    }
+
                     // Update the profile with the data currently on this page (used when "Save Profile" button is clicked)
 
                     ProfileService.UpdateMyProfile($scope.profileData,
@@ -2670,6 +2718,16 @@ angular.module('Search')
         $scope.currentPage = 1;
         $scope.results = [];
 
+        SearchService.GetFieldTypes(
+            function(response){
+                $scope.fieldTypes = response.ReturnValue;
+                console.log($scope.fieldTypes);
+            },
+            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+            function (response) {
+                ConnectionService.HandleServiceError(response, $scope, $location);
+            }
+        );
         $scope.pageCount = function () {
             return Math.ceil($scope.friends.length / $scope.itemsPerPage);
         };
@@ -2683,7 +2741,7 @@ angular.module('Search')
         });
 
         $scope.getSearchableFields = function (level) {
-            if(config.debugMode) console.log(AuthorizationService.GetReturnableFields(level));
+            //if(config.debugMode) console.log(AuthorizationService.GetReturnableFields(level));
             return AuthorizationService.GetReturnableFields(level);
         };
 
@@ -2698,6 +2756,7 @@ angular.module('Search')
         };
 
         $scope.goToResults = function (filters, fields, level) {
+            console.log($scope.advancedSearchFilters);
             if (level == null) {
                 level = $routeParams.searchLevel;
                 if (level == null) {
@@ -2707,8 +2766,28 @@ angular.module('Search')
             level = level.replace(/['"]+/g, '');
 
             for (var i in filters) {
-                if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1) delete filters[i];
+                if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1){
+                    delete filters[i];
+                } else {
+                    console.log(i);
+                    console.log($scope.fieldTypes[i]);
+                    console.log(filters[i]);
+                    if ($scope.fieldTypes[i].SearchDataType == "DateTime") {
+                        var newFilter = [];
+                        for ( var j in filters[i])  {
+                            newFilter.push({});
+                            if (filters[i][j].To != null) newFilter[j].To = filters[i][j].To;
+                            if (filters[i][j].From != null) newFilter[j].From = filters[i][j].From;
+
+                        }
+                        filters[i] = newFilter;
+                        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%");
+                        console.log(filters[i]);
+                    }
+                }
             }
+            console.log(filters);
+            console.log("***********************");
             $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields) + '/' + JSON.stringify(level) + '/' + JSON.stringify($scope.showHidden));
         };
 
@@ -2753,6 +2832,8 @@ angular.module('Search')
             $scope.fieldsToReturn = JSON.parse($routeParams.returnFields);
             $scope.fieldsToSearch = Object.keys(JSON.parse($routeParams.searchTerms));
             $scope.advancedSearchFilters = $scope.searchByFieldTerms;
+            console.log("HERE");
+            console.log($scope.advancedSearchFilters);
             $scope.selectedLevel = JSON.parse($routeParams.searchLevel);
 
             if(config.debugMode) console.log(JSON.parse($routeParams.searchTerms));
@@ -2773,7 +2854,11 @@ angular.module('Search')
     ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
     function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
-		
+
+        service.GetFieldTypes = function (success, error) {
+            return ConnectionService.RequestFromBackend('GetPersonMetaData', { 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+        };
+
         service.DoSimpleSearch = function (terms, showHidden, success, error) {
             return ConnectionService.RequestFromBackend('SimpleSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'searchterm': terms, 'showhidden': showHidden }, success, error);
         };

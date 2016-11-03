@@ -65,6 +65,7 @@ angular.module('Profiles')
 
                             // Set up all the dates to be actual Dates
                             if(response.ReturnValue.Person.DateOfBirth) $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
+                            console.log(response.ReturnValue.Person.DateOfBirth);
                             if(response.ReturnValue.Person.DateOfArrival) $scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
                             if(response.ReturnValue.Person.DateOfDeparture) $scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
                             if(response.ReturnValue.Person.EAOS) $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
@@ -191,6 +192,13 @@ angular.module('Profiles')
                 $scope.updateProfile = function () {
                     $scope.dataLoading = true;
                     $scope.profileUpdateSuccess = false;
+                    // Check to see if the Primary NEC is also one of the Secondary NECs. If it is, remove it.
+                    for (var i in $scope.profileData.SecondaryNECs) {
+                        if($scope.profileData.SecondaryNECs[i].Id == $scope.profileData.PrimaryNEC.Id){
+                            $scope.profileData.SecondaryNECs.splice(i,1);
+                        }
+                    }
+
                     // Update the profile with the data currently on this page (used when "Save Profile" button is clicked)
 
                     ProfileService.UpdateMyProfile($scope.profileData,

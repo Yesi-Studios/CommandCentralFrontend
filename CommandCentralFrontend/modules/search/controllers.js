@@ -123,6 +123,16 @@ angular.module('Search')
         $scope.currentPage = 1;
         $scope.results = [];
 
+        SearchService.GetFieldTypes(
+            function(response){
+                $scope.fieldTypes = response.ReturnValue;
+                console.log($scope.fieldTypes);
+            },
+            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+            function (response) {
+                ConnectionService.HandleServiceError(response, $scope, $location);
+            }
+        );
         $scope.pageCount = function () {
             return Math.ceil($scope.friends.length / $scope.itemsPerPage);
         };
@@ -136,7 +146,7 @@ angular.module('Search')
         });
 
         $scope.getSearchableFields = function (level) {
-            if(config.debugMode) console.log(AuthorizationService.GetReturnableFields(level));
+            //if(config.debugMode) console.log(AuthorizationService.GetReturnableFields(level));
             return AuthorizationService.GetReturnableFields(level);
         };
 
@@ -151,6 +161,7 @@ angular.module('Search')
         };
 
         $scope.goToResults = function (filters, fields, level) {
+            console.log($scope.advancedSearchFilters);
             if (level == null) {
                 level = $routeParams.searchLevel;
                 if (level == null) {
@@ -160,8 +171,28 @@ angular.module('Search')
             level = level.replace(/['"]+/g, '');
 
             for (var i in filters) {
-                if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1) delete filters[i];
+                if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1){
+                    delete filters[i];
+                } else {
+                    console.log(i);
+                    console.log($scope.fieldTypes[i]);
+                    console.log(filters[i]);
+                    if ($scope.fieldTypes[i].SearchDataType == "DateTime") {
+                        var newFilter = [];
+                        for ( var j in filters[i])  {
+                            newFilter.push({});
+                            if (filters[i][j].To != null) newFilter[j].To = filters[i][j].To;
+                            if (filters[i][j].From != null) newFilter[j].From = filters[i][j].From;
+
+                        }
+                        filters[i] = newFilter;
+                        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%");
+                        console.log(filters[i]);
+                    }
+                }
             }
+            console.log(filters);
+            console.log("***********************");
             $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields) + '/' + JSON.stringify(level) + '/' + JSON.stringify($scope.showHidden));
         };
 
@@ -206,6 +237,8 @@ angular.module('Search')
             $scope.fieldsToReturn = JSON.parse($routeParams.returnFields);
             $scope.fieldsToSearch = Object.keys(JSON.parse($routeParams.searchTerms));
             $scope.advancedSearchFilters = $scope.searchByFieldTerms;
+            console.log("HERE");
+            console.log($scope.advancedSearchFilters);
             $scope.selectedLevel = JSON.parse($routeParams.searchLevel);
 
             if(config.debugMode) console.log(JSON.parse($routeParams.searchTerms));
