@@ -45,7 +45,7 @@
                     </div>
                     <div id="department{{department.Value}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="department{{department.Value}}Heading">
                         <div class="panel-body">
-                            <div ng-repeat="division in department.Divisions" class="panel panel-default">
+                            <div ng-repeat="division in department.Divisions | orderBy: 'Value'" class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="division{{department.Value}}{{division.Value}}Heading">
                                     <h4 class="panel-title">
                                         <button data-toggle="collapse" data-target="#division{{department.Value}}{{division.Value}}" class="btn btn-default">{{division.Value}}</button>

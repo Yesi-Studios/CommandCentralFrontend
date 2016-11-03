@@ -1988,6 +1988,9 @@ angular.module('Muster')
                         $scope.dataLoading = false;
                         $scope.errors = [];
                         $scope.messages= [];
+                        $scope.musterFinalized = response.ReturnValue.MusterFinalized;
+                        $scope.rolloverTime = response.ReturnValue.RolloverTime;
+
                         // Create the divisions array
                         for (var j = 0; j < response.ReturnValue.Musters.length; j++) {
                             if ($scope.divisions.indexOf(response.ReturnValue.Musters[j].Division) == -1) {
@@ -2769,9 +2772,6 @@ angular.module('Search')
                 if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1){
                     delete filters[i];
                 } else {
-                    console.log(i);
-                    console.log($scope.fieldTypes[i]);
-                    console.log(filters[i]);
                     if ($scope.fieldTypes[i].SearchDataType == "DateTime") {
                         var newFilter = [];
                         for ( var j in filters[i])  {
@@ -2781,13 +2781,9 @@ angular.module('Search')
 
                         }
                         filters[i] = newFilter;
-                        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%");
-                        console.log(filters[i]);
                     }
                 }
             }
-            console.log(filters);
-            console.log("***********************");
             $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields) + '/' + JSON.stringify(level) + '/' + JSON.stringify($scope.showHidden));
         };
 

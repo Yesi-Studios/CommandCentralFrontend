@@ -1,5 +1,6 @@
 <div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
 <div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">{{message}}</div>
+<div ng-show="musterFinalized" class="alert alert-warning status_message">Muster has been finalized for the day. Muster records for the next day will open at {{rolloverTime}}.</div>
 <div class="content_panel">
 	<div class="row">
 		<div class="col-md-offset-1 col-md-10">
@@ -100,7 +101,7 @@
                         <td>{{sailor['Division']}}</td>
                         <td>{{sailor['HasBeenMustered'] | yesNo }}</td>
                         <td>
-                            <select name="{{sailor.Id}}MusterStatus" tabindex="{{$index+1000}}" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus" ng-options="o.Value as o.Value for o in musterStatuses | orderBy: 'Value'">
+                            <select name="{{sailor.Id}}MusterStatus" tabindex="{{$index+1000}}" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus" ng-options="o.Value as o.Value for o in musterStatuses | orderBy: 'Value'" ng-disabled="musterFinalized">
                             </select>
                         </td>
 						<td><!--suppress HtmlUnknownAttribute -->
@@ -117,7 +118,7 @@
     </div>
     <div class="row">
         <div class="col-md-offset-10 col-md-2">
-            <button class="btn btn-primary" type="button" ng-show="groupCount" ng-click="submitMuster(newStatusList)">Save</button>
+            <button class="btn btn-primary" type="button" ng-show="groupCount" ng-click="submitMuster(newStatusList)" ng-disabled="musterFinalized">Save</button>
         </div>
     </div>
 </div>
