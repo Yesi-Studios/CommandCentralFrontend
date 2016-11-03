@@ -174,9 +174,6 @@ angular.module('Search')
                 if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1){
                     delete filters[i];
                 } else {
-                    console.log(i);
-                    console.log($scope.fieldTypes[i]);
-                    console.log(filters[i]);
                     if ($scope.fieldTypes[i].SearchDataType == "DateTime") {
                         var newFilter = [];
                         for ( var j in filters[i])  {
@@ -186,13 +183,9 @@ angular.module('Search')
 
                         }
                         filters[i] = newFilter;
-                        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%");
-                        console.log(filters[i]);
                     }
                 }
             }
-            console.log(filters);
-            console.log("***********************");
             $location.path('/searchbyfield/' + JSON.stringify(filters) + '/' + JSON.stringify(fields) + '/' + JSON.stringify(level) + '/' + JSON.stringify($scope.showHidden));
         };
 
