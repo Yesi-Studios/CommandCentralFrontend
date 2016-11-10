@@ -285,6 +285,11 @@
                                 <!--suppress HtmlUnknownAttribute -->
                                 <select class="form-control" id="necs" ng-disabled="!canEditPersonField('SecondaryNECs')" ng-show="canReturnPersonField('SecondaryNECs')" ng-model="profileData.SecondaryNECs" ng-options="o as o.Value for o in lists['NEC'] |orderBy: 'Value' track by o.Id" multiple></select>
                             </div>
+                            <label class="col-md-2" for="watchqualifications">Watch Qualifications</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="watchqualifications" ng-disabled="!canEditPersonField('WatchQualifications')" ng-show="canReturnPersonField('WatchQualifications')" ng-model="profileData.WatchQualifications" ng-options="o as o.Value for o in lists['WatchQualification'] |orderBy: 'Value' track by o.Id" multiple></select>
+                            </div>
                         </div>
                         <div class="form-group">
 							<label class="col-md-2" for="prd">PRD</label>
