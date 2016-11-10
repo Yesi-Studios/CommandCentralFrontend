@@ -1,437 +1,660 @@
-<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
-<div ng-show="profileUpdateSuccess && form.$pristine" class="alert alert-success status_message">Profile updated successfully.</div>
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
+<div ng-show="profileUpdateSuccess && form.$pristine" class="alert alert-success status_message">Profile updated
+    successfully.
+</div>
 <div class="content_panel">
-	<form name="form" role="form" class="form-horizontal" ng-submit="updateProfile()">
-		<h3>Profile for {{friendlyName}}</h3>
-		<!--suppress HtmlUnknownTag, HtmlUnknownTag -->
-		<uib-tabset>
-			<div ng-show="!haveLock" class="alert alert-danger status_message text-center">Saving disabled: {{lockMessage}}</div>
-			<div ng-show="haveLock && lockMessage" class="alert alert-warning status_message text-center">{{lockMessage}}</div>
-			<!--suppress HtmlUnknownAttribute -->
-			<button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 5px;">Save Changes</button>
+    <form name="form" role="form" class="form-horizontal" ng-submit="updateProfile()">
+        <h3>Profile for {{friendlyName}}</h3>
+        <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
+        <uib-tabset>
+            <div ng-show="!haveLock" class="alert alert-danger status_message text-center">Saving disabled:
+                {{lockMessage}}
+            </div>
+            <div ng-show="haveLock && lockMessage" class="alert alert-warning status_message text-center">
+                {{lockMessage}}
+            </div>
+            <!--suppress HtmlUnknownAttribute -->
+            <button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine"
+                    class="btn btn-primary pull-right" style="margin-right: 5px;">Save Changes
+            </button>
 
-			<!--suppress HtmlUnknownTag, HtmlUnknownTag -->
-			<uib-tab heading="Personal Data">
-				<br />
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group" ng-class="{'has-error': trimString(profileData.FirstName)==''}">
-							<label class="col-md-4" for="firstName">First Name</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<input type="text" class="form-control" name="firstName" id="firstName" ng-disabled="!canEditPersonField('FirstName')" ng-show="canReturnPersonField('FirstName')" ng-model="profileData.FirstName" required/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="middleName">Middle Name</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<input type="text" class="form-control" id="middleName" ng-disabled="!canEditPersonField('MiddleName')" ng-show="canReturnPersonField('MiddleName')" ng-model="profileData.MiddleName" />
-							</div>
-						</div>
-						<div class="form-group"  ng-class="{'has-error': trimString(profileData.LastName)==''}">
-							<label class="col-md-4" for="lastName">Last Name</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<input type="text" class="form-control" id="lastName" ng-disabled="!canEditPersonField('LastName')" ng-show="canReturnPersonField('LastName')" ng-model="profileData.LastName" required/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="suffix">Suffix</label>
-							<div class="col-md-3">
-								<!--suppress HtmlUnknownAttribute -->
-								<input type="text" class="form-control" id="suffix" ng-disabled="!canEditPersonField('Suffix')" ng-show="canReturnPersonField('Suffix')" ng-model="profileData.Suffix" />
-							</div>
-						</div>
-						<div class="form-group"  ng-class="{'has-error': !isValidSSN(profileData.SSN)}">
-							<label class="col-md-4" for="ssn">SSN</label>
-							<div class="input-group col-md-8">
-								<a href="" ng-click="showSSN=true" class="btn btn-warning" ng-hide="!canReturnPersonField('SSN')||showSSN">Show SSN</a>
-								<!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute, HtmlUnknownAttribute -->
-								<input type="text" class="form-control" id="ssn" ng-disabled="!canEditPersonField('SSN')" ng-show="canReturnPersonField('SSN') && showSSN " ng-model="profileData.SSN" ui-mask="999-99-9999" ui-mask-placeholder ui-mask-placeholder-char="_" /><!-- ng-pattern='/^\d{3}-?\d{2}-?\d{4}$/'/>-->
-								<span class="input-group-btn">
-                                    <a href="" ng-click="showSSN=false" class="btn btn-default" ng-show="canReturnPersonField('SSN') && showSSN ">Hide SSN</a>
+            <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
+            <uib-tab heading="Personal Data">
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" ng-class="{'has-error': trimString(profileData.FirstName)==''}">
+                            <label class="col-md-4" for="firstName">First Name</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <input type="text" class="form-control" name="firstName" id="firstName"
+                                       ng-disabled="!canEditPersonField('FirstName')"
+                                       ng-show="canReturnPersonField('FirstName')" ng-model="profileData.FirstName"
+                                       required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="middleName">Middle Name</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <input type="text" class="form-control" id="middleName"
+                                       ng-disabled="!canEditPersonField('MiddleName')"
+                                       ng-show="canReturnPersonField('MiddleName')" ng-model="profileData.MiddleName"/>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': trimString(profileData.LastName)==''}">
+                            <label class="col-md-4" for="lastName">Last Name</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <input type="text" class="form-control" id="lastName"
+                                       ng-disabled="!canEditPersonField('LastName')"
+                                       ng-show="canReturnPersonField('LastName')" ng-model="profileData.LastName"
+                                       required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="suffix">Suffix</label>
+                            <div class="col-md-3">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <input type="text" class="form-control" id="suffix"
+                                       ng-disabled="!canEditPersonField('Suffix')"
+                                       ng-show="canReturnPersonField('Suffix')" ng-model="profileData.Suffix"/>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': !isValidSSN(profileData.SSN)}">
+                            <label class="col-md-4" for="ssn">SSN</label>
+                            <div class="input-group col-md-8">
+                                <a href="" ng-click="showSSN=true" class="btn btn-warning"
+                                   ng-hide="!canReturnPersonField('SSN')||showSSN">Show SSN</a>
+                                <!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute, HtmlUnknownAttribute -->
+                                <input type="text" class="form-control" id="ssn"
+                                       ng-disabled="!canEditPersonField('SSN')"
+                                       ng-show="canReturnPersonField('SSN') && showSSN " ng-model="profileData.SSN"
+                                       ui-mask="999-99-9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
+                                <!-- ng-pattern='/^\d{3}-?\d{2}-?\d{4}$/'/>-->
+                                <span class="input-group-btn">
+                                    <a href="" ng-click="showSSN=false" class="btn btn-default"
+                                       ng-show="canReturnPersonField('SSN') && showSSN ">Hide SSN</a>
                                 </span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="col-md-4" for="dob">Date of Birth</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<ng-custom-date-picker id="dob" ng-disabled="!canEditPersonField('DateOfBirth')" ng-show="canReturnPersonField('DateOfBirth')" ng-model="profileData.DateOfBirth"></ng-custom-date-picker>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="ethnicity">Ethnicity</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="ethnicity" ng-disabled="!canEditPersonField('Ethnicity')" ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity" ng-options="o as o.Value for o in lists['Ethnicity'] | orderBy:'Value' track by o.Id">
-									<option></option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="religiousPreference">Religious Preference</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="religiousPreference" ng-disabled="!canEditPersonField('ReligiousPreference')" ng-show="canReturnPersonField('ReligiousPreference')" ng-model="profileData.ReligiousPreference" ng-options="o as o.Value for o in lists['ReligiousPreference'] | orderBy:'Value' track by o.Id">
-									<option></option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="sex">Sex</label>
-							<div class="col-md-8">
-								<!--<label class="radio-inline" ng-repeat="o in lists['Sex']">-->
-									<!--&lt;!&ndash;suppress HtmlUnknownAttribute &ndash;&gt;-->
-									<!--<input type="radio" name="sex" id="{{o.Id}}" ng-value="o.Id == profileData.Sex.Id" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex"> {{o.Value}}-->
-								<!--</label>-->
-								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="sex" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex" ng-options="o as o.Value for o in lists['Sex'] track by o.Id">
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="remarks">Remarks</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<textarea class="form-control" id="remarks" rows="2" ng-disabled="!canEditPersonField('Remarks')" ng-show="canReturnPersonField('Remarks')" ng-model="profileData.Remarks"></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row"><!--suppress HtmlUnknownAttribute -->
-					<button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
-			</uib-tab>
-			<!--suppress HtmlUnknownTag, HtmlUnknownTag -->
-			<uib-tab heading="Contact Infomation">
-				<br />
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label class="col-md-3" for="emails">Emails</label>
-							<!--suppress HtmlUnknownAttribute -->
-							<table id="emails" class="col-md-8 table-striped contact-table" ng-disabled="!canEditPersonField('EmailAddresses')" ng-show="canReturnPersonField('EmailAddresses')">
-								<thead ng-show="profileData.EmailAddresses.length > 0">
-								<tr>
-									<th>Address</th>
-									<th>Contactable</th>
-									<th>Preferred</th>
-									<th>Delete</th>
-								</tr>
-								</thead>
-								<tbody>
-								<tr ng-repeat="email in profileData.EmailAddresses">
-									<td class="col-md-6">
-										<input ng-disabled="!canEditPersonField('EmailAddresses')" type="text" class="form-control" ng-model="email.Address"/>
-									</td>
-									<td><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="!email.IsContactable" type="button" class="btn btn-danger btn-xs" ng-click="email.IsContactable=true; form.$pristine = false;">No</button><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="email.IsContactable" type="button" class="btn btn-success btn-xs" ng-click="email.IsContactable=false; form.$pristine = false;">Yes</button></td>
-									<td><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="!email.IsPreferred" type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses = makePreferred(profileData.EmailAddresses, email); form.$pristine = false;">No</button><button ng-disabled="!canEditPersonField('EmailAddresses')" ng-if="email.IsPreferred" type="button" class="btn btn-success btn-xs" ng-click="email.IsPreferred = false; form.$pristine = false;">Yes</button></td>
-									<td><button ng-disabled="!canEditPersonField('EmailAddresses')||!canDeleteEmail(email.Address)" type="button" class="btn btn-danger btn-xs" ng-click="profileData.EmailAddresses.splice(profileData.EmailAddresses.indexOf(email), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td><!--suppress HtmlUnknownAttribute -->
-										<button ng-disabled="!canEditPersonField('EmailAddresses')" type="button" class="btn btn-success btn-xs" ng-click="profileData.EmailAddresses.push({Address:'', IsContactable:false, IsPreferred:false})"><span class="glyphicon glyphicon-plus"></span></button></td>
-								</tr>
-								</tbody>
-							</table>
-						</div>
-						<hr>
-						<div class="form-group">
-							<label class="col-md-3" for="phoneNumbers">Phone Numbers</label>
-							<!--suppress HtmlUnknownAttribute -->
-							<table id="phoneNumbers" class="table-striped contact-table col-md-8" ng-disabled="!canEditPersonField('PhoneNumbers')" ng-show="canReturnPersonField('PhoneNumbers')">
-								<thead ng-show="profileData.PhoneNumbers.length > 0">
-								<tr>
-									<th>Number</th>
-									<th>Type</th>
-									<th>Contactable</th>
-									<th>Preferred</th>
-									<th>Delete</th>
-								</tr>
-								</thead>
-								<tbody>
-								<tr ng-repeat="number in profileData.PhoneNumbers">
-									<td class="col-md-5">
-										<input ng-disabled="!canEditPersonField('PhoneNumbers')" name="newNumber" id="newNumber" type="text" class="form-control" aria-describedby="newNumberAddon" ng-model="number.Number" ui-mask="(999)-999-9999" ui-mask-placeholder ui-mask-placeholder-char="_"/>
-									</td>
-									<td>
-										<select ng-disabled="!canEditPersonField('PhoneNumbers')" name="newNumberType" class="form-control" id="newNumberType" ng-model="number.PhoneType" ng-options="o as o.Value for o in lists['PhoneNumberType'] track by o.Id" required>
-											<option ng-if="profileData.PhoneNumbers.length == 0" value="" disabled selected hidden><!--suppress HtmlUnknownTag, HtmlUnknownTag -->
-												<strong>Phone Type</strong></option>
-											<option ng-if="profileData.PhoneNumbers.length != 0" disabled selected hidden></option>
-										</select>
-									</td>
-									<td><button ng-disabled="!canEditPersonField('PhoneNumbers')" ng-if="!number.IsContactable" type="button" class="btn btn-danger btn-xs" ng-click="number.IsContactable=true">No</button><button ng-disabled="!canEditPersonField('PhoneNumbers'); form.$pristine = false;" ng-if="number.IsContactable" type="button" class="btn btn-success btn-xs" ng-click="number.IsContactable=false; form.$pristine = false;">Yes</button></td>
-									<td><button ng-disabled="!canEditPersonField('PhoneNumbers')" ng-if="!number.IsPreferred" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers = makePreferred(profileData.PhoneNumbers, number); form.$pristine = false;">No</button><button ng-disabled="!canEditPersonField('PhoneNumbers')" ng-if="number.IsPreferred" type="button" class="btn btn-success btn-xs" ng-click="number.IsPreferred=false; form.$pristine = false;">Yes</button></td>
-									<td><button ng-disabled="!canEditPersonField('PhoneNumbers')" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhoneNumbers.splice(profileData.PhoneNumbers.indexOf(number), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
-								</tr>
-								<tr>
-									<td class="col-md-5"></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td><!--suppress HtmlUnknownAttribute -->
-										<button ng-disabled="!canEditPersonField('PhoneNumbers')" name="insertPhoneNumber" type="button" class="btn btn-success btn-xs" ng-click="profileData.PhoneNumbers.push({Number:'', PhoneType:defaultPhoneType, IsContactable:false, IsPreferred:false})"><span class="glyphicon glyphicon-plus"></span></button></td>
-								</tr>
-								</tbody>
-							</table>
-						</div>
-						<hr>
-						<div class="form-group">
-							<label class="col-md-3" for="addresses">Physical Addresses</label>
-							<!--suppress HtmlUnknownAttribute -->
-							<table id="addresses" class="col-md-8 table-striped contact-table" ng-disabled="!canEditPersonField('PhysicalAddresses')" ng-show="canReturnPersonField('PhysicalAddresses')">
-								<thead ng-show="profileData.PhysicalAddresses.length > 0">
-								<tr>
-									<th>Address</th>
-									<th>Home Address</th>
-									<th>Delete</th>
-								</tr>
-								</thead>
-								<tbody>
-								<tr ng-repeat="address in profileData.PhysicalAddresses">
-									<td class="col-md-5">
-										<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="street" placeholder="Number and Street" class="form-control" style="float: left; width: 100%;" ng-model="address.Address" type="text">
-										<div class="input-group">
-											<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="city" placeholder="City" class="form-control" style="float: left; width: 50%;" ng-model="address.City" type="text">
-											<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="state" placeholder="State" class="form-control" style="float: left; width: 20%;" ng-model="address.State" type="text">
-											<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="zip" placeholder="Zip" class="form-control" style="float: left; width: 30%;" ng-model="address.ZipCode" type="text">
-										</div>
-										<input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="country" placeholder="Country" class="form-control" style="float: left; width: 100%;" ng-model="address.Country" type="text">
-									</td>
-									<td><button ng-disabled="!canEditPersonField('PhysicalAddresses')" id ="makeHome"ng-if="!address.IsHomeAddress" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses = makeHome(profileData.PhysicalAddresses, address); form.$pristine = false;">No</button><button ng-disabled="!canEditPersonField('PhysicalAddresses')" ng-if="address.IsHomeAddress" type="button" class="btn btn-success btn-xs" ng-click="address.IsHomeAddress = false; form.$pristine=false;">Yes</button></td>
-									<td><button ng-disabled="!canEditPersonField('PhysicalAddresses')" type="button" class="btn btn-danger btn-xs" ng-click="profileData.PhysicalAddresses.splice(profileData.PhysicalAddresses.indexOf(address), 1); form.$pristine = false;"><span class="glyphicon glyphicon-remove"></span></button></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td><button type="button" class="btn btn-success btn-xs" ng-click="profileData.PhysicalAddresses.push({Address:'', City:'', State:'', ZipCode:'', Country:''})"><span class="glyphicon glyphicon-plus"></span></button></td>
-								</tr>
-								</tbody>
-							</table>
-						</div>
-						<hr>
-						<div class="form-group">
-							<label class="col-md-3" for="emergencyContactInstructions">Emergency Contact Instructions</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<textarea class="form-control" id="emergencyContactInstructions" rows="2" ng-disabled="!canEditPersonField('EmergencyContactInstructions')" ng-show="canReturnPersonField('EmergencyContactInstructions')" ng-model="profileData.EmergencyContactInstructions"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-3" for="contactRemarks">Contact Remarks</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<textarea class="form-control" id="contactRemarks" rows="2" ng-disabled="!canEditPersonField('ContactRemarks')" ng-show="canReturnPersonField('ContactRemarks')" ng-model="profileData.ContactRemarks"></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row"><!--suppress HtmlUnknownAttribute -->
-					<button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
-			</uib-tab>
-			<!--suppress HtmlUnknownTag, HtmlUnknownTag -->
-			<uib-tab heading="Work Information">
-				<br />
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="col-md-4" for="jobTitle">Job Title</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<input type="text" class="form-control" id="jobTitle" ng-disabled="!canEditPersonField('JobTitle')" ng-show="canReturnPersonField('JobTitle')" ng-model="profileData.JobTitle" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="shift">Shift</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<input type="text" class="form-control" id="shift" ng-disabled="!canEditPersonField('Shift')" ng-show="canReturnPersonField('Shift')" ng-model="profileData.Shift" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="workRoom">Work Room</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<input type="text" class="form-control" id="workRoom" ng-disabled="!canEditPersonField('WorkRoom')" ng-show="canReturnPersonField('WorkRoom')" ng-model="profileData.WorkRoom" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-2" for="dateOfArrival">Date of Arrival</label>
-							<div class="col-md-4">
-								<!--suppress HtmlUnknownAttribute -->
-								<ng-custom-date-picker id="dateOfArrival" ng-disabled="!canEditPersonField('DateOfArrival')" ng-show="canReturnPersonField('DateOfArrival')" ng-model="profileData.DateOfArrival" ></ng-custom-date-picker>
-							</div>
-							<label class="col-md-2" for="dateOfDeparture">Date of Departure</label>
-							<div class="col-md-4">
-								<!--suppress HtmlUnknownAttribute -->
-								<ng-custom-date-picker ng-disabled ="!canEditPersonField('DateOfDeparture')" ng-show="canReturnPersonField('DateOfDeparture')" ng-model="profileData.DateOfDeparture" ></ng-custom-date-picker>
-							</div>
-						</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-md-4" for="dob">Date of Birth</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <ng-custom-date-picker id="dob" ng-disabled="!canEditPersonField('DateOfBirth')"
+                                                       ng-show="canReturnPersonField('DateOfBirth')"
+                                                       ng-model="profileData.DateOfBirth"></ng-custom-date-picker>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="ethnicity">Ethnicity</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="ethnicity"
+                                        ng-disabled="!canEditPersonField('Ethnicity')"
+                                        ng-show="canReturnPersonField('Ethnicity')" ng-model="profileData.Ethnicity"
+                                        ng-options="o as o.Value for o in lists['Ethnicity'] | orderBy:'Value' track by o.Id">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="religiousPreference">Religious Preference</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="religiousPreference"
+                                        ng-disabled="!canEditPersonField('ReligiousPreference')"
+                                        ng-show="canReturnPersonField('ReligiousPreference')"
+                                        ng-model="profileData.ReligiousPreference"
+                                        ng-options="o as o.Value for o in lists['ReligiousPreference'] | orderBy:'Value' track by o.Id">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="sex">Sex</label>
+                            <div class="col-md-8">
+                                <!--<label class="radio-inline" ng-repeat="o in lists['Sex']">-->
+                                <!--&lt;!&ndash;suppress HtmlUnknownAttribute &ndash;&gt;-->
+                                <!--<input type="radio" name="sex" id="{{o.Id}}" ng-value="o.Id == profileData.Sex.Id" ng-disabled="!canEditPersonField('Sex')" ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex"> {{o.Value}}-->
+                                <!--</label>-->
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="sex" ng-disabled="!canEditPersonField('Sex')"
+                                        ng-show="canReturnPersonField('Sex')" ng-model="profileData.Sex"
+                                        ng-options="o as o.Value for o in lists['Sex'] track by o.Id">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="remarks">Remarks</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <textarea class="form-control" id="remarks" rows="2"
+                                          ng-disabled="!canEditPersonField('Remarks')"
+                                          ng-show="canReturnPersonField('Remarks')"
+                                          ng-model="profileData.Remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><!--suppress HtmlUnknownAttribute -->
+                    <button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine"
+                            class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes
+                    </button>
+                </div>
+            </uib-tab>
+            <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
+            <uib-tab heading="Contact Infomation">
+                <br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-md-3" for="emails">Emails</label>
+                            <!--suppress HtmlUnknownAttribute -->
+                            <table id="emails" class="col-md-8 table-striped contact-table"
+                                   ng-disabled="!canEditPersonField('EmailAddresses')"
+                                   ng-show="canReturnPersonField('EmailAddresses')">
+                                <thead ng-show="profileData.EmailAddresses.length > 0">
+                                <tr>
+                                    <th>Address</th>
+                                    <th>Contactable</th>
+                                    <th>Preferred</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="email in profileData.EmailAddresses">
+                                    <td class="col-md-6">
+                                        <input ng-disabled="!canEditPersonField('EmailAddresses')" type="text"
+                                               class="form-control" ng-model="email.Address"/>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="!canEditPersonField('EmailAddresses')"
+                                                ng-if="!email.IsContactable" type="button" class="btn btn-danger btn-xs"
+                                                ng-click="email.IsContactable=true; form.$pristine = false;">No
+                                        </button>
+                                        <button ng-disabled="!canEditPersonField('EmailAddresses')"
+                                                ng-if="email.IsContactable" type="button" class="btn btn-success btn-xs"
+                                                ng-click="email.IsContactable=false; form.$pristine = false;">Yes
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="!canEditPersonField('EmailAddresses')"
+                                                ng-if="!email.IsPreferred" type="button" class="btn btn-danger btn-xs"
+                                                ng-click="profileData.EmailAddresses = makePreferred(profileData.EmailAddresses, email); form.$pristine = false;">
+                                            No
+                                        </button>
+                                        <button ng-disabled="!canEditPersonField('EmailAddresses')"
+                                                ng-if="email.IsPreferred" type="button" class="btn btn-success btn-xs"
+                                                ng-click="email.IsPreferred = false; form.$pristine = false;">Yes
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="!canEditPersonField('EmailAddresses')||!canDeleteEmail(email.Address)"
+                                                type="button" class="btn btn-danger btn-xs"
+                                                ng-click="profileData.EmailAddresses.splice(profileData.EmailAddresses.indexOf(email), 1); form.$pristine = false;">
+                                            <span class="glyphicon glyphicon-remove"></span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><!--suppress HtmlUnknownAttribute -->
+                                        <button ng-disabled="!canEditPersonField('EmailAddresses')" type="button"
+                                                class="btn btn-success btn-xs"
+                                                ng-click="profileData.EmailAddresses.push({Address:'', IsContactable:false, IsPreferred:false})">
+                                            <span class="glyphicon glyphicon-plus"></span></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-md-3" for="phoneNumbers">Phone Numbers</label>
+                            <!--suppress HtmlUnknownAttribute -->
+                            <table id="phoneNumbers" class="table-striped contact-table col-md-8"
+                                   ng-disabled="!canEditPersonField('PhoneNumbers')"
+                                   ng-show="canReturnPersonField('PhoneNumbers')">
+                                <thead ng-show="profileData.PhoneNumbers.length > 0">
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Type</th>
+                                    <th>Contactable</th>
+                                    <th>Preferred</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="number in profileData.PhoneNumbers">
+                                    <td class="col-md-5">
+                                        <input ng-disabled="!canEditPersonField('PhoneNumbers')" name="newNumber"
+                                               id="newNumber" type="text" class="form-control"
+                                               aria-describedby="newNumberAddon" ng-model="number.Number"
+                                               ui-mask="(999)-999-9999" ui-mask-placeholder
+                                               ui-mask-placeholder-char="_"/>
+                                    </td>
+                                    <td>
+                                        <select ng-disabled="!canEditPersonField('PhoneNumbers')" name="newNumberType"
+                                                class="form-control" id="newNumberType" ng-model="number.PhoneType"
+                                                ng-options="o as o.Value for o in lists['PhoneNumberType'] track by o.Id"
+                                                required>
+                                            <option ng-if="profileData.PhoneNumbers.length == 0" value="" disabled
+                                                    selected hidden><!--suppress HtmlUnknownTag, HtmlUnknownTag -->
+                                                <strong>Phone Type</strong></option>
+                                            <option ng-if="profileData.PhoneNumbers.length != 0" disabled selected
+                                                    hidden></option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="!canEditPersonField('PhoneNumbers')"
+                                                ng-if="!number.IsContactable" type="button"
+                                                class="btn btn-danger btn-xs" ng-click="number.IsContactable=true">No
+                                        </button>
+                                        <button ng-disabled="!canEditPersonField('PhoneNumbers'); form.$pristine = false;"
+                                                ng-if="number.IsContactable" type="button"
+                                                class="btn btn-success btn-xs"
+                                                ng-click="number.IsContactable=false; form.$pristine = false;">Yes
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="!canEditPersonField('PhoneNumbers')"
+                                                ng-if="!number.IsPreferred" type="button" class="btn btn-danger btn-xs"
+                                                ng-click="profileData.PhoneNumbers = makePreferred(profileData.PhoneNumbers, number); form.$pristine = false;">
+                                            No
+                                        </button>
+                                        <button ng-disabled="!canEditPersonField('PhoneNumbers')"
+                                                ng-if="number.IsPreferred" type="button" class="btn btn-success btn-xs"
+                                                ng-click="number.IsPreferred=false; form.$pristine = false;">Yes
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="!canEditPersonField('PhoneNumbers')" type="button"
+                                                class="btn btn-danger btn-xs"
+                                                ng-click="profileData.PhoneNumbers.splice(profileData.PhoneNumbers.indexOf(number), 1); form.$pristine = false;">
+                                            <span class="glyphicon glyphicon-remove"></span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-5"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><!--suppress HtmlUnknownAttribute -->
+                                        <button ng-disabled="!canEditPersonField('PhoneNumbers')"
+                                                name="insertPhoneNumber" type="button" class="btn btn-success btn-xs"
+                                                ng-click="profileData.PhoneNumbers.push({Number:'', PhoneType:defaultPhoneType, IsContactable:false, IsPreferred:false})">
+                                            <span class="glyphicon glyphicon-plus"></span></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-md-3" for="addresses">Physical Addresses</label>
+                            <!--suppress HtmlUnknownAttribute -->
+                            <table id="addresses" class="col-md-8 table-striped contact-table"
+                                   ng-disabled="!canEditPersonField('PhysicalAddresses')"
+                                   ng-show="canReturnPersonField('PhysicalAddresses')">
+                                <thead ng-show="profileData.PhysicalAddresses.length > 0">
+                                <tr>
+                                    <th>Address</th>
+                                    <th>Home Address</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="address in profileData.PhysicalAddresses">
+                                    <td class="col-md-5">
+                                        <input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="street"
+                                               placeholder="Number and Street" class="form-control"
+                                               style="float: left; width: 100%;" ng-model="address.Address" type="text">
+                                        <div class="input-group">
+                                            <input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="city"
+                                                   placeholder="City" class="form-control"
+                                                   style="float: left; width: 50%;" ng-model="address.City" type="text">
+                                            <input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="state"
+                                                   placeholder="State" class="form-control"
+                                                   style="float: left; width: 20%;" ng-model="address.State"
+                                                   type="text">
+                                            <input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="zip"
+                                                   placeholder="Zip" class="form-control"
+                                                   style="float: left; width: 30%;" ng-model="address.ZipCode"
+                                                   type="text">
+                                        </div>
+                                        <input ng-disabled="!canEditPersonField('PhysicalAddresses')" name="country"
+                                               placeholder="Country" class="form-control"
+                                               style="float: left; width: 100%;" ng-model="address.Country" type="text">
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="!canEditPersonField('PhysicalAddresses')" id="makeHome"
+                                                ng-if="!address.IsHomeAddress" type="button"
+                                                class="btn btn-danger btn-xs"
+                                                ng-click="profileData.PhysicalAddresses = makeHome(profileData.PhysicalAddresses, address); form.$pristine = false;">
+                                            No
+                                        </button>
+                                        <button ng-disabled="!canEditPersonField('PhysicalAddresses')"
+                                                ng-if="address.IsHomeAddress" type="button"
+                                                class="btn btn-success btn-xs"
+                                                ng-click="address.IsHomeAddress = false; form.$pristine=false;">Yes
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="!canEditPersonField('PhysicalAddresses')" type="button"
+                                                class="btn btn-danger btn-xs"
+                                                ng-click="profileData.PhysicalAddresses.splice(profileData.PhysicalAddresses.indexOf(address), 1); form.$pristine = false;">
+                                            <span class="glyphicon glyphicon-remove"></span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-xs"
+                                                ng-click="profileData.PhysicalAddresses.push({Address:'', City:'', State:'', ZipCode:'', Country:''})">
+                                            <span class="glyphicon glyphicon-plus"></span></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-md-3" for="emergencyContactInstructions">Emergency Contact
+                                Instructions</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <textarea class="form-control" id="emergencyContactInstructions" rows="2"
+                                          ng-disabled="!canEditPersonField('EmergencyContactInstructions')"
+                                          ng-show="canReturnPersonField('EmergencyContactInstructions')"
+                                          ng-model="profileData.EmergencyContactInstructions"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3" for="contactRemarks">Contact Remarks</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <textarea class="form-control" id="contactRemarks" rows="2"
+                                          ng-disabled="!canEditPersonField('ContactRemarks')"
+                                          ng-show="canReturnPersonField('ContactRemarks')"
+                                          ng-model="profileData.ContactRemarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><!--suppress HtmlUnknownAttribute -->
+                    <button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine"
+                            class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes
+                    </button>
+                </div>
+            </uib-tab>
+            <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
+            <uib-tab heading="Work Information">
+                <br/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-md-4" for="jobTitle">Job Title</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <input type="text" class="form-control" id="jobTitle"
+                                       ng-disabled="!canEditPersonField('JobTitle')"
+                                       ng-show="canReturnPersonField('JobTitle')" ng-model="profileData.JobTitle"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="shift">Shift</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <input type="text" class="form-control" id="shift"
+                                       ng-disabled="!canEditPersonField('Shift')"
+                                       ng-show="canReturnPersonField('Shift')" ng-model="profileData.Shift"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="workRoom">Work Room</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <input type="text" class="form-control" id="workRoom"
+                                       ng-disabled="!canEditPersonField('WorkRoom')"
+                                       ng-show="canReturnPersonField('WorkRoom')" ng-model="profileData.WorkRoom"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2" for="dateOfArrival">Date of Arrival</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <ng-custom-date-picker id="dateOfArrival"
+                                                       ng-disabled="!canEditPersonField('DateOfArrival')"
+                                                       ng-show="canReturnPersonField('DateOfArrival')"
+                                                       ng-model="profileData.DateOfArrival"></ng-custom-date-picker>
+                            </div>
+                            <label class="col-md-2" for="dateOfDeparture">Date of Departure</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <ng-custom-date-picker ng-disabled="!canEditPersonField('DateOfDeparture')"
+                                                       ng-show="canReturnPersonField('DateOfDeparture')"
+                                                       ng-model="profileData.DateOfDeparture"></ng-custom-date-picker>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-md-2" for="eaos">EAOS</label>
                             <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
-                                <ng-custom-date-picker ng-disabled="!canEditPersonField('EAOS')" ng-show="canReturnPersonField('EAOS')" ng-model="profileData.EAOS"></ng-custom-date-picker>
+                                <ng-custom-date-picker ng-disabled="!canEditPersonField('EAOS')"
+                                                       ng-show="canReturnPersonField('EAOS')"
+                                                       ng-model="profileData.EAOS"></ng-custom-date-picker>
                             </div>
                             <label class="col-md-2" for="necs">Secondary NECs</label>
                             <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="necs" ng-disabled="!canEditPersonField('SecondaryNECs')" ng-show="canReturnPersonField('SecondaryNECs')" ng-model="profileData.SecondaryNECs" ng-options="o as o.Value for o in lists['NEC'] |orderBy: 'Value' track by o.Id" multiple></select>
-                            </div>
-                            <label class="col-md-2" for="watchqualifications">Watch Qualifications</label>
-                            <div class="col-md-4">
-                                <!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="watchqualifications" ng-disabled="!canEditPersonField('WatchQualifications')" ng-show="canReturnPersonField('WatchQualifications')" ng-model="profileData.WatchQualifications" ng-options="o as o.Value for o in lists['WatchQualification'] |orderBy: 'Value' track by o.Id" multiple></select>
+                                <select class="form-control" id="necs"
+                                        ng-disabled="!canEditPersonField('SecondaryNECs')"
+                                        ng-show="canReturnPersonField('SecondaryNECs')"
+                                        ng-model="profileData.SecondaryNECs"
+                                        ng-options="o as o.Value for o in lists['NEC'] |orderBy: 'Value' track by o.Id"
+                                        multiple></select>
                             </div>
                         </div>
                         <div class="form-group">
-							<label class="col-md-2" for="prd">PRD</label>
-							<div class="col-md-4">
-								<!--suppress HtmlUnknownAttribute -->
-								<ng-custom-date-picker ng-disabled="!canEditPersonField('PRD')" ng-show="canReturnPersonField('PRD')" ng-model="profileData.PRD"></ng-custom-date-picker>
-							</div>
+                            <label class="col-md-2" for="prd">PRD</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <ng-custom-date-picker ng-disabled="!canEditPersonField('PRD')"
+                                                       ng-show="canReturnPersonField('PRD')"
+                                                       ng-model="profileData.PRD"></ng-custom-date-picker>
+                            </div>
                             <label class="col-md-2" for="necs">Primary NEC</label>
                             <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="primarynec" ng-disabled="!canEditPersonField('PrimaryNEC')" ng-show="canReturnPersonField('PrimaryNEC')" ng-model="profileData.PrimaryNEC" ng-options="o as o.Value for o in lists['NEC'] | orderBy: 'Value' track by o.Id" ></select>
+                                <select class="form-control" id="primarynec"
+                                        ng-disabled="!canEditPersonField('PrimaryNEC')"
+                                        ng-show="canReturnPersonField('PrimaryNEC')" ng-model="profileData.PrimaryNEC"
+                                        ng-options="o as o.Value for o in lists['NEC'] | orderBy: 'Value' track by o.Id"></select>
                             </div>
                         </div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
+                        <div class="form-group">
+                            <label class="col-md-2" for="watchqualifications">Watch Qualifications</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="watchqualifications"
+                                        ng-disabled="!canEditPersonField('WatchQualifications')"
+                                        ng-show="canReturnPersonField('WatchQualifications')"
+                                        ng-model="profileData.WatchQualifications"
+                                        ng-options="o as o.Value for o in lists['WatchQualification'] |orderBy: 'Value' track by o.Id"
+                                        multiple></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label class="col-md-2" for="designation">Designation</label>
-							<div class="col-md-4">
-								<!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="designation" ng-disabled="!canEditPersonField('Designation')" ng-show="canReturnPersonField('Designation')" ng-model="profileData.Designation" ng-options="o as o.Value for o in lists['Designation'] | orderBy: 'Value' track by o.Id">
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="designation"
+                                        ng-disabled="!canEditPersonField('Designation')"
+                                        ng-show="canReturnPersonField('Designation')" ng-model="profileData.Designation"
+                                        ng-options="o as o.Value for o in lists['Designation'] | orderBy: 'Value' track by o.Id">
                                     <option></option>
                                 </select>
-							</div>
+                            </div>
                             <label class="col-md-2" for="paygrade">Paygrade</label>
-							<div class="col-md-4">
-								<!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="paygrade" ng-disabled="!canEditPersonField('Paygrade')" ng-show="canReturnPersonField('Paygrade')" ng-model="profileData.Paygrade" ng-options="o as o.Value for o in lists['Paygrade'] | orderBy: 'Value' track by o.Id">
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="paygrade" ng-disabled="!canEditPersonField('Paygrade')"
+                                        ng-show="canReturnPersonField('Paygrade')" ng-model="profileData.Paygrade"
+                                        ng-options="o as o.Value for o in lists['Paygrade'] | orderBy: 'Value' track by o.Id">
                                     <option></option>
                                 </select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-2" for="command">Command</label>
-							<div class="col-md-10">
-								<!--suppress HtmlUnknownAttribute -->
-								<select class="form-control" id="command" ng-disabled="!canEditPersonField('Command')" ng-show="canReturnPersonField('Command')" ng-model="profileData.Command" ng-options="o as o.Value for o in commandList track by o.Id">
-									<option></option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-2" for="division">Division</label>
-							<div class="col-md-4">
-								<!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="division" ng-disabled="!canEditPersonField('Division')" ng-show="canReturnPersonField('Division')" ng-model="profileData.Division" ng-options="o as o.Value for o in profileData.Department.Divisions | orderBy: 'Value' track by o.Id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2" for="command">Command</label>
+                            <div class="col-md-10">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="command" ng-disabled="!canEditPersonField('Command')"
+                                        ng-show="canReturnPersonField('Command')" ng-model="profileData.Command"
+                                        ng-options="o as o.Value for o in commandList track by o.Id">
                                     <option></option>
                                 </select>
-							</div>
-							<label class="col-md-2" for="department">Department</label>
-							<div class="col-md-4">
-								<!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="department" ng-disabled="!canEditPersonField('Department')" ng-show="canReturnPersonField('Department')" ng-model="profileData.Department" ng-options="o as o.Value for o in profileData.Command.Departments | orderBy: 'Value' track by o.Id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2" for="division">Division</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="division" ng-disabled="!canEditPersonField('Division')"
+                                        ng-show="canReturnPersonField('Division')" ng-model="profileData.Division"
+                                        ng-options="o as o.Value for o in profileData.Department.Divisions | orderBy: 'Value' track by o.Id">
                                     <option></option>
                                 </select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-2" for="dutyStatus">Duty Status</label>
-							<div class="col-md-4">
-								<!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="dutyStatus" ng-disabled="!canEditPersonField('DutyStatus')" ng-show="canReturnPersonField('DutyStatus')" ng-model="profileData.DutyStatus" ng-options="o as o.Value for o in lists['DutyStatus'] | orderBy: 'Value' track by o.Id">
+                            </div>
+                            <label class="col-md-2" for="department">Department</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="department"
+                                        ng-disabled="!canEditPersonField('Department')"
+                                        ng-show="canReturnPersonField('Department')" ng-model="profileData.Department"
+                                        ng-options="o as o.Value for o in profileData.Command.Departments | orderBy: 'Value' track by o.Id">
                                     <option></option>
                                 </select>
-							</div>
-							<label class="col-md-2" for="uic">UIC</label>
-							<div class="col-md-4">
-								<!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="uic" ng-disabled="!canEditPersonField('UIC')" ng-show="canReturnPersonField('UIC')" ng-model="profileData.UIC" ng-options="o as o.Value for o in lists['UIC'] | orderBy: 'Value' track by o.Id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2" for="dutyStatus">Duty Status</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="dutyStatus"
+                                        ng-disabled="!canEditPersonField('DutyStatus')"
+                                        ng-show="canReturnPersonField('DutyStatus')" ng-model="profileData.DutyStatus"
+                                        ng-options="o as o.Value for o in lists['DutyStatus'] | orderBy: 'Value' track by o.Id">
                                     <option></option>
                                 </select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="workRemarks">Work Remarks</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<textarea class="form-control" id="workRemarks" rows="2" ng-disabled="!canEditPersonField('WorkRemarks')" ng-show="canReturnPersonField('WorkRemarks')" ng-model="profileData.WorkRemarks"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-4" for="currentMusterStatus">Current Muster Status</label>
-							<div class="col-md-8">
-								<!--suppress HtmlUnknownAttribute -->
-								<span class="label label-default" id="currentMusterStatus" ng-if="canReturnPersonField('CurrentMusterStatus')">{{profileData.CurrentMusterStatus.MusterStatus}}<span ng-if="!profileData.CurrentMusterStatus.HasBeenSubmitted">(Not Mustered Yet)</span></span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row"><!--suppress HtmlUnknownAttribute -->
-					<button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button></div>
-				<div class="alert alert-info">Use the Ctrl key to select multiple NECs.</div>
-			</uib-tab>
-			<!--suppress HtmlUnknownTag, HtmlUnknownTag -->
-			<uib-tab heading="Account">
-				<div class="row">
-					<div class="col-md-offset-1 col-md-6 text-center">
-						<!--suppress HtmlUnknownAttribute -->
-						<div class="form-group" height="400px" style="overflow: auto; height: 250px !important;">
-							<label for="accountHistory">Account History</label>
-							<!--suppress HtmlUnknownAttribute -->
-							<table id="accountHistory" class="table-striped contact-table" ng-disabled="!canEditPersonField('AccountHistory')" ng-show="canReturnPersonField('AccountHistory')">
-								<thead>
-								<tr>
-									<th class="text-center">Type of Event</th>
-									<th class="text-center">Time (GMT)</th>
-								</tr>
-								</thead>
-								<tbody>
-								<tr ng-repeat="event in profileData.AccountHistory | orderBy: '-EventTime'">
-									<td>{{event.AccountHistoryEventType.Value}}</td>
-									<td>{{event.EventTime | date:'medium'}}</td>
-								</tr>
-								</tbody>
-							</table>
-						</div>
-						<a href="" class="btn btn-primary" ng-click="loadFullAccountHistory()">Load Full History</a>
-					</div>
-					<div class="col-md-offset-1 col-md-3 text-center">
-						<div class="form-group">
-							<label for="permissionGroups">Permission Groups <!--suppress HtmlUnknownAttribute -->
-								<a class="btn btn-primary btn-sm" ng-href="#/editpermissions/{{profileData.Id}}">Edit</a></label>
+                            </div>
+                            <label class="col-md-2" for="uic">UIC</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="uic" ng-disabled="!canEditPersonField('UIC')"
+                                        ng-show="canReturnPersonField('UIC')" ng-model="profileData.UIC"
+                                        ng-options="o as o.Value for o in lists['UIC'] | orderBy: 'Value' track by o.Id">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="workRemarks">Work Remarks</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <textarea class="form-control" id="workRemarks" rows="2"
+                                          ng-disabled="!canEditPersonField('WorkRemarks')"
+                                          ng-show="canReturnPersonField('WorkRemarks')"
+                                          ng-model="profileData.WorkRemarks"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="currentMusterStatus">Current Muster Status</label>
+                            <div class="col-md-8">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <span class="label label-default" id="currentMusterStatus"
+                                      ng-if="canReturnPersonField('CurrentMusterStatus')">{{profileData.CurrentMusterStatus.MusterStatus}}<span
+                                        ng-if="!profileData.CurrentMusterStatus.HasBeenSubmitted">(Not Mustered Yet)</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><!--suppress HtmlUnknownAttribute -->
+                    <button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine"
+                            class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes
+                    </button>
+                </div>
+                <div class="alert alert-info">Use the Ctrl key to select multiple NECs.</div>
+            </uib-tab>
+            <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
+            <uib-tab heading="Account">
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-6 text-center">
+                        <!--suppress HtmlUnknownAttribute -->
+                        <div class="form-group" height="400px" style="overflow: auto; height: 250px !important;">
+                            <label for="accountHistory">Account History</label>
+                            <!--suppress HtmlUnknownAttribute -->
+                            <table id="accountHistory" class="table-striped contact-table"
+                                   ng-disabled="!canEditPersonField('AccountHistory')"
+                                   ng-show="canReturnPersonField('AccountHistory')">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Type of Event</th>
+                                    <th class="text-center">Time (GMT)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="event in profileData.AccountHistory | orderBy: '-EventTime'">
+                                    <td>{{event.AccountHistoryEventType.Value}}</td>
+                                    <td>{{event.EventTime | date:'medium'}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="" class="btn btn-primary" ng-click="loadFullAccountHistory()">Load Full History</a>
+                    </div>
+                    <div class="col-md-offset-1 col-md-3 text-center">
+                        <div class="form-group">
+                            <label for="permissionGroups">Permission Groups <!--suppress HtmlUnknownAttribute -->
+                                <a class="btn btn-primary btn-sm"
+                                   ng-href="#/editpermissions/{{profileData.Id}}">Edit</a></label>
 
-								<!--<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroupNames')" ng-model="profileData.PermissionGroupNames" ng-options="o as o.Name for o in permissionGroups track by o.Id" multiple>-->
-								<!--</select>-->
-								<ul id="permissionGroups" class="list-group">
-									<li class="list-group-item" ng-repeat="perm in profileData.PermissionGroupNames">{{perm}}</li>
-								</ul>
+                            <!--<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroupNames')" ng-model="profileData.PermissionGroupNames" ng-options="o as o.Name for o in permissionGroups track by o.Id" multiple>-->
+                            <!--</select>-->
+                            <ul id="permissionGroups" class="list-group">
+                                <li class="list-group-item" ng-repeat="perm in profileData.PermissionGroupNames">
+                                    {{perm}}
+                                </li>
+                            </ul>
 
-						</div>
-					</div>
-				</div>
-				<div ng-if="isMyProfile" class="row">
-					<div class="col-md-offset-8 col-md-4 text-right">
-						<a href="#/changepassword" class="btn btn-sm btn-default">Change My Password</a>
-					</div>
-				</div><br/>
-				<div class="row"><!--suppress HtmlUnknownAttribute -->
-					<button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine" class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes</button>
-				</div><br/>
-				<div class="alert alert-info">Use the Ctrl key to select multiple Permission Groups.</div>
-			</uib-tab>
-		</uib-tabset>
-		<div ng-show="form.$dirty" class="text-center"><h4><span class="label label-danger">Unsaved Changes!</span><br/><br/></h4></div>
-	</form>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="isMyProfile" class="row">
+                    <div class="col-md-offset-8 col-md-4 text-right">
+                        <a href="#/changepassword" class="btn btn-sm btn-default">Change My Password</a>
+                    </div>
+                </div>
+                <br/>
+                <div class="row"><!--suppress HtmlUnknownAttribute -->
+                    <button type="submit" ng-disabled="form.$invalid || dataLoading || !haveLock || form.$pristine"
+                            class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes
+                    </button>
+                </div>
+                <br/>
+                <div class="alert alert-info">Use the Ctrl key to select multiple Permission Groups.</div>
+            </uib-tab>
+        </uib-tabset>
+        <div ng-show="form.$dirty" class="text-center"><h4><span class="label label-danger">Unsaved Changes!</span><br/><br/>
+        </h4></div>
+    </form>
 </div>
