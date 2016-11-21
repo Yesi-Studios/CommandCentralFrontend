@@ -44,9 +44,9 @@ angular.module('Muster')
                             $scope.displayList = $scope.newStatusList.slice(begin, end);
                         }
                     } else {
-                        var sailorsInThisGroup = $filter('filter')($scope.newStatusList, { Division : $scope.selectedDivision });
+                        var sailorsInThisGroup = $filter('filter')($scope.newStatusList, { Division : $scope.selectedDivision }, true);
                         $scope.groupCount = sailorsInThisGroup.length;
-                        $scope.unmusteredSailorsList = $filter('filter')(sailorsInThisGroup, { HasBeenMustered: false });
+                        $scope.unmusteredSailorsList = $filter('filter')(sailorsInThisGroup, { HasBeenMustered: false }, true);
                         if ($scope.showUnmustered) {
                             $scope.displayList = $scope.unmusteredSailorsList.slice(begin, end)
                         } else {
