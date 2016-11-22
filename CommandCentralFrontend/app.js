@@ -1,6 +1,7 @@
 'use strict';
 
 // declare modules
+angular.module('FAQ', []);
 angular.module('Connection', []);
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles', 'Connection']);
 angular.module('Authorization', ['Authentication', 'Connection']);
@@ -18,6 +19,7 @@ angular.module('CommandCentral', [
     'Authentication',
 	'Authorization',
     'Connection',
+    'FAQ',
     'Home',
 	'Navigation',
 	'Profiles',
