@@ -1,0 +1,15 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
+<div ng-repeat="message in messages" class="alert alert-success">{{message}}</div>
+<div class="content_panel">
+    <div class="panel panel-primary" ng-repeat="question in questions" id="question.name">
+        <div class="panel-heading">
+            <div class="panel-title">{{question.question}}
+                </div>
+        </div>
+        <div class="panel-body">
+            <p ng-repeat="paragraph in question.paragraphs">
+                {{paragraph}}
+            </p>
+        </div>
+    </div>
+</div>

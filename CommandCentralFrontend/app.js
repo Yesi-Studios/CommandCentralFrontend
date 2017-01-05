@@ -1,8 +1,8 @@
 'use strict';
 
 // declare modules
-angular.module('FAQ', []);
 angular.module('Connection', []);
+angular.module('FAQ', ['Connection', 'Authentication', 'Authorization']);
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles', 'Connection']);
 angular.module('Authorization', ['Authentication', 'Connection']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
@@ -49,15 +49,25 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/authentication/views/login.html',
             hideMenus: true
         })
- 
+
         .when('/', {
             controller: 'HomeController',
             templateUrl: 'modules/home/views/home.html'
         })
 
+        .when('/faq', {
+            controller: 'FAQController',
+            templateUrl: 'modules/faq/views/faq.html'
+        })
+
         .when('/createnews', {
             controller: 'CreateNewsController',
             templateUrl: 'modules/home/views/createnews.html'
+        })
+
+        .when('/faq/create', {
+            controller: 'CreateFAQController',
+            templateUrl: 'modules/faq/views/createfaq.html'
         })
 
         .when('/muster', {
