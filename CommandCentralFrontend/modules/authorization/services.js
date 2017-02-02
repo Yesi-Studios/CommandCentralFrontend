@@ -44,6 +44,16 @@ angular.module('Authorization')
         };
 
         /** @return Boolean **/
+        service.CanEditFAQs = function () {
+            try {
+                return $rootScope.globals.currentUser.permissions.AccessibleSubmodules.indexOf('EditFAQ') != -1;
+
+            } catch (err){
+                return false;
+            }
+        };
+
+        /** @return Boolean **/
         service.CanUseAdminTools = function () {
             try {
                 return $rootScope.globals.currentUser.permissions.AccessibleSubmodules.indexOf('AdminTools') != -1;

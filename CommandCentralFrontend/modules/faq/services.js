@@ -73,8 +73,8 @@ angular.module('FAQ')
                     return ConnectionService.RequestFromBackend('LoadFAQs', { 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
-                service.LoadFAQ = function (itemID, success, error) {
-                    return ConnectionService.RequestFromBackend('LoadFAQ', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'newsitemid': itemID}, success, error);
+                service.LoadFAQ = function (faqid, success, error) {
+                    return ConnectionService.RequestFromBackend('LoadFAQ', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'faqid': faqid}, success, error);
                 };
 
                 service.CreateOrUpdateFAQ = function (faq, success, error) {
@@ -82,7 +82,7 @@ angular.module('FAQ')
                 };
 
                 service.DeleteFAQ = function (faq, success, error) {
-                    return ConnectionService.RequestFromBackend('DeleteNewsItem', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'faq': faq }, success, error);
+                    return ConnectionService.RequestFromBackend('DeleteFAQ', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'faq': faq }, success, error);
                 };
 
                 return service;

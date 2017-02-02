@@ -70,6 +70,11 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/faq/views/createfaq.html'
         })
 
+        .when('/faq/create/:id', {
+            controller: 'CreateFAQController',
+            templateUrl: 'modules/faq/views/createfaq.html'
+        })
+
         .when('/muster', {
             controller: 'MusterController',
             templateUrl: 'modules/muster/views/muster.html'
