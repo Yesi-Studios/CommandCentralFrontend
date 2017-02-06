@@ -1,0 +1,21 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
+<div ng-repeat="message in messages" class="alert alert-success">{{message}}</div>
+<div class="content_panel text-center">
+    <H1>Frequently Asked Questions<a href="#/faq/create" ng-if="!dataLoading && userCanEditFAQs()" class="btn btn-primary pull-right" style="margin-right: 5px;">New FAQ <span class="glyphicon glyphicon-pencil"></span></a></H1><br/>
+    <div class="panel panel-info text-left" ng-repeat="question in questions" id="question.Name">
+        <div class="panel-heading">
+            <div class="panel-title">{{question.Question}}
+                <!--suppress HtmlUnknownAttribute -->
+                <a ng-href="#faq/create/{{question.Id}}" class="btn btn-xs btn-info pull-right" ng-show="userCanEditFAQs()"><span class="glyphicon glyphicon-edit"></span></a>
+                <a href="" class="btn btn-xs btn-danger pull-right" ng-click="question.showDeleteWarning=true" ng-show="!question.showDeleteWarning && userCanEditFAQs()"><span class="glyphicon glyphicon-remove"></span></a>
+                <span ng-show="question.showDeleteWarning" class="pull-right">Really delete?<a href="" ng-click="deleteFAQ(question)" class="btn btn-xs btn-danger">Yes</a><a href="" ng-click="question.showDeleteWarning=false" class="btn btn-xs btn-success">No</a></span>
+
+            </div>
+        </div>
+        <div class="panel-body">
+            <p ng-repeat="Paragraph in question.Paragraphs">
+                {{Paragraph}}
+            </p>
+        </div>
+    </div>
+</div>
