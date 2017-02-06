@@ -451,6 +451,22 @@
                                                        ng-show="canReturnPersonField('EAOS')"
                                                        ng-model="profileData.EAOS"></ng-custom-date-picker>
                             </div>
+                            <label class="col-md-2" for="gtc">GTC Training</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <ng-custom-date-picker ng-disabled="!canEditPersonField('GTCTrainingDate')"
+                                                       ng-show="canReturnPersonField('GTCTrainingDate')"
+                                                       ng-model="profileData.GTCTrainingDate"></ng-custom-date-picker>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2" for="prd">PRD</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <ng-custom-date-picker ng-disabled="!canEditPersonField('PRD')"
+                                                       ng-show="canReturnPersonField('PRD')"
+                                                       ng-model="profileData.PRD"></ng-custom-date-picker>
+                            </div>
                             <label class="col-md-2" for="necs">Secondary NECs</label>
                             <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
@@ -463,23 +479,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2" for="prd">PRD</label>
-                            <div class="col-md-4">
-                                <!--suppress HtmlUnknownAttribute -->
-                                <ng-custom-date-picker ng-disabled="!canEditPersonField('PRD')"
-                                                       ng-show="canReturnPersonField('PRD')"
-                                                       ng-model="profileData.PRD"></ng-custom-date-picker>
-                            </div>
-                            <label class="col-md-2" for="necs">Primary NEC</label>
-                            <div class="col-md-4">
-                                <!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="primarynec"
-                                        ng-disabled="!canEditPersonField('PrimaryNEC')"
-                                        ng-show="canReturnPersonField('PrimaryNEC')" ng-model="profileData.PrimaryNEC"
-                                        ng-options="o as o.Value for o in lists['NEC'] | orderBy: 'Value' track by o.Id"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-md-2" for="watchqualifications">Watch Qualifications</label>
                             <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
@@ -489,6 +488,14 @@
                                         ng-model="profileData.WatchQualifications"
                                         ng-options="o as o.Value for o in lists['WatchQualification'] |orderBy: 'Value' track by o.Id"
                                         multiple></select>
+                            </div>
+                            <label class="col-md-2" for="necs">Primary NEC</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="primarynec"
+                                        ng-disabled="!canEditPersonField('PrimaryNEC')"
+                                        ng-show="canReturnPersonField('PrimaryNEC')" ng-model="profileData.PrimaryNEC"
+                                        ng-options="o as o.Value for o in lists['NEC'] | orderBy: 'Value' track by o.Id"></select>
                             </div>
                         </div>
                     </div>

@@ -71,6 +71,7 @@ angular.module('Profiles')
                             if(response.ReturnValue.Person.EAOS) $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
                             if(response.ReturnValue.Person.PRD) $scope.profileData.PRD = new Date(response.ReturnValue.Person.PRD);
                             if(response.ReturnValue.Person.ClaimTime) $scope.profileData.ClaimTime = new Date(response.ReturnValue.Person.ClaimTime);
+                            if(response.ReturnValue.Person.GTCTrainingDate) $scope.profileData.GTCTrainingDate = new Date(response.ReturnValue.Person.GTCTrainingDate);
 
 
                             $scope.canSearchPersonField = function (field) {
