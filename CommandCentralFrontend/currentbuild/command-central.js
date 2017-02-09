@@ -202,6 +202,10 @@ angular.module('CommandCentral', [
  
 .run(['$rootScope', '$location', '$localStorage', '$http', 'ConnectionService',
     function ($rootScope, $location, $localStorage, $http, ConnectionService) {
+
+        // create Regex to match publicly accessible pages
+        var publicPagesRegex = /(\/login|^\/resetlogin$|^\/register$|\/finishregistration|^\/forgotpassword$|^\/forgotusername$|\/finishreset)/;
+
 		// keep user logged in after page refresh
         $rootScope.globals = $localStorage.globals || {};
         if ($rootScope.globals.currentUser) {
@@ -213,11 +217,12 @@ angular.module('CommandCentral', [
 		
 		// whenever the location changes... 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
+
 			// Show navigation when appropriate
-			$rootScope.showNav = $location.path().indexOf('/login') == -1 && $location.path().indexOf('/register') == -1 && $location.path().indexOf('/finishregistration') == -1 && $location.path().indexOf('/forgotpassword') == -1 &&$location.path().indexOf('/finishreset') == -1;
+			$rootScope.showNav = !$location.path().match(publicPagesRegex);
 
             // redirect to login page if not logged in
-            if ($location.path().indexOf('/login') == -1 && $location.path() !== '/resetlogin' && $location.path() !== '/register' && $location.path().indexOf('/finishregistration') == -1 && $location.path() !== '/forgotpassword' && $location.path() !== '/forgotusername' && $location.path().indexOf('/finishreset') == -1 && !$rootScope.globals.currentUser) {
+            if ( !$location.path().match(publicPagesRegex) && !$rootScope.globals.currentUser) {
                 ConnectionService.AddLoginError("You must log in to see that page");
                 ConnectionService.SetRedirectURL($location.url());
 				$location.path('/login');
