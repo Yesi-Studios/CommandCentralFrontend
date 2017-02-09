@@ -3,6 +3,7 @@
 // declare modules
 angular.module('Connection', []);
 angular.module('FAQ', ['Connection', 'Authentication', 'Authorization']);
+angular.module('Feedback', ['Connection', 'Authentication', 'Authorization']);
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles', 'Connection']);
 angular.module('Authorization', ['Authentication', 'Connection']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
@@ -20,6 +21,7 @@ angular.module('CommandCentral', [
 	'Authorization',
     'Connection',
     'FAQ',
+    'Feedback',
     'Home',
 	'Navigation',
 	'Profiles',
@@ -53,6 +55,11 @@ angular.module('CommandCentral', [
         .when('/', {
             controller: 'HomeController',
             templateUrl: 'modules/home/views/home.html'
+        })
+
+        .when('/feedback', {
+            controller: 'FeedbackController',
+            templateUrl: 'modules/feedback/views/feedback.html'
         })
 
         .when('/faq', {
@@ -217,7 +224,7 @@ angular.module('CommandCentral', [
 			$rootScope.showNav = $location.path().indexOf('/login') == -1 && $location.path().indexOf('/register') == -1 && $location.path().indexOf('/finishregistration') == -1 && $location.path().indexOf('/forgotpassword') == -1 &&$location.path().indexOf('/finishreset') == -1;
 
             // redirect to login page if not logged in
-            if ($location.path().indexOf('/login') == -1 && $location.path() !== '/resetlogin' && $location.path() !== '/register' && $location.path().indexOf('/finishregistration') == -1 && $location.path() !== '/forgotpassword' && $location.path() !== '/forgotusername' && $location.path().indexOf('/finishreset') == -1 && !$rootScope.globals.currentUser) {
+            if ($location.path() !== '/feedback' && $location.path().indexOf('/login') == -1 && $location.path() !== '/resetlogin' && $location.path() !== '/register' && $location.path().indexOf('/finishregistration') == -1 && $location.path() !== '/forgotpassword' && $location.path() !== '/forgotusername' && $location.path().indexOf('/finishreset') == -1 && !$rootScope.globals.currentUser) {
                 ConnectionService.AddLoginError("You must log in to see that page");
                 ConnectionService.SetRedirectURL($location.url());
 				$location.path('/login');
@@ -1925,6 +1932,51 @@ angular.module('FAQ')
                     return ConnectionService.RequestFromBackend('DeleteFAQ', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'faq': faq }, success, error);
                 };
 
+                return service;
+            }]);
+/*****************
+ File division
+*****************/
+'use strict';
+
+angular.module('Feedback')
+
+.controller('FeedbackController',
+    ['$scope', '$rootScope', 'config', 'FeedbackService',
+        function ($scope, $rootScope, config, FeedbackService) {
+
+            $scope.sendFeedback = function(title, body) {
+                $scope.dataLoading = true;
+                FeedbackService.SendFeedback(title, body,
+                    function(response) {
+                        $scope.dataLoading = false;
+                        $scope.showSuccess = true;
+                        $scope.title = "";
+                        $scope.body = "";
+                    },
+                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    function (response) {
+                        ConnectionService.HandleServiceError(response, $scope, $location);
+                    }
+                )
+            }
+
+        }]);
+/*****************
+ File division
+*****************/
+'use strict';
+
+angular.module('Feedback')
+
+    .factory('FeedbackService',
+        ['$http', '$localStorage', '$rootScope', 'config', 'ConnectionService', 'AuthenticationService',
+            function ($http, $localStorage, $rootScope, config, ConnectionService, AuthenticationService) {
+                var service = {};
+
+                service.SendFeedback = function (title, body, success, error) {
+                    return ConnectionService.RequestFromBackend('SubmitFeedback', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'title' : title, 'body' : body}, success, error);
+                };
                 return service;
             }]);
 /*****************
