@@ -3,6 +3,7 @@
 // declare modules
 angular.module('Connection', []);
 angular.module('FAQ', ['Connection', 'Authentication', 'Authorization']);
+angular.module('Feedback', ['Connection', 'Authentication', 'Authorization']);
 angular.module('Authentication', ['Authorization', 'angularModalService', 'Modals', 'Profiles', 'Connection']);
 angular.module('Authorization', ['Authentication', 'Connection']);
 angular.module('Navigation', ['Authentication', 'Profiles', 'Authorization']);
@@ -20,6 +21,7 @@ angular.module('CommandCentral', [
 	'Authorization',
     'Connection',
     'FAQ',
+    'Feedback',
     'Home',
 	'Navigation',
 	'Profiles',
@@ -53,6 +55,11 @@ angular.module('CommandCentral', [
         .when('/', {
             controller: 'HomeController',
             templateUrl: 'modules/home/views/home.html'
+        })
+
+        .when('/feedback', {
+            controller: 'FeedbackController',
+            templateUrl: 'modules/feedback/views/feedback.html'
         })
 
         .when('/faq', {
