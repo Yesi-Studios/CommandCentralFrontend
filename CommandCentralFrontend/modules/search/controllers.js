@@ -105,6 +105,8 @@ angular.module('Search')
 
                 $scope.orderKey = "LastName";
 
+                $scope.printURL = "#/searchbyfield/print/" + $location.path().substr(15);
+
                 if ($routeParams.showHidden) {
                     $scope.showHidden = JSON.parse($routeParams.showHidden);
                 } else {
@@ -249,6 +251,8 @@ angular.module('Search')
                 $scope.searchLevels = ["Command", "Department", "Division"];
                 $scope.selectedLevel = "Command";
                 $scope.orderKey = "LastName";
+
+                $scope.searchURL = "#/searchbyfield/" + $location.path().substr(21);
 
                 if ($routeParams.showHidden) {
                     $scope.showHidden = JSON.parse($routeParams.showHidden);
