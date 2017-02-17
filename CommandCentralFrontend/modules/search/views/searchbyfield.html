@@ -6,10 +6,10 @@
             <div class="alert alert-info">Use Ctrl key to select multiple fields.</div>
         </div>
         <div class="col-md-3">
-            <div class="pull-right"><a
+            <div ng-show="results.length" class="pull-right"><a
                     class="btn btn-primary"
                     href="{{printURL}}"><span class="glyphicon glyphicon-print"></span> Print/PDF Version!
-            </a></div>
+            </a><br/><p class="bg-danger"><small ng-show="results.length > 200">Be careful about sending large search results to print. You may experience browser lag or freezing while data is processed.</small></p></div>
         </div>
     </div>
     <div class="row text-center">
