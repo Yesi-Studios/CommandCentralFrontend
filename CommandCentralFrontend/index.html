@@ -35,14 +35,14 @@
             </div>
             <div class="clearfix visible-xs"></div>
             <div class="col-md-4  header_right visible-lg visible-md visible-sm visible-xs">
-                <span class="header_small_title pull-right" ng-show="containsPII">FOUO Privacy Sensitive</span><br />
-                <span class="header_txt pull-right">Version 1.0.5</span>
+                <span class="header_small_title pull-right no-print" ng-show="containsPII">FOUO Privacy Sensitive</span><br />
+                <span class="header_txt pull-right no-print">Version 1.0.5</span>
             </div>
         </div>
     </div>
     <!-- END BODY HEAD -->
     <!-- BEGIN NAV BAR -->
-    <div ng-show="showNav" class="container">
+    <div ng-show="showNav" class="container no-print">
         <div class="navbar navbar-default" id="mainNav" ng-controller="NavController">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -97,14 +97,14 @@
     <br>
 
 
-    <div class="container" ng-controller="ModalServiceController">
+    <div class="container no-print" ng-controller="ModalServiceController">
         <div class="row">
             <div class="col-md-offset-3 col-md-6 text-center">
                 <a href ng-click="show()">Re-show PII info</a>
             </div>
         </div>
     </div>
-    <div class="container" ng-controller="SetPortController">
+    <div class="container no-print" ng-controller="SetPortController">
         <div ng-if="showPortController" class="row">
             <form class="form-inline">
                 <div class="form-group">

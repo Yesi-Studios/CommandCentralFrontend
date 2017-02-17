@@ -1,0 +1,83 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
+<div class="row no-print">
+    <div class="col-md-3">
+        <br/>
+        <br/>
+        <br/>
+        <p>
+            Alter the order of the fields to the right, then click "Print" to create a pdf
+            or printed copy. Please keep in mind that <strong>data printed from this page is very likely to be FOUO
+            Privacy Act Sensitive, and must be handled properly.</strong>
+        </p>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group text-center">
+            <label for="fieldsOrder">Order of Fields</label>
+            <select class="form-control" size="10" id="fieldsOrder" ng-model="selectedField"
+                    ng-options="field for field in searchByFieldReturns" multiple></select>
+        </div>
+    </div>
+    <div class="col-md-3"><br/><br/>
+        <button class="btn btn-default btn-block" ng-disabled="!selectedField || dataLoading"
+                ng-click="moveToTop(selectedField[0])"><span class="glyphicon glyphicon-arrow-up"></span> Move Item To
+            Top
+        </button>
+        <button class="btn btn-default btn-block" ng-disabled="!selectedField || dataLoading"
+                ng-click="moveUp(selectedField[0])">
+            <span class="glyphicon glyphicon-menu-up"></span> Move Item Up
+        </button>
+        <button class="btn btn-default btn-block" ng-disabled="!selectedField || dataLoading"
+                ng-click="moveDown(selectedField[0])"><span class="glyphicon glyphicon-menu-down"></span> Move Item Down
+        </button>
+        <button class="btn btn-default btn-block" ng-disabled="!selectedField || dataLoading"
+                ng-click="moveToBottom(selectedField[0])"><span class="glyphicon glyphicon-arrow-down"></span> Move Item
+            To Bottom
+        </button>
+        <br/>
+        <div class="btn-group btn-group-justified" width="100%" wrole="group">
+            <a class="btn btn-primary"
+               href="{{searchURL}}"><span class="glyphicon glyphicon-hand-left"></span> Back
+            </a>
+            <a class="btn btn-primary"
+               href="javascript:window.print()"><span class="glyphicon glyphicon-print"></span> Print
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row results">
+    <div class="col-md-12">
+
+        <div ng-show="results.length" class="table-responsive">
+            <table ng-show="results" class="table-striped col-md-12">
+                <thead>
+                <tr>
+                    <th colspan="100">FOUO Privacy Sensitive</th>
+                </tr>
+                <tr>
+                    <th ng-repeat="field in searchByFieldReturns" ng-click="setOrder(field)"><a>{{field}}<span
+                            class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-'+field"></span><span
+                            class="glyphicon glyphicon-chevron-down" ng-if="orderKey==field"></span></a>&nbsp&nbsp
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="result in filteredResults | orderBy: orderKey">
+                    <td ng-repeat="field in searchByFieldReturns">{{result[field]}}</td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+</tr>
+<div class="row">
+    <div class="col-md-12 text-center no-print">
+        <uib-pagination ng-show="results.length" total-items="results.length" items-per-page="itemsPerPage"
+                        ng-model="currentPage" ng-change="pageChanged()" max-size="7" class="pagination-sm"
+                        boundary-links="true" force-ellipses="true"></uib-pagination>
+    </div>
+</div>
+

@@ -1,14 +1,22 @@
-<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}</div>
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
 <div class="content_panel">
     <div class="row text-center">
         <div class="col-md-offset-3 col-md-6">
             <div class="alert alert-info">Use Ctrl key to select multiple fields.</div>
         </div>
+        <div class="col-md-3">
+            <div ng-show="results.length" class="pull-right"><a
+                    class="btn btn-primary"
+                    href="{{printURL}}"><span class="glyphicon glyphicon-print"></span> Print/PDF Version!
+            </a><br/><p class="bg-danger"><small ng-show="results.length > 200">Be careful about sending large search results to print. You may experience browser lag or freezing while data is processed.</small></p></div>
+        </div>
     </div>
     <div class="row text-center">
         <div class="col-md-offset-3 col-md-6">
             <label for="selectedLevel">Search at this level:</label>
-            <select class="form-control" id="selectedLevel" ng-model="selectedLevel" ng-options="o as 'My ' + o for o in searchLevels" required>
+            <select class="form-control" id="selectedLevel" ng-model="selectedLevel"
+                    ng-options="o as 'My ' + o for o in searchLevels" required>
             </select>
         </div>
     </div>
@@ -16,14 +24,17 @@
         <div class="col-md-offset-1 col-md-5">
             <div class="form-group">
                 <label for="fieldsToSearch">Fields to Search</label>
-                <select class="form-control" size="10" id="fieldsToSearch" ng-model="fieldsToSearch" ng-options="o for o in getSearchableFields(selectedLevel) | orderBy:'toString()'" multiple>
+                <select class="form-control" size="10" id="fieldsToSearch" ng-model="fieldsToSearch"
+                        ng-options="o for o in getSearchableFields(selectedLevel) | orderBy:'toString()'" multiple>
                 </select>
             </div>
         </div>
         <div class="col-md-5">
             <div class="form-group">
                 <label for="fieldsToReturn">Fields to Return</label>
-                <select class="form-control" size="10" id="fieldsToReturn" ng-model="fieldsToReturn" ng-options="o for o in getReturnableFields(selectedLevel) | orderBy:'toString()'" multiple></select>
+                <select class="form-control" size="10" id="fieldsToReturn" ng-model="fieldsToReturn"
+                        ng-options="o for o in getReturnableFields(selectedLevel) | orderBy:'toString()'"
+                        multiple></select>
             </div>
         </div>
     </div>
@@ -32,7 +43,8 @@
             <div ng-repeat="field in fieldsToSearch track by $index" class="form-group col-md-offset-2 col-md-8">
                 <span ng-keyup="searchOnEnter($event, advancedSearchFilters, fieldsToReturn, selectedLevel)">
 
-                    <ng-search-field ng-model="advancedSearchFilters" data-field-name="field" data-field-type="fieldTypes[field]['SearchDataType']"></ng-search-field>
+                    <ng-search-field ng-model="advancedSearchFilters" data-field-name="field"
+                                     data-field-type="fieldTypes[field]['SearchDataType']"></ng-search-field>
                 </span>
             </div>
         </div>
@@ -45,18 +57,24 @@
                 </label>
             </div>
             <!--suppress HtmlUnknownAttribute -->
-            <button class="btn btn-primary" type="button" ng-click="goToResults(advancedSearchFilters, fieldsToReturn, selectedLevel)" ng-disabled="!fieldsToReturn || !selectedLevel">Search</button>
+            <button class="btn btn-primary" type="button"
+                    ng-click="goToResults(advancedSearchFilters, fieldsToReturn, selectedLevel)"
+                    ng-disabled="!fieldsToReturn || !selectedLevel">Search
+            </button>
             <div ng-show="dataLoading"><br/><img src="img/loading.gif" height="32" width="32"/><br/>Loading...</div>
         </div>
     </div>
     <div>
         <div class="col-md-12">
             <h3 class="text-center" ng-show="results.length">Showing {{results.length}} results.</h3>
+
             <div class="row">
-                <div class="col-md-offset-4 col-md-4"><h4 div="text-center" ng-show="filteredResults.length">Click a column to sort by it.</h4></div>
+                <div class="col-md-offset-4 col-md-4"><h4 div="text-center" ng-show="filteredResults.length">Click a
+                    column to sort by it.</h4></div>
                 <div class="col-md-offset-2 col-md-2">
                     <label ng-show="filteredResults.length" for="itemsPerPageSelect">Items per page:</label>
-                    <select id="itemsPerPageSelect" ng-model="itemsPerPage" ng-init="itemsPerPage='50'" ng-show="filteredResults.length" class="pull-right form-control">
+                    <select id="itemsPerPageSelect" ng-model="itemsPerPage" ng-init="itemsPerPage='50'"
+                            ng-show="filteredResults.length" class="pull-right form-control">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
@@ -69,7 +87,11 @@
                 <table ng-show="results" class="table-striped col-md-12">
                     <thead>
                     <tr>
-                        <th ng-repeat="field in searchByFieldReturns" ng-click="setOrder(field)"><button ng-class="{'btn-primary': orderKey==field || orderKey=='-'+field}">{{field}}<span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-'+field"></span><span class="glyphicon glyphicon-chevron-down" ng-if="orderKey==field"></span></button></th>
+                        <th ng-repeat="field in searchByFieldReturns" ng-click="setOrder(field)">
+                            <button ng-class="{'btn-primary': orderKey==field || orderKey=='-'+field}">{{field}}<span
+                                    class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-'+field"></span><span
+                                    class="glyphicon glyphicon-chevron-down" ng-if="orderKey==field"></span></button>
+                        </th>
                         <th>Profile</th>
                     </tr>
                     </thead>
@@ -77,7 +99,8 @@
                     <tr ng-repeat="result in filteredResults | orderBy: orderKey" ng-click="goToProfile(result.Id)">
                         <td ng-repeat="field in searchByFieldReturns">{{result[field]}}</td>
                         <td><!--suppress HtmlUnknownAttribute -->
-                            <a ng-href="#/profile/{{result.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                            <a ng-href="#/profile/{{result.Id}}"><span class="glyphicon glyphicon-new-window"
+                                                                       aria-hidden="true"></span></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -86,7 +109,9 @@
     </div>
     <div class="row">
         <div class="col-md-12 text-center">
-            <uib-pagination ng-show="results.length" total-items="results.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="7" class="pagination-sm" boundary-links="true" force-ellipses="true"></uib-pagination>
+            <uib-pagination ng-show="results.length" total-items="results.length" items-per-page="itemsPerPage"
+                            ng-model="currentPage" ng-change="pageChanged()" max-size="7" class="pagination-sm"
+                            boundary-links="true" force-ellipses="true"></uib-pagination>
         </div>
     </div>
 </div>

@@ -116,20 +116,25 @@ angular.module('CommandCentral', [
             controller: 'SearchController',
             templateUrl: 'modules/search/views/search.html'
         })
-		
-		.when('/search/:searchTerms/:showHidden', {
+
+        .when('/search/:searchTerms/:showHidden', {
             controller: 'SearchController',
             templateUrl: 'modules/search/views/search.html'
         })
-		
-		.when('/searchbyfield', {
+
+        .when('/searchbyfield', {
             controller: 'SearchByFieldController',
             templateUrl: 'modules/search/views/searchbyfield.html'
         })
-		
-		.when('/searchbyfield/:searchTerms/:returnFields/:searchLevel/:showHidden', {
+
+        .when('/searchbyfield/:searchTerms/:returnFields/:searchLevel/:showHidden', {
             controller: 'SearchByFieldController',
             templateUrl: 'modules/search/views/searchbyfield.html'
+        })
+
+		.when('/searchbyfield/print/:searchTerms/:returnFields/:searchLevel/:showHidden', {
+            controller: 'SearchByFieldPrintController',
+            templateUrl: 'modules/search/views/searchbyfieldprint.html'
         })
 		
 		.when('/register', {
