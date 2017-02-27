@@ -5,7 +5,7 @@ angular.module('Profiles')
     .controller('ProfileController',
         ['$scope', '$rootScope', '$location', '$routeParams', '$filter', 'AuthenticationService', 'ProfileService', 'ConnectionService', 'config',
             function ($scope, $rootScope, $location, $routeParams, $filter, AuthenticationService, ProfileService, ConnectionService, config) {
-                
+
                 /*
                  *   This function chain is a little hefty, so a preface is warranted.
                  *
@@ -64,14 +64,14 @@ angular.module('Profiles')
                             $scope.editableFields = response.ReturnValue.ResolvedPermissions.EditableFields.Main.Person;
 
                             // Set up all the dates to be actual Dates
-                            if(response.ReturnValue.Person.DateOfBirth) $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
+                            if (response.ReturnValue.Person.DateOfBirth) $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
                             console.log(response.ReturnValue.Person.DateOfBirth);
-                            if(response.ReturnValue.Person.DateOfArrival) $scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
-                            if(response.ReturnValue.Person.DateOfDeparture) $scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
-                            if(response.ReturnValue.Person.EAOS) $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
-                            if(response.ReturnValue.Person.PRD) $scope.profileData.PRD = new Date(response.ReturnValue.Person.PRD);
-                            if(response.ReturnValue.Person.ClaimTime) $scope.profileData.ClaimTime = new Date(response.ReturnValue.Person.ClaimTime);
-                            if(response.ReturnValue.Person.GTCTrainingDate) $scope.profileData.GTCTrainingDate = new Date(response.ReturnValue.Person.GTCTrainingDate);
+                            if (response.ReturnValue.Person.DateOfArrival) $scope.profileData.DateOfArrival = new Date(response.ReturnValue.Person.DateOfArrival);
+                            if (response.ReturnValue.Person.DateOfDeparture) $scope.profileData.DateOfDeparture = new Date(response.ReturnValue.Person.DateOfDeparture);
+                            if (response.ReturnValue.Person.EAOS) $scope.profileData.EAOS = new Date(response.ReturnValue.Person.EAOS);
+                            if (response.ReturnValue.Person.PRD) $scope.profileData.PRD = new Date(response.ReturnValue.Person.PRD);
+                            if (response.ReturnValue.Person.ClaimTime) $scope.profileData.ClaimTime = new Date(response.ReturnValue.Person.ClaimTime);
+                            if (response.ReturnValue.Person.GTCTrainingDate) $scope.profileData.GTCTrainingDate = new Date(response.ReturnValue.Person.GTCTrainingDate);
 
 
                             $scope.canSearchPersonField = function (field) {
@@ -119,6 +119,8 @@ angular.module('Profiles')
                             }
                         );
 
+                        $scope.loadFullAccountHistory();
+
                         ProfileService.GetCommands(
                             // If we succeed, this is our callback
                             function (response) {
@@ -129,7 +131,7 @@ angular.module('Profiles')
 
                                 // Fill in the objects where currently only Ids exist.
                                 $scope.profileData.Command = $scope.command;
-                                if($scope.profileData.Command) {
+                                if ($scope.profileData.Command) {
                                     $scope.profileData.Department = $scope.getById($scope.profileData.Command.Departments, $scope.profileData.Department);
                                     if ($scope.profileData.Department) {
                                         $scope.profileData.Division = $scope.getById($scope.profileData.Department.Divisions, $scope.profileData.Division);
@@ -139,13 +141,23 @@ angular.module('Profiles')
                                 } else {
                                     $scope.profileData.Department = null;
                                 }
-                                if(config.debugMode) console.log($scope.form.$error);
+                                if (config.debugMode) console.log($scope.form.$error);
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                             function (response) {
                                 ConnectionService.HandleServiceError(response, $scope, $location);
                             }
                         );
+
+                        /*ProfileService.GetChainOfCommand($routeParams.id, function (response) {
+                         console.log("HERE");
+                         console.log(response);
+                         },
+                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                         function (response) {
+                         ConnectionService.HandleServiceError(response, $scope, $location);
+                         }
+                         );*/
                     });
                 };
 
@@ -153,7 +165,7 @@ angular.module('Profiles')
                     // If we succeed, this is our call back
                     function (response) {
                         $scope.lists = response.ReturnValue;
-                        $scope.defaultPhoneType = $filter('filter')(response.ReturnValue.PhoneNumberType, { Value: "Home" })[0];
+                        $scope.defaultPhoneType = $filter('filter')(response.ReturnValue.PhoneNumberType, {Value: "Home"})[0];
 
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
@@ -173,10 +185,9 @@ angular.module('Profiles')
                  ConnectionService.HandleServiceError(response, $scope, $location);
                  }
                  );*/
-                $scope.loadProfile();
 
                 $scope.loadFullAccountHistory = function () {
-                    ProfileService.LoadAccountHistory($scope.profileData.Id,
+                    ProfileService.LoadAccountHistory($routeParams.id,
                         // If we succeed, this is our call back
                         function (response) {
                             $scope.profileData.AccountHistory = response.ReturnValue;
@@ -190,13 +201,15 @@ angular.module('Profiles')
 
                 };
 
+                $scope.loadProfile();
+
                 $scope.updateProfile = function () {
                     $scope.dataLoading = true;
                     $scope.profileUpdateSuccess = false;
                     // Check to see if the Primary NEC is also one of the Secondary NECs. If it is, remove it.
                     for (var i in $scope.profileData.SecondaryNECs) {
-                        if($scope.profileData.SecondaryNECs[i].Id == $scope.profileData.PrimaryNEC.Id){
-                            $scope.profileData.SecondaryNECs.splice(i,1);
+                        if ($scope.profileData.SecondaryNECs[i].Id == $scope.profileData.PrimaryNEC.Id) {
+                            $scope.profileData.SecondaryNECs.splice(i, 1);
                         }
                     }
 
@@ -217,16 +230,18 @@ angular.module('Profiles')
                 };
 
                 $scope.canDeleteEmail = function (email) {
-                    if(email.substr(email.length-4)!='.mil') {return true;}
+                    if (email.substr(email.length - 4) != '.mil') {
+                        return true;
+                    }
 
                     var c = 0;
-                    for (var i in $scope.profileData.EmailAddresses){
-                        if($scope.profileData.EmailAddresses[i].Address.substr($scope.profileData.EmailAddresses[i].Address.length-4) == '.mil') {
+                    for (var i in $scope.profileData.EmailAddresses) {
+                        if ($scope.profileData.EmailAddresses[i].Address.substr($scope.profileData.EmailAddresses[i].Address.length - 4) == '.mil') {
                             c += 1;
                         }
                     }
 
-                    if(c != 1){
+                    if (c != 1) {
                         return true;
                     }
                     return false;

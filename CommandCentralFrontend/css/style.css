@@ -47,6 +47,14 @@ uib-tab {
     float: right;
 }
 
+.profile-table:nth-child(odd) {
+    background: #DDD;
+}
+
+.profile-table {
+    width: 100%;
+}
+
 .form-group {
     margin-top: 10px !important;
 }

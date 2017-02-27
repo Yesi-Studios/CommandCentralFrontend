@@ -603,14 +603,18 @@
                 <div class="alert alert-info">Use the Ctrl key to select multiple NECs or Watch Qualifications.</div>
             </uib-tab>
             <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
+            <!--<uib-tab heading="Chain of Command">
+
+            </uib-tab>-->
             <uib-tab heading="Account">
                 <div class="row">
                     <div class="col-md-offset-1 col-md-6 text-center">
-                        <!--suppress HtmlUnknownAttribute -->
-                        <div class="form-group" height="400px" style="overflow: auto; height: 250px !important;">
-                            <label for="accountHistory">Account History</label>
+                        <!--suppress HtmlUnknownAttribute --><br/>
+                        <label for="accountHistory"><h4>Account History</h4></label>
+                        <div id="accountHistory" class="form-group"
+                             style="border: groove; overflow: auto; height: 250px !important; width: 100%;">
                             <!--suppress HtmlUnknownAttribute -->
-                            <table id="accountHistory" class="table-striped contact-table"
+                            <table class="table-striped contact-table profile-table"
                                    ng-disabled="!canEditPersonField('AccountHistory')"
                                    ng-show="canReturnPersonField('AccountHistory')">
                                 <thead>
@@ -627,13 +631,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        <a href="" class="btn btn-primary" ng-click="loadFullAccountHistory()">Load Full History</a>
+                        <!--<a href="" class="btn btn-primary" ng-click="loadFullAccountHistory()">Load Full History</a>-->
                     </div>
                     <div class="col-md-offset-1 col-md-3 text-center">
-                        <div class="form-group">
-                            <label for="permissionGroups">Permission Groups <!--suppress HtmlUnknownAttribute -->
-                                <a class="btn btn-primary btn-sm"
-                                   ng-href="#/editpermissions/{{profileData.Id}}">Edit</a></label>
+                        <div class="form-group"><br />
+                            <label for="permissionGroups"><h4>Permission Groups </h4></label>
 
                             <!--<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroupNames')" ng-model="profileData.PermissionGroupNames" ng-options="o as o.Name for o in permissionGroups track by o.Id" multiple>-->
                             <!--</select>-->
@@ -643,6 +645,45 @@
                                 </li>
                             </ul>
 
+                            <div class="row text-right">
+                                <div class="col-md-12">
+                                    <a class="btn btn-primary btn-sm"
+                                       ng-href="#/editpermissions/{{profileData.Id}}">Edit</a></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10 text-center">
+                        <label for="changeHistory"><h3>Change History</h3></label>
+                        <div id="changeHistory" class="form-group" height="400px"
+                             style="border: groove ;overflow: auto; height: 250px !important;">
+                            <!--suppress HtmlUnknownAttribute -->
+                            <table class="table-striped contact-table profile-table"
+                                   ng-disabled="!canEditPersonField('Changes')"
+                                   ng-show="canReturnPersonField('Changes')">
+                                <col width="10%">
+                                <col width="35%">
+                                <col width="35%">
+                                <col width="30%">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Field</th>
+                                    <th class="text-center">From</th>
+                                    <th class="text-center">To</th>
+                                    <th class="text-center">Time (GMT)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="event in profileData.Changes | orderBy: '-Time' track by event.Id" >
+                                    <td>{{event.PropertyName}}</td>
+                                    <td>{{event.OldValue}}</td>
+                                    <td>{{event.NewValue}}</td>
+                                    <td>{{event.Time | date:'short'}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -658,7 +699,6 @@
                     </button>
                 </div>
                 <br/>
-                <div class="alert alert-info">Use the Ctrl key to select multiple Permission Groups.</div>
             </uib-tab>
         </uib-tabset>
         <div ng-show="form.$dirty" class="text-center"><h4><span class="label label-danger">Unsaved Changes!</span><br/><br/>
