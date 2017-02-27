@@ -623,17 +623,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="x in chain['Division']" >
+                                <tr ng-repeat="x in chain['Division'] | orderBy: 'FriendlyName'" >
                                     <td class="text-left">Division</td>
                                     <td>{{x.FriendlyName}}</td>
                                     <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                                 </tr>
-                                <tr ng-repeat="x in chain['Department']" >
+                                <tr ng-repeat="x in chain['Department'] | orderBy: 'FriendlyName'" >
                                     <td class="text-left">Department</td>
                                     <td>{{x.FriendlyName}}</td>
                                     <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                                 </tr>
-                                <tr ng-repeat="x in chain['Command']" >
+                                <tr ng-repeat="x in chain['Command'] | orderBy: 'FriendlyName'" >
                                     <td class="text-left">Command</td>
                                     <td>{{x.FriendlyName}}</td>
                                     <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
