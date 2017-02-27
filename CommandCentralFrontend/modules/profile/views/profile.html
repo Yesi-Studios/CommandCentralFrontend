@@ -603,9 +603,47 @@
                 <div class="alert alert-info">Use the Ctrl key to select multiple NECs or Watch Qualifications.</div>
             </uib-tab>
             <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
-            <!--<uib-tab heading="Chain of Command">
+            <uib-tab heading="Chain of Command">
+                <div class="row" ng-repeat="(name, chain) in chainOfCommand">
 
-            </uib-tab>-->
+                    <div class="col-md-offset-1 col-md-10 text-center">
+                        <label for="{{name}}"><h3>{{name}}</h3></label>
+                        <div id="{{name}}" class="form-group"
+                             style="border: groove ;overflow: auto; height: 250px !important;">
+                            <!--suppress HtmlUnknownAttribute -->
+                            <table class="table-striped contact-table profile-table">
+                                <col width="15%">
+                                <col width="70%">
+                                <col width="15%">
+                                <thead>
+                                <tr>
+                                    <th class="text-left">&nbsp Level</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Profile</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="x in chain['Division']" >
+                                    <td class="text-left">Division</td>
+                                    <td>{{x.FriendlyName}}</td>
+                                    <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                </tr>
+                                <tr ng-repeat="x in chain['Department']" >
+                                    <td class="text-left">Department</td>
+                                    <td>{{x.FriendlyName}}</td>
+                                    <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                </tr>
+                                <tr ng-repeat="x in chain['Command']" >
+                                    <td class="text-left">Command</td>
+                                    <td>{{x.FriendlyName}}</td>
+                                    <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
             <uib-tab heading="Account">
                 <div class="row">
                     <div class="col-md-offset-1 col-md-6 text-center">

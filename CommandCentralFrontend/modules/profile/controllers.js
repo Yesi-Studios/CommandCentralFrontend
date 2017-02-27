@@ -149,15 +149,15 @@ angular.module('Profiles')
                             }
                         );
 
-                        /*ProfileService.GetChainOfCommand($routeParams.id, function (response) {
-                         console.log("HERE");
-                         console.log(response);
+                        ProfileService.GetChainOfCommand($routeParams.id, function (response) {if (config.debugMode) console.log("HERE");
+                         if (config.debugMode) console.log(response);
+                         $scope.chainOfCommand = response.ReturnValue;
                          },
                          // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                          function (response) {
                          ConnectionService.HandleServiceError(response, $scope, $location);
                          }
-                         );*/
+                         );
                     });
                 };
 
