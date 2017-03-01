@@ -16,6 +16,7 @@ angular.module('Search')
         };
 		
         service.DoAdvancedSearch = function (filters, returnFields, searchLevel, showHidden, success, error) {
+            if ( returnFields.indexOf("Id") < 0 ) returnFields.push('Id');
             return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': filters, 'returnfields': returnFields, 'searchLevel' : searchLevel, 'showhidden': showHidden }, success, error);
         };
 		

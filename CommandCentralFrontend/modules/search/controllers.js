@@ -173,7 +173,7 @@ angular.module('Search')
                     level = level.replace(/['"]+/g, '');
 
                     for (var i in filters) {
-                        if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1) {
+                        if (filters[i] === "" || $scope.fieldsToSearch.indexOf(i) == -1) {
                             delete filters[i];
                         } else {
                             if ($scope.fieldTypes[i].SearchDataType == "DateTime") {
@@ -346,7 +346,7 @@ angular.module('Search')
                     level = level.replace(/['"]+/g, '');
 
                     for (var i in filters) {
-                        if (filters[i] == "" || $scope.fieldsToSearch.indexOf(i) == -1) {
+                        if (filters[i] === "" || $scope.fieldsToSearch.indexOf(i) == -1) {
                             delete filters[i];
                         } else {
                             if ($scope.fieldTypes[i].SearchDataType == "DateTime") {
