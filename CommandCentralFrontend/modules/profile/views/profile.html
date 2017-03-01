@@ -467,15 +467,13 @@
                                                        ng-show="canReturnPersonField('PRD')"
                                                        ng-model="profileData.PRD"></ng-custom-date-picker>
                             </div>
-                            <label class="col-md-2" for="necs">Secondary NECs</label>
+                            <label class="col-md-2" for="ADAMSDate">ADAMS Training Date</label>
                             <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="necs"
-                                        ng-disabled="!canEditPersonField('SecondaryNECs')"
-                                        ng-show="canReturnPersonField('SecondaryNECs')"
-                                        ng-model="profileData.SecondaryNECs"
-                                        ng-options="o as o.Value for o in lists['NEC'] |orderBy: 'Value' track by o.Id"
-                                        multiple></select>
+                                <ng-custom-date-picker ng-disabled="!canEditPersonField('ADAMSTrainingDate')"
+                                                       ng-show="canReturnPersonField('ADAMSTrainingDate')"
+                                                       ng-model="profileData.ADAMSTrainingDate"
+                                                       id="ADAMSDate"></ng-custom-date-picker>
                             </div>
                         </div>
                         <div class="form-group">
@@ -489,13 +487,9 @@
                                         ng-options="o as o.Value for o in lists['WatchQualification'] |orderBy: 'Value' track by o.Id"
                                         multiple></select>
                             </div>
-                            <label class="col-md-2" for="necs">Primary NEC</label>
+                            <label class="col-md-2" for="AWAREComplete">AWARE Completed</label>
                             <div class="col-md-4">
-                                <!--suppress HtmlUnknownAttribute -->
-                                <select class="form-control" id="primarynec"
-                                        ng-disabled="!canEditPersonField('PrimaryNEC')"
-                                        ng-show="canReturnPersonField('PrimaryNEC')" ng-model="profileData.PrimaryNEC"
-                                        ng-options="o as o.Value for o in lists['NEC'] | orderBy: 'Value' track by o.Id"></select>
+                                <input type="checkbox" ng-model="profileData.HasCompletedAWARE">
                             </div>
                         </div>
                     </div>
@@ -575,6 +569,26 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-md-2" for="necs">Primary NEC</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="primarynec"
+                                        ng-disabled="!canEditPersonField('PrimaryNEC')"
+                                        ng-show="canReturnPersonField('PrimaryNEC')" ng-model="profileData.PrimaryNEC"
+                                        ng-options="o as o.Value for o in lists['NEC'] | orderBy: 'Value' track by o.Id"></select>
+                            </div>
+                            <label class="col-md-2" for="necs">Secondary NECs</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="necs"
+                                        ng-disabled="!canEditPersonField('SecondaryNECs')"
+                                        ng-show="canReturnPersonField('SecondaryNECs')"
+                                        ng-model="profileData.SecondaryNECs"
+                                        ng-options="o as o.Value for o in lists['NEC'] |orderBy: 'Value' track by o.Id"
+                                        multiple></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-md-4" for="workRemarks">Work Remarks</label>
                             <div class="col-md-8">
                                 <!--suppress HtmlUnknownAttribute -->
@@ -600,7 +614,8 @@
                             class="btn btn-primary pull-right" style="margin-right: 20px;">Save Changes
                     </button>
                 </div>
-                <div class="alert alert-info">Use the Ctrl key to select multiple NECs or Watch Qualifications.</div>
+                <div class="alert alert-info">Use the Ctrl key to select multiple NECs or Watch Qualifications.
+                </div>
             </uib-tab>
             <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
             <uib-tab heading="Chain of Command">
@@ -623,20 +638,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="x in chain['Division'] | orderBy: 'FriendlyName'" >
+                                <tr ng-repeat="x in chain['Division'] | orderBy: 'FriendlyName'">
                                     <td class="text-left">Division</td>
                                     <td>{{x.FriendlyName}}</td>
-                                    <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                    <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window"
+                                                                              aria-hidden="true"></span></a></td>
                                 </tr>
-                                <tr ng-repeat="x in chain['Department'] | orderBy: 'FriendlyName'" >
+                                <tr ng-repeat="x in chain['Department'] | orderBy: 'FriendlyName'">
                                     <td class="text-left">Department</td>
                                     <td>{{x.FriendlyName}}</td>
-                                    <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                    <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window"
+                                                                              aria-hidden="true"></span></a></td>
                                 </tr>
-                                <tr ng-repeat="x in chain['Command'] | orderBy: 'FriendlyName'" >
+                                <tr ng-repeat="x in chain['Command'] | orderBy: 'FriendlyName'">
                                     <td class="text-left">Command</td>
                                     <td>{{x.FriendlyName}}</td>
-                                    <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+                                    <td><a ng-href="#/profile/{{x.Id}}"><span class="glyphicon glyphicon-new-window"
+                                                                              aria-hidden="true"></span></a></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -672,7 +690,7 @@
                         <!--<a href="" class="btn btn-primary" ng-click="loadFullAccountHistory()">Load Full History</a>-->
                     </div>
                     <div class="col-md-offset-1 col-md-3 text-center">
-                        <div class="form-group"><br />
+                        <div class="form-group"><br/>
                             <label for="permissionGroups"><h4>Permission Groups </h4></label>
 
                             <!--<select size="10" class="form-control" id="permissionGroups" disabled ng-show="canReturnPersonField('PermissionGroupNames')" ng-model="profileData.PermissionGroupNames" ng-options="o as o.Name for o in permissionGroups track by o.Id" multiple>-->
@@ -702,22 +720,26 @@
                                    ng-disabled="!canEditPersonField('Changes')"
                                    ng-show="canReturnPersonField('Changes')">
                                 <col width="10%">
-                                <col width="35%">
-                                <col width="35%">
+                                <col width="20%">
+                                <col width="20%">
                                 <col width="30%">
+                                <col width="20%">
                                 <thead>
                                 <tr>
                                     <th class="text-center">Field</th>
                                     <th class="text-center">From</th>
                                     <th class="text-center">To</th>
+                                    <th class="text-center">Changed By</th>
                                     <th class="text-center">Time (GMT)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="event in profileData.Changes | orderBy: '-Time' track by event.Id" >
+                                <tr ng-repeat="event in profileData.Changes | orderBy: '-Time' track by event.Id">
                                     <td>{{event.PropertyName}}</td>
                                     <td>{{event.OldValue}}</td>
                                     <td>{{event.NewValue}}</td>
+                                    <td>{{event.Editor.FriendlyName}} <a ng-href="#/profile/{{event.Editor.Id}}"><span
+                                            class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
                                     <td>{{event.Time | date:'short'}}</td>
                                 </tr>
                                 </tbody>
