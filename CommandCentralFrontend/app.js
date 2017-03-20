@@ -12,6 +12,7 @@ angular.module('Home', ['Authentication', 'Authorization', 'pdf', 'Connection'])
 angular.module('Administration', ['Authentication', 'Connection']);
 angular.module('Search', ['Authentication', 'Authorization', 'Connection', 'ui.bootstrap']);
 angular.module('Muster', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
+angular.module('Watchbill', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
 
 angular.module('Modals', ['angularModalService']);
 
@@ -28,6 +29,7 @@ angular.module('CommandCentral', [
 	'Search',
     'Modals',
     'Muster',
+    'Watchbill',
     'angularModalService',
     'ngRoute',
     'ngStorage',
@@ -100,6 +102,11 @@ angular.module('CommandCentral', [
         .when('/muster/archive', {
             controller: 'MusterArchiveController',
             templateUrl: 'modules/muster/views/archive.html'
+        })
+
+        .when('/watchbill', {
+            controller: 'WatchbillController',
+            templateUrl: 'modules/watchbill/views/watchbill.html'
         })
 
         .when('/updatenews/:id', {

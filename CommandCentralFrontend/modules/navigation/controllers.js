@@ -62,4 +62,8 @@ angular.module('Navigation')
         $scope.isActive = function (viewLocation) {
             return viewLocation === $location.path();
         };
+
+        $scope.isIn = function (viewLocation) {
+            return $location.path().indexOf(viewLocation) >= 0;
+        }
     }]);
