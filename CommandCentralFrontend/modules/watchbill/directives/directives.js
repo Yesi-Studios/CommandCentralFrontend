@@ -14,7 +14,7 @@ angular.module('Watchbill')
                 controller: ['$scope', '$location', 'WatchbillService', 'ConnectionService', function ($scope, $location, WatchbillService, ConnectionService) {
                     WatchbillService.LoadWatchbill($scope.watchbillId,
                         function (response) {
-                            $scope.watchbill = response;
+                            $scope.watchbill = response.ReturnValue;
                         },
                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                         function (response) {

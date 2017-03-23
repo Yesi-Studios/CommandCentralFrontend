@@ -14,5 +14,9 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('LoadWatchbill', {'watchbillId': id, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                service.LoadWatchbills = function (success, error) {
+                    return ConnectionService.RequestFromBackend('LoadWatchbills', {'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
                 return service;
             }]);
