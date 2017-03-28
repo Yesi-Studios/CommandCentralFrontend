@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group text-center">
+            <label for="watchDayDesigner">Watch Day Builder</label>
+            <select class="form-control" size="10" id="watchDayDesigner" ng-model="selectedShift"
+                    ng-options="shifts"></select>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-success btn-block"
+                ng-click="shifts.push()"><span class="glyphicon glyphicon-arrow-up"></span> Move Item To
+            Top
+        </button>
+    </div>
+</div>

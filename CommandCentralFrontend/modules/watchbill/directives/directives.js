@@ -107,4 +107,18 @@ angular.module('Watchbill')
             }]
         }
     }
-);
+)
+    .directive('ngDayEditor', function () {
+        return {
+            restrict: 'E',
+            require: '^ngModel',
+            scope: {
+                ngModel: '=',
+            },
+            templateUrl: "modules/watchbill/directives/dayeditor.html",
+            controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
+                $scope.shifts = [];
+
+            }]
+        }
+    });
