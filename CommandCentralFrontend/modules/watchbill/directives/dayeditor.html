@@ -1,15 +1,22 @@
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 col-md-offset-1">
         <div class="form-group text-center">
             <label for="watchDayDesigner">Watch Day Builder</label>
             <select class="form-control" size="10" id="watchDayDesigner" ng-model="selectedShift"
-                    ng-options="shifts"></select>
+                    ng-options="shift as shift.Title for shift in ngModel"></select>
         </div>
     </div>
     <div class="col-md-3">
         <button class="btn btn-success btn-block"
-                ng-click="shifts.push()"><span class="glyphicon glyphicon-arrow-up"></span> Move Item To
-            Top
+                ng-click="ngModel.push({'Title':'New Shift', 'Range':{'Start':'','End':''}, 'ShiftType':''})"><span class="glyphicon glyphicon-plus"></span> New shift
         </button>
+        <button class="btn btn-danger btn-block"
+                ng-click="ngModel.splice(shifts.indexOf(selectedShift, 1))"><span class="glyphicon glyphicon-remove"></span> Delete shift
+        </button>
+    </div>
+    <div class="col-md-5">
+        <input type="text" ng-model="selectedShift.Title"/>
+        <uib-timepicker ng-model="selectedShift.Range.From"></uib-timepicker>
+        <uib-timepicker ng-model="selectedShift.Range.To"></uib-timepicker>
     </div>
 </div>

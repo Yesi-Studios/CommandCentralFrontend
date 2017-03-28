@@ -57,6 +57,7 @@ angular.module('Watchbill')
                 function (response) {
                     $scope.watchbill = response.ReturnValue;
                     $scope.weeks = [];
+                    $scope.dayToCopy = [];
 
                     // Fix our dates to be Dates
                     angular.forEach(response.ReturnValue.WatchDays, function (value, index) {

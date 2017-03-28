@@ -5,6 +5,9 @@
 </div>
 <div class="content_panel">
     <div class="row">
+        <ng-day-editor ng-model="dayToCopy"></ng-day-editor>
+    </div>
+    <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
             <table class="table-bordered">
@@ -21,11 +24,17 @@
                                     <ng-shift-nub ng-model="shift"></ng-shift-nub>
                                 </span>
                         </div>
+
+                        <button class="btn btn-success"
+                                ng-click="day.WatchShifts = dayToCopy"><span class="glyphicon glyphicon-plus"></span></button>
+                        <!--<button class="btn btn-danger"-->
+                                <!--ng-click="dayToCopy = angular.copy(day.WatchShifts)"><span class="glyphicon glyphicon-remove"></span></button>-->
                     </td>
                 </tr>
                 </span>
                 </tr>
             </table>
+            {{dayToCopy}}
         </div>
     </div>
 </div>

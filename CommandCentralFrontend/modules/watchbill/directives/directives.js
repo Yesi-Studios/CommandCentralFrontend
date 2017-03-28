@@ -117,7 +117,6 @@ angular.module('Watchbill')
             },
             templateUrl: "modules/watchbill/directives/dayeditor.html",
             controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
-                $scope.shifts = [];
 
             }]
         }
