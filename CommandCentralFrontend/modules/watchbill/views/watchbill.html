@@ -7,10 +7,31 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <H1>Watchbills here</H1>
-            <div class="list-group">
-                <ng-watch-bill-nub ng-repeat="watchbill in watchbills"
-                                   watchbill-id="{{watchbill.Id}}"></ng-watch-bill-nub>
-            </div>
+            <table class="table-bordered">
+                <tr>
+                    <th>S</th>
+                    <th>M</th>
+                    <th>T</th>
+                    <th>W</th>
+                    <th>T</th>
+                    <th>F</th>
+                    <th>S</th>
+                </tr>
+                <tr ng-repeat="week in weeks">
+                    <td ng-if="$first" ng-repeat="day in blankStartDays"></td>
+                    <td ng-repeat="day in week" class="row">
+                        <div class="col-md-12">
+                            {{day.Date | date: shortDate }}
+                                <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
+                                    <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
+                                    <ng-shift-nub ng-model="shift"></ng-shift-nub>
+                                </span>
+                        </div>
+                    </td>
+                </tr>
+                </span>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

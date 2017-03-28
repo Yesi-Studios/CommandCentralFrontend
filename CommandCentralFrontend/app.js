@@ -105,6 +105,11 @@ angular.module('CommandCentral', [
         })
 
         .when('/watchbill', {
+            controller: 'WatchbillsController',
+            templateUrl: 'modules/watchbill/views/watchbills.html'
+        })
+
+        .when('/watchbill/:id', {
             controller: 'WatchbillController',
             templateUrl: 'modules/watchbill/views/watchbill.html'
         })

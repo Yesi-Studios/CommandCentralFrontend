@@ -1,0 +1,16 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
+<div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
+    {{message}}
+</div>
+<div class="content_panel">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <H1>Watchbills here</H1>
+            <div class="list-group">
+                <ng-watch-bill-nub ng-repeat="watchbill in watchbills"
+                                   watchbill-id="{{watchbill.Id}}"></ng-watch-bill-nub>
+            </div>
+        </div>
+    </div>
+</div>

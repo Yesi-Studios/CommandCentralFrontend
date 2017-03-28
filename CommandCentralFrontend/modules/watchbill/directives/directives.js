@@ -93,4 +93,18 @@ angular.module('Watchbill')
                 }]
             }
         }
-    );
+    ).directive('ngShiftNub', function () {
+        return {
+            restrict: 'E',
+            require: '^ngModel',
+            scope: {
+                ngModel: '='
+            },
+            templateUrl: "modules/watchbill/directives/shiftnub.html",
+            controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
+                $scope.ngModel.Range.Start = new Date($scope.ngModel.Range.Start);
+                $scope.ngModel.Range.End = new Date($scope.ngModel.Range.End);
+            }]
+        }
+    }
+);
