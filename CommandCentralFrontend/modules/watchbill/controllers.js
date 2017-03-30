@@ -53,6 +53,26 @@ angular.module('Watchbill')
 ).controller('WatchbillEditorController',
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
         function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
+            $scope.copyShifts = function(shifts, day) {
+                day.WatchShifts = [];
+                /**
+                 * @param {Date} value
+                 */
+                angular.forEach(shifts, function(value, index){
+                    var fixed = angular.copy(value);
+                    fixed.Range.Start = new Date(fixed.Range.Start);
+                    fixed.Range.End = new Date(fixed.Range.End);
+                    fixed.Range.Start.setDate(day.Date.getDate());
+                    fixed.Range.Start.setMonth(day.Date.getMonth());
+                    fixed.Range.Start.setYear(day.Date.getYear());
+                    fixed.Range.End.setDate(day.Date.getDate());
+                    fixed.Range.End.setMonth(day.Date.getMonth());
+                    fixed.Range.End.setYear(day.Date.getYear());
+                    console.log(value);
+                    console.log(fixed);
+                    day.WatchShifts.push(fixed);
+                })
+            };
             WatchbillService.LoadWatchbill($routeParams.id,
                 function (response) {
                     $scope.watchbill = response.ReturnValue;

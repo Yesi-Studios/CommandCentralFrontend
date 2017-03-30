@@ -16,7 +16,7 @@
     </div>
     <div class="col-md-5">
         <input type="text" ng-model="selectedShift.Title"/>
-        <uib-timepicker ng-model="selectedShift.Range.From"></uib-timepicker>
-        <uib-timepicker ng-model="selectedShift.Range.To"></uib-timepicker>
+        <uib-timepicker ng-model="selectedShift.Range.Start"></uib-timepicker>{{selectedShift.Range.From}}
+        <uib-timepicker ng-model="selectedShift.Range.End"></uib-timepicker>{{selectedShift.Range.To}}
     </div>
 </div>
