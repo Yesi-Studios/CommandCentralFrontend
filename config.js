@@ -4,7 +4,7 @@
 'use strict';
 
 var constants = {
-    backendURL: 'http://192.168.1.2',
+    backendURL: 'http://192.168.1.2l',
     backendPort: '1113',
     apiKey: "90fdb89f-282b-4bd6-840b-cef597615728",
     debugMode: false
