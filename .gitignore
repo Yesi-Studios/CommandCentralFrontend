@@ -8,11 +8,11 @@ old/
 livebeta/
 TestFrontend/
 Development/
-CommandCentralFrontend/node_modules/
-CommandCentralFrontend/config.js
+node_modules/
+config.js
 # We should be ignoring the current build, and just doing it when ready
-CommandCentralFrontend/currentbuild/command-central.min.js
-CommandCentralFrontend/currentbuild/command-central.js
+currentbuild/command-central.min.js
+currentbuild/command-central.js
 
 # User-specific files
 *.suo
