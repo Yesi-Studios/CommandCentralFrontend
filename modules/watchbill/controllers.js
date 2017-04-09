@@ -92,31 +92,48 @@ angular.module('Watchbill')
 
                 // First, delete all the watch days in the backend
                 WatchbillService.DeleteWatchDays($scope.watchbill.WatchDays, function (response) {
-                        console.log(response)
+                        console.log(response);
+                        WatchbillService.CreateWatchDays($scope.watchbill.WatchDays, function (response) {
+                                newDays = response.ReturnValue;
+
+                                WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {
+                                        console.log(response)
+                                    },
+                                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                                    function (response) {
+                                        ConnectionService.HandleServiceError(response, $scope, $location);
+                                    });
+                            },
+                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                            function (response) {
+                                ConnectionService.HandleServiceError(response, $scope, $location);
+                            });
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {
                         ConnectionService.HandleServiceError(response, $scope, $location);
-                    })
-                    // Then, create all those days again, saving their Ids
-                    .then(function () {
-                        WatchbillService.CreateWatchDays($scope.watchbill.WatchDays, function (response) {
-                                newDays = response.ReturnValue;
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            });
-                    })
-                    .then(function(){
-                        WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {
-                                console.log(response)
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            });
                     });
+                    // Then, create all those days again, saving their Ids
+                    // .then(function () {
+                    //     alert("FUCK");
+                    //     WatchbillService.CreateWatchDays($scope.watchbill.WatchDays, function (response) {
+                    //             newDays = response.ReturnValue;
+                    //         },
+                    //         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    //         function (response) {
+                    //             ConnectionService.HandleServiceError(response, $scope, $location);
+                    //         });
+                    // })
+                    // .then(function(){
+                    //     alert("WHAT THE");
+                    //     WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {
+                    //             console.log(response)
+                    //         },
+                    //         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    //         function (response) {
+                    //             ConnectionService.HandleServiceError(response, $scope, $location);
+                    //         });
+                    // });
 
                 // Then create all the watch shifts, sending the days we just created as the list of days.
 
