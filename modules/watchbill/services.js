@@ -18,5 +18,28 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('LoadWatchbills', {'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                service.CreateWatchShift = function (shift, watchbillid, success, error) {
+                    return ConnectionService.RequestFromBackend('CreateWatchShift', {'watchshifts': [shift], 'watchbillid':  watchbillid, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
+                service.CreateWatchShifts = function (shifts, watchbillid, success, error) {
+                    return ConnectionService.RequestFromBackend('CreateWatchShifts', {'watchshifts': shifts, 'watchbillid':  watchbillid, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
+                service.CreateWatchDay = function (day, success, error) {
+                    return ConnectionService.RequestFromBackend('CreateWatchDay', {'watchday': day, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
+                service.CreateWatchDays = function (days, success, error) {
+                    return ConnectionService.RequestFromBackend('CreateWatchDays', {'watchdays': days, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
+                service.DeleteWatchDay = function (id, success, error) {
+                    return ConnectionService.RequestFromBackend('DeleteWatchDay', {'watchday': {'Id': id}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
+                service.DeleteWatchDays = function (days, success, error) {
+                    return ConnectionService.RequestFromBackend('DeleteWatchDays', {'watchdays': days, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
                 return service;
             }]);

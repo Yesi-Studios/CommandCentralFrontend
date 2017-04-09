@@ -15,8 +15,8 @@
                     <th ng-repeat="d in ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']">{{d}}</th>
                 </tr>
                 <tr ng-repeat="week in weeks">
-                    <td ng-if="$first" ng-repeat="day in blankStartDays"></td>
-                    <td ng-repeat="day in week" class="row">
+                    <td ng-if="$parent.$first" ng-repeat="day in blankStartDays track by $index"></td>
+                    <td ng-repeat="day in week" class="row text-center">
                         <div class="col-md-12">
                             {{day.Date | date: shortDate }}
                                 <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
@@ -25,16 +25,16 @@
                                 </span>
                         </div>
 
-                        <button class="btn btn-success"
+                        <button class="btn btn-success btn-sm"
                                 ng-click="copyShifts(dayToCopy, day)"><span class="glyphicon glyphicon-plus"></span></button>
-                        <!--<button class="btn btn-danger"-->
-                                <!--ng-click="dayToCopy = angular.copy(day.WatchShifts)"><span class="glyphicon glyphicon-remove"></span></button>-->
+                        <button class="btn btn-primary btn-sm"
+                                ng-click="copyDay(day)"><span class="glyphicon glyphicon-copy"></span></button>
                     </td>
                 </tr>
                 </span>
                 </tr>
             </table>
-            {{dayToCopy}}
+            <button class="btn-success" ng-click="saveWatchBill()">Save</button>
         </div>
     </div>
 </div>
