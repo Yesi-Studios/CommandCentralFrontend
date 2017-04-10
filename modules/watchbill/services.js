@@ -18,6 +18,10 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('CreateWatchbill', {'watchbill': {'title': title, 'eligibilityGroup':  eligibilityGroup}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                service.UpdateWatchbill = function (watchbill, success, error) {
+                    return ConnectionService.RequestFromBackend('UpdateWatchbill', {'watchbill': watchbill, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
                 service.DeleteWatchbill = function (id, success, error) {
                     return ConnectionService.RequestFromBackend('DeleteWatchbill', {'watchbill': {'id': id}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };

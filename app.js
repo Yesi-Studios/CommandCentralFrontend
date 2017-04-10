@@ -118,6 +118,11 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/watchbill/views/watchbilleditor.html'
         })
 
+        .when('/watchbill/progress/:id', {
+            controller: 'WatchbillProgressController',
+            templateUrl: 'modules/watchbill/views/progress.html'
+        })
+
         .when('/updatenews/:id', {
             controller: 'UpdateNewsController',
             templateUrl: 'modules/home/views/updatenews.html'

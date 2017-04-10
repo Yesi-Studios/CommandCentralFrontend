@@ -6,8 +6,10 @@
 <div class="content_panel">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <a href="#/watchbill/edit/{{watchbill.Id}}" class="pull-right btn btn-primary">Edit</a>
+            <a ng-if="watchbill.CurrentState.Value == 'Initial'" href="#/watchbill/edit/{{watchbill.Id}}" class="pull-right btn btn-primary">Edit</a>
+            <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}" class="pull-right btn btn-success">Next Stage</a>
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
             <table class="table-bordered">
                 <tr class="text-center">
                     <th ng-repeat="d in ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']">{{d}}</th>

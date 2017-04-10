@@ -1,0 +1,17 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
+<div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
+    {{message}}
+</div>
+<div class="content_panel">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <h2>This watchbill is currently in the "{{watchbill.CurrentState.Value}}" phase.</h2>
+            <h2>Confirming below will move it to the "{{nextStatus.Value}}" phase.</h2>
+            <button class="btn btn-success" ng-click="moveToNextStep()">Confirm</button>
+            <a class="btn btn-danger" href="#/watchbill/edit/{{watchbill.Id}}">Go Back</a>
+        </div>
+    </div>
+</div>
