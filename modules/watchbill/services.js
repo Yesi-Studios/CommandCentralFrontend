@@ -46,6 +46,14 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('CreateWatchDays', {'watchdays': days, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                service.CreateWatchInput = function (person, shifts, reason, success, error) {
+                    return ConnectionService.RequestFromBackend('CreateWatchInputs', {'watchinputs': [{'person': person , 'WatchShifts': shifts, 'InputReason': reason}], 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
+                service.UpdateWatchInput = function (input, success, error) {
+                    return ConnectionService.RequestFromBackend('UpdateWatchInput', {'watchinput': input, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
                 service.DeleteWatchDay = function (id, success, error) {
                     return ConnectionService.RequestFromBackend('DeleteWatchDay', {'watchday': {'Id': id}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };

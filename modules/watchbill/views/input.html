@@ -43,7 +43,8 @@
             <select ng-options="p as p.FriendlyName for p in inputPeople | orderBy: 'FriendlyName'" ng-model="selectedPerson" size="10"></select>
         </div>
         <div class="col-md-offset-1 col-md-5">
-            {{checkity}}
+            <select ng-options="o as o.Value for o in reasons | orderBy: 'Value'" ng-model="reason"></select>
+            <button ng-click="submitInput()" class="btn btn-success">Submit</button>
         </div>
     </div>
 </div>

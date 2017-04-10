@@ -253,6 +253,27 @@ angular.module('Watchbill')
                     $scope.watchbill = response.ReturnValue;
                     $scope.weeks = [];
 
+                    $scope.submitInput = function () {
+                        var shifts = [];
+                        for (var w = 0; w < $scope.weeks.length; w++) {
+                            for (var d = 0; d < $scope.weeks[w].length; d++) {
+                                for (var s = 0; s < $scope.weeks[w][d].WatchShifts.length; s++) {
+                                    if ($scope.weeks[w][d].WatchShifts[s].checked) {
+                                        shifts.push($scope.weeks[w][d].WatchShifts[s]);
+                                    }
+                                }
+                            }
+                        }
+
+                        WatchbillService.CreateWatchInput($scope.selectedPerson, shifts, $scope.reason, function (response) {
+                                alert("NO WAY");
+                            },
+                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                            function (response) {
+                                ConnectionService.HandleServiceError(response, $scope, $location);
+                            })
+                    };
+
                     // Fix our dates to be Dates
                     angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
                         $scope.watchbill.WatchDays[index].Date = new Date(value.Date);
@@ -276,34 +297,35 @@ angular.module('Watchbill')
 
                     var permissionLevel = $rootScope.globals.currentUser.permissions.HighestLevels[$scope.watchbill.EligibilityGroup.OwningChainOfCommand];
                     ProfileService.LoadProfile($rootScope.globals.currentUser.userID, function (response) {
-                        var valId = response.ReturnValue.Person[permissionLevel];
+                            var valId = response.ReturnValue.Person[permissionLevel];
                             WatchbillService.GetAllLists(function (response) {
-                                var val = "";
-                                console.log(response.ReturnValue[permissionLevel]);
-                                console.log(valId);
-                                for (var k in response.ReturnValue[permissionLevel]){
-                                    if(response.ReturnValue[permissionLevel][k].Id == valId) {
-                                        val = response.ReturnValue[permissionLevel][k].Value;
+                                    var val = "";
+                                    $scope.reasons = response.ReturnValue.WatchInputReason;
+                                    console.log(response.ReturnValue[permissionLevel]);
+                                    console.log(valId);
+                                    for (var k in response.ReturnValue[permissionLevel]) {
+                                        if (response.ReturnValue[permissionLevel][k].Id == valId) {
+                                            val = response.ReturnValue[permissionLevel][k].Value;
+                                        }
                                     }
-                                }
-                                    WatchbillService.GetSubordinatePersons(permissionLevel, val, function(response){
+                                    WatchbillService.GetSubordinatePersons(permissionLevel, val, function (response) {
 
-                                        $scope.inputPeople = [];
-                                        var subordIds = [];
-                                        for (var l = 0; l < response.ReturnValue.Results.length; l++) {
-                                            subordIds.push(response.ReturnValue.Results[l].Id);
-                                        }
-                                        for (var h = 0; h < $scope.watchbill.EligibilityGroup.EligiblePersons.length; h++) {
-                                            if (subordIds.indexOf($scope.watchbill.EligibilityGroup.EligiblePersons[h].Id) >= 0){
-                                                $scope.inputPeople.push($scope.watchbill.EligibilityGroup.EligiblePersons[h])
+                                            $scope.inputPeople = [];
+                                            var subordIds = [];
+                                            for (var l = 0; l < response.ReturnValue.Results.length; l++) {
+                                                subordIds.push(response.ReturnValue.Results[l].Id);
                                             }
-                                        }
+                                            for (var h = 0; h < $scope.watchbill.EligibilityGroup.EligiblePersons.length; h++) {
+                                                if (subordIds.indexOf($scope.watchbill.EligibilityGroup.EligiblePersons[h].Id) >= 0) {
+                                                    $scope.inputPeople.push($scope.watchbill.EligibilityGroup.EligiblePersons[h])
+                                                }
+                                            }
 
                                             console.log("********");
                                             console.log($scope.inputPeople);
                                             console.log(subordIds);
                                             console.log($scope.watchbill.EligibilityGroup.EligiblePersons);
-                                    },
+                                        },
                                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                                         function (response) {
                                             ConnectionService.HandleServiceError(response, $scope, $location);
@@ -332,6 +354,18 @@ angular.module('Watchbill')
             $scope.getByValue = function (arr, prop, val) {
                 return $filter('filter')(arr, {prop: val})[0] || {};
             };
+
+            $scope.confirm = function (input) {
+                input.IsConfirmed = true;
+                WatchbillService.UpdateWatchInput(input, function (response) {
+                        alert("AGAIN!");
+                    },
+                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    function (response) {
+                        ConnectionService.HandleServiceError(response, $scope, $location);
+                    });
+            };
+
             WatchbillService.GetAllLists(function (response) {
                     $scope.lists = response.ReturnValue;
                 },
@@ -365,6 +399,21 @@ angular.module('Watchbill')
                     });
 
                     $scope.blankStartDays = new Array(pushAmount);
+
+                    $scope.inputs = [];
+
+                    for (var w = 0; w < $scope.weeks.length; w++) {
+                        for (var d = 0; d < $scope.weeks[w].length; d++) {
+                            for (var s = 0; s < $scope.weeks[w][d].WatchShifts.length; s++) {
+                                if ($scope.weeks[w][d].WatchShifts[s].WatchInputs) {
+                                    for (var imp = 0; imp < $scope.weeks[w][d].WatchShifts[s].WatchInputs.length; imp++) {
+                                        $scope.inputs.push($scope.weeks[w][d].WatchShifts[s].WatchInputs[imp]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    console.log($scope.inputs);
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
