@@ -58,5 +58,11 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('LoadReferenceLists', {'enititynames': []}, success, error);
                 };
 
+                service.GetSubordinatePersons = function (filter, value, success, error) {
+                    var filters = {};
+                    filters[filter] = value;
+                    return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': filters, 'returnfields': ['Id'], 'searchLevel' : 'Command'}, success, error);
+                };
+
                 return service;
             }]);

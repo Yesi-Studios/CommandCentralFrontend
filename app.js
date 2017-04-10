@@ -123,6 +123,16 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/watchbill/views/progress.html'
         })
 
+        .when('/watchbill/input/:id', {
+            controller: 'WatchbillInputController',
+            templateUrl: 'modules/watchbill/views/input.html'
+        })
+
+        .when('/watchbill/approve/:id', {
+            controller: 'WatchbillApproveController',
+            templateUrl: 'modules/watchbill/views/approve.html'
+        })
+
         .when('/updatenews/:id', {
             controller: 'UpdateNewsController',
             templateUrl: 'modules/home/views/updatenews.html'
