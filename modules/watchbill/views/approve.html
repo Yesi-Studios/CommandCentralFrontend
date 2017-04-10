@@ -9,7 +9,7 @@
 
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
             <div class="list-group">
-                <li ng-repeat="input in inputs" class="list-group-item row" ng-class="{active: hover}"
+                <li ng-repeat="input in inputs" ng-if="input.Id && !input.IsConfirmed" class="list-group-item row" ng-class="{active: hover}"
                     ng-mouseenter="hover = true" ng-mouseleave="hover = false">
                     <div class="col-md-4"><strong>Person: {{input.Person.FriendlyName}}</strong></div>
                     <div class="col-md-3">Shifts: <br/><span ng-repeat="shift in input.WatchShifts" ng-if="shift.Id">{{shift.Range.Start | date: 'medium'}} {{shift.Title}}<br/></span>

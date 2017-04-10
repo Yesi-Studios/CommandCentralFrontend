@@ -137,6 +137,7 @@ angular.module('Watchbill')
         function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
             $scope.copyShifts = function (shifts, day) {
                 day.WatchShifts = [];
+                console.log(day);
                 /**
                  * @param {Date} value
                  */
@@ -266,7 +267,6 @@ angular.module('Watchbill')
                         }
 
                         WatchbillService.CreateWatchInput($scope.selectedPerson, shifts, $scope.reason, function (response) {
-                                alert("NO WAY");
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                             function (response) {
@@ -358,7 +358,6 @@ angular.module('Watchbill')
             $scope.confirm = function (input) {
                 input.IsConfirmed = true;
                 WatchbillService.UpdateWatchInput(input, function (response) {
-                        alert("AGAIN!");
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {
@@ -413,7 +412,6 @@ angular.module('Watchbill')
                             }
                         }
                     }
-                    console.log($scope.inputs);
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
