@@ -1,10 +1,17 @@
-<a href="#/watchbill/{{watchbill.Id}}" class="list-group-item row" ng-class="{active: hover}"
+<li class="list-group-item row" ng-class="{active: hover}"
    ng-mouseenter="hover = true" ng-mouseleave="hover = false">
-    <div class="col-md-3"><strong>Name: "{{watchbill.Title}}"</strong></div>
-    <div class="col-md-5">Type of Watchbill: {{watchbill.ElligibilityGroup.OwningChainOfCommand}}</div>
-    <div class="col-md-4 text-right" tooltip-placement="top-right" uib-tooltip="{{watchbill.CurrentState.Description}}">
+    <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-3"><strong>Name: "{{watchbill.Title}}"</strong></div>
+    <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-4">Type of Watchbill: {{watchbill.ElligibilityGroup.OwningChainOfCommand}}</div>
+    <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-4 text-right" tooltip-placement="top-right" uib-tooltip="{{watchbill.CurrentState.Description}}">
         State: {{watchbill.CurrentState.Value}} <span class="glyphicon glyphicon-question-sign"></span></div>
-</a>
+    <div class="col-md-1">
+        <a href="" class="btn btn-xs btn-danger" ng-click="showDeleteWarning=true"
+           ng-show="!showDeleteWarning">Delete <span class="glyphicon glyphicon-remove"></span></a>
+        <span ng-show="showDeleteWarning">Sure?<a href="" ng-click="deleteWatchbill(watchbill.Id)"
+                                                           class="btn btn-xs btn-danger">Yes</a>
+            <a href="" ng-click="showDeleteWarning=false" class="btn btn-xs btn-success">No</a>
+        </span></div>
+</li>
 <!--<div class="input-group">-->
 <!--<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}<span-->
 <!--ng-if="fieldType == \'DateTime\'"><br>(From/To)</span></span>-->

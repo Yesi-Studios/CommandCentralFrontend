@@ -18,5 +18,8 @@
         <input type="text" ng-model="selectedShift.Title"/>
         <uib-timepicker ng-model="selectedShift.Range.Start"></uib-timepicker>{{selectedShift.Range.From}}
         <uib-timepicker ng-model="selectedShift.Range.End"></uib-timepicker>{{selectedShift.Range.To}}
+        <select id="shiftType" ng-model="selectedShift.ShiftType"
+                ng-options="o as o.Value for o in shiftTypes | orderBy: 'Value' track by o.Id">
+            <option></option></select>
     </div>
 </div>

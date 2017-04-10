@@ -14,6 +14,14 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('LoadWatchbill', {'watchbillId': id, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                service.CreateWatchbill = function (title, eligibilityGroup, success, error) {
+                    return ConnectionService.RequestFromBackend('CreateWatchbill', {'watchbill': {'title': title, 'eligibilityGroup':  eligibilityGroup}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
+                service.DeleteWatchbill = function (id, success, error) {
+                    return ConnectionService.RequestFromBackend('DeleteWatchbill', {'watchbill': {'id': id}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
                 service.LoadWatchbills = function (success, error) {
                     return ConnectionService.RequestFromBackend('LoadWatchbills', {'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
@@ -41,5 +49,10 @@ angular.module('Watchbill')
                 service.DeleteWatchDays = function (days, success, error) {
                     return ConnectionService.RequestFromBackend('DeleteWatchDays', {'watchdays': days, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
+
+                service.GetAllLists = function (success, error) {
+                    return ConnectionService.RequestFromBackend('LoadReferenceLists', {'enititynames': []}, success, error);
+                };
+
                 return service;
             }]);

@@ -5,12 +5,13 @@
 </div>
 <div class="content_panel">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <ul class="col-md-10 col-md-offset-1">
             <H1>Watchbills here</H1>
             <div class="list-group">
                 <ng-watch-bill-nub ng-repeat="watchbill in watchbills"
                                    watchbill-id="{{watchbill.Id}}"></ng-watch-bill-nub>
             </div>
-        </div>
+            <ng-watch-bill-creator ng-model="eligibilityGroups"></ng-watch-bill-creator>
+        </ul>
     </div>
 </div>
