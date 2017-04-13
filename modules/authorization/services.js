@@ -63,6 +63,16 @@ angular.module('Authorization')
             }
         };
 
+        /** @return Boolean **/
+        service.CanUseWatchbillTools = function () {
+            try {
+                return $rootScope.globals.currentUser.permissions.HighestLevels["QuarterdeckWatchbill"]=="Command";
+
+            } catch (err){
+                return false;
+            }
+        };
+
         service.SetPermissions = function (newPermissions) {
             $rootScope.globals.currentUser.permissions = newPermissions;
  
