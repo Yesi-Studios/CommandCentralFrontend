@@ -164,6 +164,9 @@ angular.module('Watchbill')
                 console.log($scope.dayToCopy);
                 console.log(day);
                 $scope.dayToCopy = angular.copy(day.WatchShifts);
+                angular.forEach($scope.dayToCopy, function(value, index){
+                   value.numberOfDays = value.Range.End.getDate() - value.Range.Start.getDate() + 1;
+                });
             };
 
             $scope.saveWatchBill = function () {
