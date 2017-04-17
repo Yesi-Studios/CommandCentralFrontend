@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-3 col-md-offset-2">
+    <div class="col-md-3">
         <div class="form-group text-center">
             <select class="form-control" size="10" id="watchDayDesigner" ng-model="selectedShift"
                     ng-options="shift as shift.Title for shift in ngModel"></select>
@@ -11,7 +11,7 @@
                 ng-click="ngModel.splice(ngModel.indexOf(selectedShift, 1));selectedShift = ngModel[ngModel.length-1];"><span class="glyphicon glyphicon-remove"></span>
         </button>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <H3>Watch Day Builder</H3>
         <p>Add shifts to the list on the left, giving them start times, end times, titles, and shift types, then click
         the green button on a day to apply that schedule to that day.</p>
@@ -20,6 +20,9 @@
         <select id="shiftType" ng-model="selectedShift.ShiftType"
                 ng-options="o as o.Value for o in shiftTypes | orderBy: 'Value' track by o.Id">
             <option></option></select>
+        <div class="form-group">
+            <label for="numberOfDays">Number of Days</label>
+            <input type="number" name="numberOfDays" id="numberOfDays" ng-model="selectedShift.numberOfDays"/></div>
     </div>
     <div class="col-md-3">
         <label for="from">From</label>

@@ -153,6 +153,9 @@ angular.module('Watchbill')
                     fixed.Range.End.setYear(day.Date.getFullYear());
                     console.log(value);
                     console.log(fixed);
+                    if (fixed.numberOfDays > 1) {
+                        fixed.Range.End.setDate(fixed.Range.End.getDate() + fixed.numberOfDays - 1);
+                    }
                     day.WatchShifts.push(fixed);
                 })
             };
@@ -167,11 +170,28 @@ angular.module('Watchbill')
                 var newDays = [];
                 var newShifts = [];
 
+                var uniqueById = function (a) {
+                    var seen = {};
+                    var out = [];
+                    var len = a.length;
+                    var j = 0;
+                    for (var i = 0; i < len; i++) {
+                        var item = a[i];
+                        if (seen[item.Id] !== 1) {
+                            seen[item.Id] = 1;
+                            out[j++] = item;
+                        }
+                    }
+                    return out;
+                };
+
                 for (var d in $scope.watchbill.WatchDays) {
                     for (var s in $scope.watchbill.WatchDays[d].WatchShifts) {
-                        newShifts.push($scope.watchbill.WatchDays[d].WatchShifts[s]);
+                            newShifts.push($scope.watchbill.WatchDays[d].WatchShifts[s]);
                     }
                 }
+
+                newShifts = uniqueById(newShifts);
 
                 // First, delete all the watch days in the backend
                 WatchbillService.DeleteWatchDays($scope.watchbill.WatchDays, function (response) {
