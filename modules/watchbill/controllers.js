@@ -133,8 +133,8 @@ angular.module('Watchbill')
             );
         }]
 ).controller('WatchbillEditorController',
-    ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
-        function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
+    ['$scope', '$rootScope', '$filter', '$location', '$routeParams', '$route', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
+        function ($scope, $rootScope, $filter, $location, $routeParams, $route, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
             $scope.copyShifts = function (shifts, day) {
                 day.WatchShifts = [];
                 console.log(day);
@@ -151,6 +151,7 @@ angular.module('Watchbill')
                     fixed.Range.End.setDate(day.Date.getDate());
                     fixed.Range.End.setMonth(day.Date.getMonth());
                     fixed.Range.End.setYear(day.Date.getFullYear());
+                    delete fixed.Id;
                     console.log(value);
                     console.log(fixed);
                     if (fixed.numberOfDays > 1) {
@@ -204,6 +205,7 @@ angular.module('Watchbill')
 
                                 WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {
                                         console.log(response)
+                                        $route.reload();
                                     },
                                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                                     function (response) {
