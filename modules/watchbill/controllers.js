@@ -85,6 +85,53 @@ angular.module('Watchbill')
                 );
             });
         }]
+).controller('WatchbillPopulateController',
+    ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
+        function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
+
+            $scope.getByValue = function (arr, prop, val) {
+                return $filter('filter')(arr, {prop: val})[0] || {};
+            };
+            WatchbillService.GetAllLists(function (response) {
+                    $scope.lists = response.ReturnValue;
+                },
+                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                function (response) {
+                    ConnectionService.HandleServiceError(response, $scope, $location);
+                });
+
+            WatchbillService.PopulateWatchbill($routeParams.id,
+                function (response) {
+                    $scope.watchbill = response.ReturnValue;
+                    $scope.weeks = [];
+
+                    // Fix our dates to be Dates
+                    angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
+                        $scope.watchbill.WatchDays[index].Date = new Date(value.Date);
+                    });
+
+                    // Sort our dates because Atwood is an ass
+                    $scope.watchbill.WatchDays = $filter('orderBy')($scope.watchbill.WatchDays, 'Date');
+
+                    // This is how much we have to adjust the start of the week in the calendar
+                    var pushAmount = (new Date($scope.watchbill.WatchDays[0].Date)).getDay();
+
+                    // Create an array of the weeks populated with the days
+                    angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
+                        if (!$scope.weeks[Math.floor((pushAmount + index) / 7)]) {
+                            $scope.weeks[Math.floor((pushAmount + index) / 7)] = [];
+                        }
+                        $scope.weeks[Math.floor((pushAmount + index) / 7)].push($scope.watchbill.WatchDays[index]);
+                    });
+
+                    $scope.blankStartDays = new Array(pushAmount);
+                },
+                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                function (response) {
+                    ConnectionService.HandleServiceError(response, $scope, $location);
+                }
+            );
+        }]
 ).controller('WatchbillController',
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
         function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {

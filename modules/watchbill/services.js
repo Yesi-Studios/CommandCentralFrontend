@@ -10,6 +10,10 @@ angular.module('Watchbill')
             function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
                 var service = {};
 
+                service.PopulateWatchbill = function (id, success, error) {
+                    return ConnectionService.RequestFromBackend('LoadWatchbill', {'watchbillId': id, 'dopopulation': true, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
                 service.LoadWatchbill = function (id, success, error) {
                     return ConnectionService.RequestFromBackend('LoadWatchbill', {'watchbillId': id, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
