@@ -12,11 +12,11 @@ angular.module('Watchbill')
                 },
                 templateUrl: "modules/watchbill/directives/watchbillnub.html",
                 controller: ['$scope', '$location', '$route', 'WatchbillService', 'ConnectionService', function ($scope, $location, $route, WatchbillService, ConnectionService) {
-                    $scope.go = function(path) {
+                    $scope.go = function (path) {
                         $location.path(path);
                     };
 
-                    $scope.deleteWatchbill = function(id) {
+                    $scope.deleteWatchbill = function (id) {
                         WatchbillService.DeleteWatchbill(id,
                             function (response) {
                                 $route.reload();
@@ -151,6 +151,25 @@ angular.module('Watchbill')
                 ngModel: '=',
             },
             templateUrl: "modules/watchbill/directives/dayeditor.html",
+            controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
+                WatchbillService.GetAllLists(function (response) {
+                        $scope.shiftTypes = response.ReturnValue.WatchShiftType;
+                    },
+                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    function (response) {
+                        ConnectionService.HandleServiceError(response, $scope, $location);
+                    });
+            }]
+        }
+    })
+    .directive('ngAssignmentEditor', function () {
+        return {
+            restrict: 'E',
+            require: '^ngModel',
+            scope: {
+                ngModel: '=',
+            },
+            templateUrl: "modules/watchbill/directives/assignmenteditor.html",
             controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
                 WatchbillService.GetAllLists(function (response) {
                         $scope.shiftTypes = response.ReturnValue.WatchShiftType;
