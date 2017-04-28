@@ -15,6 +15,8 @@
                class="pull-right btn btn-primary">Submit Inputs</a>
             <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/approve/{{watchbill.Id}}"
                class="pull-right btn btn-primary">Approve Inputs</a>
+            <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs'" ng-click="populate()"
+               class="pull-right btn btn-primary">Populate</a>
             <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}"
                class="pull-right btn btn-success">Next Stage</a>
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
@@ -30,11 +32,10 @@
                             {{day.Date | date: shortDate }}
                             <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
                                     <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
-                                    <span class="label label-default">
-                                        <!--<strong>{{shift.Title}}</strong>:-->
-                                        <span ng-if="shift.WatchAssignments">{{shift.WatchAssignments[0].PersonAssigned.FriendlyName.split(',')[0]}}</span>
-                                        <span ng-if="!shift.WatchAssignments">NO PERSON ASSIGNED</span>
+                                    <span ng-if="shift.WatchAssignments && shift.WatchAssignments.length > 0" class="label label-success">
+                                        {{shift.WatchAssignments[0].PersonAssigned.FriendlyName.split(',')[0]}}
                                     </span>
+                                    <span ng-if="!shift.WatchAssignments || shift.WatchAssignments.length == 0" class="label label-warning">{{shift.Range.Start | date: 'HHmm'}} <strong>{{shift.Title}}</strong></span>
                                 </span>
                         </div>
                     </td>
