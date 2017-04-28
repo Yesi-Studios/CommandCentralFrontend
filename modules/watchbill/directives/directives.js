@@ -168,16 +168,21 @@ angular.module('Watchbill')
             require: '^ngModel',
             scope: {
                 ngModel: '=',
+                ngPeople: '='
             },
             templateUrl: "modules/watchbill/directives/assignmenteditor.html",
             controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
-                WatchbillService.GetAllLists(function (response) {
-                        $scope.shiftTypes = response.ReturnValue.WatchShiftType;
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    });
+                $scope.log = function(thing) { console.log(thing);};
+                $scope.assignWatchstander = function(stander, shift) {
+                    shift.WatchAssignment = {'PersonAssigned' : stander, 'Id' : shift.Id};
+                }
+                // WatchbillService.GetAllLists(function (response) {
+                //         $scope.shiftTypes = response.ReturnValue.WatchShiftType;
+                //     },
+                //     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                //     function (response) {
+                //         ConnectionService.HandleServiceError(response, $scope, $location);
+                //     });
             }]
         }
     });

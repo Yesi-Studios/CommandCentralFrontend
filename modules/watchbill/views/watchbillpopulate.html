@@ -5,7 +5,7 @@
 </div>
 <div class="content_panel">
     <div class="row">
-        <ng-assignment-editor ng-model="selectedDay"></ng-assignment-editor>
+        <ng-assignment-editor ng-model="selectedDay" ng-people="watchbill.EligibilityGroup.EligiblePersons"></ng-assignment-editor>
     </div>
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -32,17 +32,19 @@
                             {{day.Date | date: shortDate }}
                             <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
                                     <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
-                                    <span ng-if="shift.WatchAssignments && shift.WatchAssignments.length > 0" class="label label-success">
-                                        {{shift.WatchAssignments[0].PersonAssigned.FriendlyName.split(',')[0]}}
+                                    <span ng-if="shift.WatchAssignment" class="label label-success">
+                                        {{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}
                                     </span>
-                                    <span ng-if="!shift.WatchAssignments || shift.WatchAssignments.length == 0" class="label label-warning">{{shift.Range.Start | date: 'HHmm'}} <strong>{{shift.Title}}</strong></span>
+                                    <span ng-if="!shift.WatchAssignment" class="label label-warning">{{shift.Range.Start | date: 'HHmm'}} <strong>{{shift.Title}}</strong></span>
                                 </span>
+                            <a class="btn btn-sm btn-primary" ng-click="selectDay(day)">Select</a>
                         </div>
                     </td>
                 </tr>
                 </span>
                 </tr>
             </table>
+            <button ng-click="log(selectedDay)">blah</button>
         </div>
     </div>
 </div>

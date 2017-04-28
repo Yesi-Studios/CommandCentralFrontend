@@ -89,6 +89,11 @@ angular.module('Watchbill')
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
         function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
 
+            $scope.log = function(thing) {console.log(thing);};
+
+            $scope.selectDay = function (day) {
+                $scope.selectedDay = day;
+            };
             $scope.getByValue = function (arr, prop, val) {
                 return $filter('filter')(arr, {prop: val})[0] || {};
             };
@@ -125,6 +130,7 @@ angular.module('Watchbill')
                             $scope.weeks[Math.floor((pushAmount + index) / 7)].push($scope.watchbill.WatchDays[index]);
                         });
 
+                        $scope.selectedDay = null;
                         $scope.blankStartDays = new Array(pushAmount);
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
@@ -157,6 +163,7 @@ angular.module('Watchbill')
                         $scope.weeks[Math.floor((pushAmount + index) / 7)].push($scope.watchbill.WatchDays[index]);
                     });
 
+                    $scope.selectedDay = $scope.weeks[0][0];
                     $scope.blankStartDays = new Array(pushAmount);
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
