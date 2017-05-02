@@ -54,6 +54,10 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('CreateWatchInputs', {'watchinputs': [{'person': person , 'WatchShifts': shifts, 'InputReason': reason}], 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                service.CreateWatchAssignments = function (assignments, success, error) {
+                    return ConnectionService.RequestFromBackend('CreateWatchAssignments', {'watchassignments': assignments, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
                 service.UpdateWatchInput = function (input, success, error) {
                     return ConnectionService.RequestFromBackend('UpdateWatchInput', {'watchinput': input, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };

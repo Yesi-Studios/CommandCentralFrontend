@@ -174,7 +174,7 @@ angular.module('Watchbill')
             controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
                 $scope.log = function(thing) { console.log(thing);};
                 $scope.assignWatchstander = function(stander, shift) {
-                    shift.WatchAssignment = {'PersonAssigned' : stander, 'Id' : shift.Id};
+                    shift.WatchAssignment = {'PersonAssigned' : stander, 'WatchShift' : {'Id': shift.Id}};
                 }
                 // WatchbillService.GetAllLists(function (response) {
                 //         $scope.shiftTypes = response.ReturnValue.WatchShiftType;

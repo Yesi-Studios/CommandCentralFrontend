@@ -89,7 +89,18 @@ angular.module('Watchbill')
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
         function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
 
-            $scope.log = function(thing) {console.log(thing);};
+            $scope.errors = [];
+            $scope.messages = [];
+
+            $scope.log = function (thing) {
+                console.log(thing);
+            };
+
+            var originalWatchbill = {};
+
+            $scope.thisDaySelected = function(day){
+                return $scope.selectedDay == day;
+            };
 
             $scope.selectDay = function (day) {
                 $scope.selectedDay = day;
@@ -105,7 +116,37 @@ angular.module('Watchbill')
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 });
 
-            $scope.populate = function() {
+            $scope.submitChanges = function () {
+                var newAssignments = [];
+                for (var i in $scope.watchbill.WatchDays) {
+                    for (var j in $scope.watchbill.WatchDays[i].WatchShifts) {
+                        var shift = $scope.watchbill.WatchDays[i].WatchShifts[j];
+                        var old = originalWatchbill.WatchDays[i].WatchShifts[j];
+                        if (shift.WatchAssignment && (!shift.WatchAssignment.hasOwnProperty("Id") || !old.WatchAssignment || old.WatchAssignment.Id != shift.WatchAssignment.Id)) {
+                            newAssignments.push({
+                                "PersonAssigned": { 'Id': $scope.watchbill.WatchDays[i].WatchShifts[j].WatchAssignment.PersonAssigned.Id },
+                                "WatchShift": {'Id': shift.Id }
+                            })
+                        }
+                    }
+                }
+                if (newAssignments.length > 0) {
+                    WatchbillService.CreateWatchAssignments(newAssignments,
+                    function(response){
+                        $scope.loadWatchbill();
+                    },
+                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    function (response) {
+                        ConnectionService.HandleServiceError(response, $scope, $location);
+                    });
+                } else {
+                    $scope.errors.push("No changes to submit");
+                }
+
+
+            };
+
+            $scope.populate = function () {
                 WatchbillService.PopulateWatchbill($routeParams.id,
                     function (response) {
                         $scope.watchbill = response.ReturnValue;
@@ -139,38 +180,42 @@ angular.module('Watchbill')
                     }
                 );
             };
-            WatchbillService.LoadWatchbill($routeParams.id,
-                function (response) {
-                    $scope.watchbill = response.ReturnValue;
-                    $scope.weeks = [];
+            $scope.loadWatchbill = function () {
+                WatchbillService.LoadWatchbill($routeParams.id,
+                    function (response) {
+                        $scope.watchbill = response.ReturnValue;
+                        originalWatchbill = response.ReturnValue;
+                        $scope.weeks = [];
 
-                    // Fix our dates to be Dates
-                    angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
-                        $scope.watchbill.WatchDays[index].Date = new Date(value.Date);
-                    });
+                        // Fix our dates to be Dates
+                        angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
+                            $scope.watchbill.WatchDays[index].Date = new Date(value.Date);
+                        });
 
-                    // Sort our dates because Atwood is an ass
-                    $scope.watchbill.WatchDays = $filter('orderBy')($scope.watchbill.WatchDays, 'Date');
+                        // Sort our dates because Atwood is an ass
+                        $scope.watchbill.WatchDays = $filter('orderBy')($scope.watchbill.WatchDays, 'Date');
 
-                    // This is how much we have to adjust the start of the week in the calendar
-                    var pushAmount = (new Date($scope.watchbill.WatchDays[0].Date)).getDay();
+                        // This is how much we have to adjust the start of the week in the calendar
+                        var pushAmount = (new Date($scope.watchbill.WatchDays[0].Date)).getDay();
 
-                    // Create an array of the weeks populated with the days
-                    angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
-                        if (!$scope.weeks[Math.floor((pushAmount + index) / 7)]) {
-                            $scope.weeks[Math.floor((pushAmount + index) / 7)] = [];
-                        }
-                        $scope.weeks[Math.floor((pushAmount + index) / 7)].push($scope.watchbill.WatchDays[index]);
-                    });
+                        // Create an array of the weeks populated with the days
+                        angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
+                            if (!$scope.weeks[Math.floor((pushAmount + index) / 7)]) {
+                                $scope.weeks[Math.floor((pushAmount + index) / 7)] = [];
+                            }
+                            $scope.weeks[Math.floor((pushAmount + index) / 7)].push($scope.watchbill.WatchDays[index]);
+                        });
 
-                    $scope.selectedDay = $scope.weeks[0][0];
-                    $scope.blankStartDays = new Array(pushAmount);
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                        $scope.selectedDay = $scope.weeks[0][0];
+                        $scope.blankStartDays = new Array(pushAmount);
+                    },
+                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    function (response) {
+                        ConnectionService.HandleServiceError(response, $scope, $location);
+                    }
+                );
+            };
+            $scope.loadWatchbill();
         }]
 ).controller('WatchbillController',
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
@@ -252,8 +297,8 @@ angular.module('Watchbill')
                 console.log($scope.dayToCopy);
                 console.log(day);
                 $scope.dayToCopy = angular.copy(day.WatchShifts);
-                angular.forEach($scope.dayToCopy, function(value, index){
-                   value.numberOfDays = value.Range.End.getDate() - value.Range.Start.getDate() + 1;
+                angular.forEach($scope.dayToCopy, function (value, index) {
+                    value.numberOfDays = value.Range.End.getDate() - value.Range.Start.getDate() + 1;
                 });
             };
 
@@ -278,7 +323,7 @@ angular.module('Watchbill')
 
                 for (var d in $scope.watchbill.WatchDays) {
                     for (var s in $scope.watchbill.WatchDays[d].WatchShifts) {
-                            newShifts.push($scope.watchbill.WatchDays[d].WatchShifts[s]);
+                        newShifts.push($scope.watchbill.WatchDays[d].WatchShifts[s]);
                     }
                 }
 

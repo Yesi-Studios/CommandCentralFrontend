@@ -37,14 +37,16 @@
                                     </span>
                                     <span ng-if="!shift.WatchAssignment" class="label label-warning">{{shift.Range.Start | date: 'HHmm'}} <strong>{{shift.Title}}</strong></span>
                                 </span>
-                            <a class="btn btn-sm btn-primary" ng-click="selectDay(day)">Select</a>
+                            <br/>
+                            <br/>
+                            <a class="btn btn-sm" ng-class="{'btn-primary':!thisDaySelected(day), 'btn-success':thisDaySelected(day)}" ng-click="selectDay(day)">Select<span ng-if="thisDaySelected(day)">ed</span></a>
                         </div>
                     </td>
                 </tr>
                 </span>
                 </tr>
             </table>
-            <button ng-click="log(selectedDay)">blah</button>
+            <button ng-click="submitChanges()">Submit</button>
         </div>
     </div>
 </div>
