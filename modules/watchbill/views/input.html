@@ -6,16 +6,14 @@
 <div class="content_panel">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <a ng-if="watchbill.CurrentState.Value == 'Initial'" href="#/watchbill/edit/{{watchbill.Id}}"
-               class="pull-right btn btn-primary">Edit</a>
-            <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/input/{{watchbill.Id}}"
-               class="pull-right btn btn-primary">Submit Inputs</a>
             <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/approve/{{watchbill.Id}}"
                class="pull-right btn btn-primary">Approve Inputs</a>
-            <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}"
-               class="pull-right btn btn-success">Next Stage</a>
+            <a href="#/watchbill/{{watchbill.Id}}"
+               class="pull-right btn btn-success">Back to Watchbill</a>
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
             <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
+            <p>Please select the shifts that the Sailor is exempt from below, then select the sailor (use the text bar to search) and a justification, and click submit.</p>
+            <p>Please note: Watch inputs must be approved by a coordinator, or they will not affect watchbill generation.</p>
             <table class="table-bordered">
                 <tr class="text-center">
                     <th ng-repeat="d in ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']">{{d}}</th>
@@ -39,12 +37,23 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-offset-1 col-md-5">
-            <select ng-options="p as p.FriendlyName for p in inputPeople | orderBy: 'FriendlyName'" ng-model="selectedPerson" size="10"></select>
+        <div class="col-md-offset-4 col-md-4">
+            <div class="form-group text-center">
+                <input class="form-control" type="text" ng-model="personFilter">
+                <select class="form-control"
+                        ng-options="p as p.FriendlyName for p in inputPeople | filter: personFilter : false : 'FriendlyName' | orderBy: 'FriendlyName'"
+                        ng-model="selectedPerson" size="10"></select>
+                <div class="form-group">
+                    <label for="reasons">Justification</label>
+                    <select class="form-control" name="reasons" id="reasons" ng-options="o as o.Value for o in reasons | orderBy: 'Value'"
+                            ng-model="reason"></select>
+                </div>
+                <button ng-click="submitInput()" class="btn btn-success">Submit</button>
+            </div>
         </div>
-        <div class="col-md-offset-1 col-md-5">
-            <select ng-options="o as o.Value for o in reasons | orderBy: 'Value'" ng-model="reason"></select>
-            <button ng-click="submitInput()" class="btn btn-success">Submit</button>
+        <div class="col-md-offset-1 col-md-3 text-right">
+            <br/>
+            <br/>
         </div>
     </div>
 </div>

@@ -269,7 +269,6 @@ angular.module('Watchbill')
         function ($scope, $rootScope, $filter, $location, $routeParams, $route, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
             $scope.copyShifts = function (shifts, day) {
                 day.WatchShifts = [];
-                console.log(day);
                 /**
                  * @param {Date} value
                  */
@@ -284,8 +283,6 @@ angular.module('Watchbill')
                     fixed.Range.End.setMonth(day.Date.getMonth());
                     fixed.Range.End.setYear(day.Date.getFullYear());
                     delete fixed.Id;
-                    console.log(value);
-                    console.log(fixed);
                     if (fixed.numberOfDays > 1) {
                         fixed.Range.End.setDate(fixed.Range.End.getDate() + fixed.numberOfDays - 1);
                     }
@@ -294,8 +291,6 @@ angular.module('Watchbill')
             };
 
             $scope.copyDay = function (day) {
-                console.log($scope.dayToCopy);
-                console.log(day);
                 $scope.dayToCopy = angular.copy(day.WatchShifts);
                 angular.forEach($scope.dayToCopy, function (value, index) {
                     value.numberOfDays = value.Range.End.getDate() - value.Range.Start.getDate() + 1;
@@ -313,11 +308,12 @@ angular.module('Watchbill')
                     var j = 0;
                     for (var i = 0; i < len; i++) {
                         var item = a[i];
-                        if (seen[item.Id] !== 1) {
+                        if (seen[item.Id] !== 1 || !item.hasOwnProperty("Id")) {
                             seen[item.Id] = 1;
                             out[j++] = item;
                         }
                     }
+                    console.log(out);
                     return out;
                 };
 
@@ -337,7 +333,8 @@ angular.module('Watchbill')
 
                                 WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {
                                         console.log(response)
-                                        $route.reload();
+                                        // $route.reload();
+                                        $location.path('/watchbill/'+$routeParams.id);
                                     },
                                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                                     function (response) {

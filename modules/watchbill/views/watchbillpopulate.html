@@ -9,16 +9,12 @@
     </div>
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <a ng-if="watchbill.CurrentState.Value == 'Initial'" href="#/watchbill/edit/{{watchbill.Id}}"
-               class="pull-right btn btn-primary">Edit</a>
-            <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/input/{{watchbill.Id}}"
-               class="pull-right btn btn-primary">Submit Inputs</a>
-            <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/approve/{{watchbill.Id}}"
-               class="pull-right btn btn-primary">Approve Inputs</a>
+            <div class="btn-group pull-right">
             <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs'" ng-click="populate()"
-               class="pull-right btn btn-primary">Populate</a>
-            <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}"
-               class="pull-right btn btn-success">Next Stage</a>
+               class="btn btn-primary">Populate</a>
+            <a href="#/watchbill/{{watchbill.Id}}"
+               class="btn btn-success">Back to Watchbill</a>
+            </div>
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
             <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
             <table class="table-bordered">
@@ -39,14 +35,16 @@
                                 </span>
                             <br/>
                             <br/>
-                            <a class="btn btn-sm" ng-class="{'btn-primary':!thisDaySelected(day), 'btn-success':thisDaySelected(day)}" ng-click="selectDay(day)">Select<span ng-if="thisDaySelected(day)">ed</span></a>
+                            <a class="btn btn-sm" ng-class="{'btn-default':!thisDaySelected(day), 'btn-success':thisDaySelected(day)}" ng-click="selectDay(day)">Select<span ng-if="thisDaySelected(day)">ed</span></a>
                         </div>
                     </td>
                 </tr>
                 </span>
                 </tr>
             </table>
-            <button ng-click="submitChanges()">Submit</button>
+            <br/>
+            <br/>
+            <button class="btn btn-primary" ng-click="submitChanges()">Submit</button>
         </div>
     </div>
 </div>

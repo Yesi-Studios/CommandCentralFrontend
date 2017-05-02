@@ -1,33 +1,57 @@
 <div class="row">
     <div class="col-md-3 col-md-offset-1">
         <div class="form-group text-center">
-            <select class="form-control" size="10" id="watchDayDesigner" ng-model="selectedShift"
+            <select class="form-control" size="14" id="watchDayDesigner" ng-model="selectedShift"
                     ng-options="shift as shift.Title for shift in ngModel"></select>
         </div>
         <button class="btn btn-success btn-sm pull-right"
-                ng-click="ngModel.push({'Title':'New Shift', 'Range':{'Start':'','End':''}, 'ShiftType':''});selectedShift = ngModel[ngModel.length-1];"><span class="glyphicon glyphicon-plus"></span>
+                ng-click="ngModel.push({'Title':'New Shift', 'Range':{'Start':'','End':''}, 'ShiftType':''});selectedShift = ngModel[ngModel.length-1];">
+            <span class="glyphicon glyphicon-plus"></span>
         </button>
         <button class="btn btn-danger btn-sm pull-right"
-                ng-click="ngModel.splice(ngModel.indexOf(selectedShift, 1));selectedShift = ngModel[ngModel.length-1];"><span class="glyphicon glyphicon-remove"></span>
+                ng-click="ngModel.splice(ngModel.indexOf(selectedShift, 1));selectedShift = ngModel[ngModel.length-1];">
+            <span class="glyphicon glyphicon-remove"></span>
         </button>
     </div>
     <div class="col-md-5">
         <H3>Watch Day Builder</H3>
         <p>Add shifts to the list on the left, giving them start times, end times, titles, and shift types, then click
-        the green button on a day to apply that schedule to that day.</p>
+            the green button on a day to apply that schedule to that day.</p>
         <p>You can also copy a day's design below with the blue button on that day.</p>
-        <input type="text" ng-model="selectedShift.Title"/>
-        <select id="shiftType" ng-model="selectedShift.ShiftType"
-                ng-options="o as o.Value for o in shiftTypes | orderBy: 'Value' track by o.Id">
-            <option></option></select>
-        <div class="form-group">
-            <label for="numberOfDays">Number of Days</label>
-            <input type="number" name="numberOfDays" id="numberOfDays" ng-model="selectedShift.numberOfDays"/></div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="numberOfDays" class="col-md-4 control-label">Title</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" ng-model="selectedShift.Title"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="numberOfDays" class="col-md-4 control-label">Shift Type</label>
+                <div class="col-md-8">
+                    <select id="shiftType" class="form-control" ng-model="selectedShift.ShiftType"
+                            ng-options="o as o.Value for o in shiftTypes | orderBy: 'Value' track by o.Id">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="numberOfDays" class="col-md-4 control-label">Number of Days</label>
+                <div class="col-md-8">
+                    <input type="number" class="form-control" name="numberOfDays" id="numberOfDays"
+                           ng-model="selectedShift.numberOfDays"/>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="col-md-3">
+        <br/>
+        <br/>
+        <br/>
         <label for="from">From</label>
-        <uib-timepicker name="from" ng-model="selectedShift.Range.Start"></uib-timepicker>{{selectedShift.Range.From}}
+        <uib-timepicker name="from" ng-model="selectedShift.Range.Start"></uib-timepicker>
+        {{selectedShift.Range.From}}
         <label for="to">To</label>
-        <uib-timepicker name="to" ng-model="selectedShift.Range.End"></uib-timepicker>{{selectedShift.Range.To}}
+        <uib-timepicker name="to" ng-model="selectedShift.Range.End"></uib-timepicker>
+        {{selectedShift.Range.To}}
     </div>
 </div>

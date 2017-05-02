@@ -6,10 +6,19 @@
 <div class="content_panel">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <a ng-if="watchbill.CurrentState.Value == 'Initial'" href="#/watchbill/edit/{{watchbill.Id}}" class="pull-right btn btn-primary">Edit</a>
-            <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/input/{{watchbill.Id}}" class="pull-right btn btn-primary">Submit Inputs</a>
-            <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/approve/{{watchbill.Id}}" class="pull-right btn btn-primary">Approve Inputs</a>
-            <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}" class="pull-right btn btn-success">Next Stage</a>
+            <div class="btn-group pull-right">
+                <a ng-if="watchbill.CurrentState.Value == 'Initial'" href="#/watchbill/edit/{{watchbill.Id}}"
+                   class="btn btn-primary">Edit</a>
+                <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/input/{{watchbill.Id}}"
+                   class="btn btn-primary">Submit Inputs</a>
+                <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/approve/{{watchbill.Id}}"
+                   class="btn btn-primary">Approve Inputs</a>
+                <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs'"
+                   href="#/watchbill/populate/{{watchbill.Id}}" class="btn btn-primary">Assign
+                    Watchstanders</a>
+                <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}"
+                   class="btn btn-success">Next Stage</a>
+            </div>
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
             <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
             <table class="table-bordered">
