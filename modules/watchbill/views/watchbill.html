@@ -30,7 +30,7 @@
                     <td ng-repeat="day in week" class="row">
                         <div class="col-md-12">
                             {{day.Date | date: shortDate }}
-                            <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
+                            <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start.getUTCHours()'">
                                     <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
                                     <ng-shift-nub ng-model="shift"></ng-shift-nub>
                                 </span>

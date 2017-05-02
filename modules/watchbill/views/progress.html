@@ -5,13 +5,18 @@
 </div>
 <div class="content_panel">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-
-            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
-            <h2>This watchbill is currently in the "{{watchbill.CurrentState.Value}}" phase.</h2>
-            <h2>Confirming below will move it to the "{{nextStatus.Value}}" phase.</h2>
-            <button class="btn btn-success" ng-click="moveToNextStep()">Confirm</button>
-            <a class="btn btn-danger" href="#/watchbill/edit/{{watchbill.Id}}">Go Back</a>
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <H2>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H2>
+                </div>
+                <div class="panel-body">
+                    <h4>This watchbill is currently in the "{{watchbill.CurrentState.Value}}" phase.</h4>
+                    <h4>Confirming below will move it to the "{{nextStatus.Value}}" phase.</h4>
+                    <button class="btn btn-success" ng-click="moveToNextStep()">Confirm</button>
+                    <a class="btn btn-danger" href="#/watchbill/edit/{{watchbill.Id}}">Go Back</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
