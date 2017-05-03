@@ -221,6 +221,21 @@ angular.module('Watchbill')
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
         function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
 
+            $scope.resetWatchbill = function(id) {
+                $scope.watchbill.CurrentState = {"Id":"fa1d4185-6a36-40de-81c6-843e6ee352f0"};
+                WatchbillService.UpdateWatchbill($scope.watchbill, function (response) {
+                        $location.path('/watchbill/' + $scope.watchbill.Id);
+                    },
+                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    function (response) {
+                        ConnectionService.HandleServiceError(response, $scope, $location);
+                    })
+            };
+
+            $scope.toggleResetWarning = function() {
+                $scope.showResetWarning = !$scope.showResetWarning;
+            };
+
             $scope.getByValue = function (arr, prop, val) {
                 return $filter('filter')(arr, {prop: val})[0] || {};
             };

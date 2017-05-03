@@ -59,7 +59,7 @@ angular.module('Watchbill')
                 };
 
                 service.UpdateWatchInput = function (input, success, error) {
-                    return ConnectionService.RequestFromBackend('DeleteWatchInput', {'watchinput': input, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                    return ConnectionService.RequestFromBackend('UpdateWatchInput', {'watchinput': input, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
                 service.DeleteWatchDay = function (id, success, error) {

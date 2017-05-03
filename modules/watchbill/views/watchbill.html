@@ -11,6 +11,8 @@
                    class="btn btn-primary">Edit</a>
                 <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/input/{{watchbill.Id}}"
                    class="btn btn-primary">Submit Inputs</a>
+                <a ng-if="watchbill.CurrentState.Value != 'Initial'" ng-click="toggleResetWarning()"
+                   class="btn btn-warning">Reset To Initial</a>
                 <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/approve/{{watchbill.Id}}"
                    class="btn btn-primary">Approve Inputs</a>
                 <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs'"
@@ -19,6 +21,12 @@
                 <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}"
                    class="btn btn-success">Next Stage</a>
             </div>
+            <span ng-show="showResetWarning">Are you sure? Resetting the watchbill to the "Initial" phase will delete all watch assignments and inputs. Shifts will be maintained.
+            <div class="btn-group">
+                <a href="" ng-click="resetWatchbill(watchbill.Id)" class="btn btn-xs btn-danger">Yes</a>
+                <a href="" ng-click="toggleResetWarning()" class="btn btn-xs btn-success">No</a>
+            </div>
+            </span>
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
             <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
             <table class="table-bordered">
