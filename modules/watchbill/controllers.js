@@ -125,14 +125,14 @@ angular.module('Watchbill')
                         var old = originalWatchbill.WatchDays[i].WatchShifts[j];
                         if (shift.WatchAssignment && (!shift.WatchAssignment.hasOwnProperty("Id") || !old.WatchAssignment || old.WatchAssignment.Id != shift.WatchAssignment.Id)) {
                             newAssignments.push({
-                                "PersonAssigned": { 'Id': $scope.watchbill.WatchDays[i].WatchShifts[j].WatchAssignment.PersonAssigned.Id },
-                                "WatchShift": {'Id': shift.Id }
+                                "PersonAssigned": $scope.watchbill.WatchDays[i].WatchShifts[j].WatchAssignment.PersonAssigned.Id,
+                                "WatchShift" : shift.Id
                             })
                         }
                     }
                 }
                 if (newAssignments.length > 0) {
-                    WatchbillService.CreateWatchAssignments(newAssignments,
+                    WatchbillService.CreateWatchAssignments(newAssignments, $scope.watchbill.Id,
                     function(response){
                         $scope.loadWatchbill();
                     },
@@ -344,7 +344,12 @@ angular.module('Watchbill')
                 newShifts = uniqueById(newShifts);
 
                 // First, delete all the watch days in the backend
-                WatchbillService.DeleteWatchDays($scope.watchbill.WatchDays, function (response) {
+                var watchdayIds = [];
+
+                angular.forEach($scope.watchbill.WatchDays, function (value, key){
+                    this.push(value.Id);
+                }, watchdayIds);
+                WatchbillService.DeleteWatchDays(watchdayIds, function (response) {
                         console.log(response);
                         WatchbillService.CreateWatchDays($scope.watchbill.WatchDays, $scope.watchbill.Id, function (response) {
                                 newDays = response.ReturnValue;
@@ -529,7 +534,7 @@ angular.module('Watchbill')
 
             $scope.confirm = function (input) {
                 input.IsConfirmed = true;
-                WatchbillService.UpdateWatchInput(input, function (response) {
+                WatchbillService.ConfirmWatchInput(input.Id, function (response) {
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {

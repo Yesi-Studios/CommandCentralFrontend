@@ -11,11 +11,11 @@ angular.module('Watchbill')
                 var service = {};
 
                 service.PopulateWatchbill = function (id, success, error) {
-                    return ConnectionService.RequestFromBackend('LoadWatchbill', {'watchbillId': id, 'dopopulation': true, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                    return ConnectionService.RequestFromBackend('LoadWatchbill', {'Id': id, 'dopopulation': true, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
                 service.LoadWatchbill = function (id, success, error) {
-                    return ConnectionService.RequestFromBackend('LoadWatchbill', {'watchbillId': id, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                    return ConnectionService.RequestFromBackend('LoadWatchbill', {'Id': id, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
                 service.CreateWatchbill = function (title, eligibilityGroup, success, error) {
@@ -54,20 +54,20 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('CreateWatchInputs', {'watchinputs': [{'person': person , 'WatchShifts': shifts, 'InputReason': reason}], 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
-                service.CreateWatchAssignments = function (assignments, success, error) {
-                    return ConnectionService.RequestFromBackend('CreateWatchAssignments', {'watchassignments': assignments, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                service.CreateWatchAssignments = function (assignments, watchbillId, success, error) {
+                    return ConnectionService.RequestFromBackend('CreateWatchAssignments', {'watchassignments': assignments, 'watchbillId': watchbillId, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
-                service.UpdateWatchInput = function (input, success, error) {
-                    return ConnectionService.RequestFromBackend('UpdateWatchInput', {'watchinput': input, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                service.ConfirmWatchInput = function (inputId, success, error) {
+                    return ConnectionService.RequestFromBackend('ConfirmWatchInput', {'Id': inputId, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
                 service.DeleteWatchDay = function (id, success, error) {
                     return ConnectionService.RequestFromBackend('DeleteWatchDay', {'watchday': {'Id': id}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
-                service.DeleteWatchDays = function (days, success, error) {
-                    return ConnectionService.RequestFromBackend('DeleteWatchDays', {'watchdays': days, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                service.DeleteWatchDays = function (watchdayIds, success, error) {
+                    return ConnectionService.RequestFromBackend('DeleteWatchDays', {'Ids': watchdayIds, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
                 service.GetAllLists = function (success, error) {
