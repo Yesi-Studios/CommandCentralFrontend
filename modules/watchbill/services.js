@@ -19,15 +19,15 @@ angular.module('Watchbill')
                 };
 
                 service.CreateWatchbill = function (title, eligibilityGroup, success, error) {
-                    return ConnectionService.RequestFromBackend('CreateWatchbill', {'watchbill': {'title': title, 'eligibilityGroup':  eligibilityGroup}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                    return ConnectionService.RequestFromBackend('CreateWatchbill', {'title': title, 'eligibilityGroupId':  eligibilityGroup.Id, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
                 service.UpdateWatchbill = function (watchbill, success, error) {
-                    return ConnectionService.RequestFromBackend('UpdateWatchbill', {'watchbill': watchbill, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                    return ConnectionService.RequestFromBackend('UpdateWatchbillState', {'Id': watchbill.Id, 'stateId': watchbill.CurrentState.Id, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
                 service.DeleteWatchbill = function (id, success, error) {
-                    return ConnectionService.RequestFromBackend('DeleteWatchbill', {'watchbill': {'id': id}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                    return ConnectionService.RequestFromBackend('DeleteWatchbill', {'id': id, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
                 service.LoadWatchbills = function (success, error) {
@@ -46,8 +46,8 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('CreateWatchDay', {'watchday': day, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
-                service.CreateWatchDays = function (days, success, error) {
-                    return ConnectionService.RequestFromBackend('CreateWatchDays', {'watchdays': days, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                service.CreateWatchDays = function (days, watchbillId, success, error) {
+                    return ConnectionService.RequestFromBackend('CreateWatchDays', {'watchdays': days, 'watchbillId': watchbillId, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
                 service.CreateWatchInput = function (person, shifts, reason, success, error) {

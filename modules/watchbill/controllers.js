@@ -343,7 +343,7 @@ angular.module('Watchbill')
                 // First, delete all the watch days in the backend
                 WatchbillService.DeleteWatchDays($scope.watchbill.WatchDays, function (response) {
                         console.log(response);
-                        WatchbillService.CreateWatchDays($scope.watchbill.WatchDays, function (response) {
+                        WatchbillService.CreateWatchDays($scope.watchbill.WatchDays, $scope.watchbill.Id, function (response) {
                                 newDays = response.ReturnValue;
 
                                 WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {

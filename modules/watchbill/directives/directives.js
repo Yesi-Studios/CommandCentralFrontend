@@ -81,13 +81,13 @@ angular.module('Watchbill')
 
                                 for (var j = 0; j < $scope.numberOfDays; j += 1) {
                                     days[j] = {
-                                        'date': new Date($scope.from),
-                                        'remarks': '',
-                                        'watchbill': {'Id': watchbillId}
+                                        'Date': new Date($scope.from),
+                                        'Remarks': ''
+                                        // 'watchbill': {'Id': watchbillId}
                                     };
-                                    days[j].date.setDate(days[j].date.getDate() + j);
+                                    days[j].Date.setDate(days[j].Date.getDate() + j);
                                 }
-                                WatchbillService.CreateWatchDays(days, function (response) {
+                                WatchbillService.CreateWatchDays(days, watchbillId, function (response) {
                                         $location.path("/watchbill/edit/" + watchbillId);
                                     },
                                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
@@ -152,6 +152,10 @@ angular.module('Watchbill')
             },
             templateUrl: "modules/watchbill/directives/dayeditor.html",
             controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
+                $scope.removeSelectedShift = function () {
+                    $scope.ngModel.splice($scope.ngModel.indexOf($scope.selectedShift), 1);
+                    $scope.selectedShift = $scope.ngModel[$scope.ngModel.length - 1];
+                };
                 WatchbillService.GetAllLists(function (response) {
                         $scope.shiftTypes = response.ReturnValue.WatchShiftType;
                     },
@@ -172,9 +176,11 @@ angular.module('Watchbill')
             },
             templateUrl: "modules/watchbill/directives/assignmenteditor.html",
             controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
-                $scope.log = function(thing) { console.log(thing);};
-                $scope.assignWatchstander = function(stander, shift) {
-                    shift.WatchAssignment = {'PersonAssigned' : stander, 'WatchShift' : {'Id': shift.Id}};
+                $scope.log = function (thing) {
+                    console.log(thing);
+                };
+                $scope.assignWatchstander = function (stander, shift) {
+                    shift.WatchAssignment = {'PersonAssigned': stander, 'WatchShift': {'Id': shift.Id}};
                 }
                 // WatchbillService.GetAllLists(function (response) {
                 //         $scope.shiftTypes = response.ReturnValue.WatchShiftType;
