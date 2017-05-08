@@ -10,11 +10,14 @@
                 <div class="panel-heading">
                     <H2>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H2>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" ng-if="!progressing">
                     <h4>This watchbill is currently in the "{{watchbill.CurrentState.Value}}" phase.</h4>
                     <h4>Confirming below will move it to the "{{nextStatus.Value}}" phase.</h4>
                     <button class="btn btn-success" ng-click="moveToNextStep()">Confirm</button>
                     <a class="btn btn-danger" href="#/watchbill/edit/{{watchbill.Id}}">Go Back</a>
+                </div>
+                <div class="panel-body" ng-if="progressing">
+                    <h4>Going to phase {{nextStatus.Value}}, please wait...</h4>
                 </div>
             </div>
         </div>

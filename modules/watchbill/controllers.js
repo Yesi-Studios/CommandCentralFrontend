@@ -39,6 +39,7 @@ angular.module('Watchbill')
             $scope.getByValue = getByValue;
 
             $scope.moveToNextStep = function () {
+                $scope.progressing = true;
                 $scope.watchbill.CurrentState = $scope.nextStatus;
                 WatchbillService.UpdateWatchbill($scope.watchbill, function (response) {
                         $location.path('/watchbill/' + $scope.watchbill.Id);
@@ -218,13 +219,15 @@ angular.module('Watchbill')
             $scope.loadWatchbill();
         }]
 ).controller('WatchbillController',
-    ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
-        function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
+    ['$scope', '$route', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
+        function ($scope, $route, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
 
             $scope.resetWatchbill = function(id) {
+                $scope.resetting = true;
                 $scope.watchbill.CurrentState = {"Id":"fa1d4185-6a36-40de-81c6-843e6ee352f0"};
                 WatchbillService.UpdateWatchbill($scope.watchbill, function (response) {
                         $location.path('/watchbill/' + $scope.watchbill.Id);
+                        $route.reload();
                     },
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {

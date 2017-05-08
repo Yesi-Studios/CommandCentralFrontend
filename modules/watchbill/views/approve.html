@@ -8,6 +8,10 @@
         <div class="col-md-10 col-md-offset-1">
 
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <div ng-if="!inputs">
+                <br/>
+                <h3>There are no inputs waiting for approval</h3>
+            </div>
             <div class="list-group">
                 <li ng-repeat="input in inputs track by $index" ng-if="input.Id && !input.IsConfirmed" class="list-group-item row" ng-class="{active: hover}"
                     ng-mouseenter="hover = true" ng-mouseleave="hover = false">
