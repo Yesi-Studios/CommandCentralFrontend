@@ -569,6 +569,26 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-md-2" for="dutyStatus">Billet Assignment</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <select class="form-control" id="dutyStatus"
+                                        ng-disabled="!canEditPersonField('BilletAssignment')"
+                                        ng-show="canReturnPersonField('BilletAssignment')" ng-model="profileData.BilletAssignment"
+                                        ng-options="o as o.Value for o in lists['BilletAssignment'] | orderBy: 'Value' track by o.Id">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <label class="col-md-2" for="dodId">DoD ID</label>
+                            <div class="col-md-4">
+                                <!--suppress HtmlUnknownAttribute -->
+                                <input class="form-control" id="dodId" ng-disabled="!canEditPersonField('DoDId')"
+                                        ng-show="canReturnPersonField('DoDId')" ng-model="profileData.DoDId"
+                                        >
+                                </input>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-md-2" for="necs">Primary NEC</label>
                             <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
