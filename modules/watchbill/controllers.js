@@ -301,8 +301,8 @@ angular.module('Watchbill')
                     fixed.Range.End.setMonth(day.Date.getMonth());
                     fixed.Range.End.setYear(day.Date.getFullYear());
                     delete fixed.Id;
-                    if (fixed.numberOfDays > 1) {
-                        fixed.Range.End.setDate(fixed.Range.End.getDate() + fixed.numberOfDays - 1);
+                    if (fixed.numberOfDays >= 1) {
+                        fixed.Range.End.setDate(fixed.Range.End.getDate() + fixed.numberOfDays);
                     }
                     day.WatchShifts.push(fixed);
                 })
@@ -414,6 +414,8 @@ angular.module('Watchbill')
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
         function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
 
+            $scope.messages = [];
+            $scope.errors = [];
 
             $scope.getByValue = function (arr, prop, val) {
                 return $filter('filter')(arr, {prop: val})[0] || {};
@@ -430,6 +432,7 @@ angular.module('Watchbill')
                 function (response) {
                     $scope.watchbill = response.ReturnValue;
                     $scope.weeks = [];
+                    $scope.inputs = [];
 
                     $scope.submitInput = function () {
                         var shifts = [];
@@ -438,12 +441,14 @@ angular.module('Watchbill')
                                 for (var s = 0; s < $scope.weeks[w][d].WatchShifts.length; s++) {
                                     if ($scope.weeks[w][d].WatchShifts[s].checked) {
                                         shifts.push($scope.weeks[w][d].WatchShifts[s]);
+                                        $scope.weeks[w][d].WatchShifts[s].checked = false;
                                     }
                                 }
                             }
                         }
 
                         WatchbillService.CreateWatchInput($scope.selectedPerson, shifts, $scope.reason, function (response) {
+                                $scope.messages.push("Input successfully submitted for "+ $scope.selectedPerson.FriendlyName);
                             },
                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                             function (response) {
@@ -472,6 +477,17 @@ angular.module('Watchbill')
 
                     $scope.blankStartDays = new Array(pushAmount);
 
+                    for (var w = 0; w < $scope.weeks.length; w++) {
+                        for (var d = 0; d < $scope.weeks[w].length; d++) {
+                            for (var s = 0; s < $scope.weeks[w][d].WatchShifts.length; s++) {
+                                if ($scope.weeks[w][d].WatchShifts[s].WatchInputs) {
+                                    for (var imp = 0; imp < $scope.weeks[w][d].WatchShifts[s].WatchInputs.length; imp++) {
+                                        $scope.inputs.push($scope.weeks[w][d].WatchShifts[s].WatchInputs[imp]);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     var permissionLevel = $rootScope.globals.currentUser.permissions.HighestLevels[$scope.watchbill.EligibilityGroup.OwningChainOfCommand];
                     ProfileService.LoadProfile($rootScope.globals.currentUser.userID, function (response) {
                             var valId = response.ReturnValue.Person[permissionLevel];
@@ -577,6 +593,7 @@ angular.module('Watchbill')
                     $scope.blankStartDays = new Array(pushAmount);
 
                     $scope.inputs = [];
+                    $scope.noNewInputs = true;
 
                     for (var w = 0; w < $scope.weeks.length; w++) {
                         for (var d = 0; d < $scope.weeks[w].length; d++) {
@@ -584,6 +601,9 @@ angular.module('Watchbill')
                                 if ($scope.weeks[w][d].WatchShifts[s].WatchInputs) {
                                     for (var imp = 0; imp < $scope.weeks[w][d].WatchShifts[s].WatchInputs.length; imp++) {
                                         $scope.inputs.push($scope.weeks[w][d].WatchShifts[s].WatchInputs[imp]);
+                                        if(!$scope.weeks[w][d].WatchShifts[s].WatchInputs[imp].isConfirmed){
+                                           $scope.noNewInputs = false;
+                                        }
                                     }
                                 }
                             }
