@@ -62,6 +62,14 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('ConfirmWatchInput', {'Id': inputId, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                service.LoadWatchInputs = function (watchbillId, success, error) {
+                    return ConnectionService.RequestFromBackend('LoadWatchInputs', {'watchbillId': watchbillId, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
+                service.DeleteWatchInput = function (inputId, success, error) {
+                    return ConnectionService.RequestFromBackend('DeleteWatchInput', {'Id': inputId, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
                 service.DeleteWatchDay = function (id, success, error) {
                     return ConnectionService.RequestFromBackend('DeleteWatchDay', {'watchday': {'Id': id}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };

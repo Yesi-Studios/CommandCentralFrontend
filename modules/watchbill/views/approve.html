@@ -31,7 +31,9 @@
                         Reason: {{input.InputReason.Value}} <span class="glyphicon glyphicon-question-sign"></span>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-success" ng-click="confirm(input)">Confirm</button>
+                        <button class="btn btn-block btn-success" ng-click="confirm(input)">Confirm</button>
+                        <button class="btn btn-block btn-danger" ng-click="input.showDeleteWarning=true">Delete</button>
+                        <span ng-show="input.showDeleteWarning" class="pull-right">Really delete?<br/><a href="" ng-click="delete(input)" class="btn btn-xs btn-danger">Yes</a><a href="" ng-click="input.showDeleteWarning=false" class="btn btn-xs btn-success">No</a></span>
                     </div>
                 </li>
             </div>
