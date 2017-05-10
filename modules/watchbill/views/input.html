@@ -17,13 +17,14 @@
             <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
             <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
             <p>Please select the shifts that the Sailor is exempt from below, then select the sailor (use the text bar to search) and a justification, and click submit.</p>
+            <p>Sailors with an asterisk next to their name have not submitted any watch inputs, and are listed as available for the entire watchbill.</p>
             <p>Please note: Watch inputs must be approved by a coordinator, or they will not affect watchbill generation.</p>
         </div>
         <div class="col-md-5">
             <div class="form-group text-center">
                 <input class="form-control" type="text" ng-model="personFilter" placeholder="Search by Name">
                 <select class="form-control"
-                        ng-options="p as p.FriendlyName for p in inputPeople | filter: personFilter : false : 'FriendlyName' | orderBy: 'FriendlyName'"
+                        ng-options="p as (asteriskForRequirement(p.Id) + p.FriendlyName) for p in inputPeople | filter: personFilter : false : 'FriendlyName' | orderBy: 'FriendlyName'"
                         ng-model="selectedPerson" size="10"></select>
                 <div class="form-group">
                     <label for="reasons">Justification</label>

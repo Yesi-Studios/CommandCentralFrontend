@@ -435,6 +435,19 @@ angular.module('Watchbill')
                         $scope.weeks = [];
                         $scope.inputs = [];
 
+                        var stillRequired = [];
+                        angular.forEach($scope.watchbill.InputRequirements, function (e) {
+                            if(!e.IsAnswered) {this.push(e.Person.Id);}
+                        }, stillRequired);
+                        $scope.asteriskForRequirement = function (id) {
+                            if (stillRequired.indexOf(id) > -1) {
+                                return "*"
+                                console.log("Did it!");
+                            }
+                            console.log("nope");
+                            return "";
+                        };
+
                         WatchbillService.LoadWatchInputs($routeParams.id, function (response) {
                                 $scope.inputs = response.ReturnValue;
                             },
@@ -505,8 +518,8 @@ angular.module('Watchbill')
                                 WatchbillService.GetAllLists(function (response) {
                                         var val = "";
                                         $scope.reasons = response.ReturnValue.WatchInputReason;
-                                        console.log(response.ReturnValue[permissionLevel]);
-                                        console.log(valId);
+                                        // console.log(response.ReturnValue[permissionLevel]);
+                                        // console.log(valId);
                                         for (var k in response.ReturnValue[permissionLevel]) {
                                             if (response.ReturnValue[permissionLevel][k].Id == valId) {
                                                 val = response.ReturnValue[permissionLevel][k].Value;
@@ -525,10 +538,10 @@ angular.module('Watchbill')
                                                     }
                                                 }
 
-                                                console.log("********");
-                                                console.log($scope.inputPeople);
-                                                console.log(subordIds);
-                                                console.log($scope.watchbill.EligibilityGroup.EligiblePersons);
+                                                // console.log("********");
+                                                // console.log($scope.inputPeople);
+                                                // console.log(subordIds);
+                                                // console.log($scope.watchbill.EligibilityGroup.EligiblePersons);
                                             },
                                             // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                                             function (response) {
