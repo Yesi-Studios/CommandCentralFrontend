@@ -429,7 +429,7 @@ angular.module('Watchbill')
         };
 
         $scope.swapShifts = function () {
-            WatchbillService.SwapWatchAssignments($scope.firstShift.Id, $scope.secondShift.Id, function (response) {
+            WatchbillService.SwapWatchAssignments($scope.firstShift.WatchAssignment.Id, $scope.secondShift.WatchAssignment.Id, function (response) {
                     console.log(response);
                     $scope.firstShift = null;
                     $scope.secondShift = null;
