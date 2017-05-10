@@ -133,6 +133,11 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/watchbill/views/input.html'
         })
 
+        .when('/watchbill/swap/:id', {
+            controller: 'WatchbillSwapController',
+            templateUrl: 'modules/watchbill/views/swap.html'
+        })
+
         .when('/watchbill/approve/:id', {
             controller: 'WatchbillApproveController',
             templateUrl: 'modules/watchbill/views/approve.html'

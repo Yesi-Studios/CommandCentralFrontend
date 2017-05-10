@@ -1,0 +1,88 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
+<div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
+    {{message}}
+</div>
+<div class="content_panel">
+    <div class="row">
+        <h2 class="text-center">Shift Swap</h2>
+        <br/>
+        <div class="col-md-offset-1 col-md-10">
+            <br/>
+            <div class="panel panel-default">
+                <table class="table">
+                    <tr>
+                        <th>Sailor</th>
+                        <th>Shift</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Shift Type</th>
+                    </tr>
+                    <tr>
+                        <td>{{firstShift.WatchAssignment.PersonAssigned.FriendlyName}}<span ng-if="!firstShift">No shift selected</span></td>
+                        <td>{{firstShift.Title}}</td>
+                        <td>{{firstShift.Range.Start | date: 'short'}}</td>
+                        <td>{{firstShift.Range.End | date:'short'}}</td>
+                        <td>{{firstShift.ShiftType.Value}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{secondShift.WatchAssignment.PersonAssigned.FriendlyName}}<span ng-if="!secondShift">No shift selected</span></td>
+                        <td>{{secondShift.Title}}</td>
+                        <td>{{secondShift.Range.Start | date: 'short'}}</td>
+                        <td>{{secondShift.Range.End | date:'short'}}</td>
+                        <td>{{secondShift.ShiftType.Value}}</td>
+                    </tr>
+                </table>
+                <div class="panel-footer text-right">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-success" ng-click="swapShifts()" ng-disabled="!firstShift || !secondShift">Swap</button>
+                        <button type="button" class="btn btn-primary" ng-click="clearShifts()">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="btn-group pull-right">
+                <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs'" ng-click="populate()"
+                   class="btn btn-primary">Populate</a>
+                <a href="#/watchbill/{{watchbill.Id}}"
+                   class="btn btn-success">Back to Watchbill</a>
+            </div>
+            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
+            <table class="table-bordered">
+                <tr class="text-center">
+                    <th ng-repeat="d in ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']">{{d}}</th>
+                </tr>
+                <tr ng-repeat="week in weeks">
+                    <td ng-if="$parent.$first" ng-repeat="day in blankStartDays track by $index" width="14%"></td>
+                    <td ng-repeat="day in week" class="row" width="14%">
+                        <div class="col-md-12">
+                            {{day.Date | date: shortDate }}
+                            <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
+                                <a href="" ng-click="selectShift(shift)">
+                                    <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
+                                    <span ng-if="shift.WatchAssignment" class="label label-success">
+                                        {{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}
+                                    </span>
+                                    <span ng-if="!shift.WatchAssignment" class="label label-danger">{{shift.Range.Start | date: 'HHmm'}} <strong>{{shift.Title}} NO WATCHSTANDER</strong></span>
+                                </a>
+                            </span>
+
+                        </div>
+                    </td>
+                </tr>
+                </span>
+                </tr>
+            </table>
+            <br/>
+            <br/>
+            <button class="btn btn-primary" ng-click="submitChanges()">Submit</button>
+        </div>
+    </div>
+</div>

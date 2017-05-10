@@ -38,6 +38,10 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('CreateWatchShift', {'watchshifts': [shift], 'watchbillid':  watchbillid, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                service.SwapWatchAssignments = function (firstId, secondId, success, error) {
+                    return ConnectionService.RequestFromBackend('SwapWatchAssignments', {'Id1': firstId, 'Id2': secondId, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
                 service.CreateWatchShifts = function (shifts, watchbillid, success, error) {
                     return ConnectionService.RequestFromBackend('CreateWatchShifts', {'watchshifts': shifts, 'watchbillid':  watchbillid, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };

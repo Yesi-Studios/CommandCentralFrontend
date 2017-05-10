@@ -410,6 +410,72 @@ angular.module('Watchbill')
             )
         }
     ]
+).controller('WatchbillSwapController', ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
+    function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
+        $scope.message = [];
+        $scope.errors = [];
+
+        $scope.selectShift = function (shift) {
+            if ($scope.firstShift && shift != $scope.firstShift) {
+                $scope.secondShift = shift;
+            } else {
+                $scope.firstShift = shift;
+            }
+        };
+
+        $scope.clearShifts = function () {
+            $scope.firstShift = null;
+            $scope.secondShift = null;
+        };
+
+        $scope.swapShifts = function () {
+            WatchbillService.SwapWatchAssignments($scope.firstShift.Id, $scope.secondShift.Id, function (response) {
+                    console.log(response);
+                    $scope.firstShift = null;
+                    $scope.secondShift = null;
+                    loadWatchbill();
+                },
+                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                function (response) {
+                    ConnectionService.HandleServiceError(response, $scope, $location);
+                });
+        };
+
+        var loadWatchbill = function () {
+            WatchbillService.LoadWatchbill($routeParams.id,
+                function (response) {
+                    $scope.watchbill = response.ReturnValue;
+                    $scope.weeks = [];
+
+                    // Fix our dates to be Dates
+                    angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
+                        $scope.watchbill.WatchDays[index].Date = new Date(value.Date);
+                    });
+
+                    // Sort our dates because Atwood is an ass
+                    $scope.watchbill.WatchDays = $filter('orderBy')($scope.watchbill.WatchDays, 'Date');
+
+                    // This is how much we have to adjust the start of the week in the calendar
+                    var pushAmount = (new Date($scope.watchbill.WatchDays[0].Date)).getDay();
+
+                    // Create an array of the weeks populated with the days
+                    angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
+                        if (!$scope.weeks[Math.floor((pushAmount + index) / 7)]) {
+                            $scope.weeks[Math.floor((pushAmount + index) / 7)] = [];
+                        }
+                        $scope.weeks[Math.floor((pushAmount + index) / 7)].push($scope.watchbill.WatchDays[index]);
+                    });
+
+                    $scope.blankStartDays = new Array(pushAmount);
+                },
+                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                function (response) {
+                    ConnectionService.HandleServiceError(response, $scope, $location);
+                }
+            );
+        };
+        loadWatchbill();
+    }]
 ).controller('WatchbillInputController',
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
         function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
@@ -437,7 +503,9 @@ angular.module('Watchbill')
 
                         var stillRequired = [];
                         angular.forEach($scope.watchbill.InputRequirements, function (e) {
-                            if(!e.IsAnswered) {this.push(e.Person.Id);}
+                            if (!e.IsAnswered) {
+                                this.push(e.Person.Id);
+                            }
                         }, stillRequired);
                         $scope.asteriskForRequirement = function (id) {
                             if (stillRequired.indexOf(id) > -1) {
