@@ -25,7 +25,7 @@ angular.module('Watchbill')
                             function (response) {
                                 ConnectionService.HandleServiceError(response, $scope, $location);
                             });
-                    }
+                    };
                     WatchbillService.LoadWatchbill($scope.watchbillId,
                         function (response) {
                             $scope.watchbill = response.ReturnValue;
@@ -76,7 +76,7 @@ angular.module('Watchbill')
                     $scope.createNewWatchBill = function () {
                         WatchbillService.CreateWatchbill($scope.title, $scope.group,
                             function (response) {
-                                var watchbillId = response.ReturnValue.Id
+                                var watchbillId = response.ReturnValue.Id;
                                 var days = [];
 
                                 for (var j = 0; j < $scope.numberOfDays; j += 1) {

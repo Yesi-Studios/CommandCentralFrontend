@@ -355,7 +355,7 @@ angular.module('Watchbill')
                                 newDays = response.ReturnValue;
 
                                 WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {
-                                        console.log(response)
+                                        console.log(response);
                                         // $route.reload();
                                         $location.path('/watchbill/' + $routeParams.id);
                                     },
@@ -509,7 +509,7 @@ angular.module('Watchbill')
                         }, stillRequired);
                         $scope.asteriskForRequirement = function (id) {
                             if (stillRequired.indexOf(id) > -1) {
-                                return "*"
+                                return "*";
                                 console.log("Did it!");
                             }
                             console.log("nope");
