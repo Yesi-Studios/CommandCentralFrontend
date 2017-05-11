@@ -208,6 +208,8 @@ angular.module('Authentication')
 
         $scope.errors = [];
         $scope.messages = [];
+        $scope.newUser = {};
+
         ProfileService.GetAllLists(
             // If we succeed, this is our call back
             function (response) {

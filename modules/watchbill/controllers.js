@@ -510,9 +510,7 @@ angular.module('Watchbill')
                         $scope.asteriskForRequirement = function (id) {
                             if (stillRequired.indexOf(id) > -1) {
                                 return "*";
-                                console.log("Did it!");
                             }
-                            console.log("nope");
                             return "";
                         };
 
@@ -633,6 +631,134 @@ angular.module('Watchbill')
                 )
             };
             $scope.loadWatchbill();
+        }]
+).controller('WatchbillEligibilityController',
+    ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
+        function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
+            $scope.messages = [];
+            $scope.errors = [];
+
+            $scope.updateLists = function () {
+                for (var i = 0; i < $scope.groups.length; i++) {
+                    if ($scope.groups[i].Id == $scope.originalSelectedGroup.Id) {
+                        $scope.selectedGroup = $scope.groups[i];
+                    }
+                }
+                $scope.notInGroup = arrayDifference($scope.allPeople, $scope.selectedGroup.EligiblePersons);
+            };
+
+            /**
+             * Compare two arrays, and return all values that are in one but not the other.
+             * @param {Array} firstArray
+             * @param {Array} secondArray
+             * @returns {Array}
+             */
+            var arrayDifference = function (firstArray, secondArray) {
+                var a = [], result = [];
+
+                for (var i = 0; i < firstArray.length; i++) {
+                    a[firstArray[i].Id] = firstArray[i].FriendlyName;
+                }
+
+                for (var i = 0; i < secondArray.length; i++) {
+                    if (a[secondArray[i].Id]) {
+                        delete a[secondArray[i].Id]
+                    } else {
+                        a[secondArray[i].Id] = secondArray[i].FriendlyName;
+                    }
+                }
+
+                for (var k in a) {
+                    result.push({'Id': k, 'FriendlyName': a[k]})
+                }
+
+                return result;
+            };
+
+            /**
+             * Adds people to the current group
+             * @param {Array} peopleToAdd
+             */
+            $scope.addPeople = function (peopleToAdd) {
+                for (var i = 0; i < peopleToAdd.length; i++) {
+                    $scope.selectedGroup.EligiblePersons.push(peopleToAdd[i]);
+                }
+                $scope.selectedGroup.UneligiblePersons = arrayDifference($scope.selectedGroup.UneligiblePersons, peopleToAdd);
+                $scope.peopleToAdd = [];
+            };
+
+            /**
+             * Removes people from the current group
+             * @param {Array} peopleToRemove
+             */
+            $scope.removePeople = function (peopleToRemove) {
+                for (var i = 0; i < peopleToRemove.length; i++) {
+                    $scope.selectedGroup.UneligiblePersons.push(peopleToRemove[i]);
+                }
+                $scope.selectedGroup.EligiblePersons = arrayDifference(peopleToRemove, $scope.selectedGroup.EligiblePersons)
+                $scope.peopleToRemove = [];
+            };
+
+            /**
+             * Creates friendly name of a person
+             * @param person - The person object to make a friendly name for
+             * @param person.FirstName
+             * @param person.LastName
+             * @param person.MiddleName
+             * @returns {string}
+             */
+            var friendlyName = function (person) {
+                return person.LastName + ", " + person.FirstName + " " + person.MiddleName;
+            };
+
+
+            $scope.loadGroups = function() {
+                WatchbillService.GetAllPeople(function (response) {
+                        $scope.allPeople = [];
+                        angular.forEach(response.ReturnValue.Results, function (value, key) {
+                            this.push({
+                                'Id': value.Id,
+                                'FriendlyName': friendlyName(value)
+                            })
+                        }, $scope.allPeople);
+
+                        WatchbillService.GetAllLists(function (response) {
+                                $scope.groups = response.ReturnValue.WatchEligibilityGroup;
+                                if($scope.groups) { $scope.selectedGroup = $scope.groups[0]; }
+                                for (var i = 0; i < $scope.groups.length; i++) {
+                                    $scope.groups[i].UneligiblePersons = arrayDifference($scope.groups[i].EligiblePersons, $scope.allPeople);
+                                }
+                                $scope.messages = [];
+                                $scope.errors = [];
+                            },
+                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                            function (response) {
+                                ConnectionService.HandleServiceError(response, $scope, $location);
+                            });
+                    },
+                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                    function (response) {
+                        ConnectionService.HandleServiceError(response, $scope, $location);
+                    });
+            };
+
+            $scope.submit = function(id, persons) {
+                var personIds = [];
+                angular.forEach(persons, function(value, key) {
+                    this.push(value.Id);
+                }, personIds);
+                WatchbillService.EditWatchEligibilityGroup(id, personIds, function(response){
+                    $scope.messages.push("Successfully updated, reloading...");
+                    $scope.loadGroups();
+                },
+                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
+                function (response) {
+                    ConnectionService.HandleServiceError(response, $scope, $location);
+                });
+            };
+
+            $scope.loadGroups()
+
         }]
 ).controller('WatchbillApproveController',
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',

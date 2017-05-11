@@ -113,6 +113,11 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/watchbill/views/watchbillpopulate.html'
         })
 
+        .when('/watchbill/eligibility/', {
+            controller: 'WatchbillEligibilityController',
+            templateUrl: 'modules/watchbill/views/eligibilityeditor.html'
+        })
+
         .when('/watchbill/:id', {
             controller: 'WatchbillController',
             templateUrl: 'modules/watchbill/views/watchbill.html'

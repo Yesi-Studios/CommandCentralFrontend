@@ -8,6 +8,12 @@ angular.module('Watchbill')
     .factory('WatchbillService',
         ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
             function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
+                /**
+                 * The callback for backend requests
+                 * @callback responseCallback
+                 * @param {Object} response - The response from the backend request
+                 */
+
                 var service = {};
 
                 service.PopulateWatchbill = function (id, success, error) {
@@ -78,10 +84,26 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('DeleteWatchDay', {'watchday': {'Id': id}, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                /**
+                 * Make a request to the backend to change the membership of an eligibility group.
+                 * @param {string} id - The Id of the eligibility group
+                 * @param {string[]} personIds - The Ids of people that are in that eligibility group
+                 * @param {responseCallback} success - The callback if the request succeeds
+                 * @param {responseCallback} error - The callback if the request fails
+                 */
+                service.EditWatchEligibilityGroup = function (id, personIds, success, error) {
+                    return ConnectionService.RequestFromBackend('EditWatchEligibilityGroupMembership', {'Id': id, 'PersonIds': personIds, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+                };
+
                 service.DeleteWatchDays = function (watchdayIds, success, error) {
                     return ConnectionService.RequestFromBackend('DeleteWatchDays', {'Ids': watchdayIds, 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
                 };
 
+                /**
+                 * Get all reference lists from the backend
+                 * @param {responseCallback} success - The callback if the request succeeds
+                 * @param {responseCallback} error - The callback if the request fails
+                 */
                 service.GetAllLists = function (success, error) {
                     return ConnectionService.RequestFromBackend('LoadReferenceLists', {'enititynames': []}, success, error);
                 };
@@ -90,6 +112,15 @@ angular.module('Watchbill')
                     var filters = {};
                     filters[filter] = value;
                     return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': filters, 'returnfields': ['Id'], 'searchLevel' : 'Command'}, success, error);
+                };
+
+                /**
+                 * Get all people in the command
+                 * @param {responseCallback} success - The callback if the request succeeds
+                 * @param {responseCallback} error - The callback if the request fails
+                 */
+                service.GetAllPeople = function (success, error) {
+                    return ConnectionService.RequestFromBackend('AdvancedSearchPersons', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'filters': null, 'returnfields': ['Id', 'FirstName', 'LastName', 'MiddleName'], 'searchLevel' : 'Command'}, success, error);
                 };
 
                 return service;
