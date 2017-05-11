@@ -109,7 +109,7 @@ angular.module('Muster')
                     var dtoMuster = {};
                     for (var i = 0; i < musterList.length; i++) {
                         if (musterList[i].CurrentMusterStatus.MusterStatus != null && musterList[i].CurrentMusterStatus.MusterStatus != $filter('filter')(oldStatusList, {Id: musterList[i].Id})[0].CurrentMusterStatus.MusterStatus) {
-                            dtoMuster[musterList[i].Id] = musterList[i].CurrentMusterStatus.MusterStatus;
+                            dtoMuster[musterList[i].Id] = { MusterStatusId : musterList[i].CurrentMusterStatus.MusterStatus.Id, Remarks : null };
                         }
                     }
 
