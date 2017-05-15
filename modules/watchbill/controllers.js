@@ -315,6 +315,15 @@ angular.module('Watchbill')
                 });
             };
 
+            $scope.generateDefault = function() {
+                for (var i = 0; i < $scope.weeks.length; i++) {
+                    var week = $scope.weeks[i];
+                    for (var j = 0; j < week.length; j++) {
+                        week[j].WatchShifts = WatchbillService.GetDefaultWatchShifts(week[j]);
+                    }
+                }
+            };
+
             $scope.saveWatchBill = function () {
                 var newDays = [];
                 var newShifts = [];
