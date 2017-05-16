@@ -302,8 +302,8 @@ angular.module('Watchbill')
                     fixed.Range.End.setMonth(day.Date.getMonth());
                     fixed.Range.End.setYear(day.Date.getFullYear());
                     delete fixed.Id;
-                    if (fixed.numberOfDays >= 1) {
-                        fixed.Range.End.setDate(fixed.Range.End.getDate() + fixed.numberOfDays);
+                    if (fixed.numberOfDays > 1) {
+                        fixed.Range.End.setDate(fixed.Range.End.getDate() + fixed.numberOfDays - 1);
                     }
                     day.WatchShifts.push(fixed);
                 })
@@ -313,6 +313,11 @@ angular.module('Watchbill')
                 $scope.dayToCopy = angular.copy(day.WatchShifts);
                 angular.forEach($scope.dayToCopy, function (value, index) {
                     value.numberOfDays = value.Range.End.getDate() - value.Range.Start.getDate() + 1;
+                    if(value.Range.End.getMonth() != value.Range.Start.getMonth()) {
+                        var month = value.Range.Start.getMonth();
+                        var year = value.Range.Start.getYear();
+                        value.numberOfDays += (new Date(year, month, 0)).getDate() + 1;
+                    }
                 });
             };
 

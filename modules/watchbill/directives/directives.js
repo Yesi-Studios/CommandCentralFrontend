@@ -143,8 +143,8 @@ angular.module('Watchbill')
 
                 $scope.days = Math.round(Math.abs(($scope.ngModel.Range.Start.getTime() - $scope.ngModel.Range.End.getTime()) / (oneDay)))
 
-                $scope.daysText = function() {
-                    if($scope.days) {
+                $scope.daysText = function () {
+                    if ($scope.days) {
                         var days = $scope.days + 1;
                         return "(" + days + " days)";
                     } else {
@@ -174,7 +174,13 @@ angular.module('Watchbill')
                     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                     function (response) {
                         ConnectionService.HandleServiceError(response, $scope, $location);
-                    });
+                    }
+                );
+                $scope.$watch('ngModel', function(newValue, oldValue){
+                    if(!$scope.selectedShift){
+                        $scope.selectedShift = $scope.ngModel[0];
+                    }
+                })
             }]
         }
     })

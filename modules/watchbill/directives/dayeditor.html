@@ -45,15 +45,23 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                <label class="col-md-4" for="from">From</label>
-                <uib-timepicker class="col-md-5" id="from" name="from" ng-model="selectedShift.Range.Start" show-meridian="false"
-                                show-spinners="false"></uib-timepicker>
+                    <label class="col-md-5" for="from">From</label>
+                    <uib-timepicker class="col-md-5" id="from" name="from" ng-model="selectedShift.Range.Start"
+                                    show-meridian="false"
+                                    show-spinners="false"></uib-timepicker>
                 </div>
-                    <div class="form-group">
-                <label class="col-md-4" for="to">To</label>
-                <uib-timepicker class="col-md-5" name="to" ng-model="selectedShift.Range.End" show-meridian="false"
-                                show-spinners="false"></uib-timepicker>
+                <div class="form-group">
+                    <label class="col-md-5" for="to">To</label>
+                    <uib-timepicker class="col-md-5" name="to" ng-model="selectedShift.Range.End" show-meridian="false"
+                                    show-spinners="false"></uib-timepicker>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4" for="points">Points</label>
+                    <div class="col-md-7">
+                        <input type="number" class="form-control" name="points" id="points"
+                               ng-model="selectedShift.Points"/>
                     </div>
+                </div>
             </div>
         </form>
 
