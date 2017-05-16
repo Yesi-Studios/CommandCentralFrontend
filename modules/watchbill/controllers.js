@@ -298,9 +298,9 @@ angular.module('Watchbill')
                     fixed.Range.Start.setDate(day.Date.getDate());
                     fixed.Range.Start.setMonth(day.Date.getMonth());
                     fixed.Range.Start.setYear(day.Date.getFullYear());
-                    fixed.Range.End.setDate(day.Date.getDate());
                     fixed.Range.End.setMonth(day.Date.getMonth());
                     fixed.Range.End.setYear(day.Date.getFullYear());
+                    fixed.Range.End.setDate(day.Date.getDate());
                     delete fixed.Id;
                     if (fixed.numberOfDays > 1) {
                         fixed.Range.End.setDate(fixed.Range.End.getDate() + fixed.numberOfDays - 1);
@@ -314,9 +314,9 @@ angular.module('Watchbill')
                 angular.forEach($scope.dayToCopy, function (value, index) {
                     value.numberOfDays = value.Range.End.getDate() - value.Range.Start.getDate() + 1;
                     if(value.Range.End.getMonth() != value.Range.Start.getMonth()) {
-                        var month = value.Range.Start.getMonth();
-                        var year = value.Range.Start.getYear();
-                        value.numberOfDays += (new Date(year, month, 0)).getDate() + 1;
+                        var millisecondsPerDay = 1000*60*60*24;
+                        var diff = value.Range.End - value.Range.Start;
+                        value.numberOfDays = Math.ceil((diff)/millisecondsPerDay) + 1
                     }
                 });
             };

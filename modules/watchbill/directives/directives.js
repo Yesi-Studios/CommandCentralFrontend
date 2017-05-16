@@ -177,7 +177,7 @@ angular.module('Watchbill')
                     }
                 );
                 $scope.$watch('ngModel', function(newValue, oldValue){
-                    if(!$scope.selectedShift){
+                    if(!$scope.selectedShift && $scope.ngModel){
                         $scope.selectedShift = $scope.ngModel[0];
                     }
                 })
