@@ -5,7 +5,7 @@
 </div>
 <div class="content_panel">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <br/>
             <div class="btn-group pull-right">
                 <a ng-if="watchbill.CurrentState.Value == 'Initial'" href="#/watchbill/edit/{{watchbill.Id}}"
@@ -45,12 +45,12 @@
                             {{day.Date | date: shortDate }}
                             <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start.getUTCHours()'">
                                     <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
-                                    <span ng-if="shift.WatchAssignment" class="label label-success"
-                                    uib-tooltip="{{shift.Title + ' at ' + (shift.Range.Start | date: 'HHmm') +
-                                    '. Currently assigned to: ' + shift.WatchAssignment.PersonAssigned.FriendlyName}}">
-                                        {{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}
-                                    </span>
-                                    <ng-shift-nub ng-if="!shift.WatchAssignment" ng-model="shift"></ng-shift-nub>
+                                    <!--<span ng-if="shift.WatchAssignment" class="label label-success"-->
+                                    <!--uib-tooltip="{{shift.Title + ' at ' + (shift.Range.Start | date: 'HHmm') +-->
+                                    <!--'. Currently assigned to: ' + shift.WatchAssignment.PersonAssigned.FriendlyName}}">-->
+                                        <!--{{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}-->
+                                    <!--</span>-->
+                                    <ng-shift-nub ng-model="shift"></ng-shift-nub>
                                 </span>
                         </div>
                     </td>

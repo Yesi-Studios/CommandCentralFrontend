@@ -139,6 +139,18 @@ angular.module('Watchbill')
             controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
                 $scope.ngModel.Range.Start = new Date($scope.ngModel.Range.Start);
                 $scope.ngModel.Range.End = new Date($scope.ngModel.Range.End);
+                var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+
+                $scope.days = Math.round(Math.abs(($scope.ngModel.Range.Start.getTime() - $scope.ngModel.Range.End.getTime()) / (oneDay)))
+
+                $scope.daysText = function() {
+                    if($scope.days) {
+                        var days = $scope.days + 1;
+                        return "(" + days + " days)";
+                    } else {
+                        return "";
+                    }
+                }
             }]
         }
     }
