@@ -134,7 +134,8 @@ angular.module('Watchbill')
                 if (newAssignments.length > 0) {
                     WatchbillService.CreateWatchAssignments(newAssignments, $scope.watchbill.Id,
                         function (response) {
-                            $scope.loadWatchbill();
+                            // $scope.loadWatchbill();
+                            $location.path('/watchbill/' + $scope.watchbill.Id);
                         },
                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                         function (response) {
