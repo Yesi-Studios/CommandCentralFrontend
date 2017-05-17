@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="btn-group pull-right">
                 <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs'" ng-click="populate()"
                    class="btn btn-primary">Populate</a>
@@ -67,10 +67,11 @@
                             <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
                                 <a href="" ng-click="selectShift(shift)">
                                     <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
-                                    <span ng-if="shift.WatchAssignment" class="label label-success">
-                                        {{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}
-                                    </span>
-                                    <span ng-if="!shift.WatchAssignment" class="label label-danger">{{shift.Range.Start | date: 'HHmm'}} <strong>{{shift.Title}} NO WATCHSTANDER</strong></span>
+                                    <!--<span ng-if="shift.WatchAssignment" class="label label-success">-->
+                                        <!--{{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}-->
+                                    <!--</span>-->
+                                    <!--<span ng-if="!shift.WatchAssignment" class="label label-danger">{{shift.Range.Start | date: 'HHmm'}} <strong>{{shift.Title}} NO WATCHSTANDER</strong></span>-->
+                                    <ng-shift-nub ng-model="shift"></ng-shift-nub><br/>
                                 </a>
                             </span>
 
@@ -80,9 +81,6 @@
                 </span>
                 </tr>
             </table>
-            <br/>
-            <br/>
-            <button class="btn btn-primary" ng-click="submitChanges()">Submit</button>
         </div>
     </div>
 </div>

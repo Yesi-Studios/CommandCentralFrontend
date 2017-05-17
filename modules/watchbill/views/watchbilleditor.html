@@ -18,10 +18,10 @@
                     <td ng-if="$parent.$first" ng-repeat="day in blankStartDays track by $index" width="14%"></td>
                     <td ng-repeat="day in week" class="row text-center" width="14%">
                         <div class="col-md-12">
-                            {{day.Date | date: shortDate }}
+                            {{day.Date | date: shortDate }}<br/>
                                 <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start.getUTCHours()'">
                                     <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
-                                    <ng-shift-nub ng-model="shift"></ng-shift-nub>
+                                    <ng-shift-nub ng-model="shift"></ng-shift-nub><span ng-if="shift.Range.Start.getDay() != shift.Range.End.getDay() && shift.Range.Start.getDay() == day.Date.getDay()">*</span><br/>
                                 </span>
                         </div>
 

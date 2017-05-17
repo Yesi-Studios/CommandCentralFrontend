@@ -452,6 +452,7 @@ angular.module('Watchbill')
                 },
                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
                 function (response) {
+                    loadWatchbill();
                     ConnectionService.HandleServiceError(response, $scope, $location);
                 });
         };

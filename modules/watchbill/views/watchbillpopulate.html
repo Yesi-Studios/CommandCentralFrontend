@@ -25,9 +25,9 @@
                     <td ng-if="$parent.$first" ng-repeat="day in blankStartDays track by $index" width="14%"></td>
                     <td ng-repeat="day in week" class="row" width="14%">
                         <div class="col-md-12">
-                            {{day.Date | date: shortDate }}
+                            {{day.Date | date: shortDate }}<br/>
                             <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
-                                    <ng-shift-nub ng-model="shift"></ng-shift-nub>
+                                    <ng-shift-nub ng-model="shift"></ng-shift-nub><br/>
                                 </span>
                             <br/>
                             <br/>
