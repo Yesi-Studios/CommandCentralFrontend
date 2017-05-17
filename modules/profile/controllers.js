@@ -106,9 +106,8 @@ angular.module('Profiles')
                                     if ($scope.profileLock) {
                                         var lockId = $scope.profileLock.Id;
                                         $scope.profileLock = null;
-                                        ProfileService.ReleaseLock(lockId, false, function (response) {
-
-                                        }, function (response) {
+                                        ProfileService.ReleaseLock(lockId, false, function (response) {},
+                                        function (response) {
                                             ConnectionService.HandleServiceError(response, $scope, $location);
                                         });
                                     }
@@ -241,9 +240,7 @@ angular.module('Profiles')
                             c += 1;
                         }
                     }
-
                     return c != 1;
-
                 };
                 $scope.makePreferred = function (listOfItems, preferredOne) {
                     for (var i = 0; i < listOfItems.length; ++i) {

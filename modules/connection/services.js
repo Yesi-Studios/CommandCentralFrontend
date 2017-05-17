@@ -11,6 +11,7 @@ angular.module('Connection')
                 var apikey = config.apiKey;
                 var backendURL = config.backendURL;
 
+
                 // Here we check to see if we have a port stored in localStorage, and if not, we use 1113.
                 // If it's enabled, there's a widget at the bottom of index.html, controlled by this module,
                 // that allows the user to set the port to look for the service on. This is for development,
@@ -149,6 +150,7 @@ angular.module('Connection')
                             if(config.debugMode) console.log(endpoint);
                             if(config.debugMode) console.log(service.RestoreJsonNetReferences(response.data));
                             success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
+
                         },
                         function (response) {
                             if (response.statusText == "") {

@@ -13,7 +13,6 @@ angular.module('Administration', ['Authentication', 'Connection']);
 angular.module('Search', ['Authentication', 'Authorization', 'Connection', 'ui.bootstrap']);
 angular.module('Muster', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
 angular.module('Watchbill', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
-
 angular.module('Modals', ['angularModalService']);
 
 angular.module('CommandCentral', [

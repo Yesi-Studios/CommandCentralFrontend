@@ -93,7 +93,9 @@ uib-tab {
 }
 
 @media screen {
-
+    .no-screen, .no-screen * {
+        display: none !important;
+    }
 }
 
 @media print {

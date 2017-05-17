@@ -14,6 +14,7 @@ angular.module('Navigation')
         $scope.canUseAdminTools = function () { return AuthorizationService.CanUseAdminTools(); };
         $scope.canUseWatchbillTools = function () { return AuthorizationService.CanUseWatchbillTools(); };
 
+
         $scope.createNewPerson = function () {
             ProfileService.CreatePerson(
                 function (response) {

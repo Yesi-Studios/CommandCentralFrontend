@@ -9,12 +9,13 @@ livebeta/
 TestFrontend/
 Development/
 node_modules/
-config.js
+
 .idea/
 # We should be ignoring the current build, and just doing it when ready
 currentbuild/command-central.min.js
 currentbuild/command-central.js
 currentbuild/
+
 
 # User-specific files
 *.suo
