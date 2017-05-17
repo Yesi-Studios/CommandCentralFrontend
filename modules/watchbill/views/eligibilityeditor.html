@@ -1,0 +1,49 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
+<div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
+    {{message}}
+</div>
+<div class="content_panel">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <div class="form-group">
+                <label for="group">Eligibility Group</label>
+                <select class="form-control" id="group" placeholder="Select Group" ng-model="selectedGroup"
+                        ng-options="group as (group.Value + ': ' + group.Description) for group in groups"
+                        <!--ng-change="updateLists()"-->
+                ></select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-4">
+            <div class="form-group">
+                <label for="notInGroup">People Not in Group</label>
+                <select class="form-control" id="notInGroup" ng-model="peopleToAdd"
+                        ng-options="person as person.FriendlyName for person in selectedGroup.UneligiblePersons | orderBy: 'FriendlyName'"
+                        size="20" multiple></select>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <br/>
+            <br/>
+            <br/>
+            <button class="btn btn-primary btn-block" ng-click="addPeople(peopleToAdd)"> >> </button>
+            <button class="btn btn-primary btn-block" ng-click="removePeople(peopleToRemove)"> << </button>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="peopleInGroup">People in Group</label>
+                <select class="form-control" id="peopleInGroup" ng-model="peopleToRemove"
+                        ng-options="person as person.FriendlyName for person in selectedGroup.EligiblePersons | orderBy: 'FriendlyName'"
+                        size="20" multiple></select>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-9 col-md-2">
+            <button class="btn btn-primary btn-block" ng-click="submit(selectedGroup.Id, selectedGroup.EligiblePersons)">Submit Changes</button>
+        </div>
+    </div>
+</div>

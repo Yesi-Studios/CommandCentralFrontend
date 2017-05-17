@@ -1,0 +1,6 @@
+<span ng-if="ngModel.WatchAssignment" class="label label-success" style="font-size: 9px;"
+      uib-tooltip="{{ngModel.Title + ' at ' + (ngModel.Range.Start | date: 'HHmm') +
+                                    '. Currently assigned to: ' + ngModel.WatchAssignment.PersonAssigned.FriendlyName}}">
+                                        {{ngModel.Title}} {{daysText()}}: {{ngModel.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}
+                                    </span>
+<span ng-if="!ngModel.WatchAssignment" class="label label-default">&nbsp{{ngModel.Range.Start | date: 'HHmm'}} <strong>{{ngModel.Title}}</strong> <span ng-if="days">({{days + 1}} days)</span>&nbsp</span>

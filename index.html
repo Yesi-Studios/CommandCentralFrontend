@@ -15,7 +15,9 @@
     <!-- BEGIN BODY HEAD -->
     <div class="container-fluid" id="publicdiv">
         <div class="row header_color">
-            <div class="col-md-12 col-md-8 col-sm-8">
+
+            <div class="col-md-12 col-md-8 col-sm-8"><!-- TODO: Why are there two col-mds here -->
+
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tbody>
                         <tr>
@@ -59,7 +61,7 @@
                             <li ng-class="{ active: isActive('/createuser')}" ng-if="canCreatePerson()"><a href="#/createuser">Create User <span class="glyphicon glyphicon-plus"></span></a></li>
                         </ul>
                     </li>
-                    <li uib-dropdown ng-class="{ active: isActive('/muster') || isActive('/muster/archive') || isActive('/muster/finalize')}">
+                    <li uib-dropdown ng-class="{ active: isIn('/muster') }">
                         <a id="muster-dropdown" uib-dropdown-toggle href>Muster<span class="caret"></span></a>
                         <ul uib-dropdown-menu aria-labelledby="muster-dropdown" class="dropdown-menu">
                             <li ng-class="{ active: isActive('/muster')}"><a href="#/muster" ng-click="resetPIIBanner()">Today's Muster</a></li>
@@ -67,6 +69,7 @@
                             <li ng-class="{ active: isActive('/muster/finalize')}" ng-if="canFinalizeMuster()"><a href="#/muster/finalize" ng-click="resetPIIBanner()">Finalize Muster</a></li>
                         </ul>
                     </li>
+                    <li ng-if="canUseWatchbillTools()" ng-class="{ active: isIn('/watchbill')}"><a href="#/watchbill" ng-click="resetPIIBanner()">Watchbills</a></li>
                     <li uib-dropdown ng-if="canUseAdminTools()">
                         <a id="admin-dropdown" uib-dropdown-toggle href>Admin Tools<span class="caret"></span></a>
                         <ul uib-dropdown-menu aria-labelledby="muster-dropdown" class="dropdown-menu">

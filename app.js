@@ -12,7 +12,7 @@ angular.module('Home', ['Authentication', 'Authorization', 'Connection']);
 angular.module('Administration', ['Authentication', 'Connection']);
 angular.module('Search', ['Authentication', 'Authorization', 'Connection', 'ui.bootstrap']);
 angular.module('Muster', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
-
+angular.module('Watchbill', ['Authentication', 'Authorization', 'Profiles', 'Connection']);
 angular.module('Modals', ['angularModalService']);
 
 angular.module('CommandCentral', [
@@ -28,6 +28,7 @@ angular.module('CommandCentral', [
 	'Search',
     'Modals',
     'Muster',
+    'Watchbill',
     'angularModalService',
     'ngRoute',
     'ngStorage',
@@ -99,6 +100,51 @@ angular.module('CommandCentral', [
         .when('/muster/archive', {
             controller: 'MusterArchiveController',
             templateUrl: 'modules/muster/views/archive.html'
+        })
+
+        .when('/watchbill', {
+            controller: 'WatchbillsController',
+            templateUrl: 'modules/watchbill/views/watchbills.html'
+        })
+
+        .when('/watchbill/populate/:id', {
+            controller: 'WatchbillPopulateController',
+            templateUrl: 'modules/watchbill/views/watchbillpopulate.html'
+        })
+
+        .when('/watchbill/eligibility/', {
+            controller: 'WatchbillEligibilityController',
+            templateUrl: 'modules/watchbill/views/eligibilityeditor.html'
+        })
+
+        .when('/watchbill/:id', {
+            controller: 'WatchbillController',
+            templateUrl: 'modules/watchbill/views/watchbill.html'
+        })
+
+        .when('/watchbill/edit/:id', {
+            controller: 'WatchbillEditorController',
+            templateUrl: 'modules/watchbill/views/watchbilleditor.html'
+        })
+
+        .when('/watchbill/progress/:id', {
+            controller: 'WatchbillProgressController',
+            templateUrl: 'modules/watchbill/views/progress.html'
+        })
+
+        .when('/watchbill/input/:id', {
+            controller: 'WatchbillInputController',
+            templateUrl: 'modules/watchbill/views/input.html'
+        })
+
+        .when('/watchbill/swap/:id', {
+            controller: 'WatchbillSwapController',
+            templateUrl: 'modules/watchbill/views/swap.html'
+        })
+
+        .when('/watchbill/approve/:id', {
+            controller: 'WatchbillApproveController',
+            templateUrl: 'modules/watchbill/views/approve.html'
         })
 
         .when('/updatenews/:id', {

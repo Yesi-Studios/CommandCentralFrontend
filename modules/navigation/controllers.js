@@ -12,6 +12,8 @@ angular.module('Navigation')
 
         $scope.canCreatePerson = function () { return AuthorizationService.CanCreatePerson(); };
         $scope.canUseAdminTools = function () { return AuthorizationService.CanUseAdminTools(); };
+        $scope.canUseWatchbillTools = function () { return AuthorizationService.CanUseWatchbillTools(); };
+
 
         $scope.createNewPerson = function () {
             ProfileService.CreatePerson(
@@ -62,4 +64,8 @@ angular.module('Navigation')
         $scope.isActive = function (viewLocation) {
             return viewLocation === $location.path();
         };
+
+        $scope.isIn = function (viewLocation) {
+            return $location.path().indexOf(viewLocation) >= 0;
+        }
     }]);

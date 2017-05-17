@@ -1,0 +1,66 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
+<div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
+    {{message}}
+</div>
+<div class="content_panel">
+    <div class="row">
+        <div class="col-md-12">
+            <br/>
+            <div class="btn-group pull-right">
+                <a ng-if="watchbill.CurrentState.Value == 'Initial'" href="#/watchbill/edit/{{watchbill.Id}}"
+                   class="btn btn-primary">Edit</a>
+                <a ng-if="watchbill.CurrentState.Value != 'Initial'" ng-click="toggleResetWarning()"
+                   class="btn btn-warning">Reset To Initial</a>
+                <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/input/{{watchbill.Id}}"
+                   class="btn btn-primary">Submit Inputs</a>
+                <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/approve/{{watchbill.Id}}"
+                   class="btn btn-primary">Approve Inputs</a>
+                <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs'"
+                   href="#/watchbill/populate/{{watchbill.Id}}" class="btn btn-primary">Assign
+                    Watchstanders</a>
+                <a ng-if="watchbill.CurrentState.Value == 'Under Review'"
+                   href="#/watchbill/swap/{{watchbill.Id}}" class="btn btn-primary">Swap
+                    Watchstanders</a>
+                <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}"
+                   class="btn btn-success">Next Stage</a>
+            </div>
+            <div class="row" ng-show="showResetWarning">
+                <div class="col-md-offset-6 col-md-6">Are you sure? Resetting the watchbill to the "Initial" phase will
+                    delete all watch assignments and inputs. Shifts will be maintained.
+                    <span ng-if="resetting"><strong>Ok, resetting to inital. Please wait...</strong></span>
+                    <div class="btn-group">
+                        <a href="" ng-click="resetWatchbill(watchbill.Id)" class="btn btn-xs btn-danger">Yes</a>
+                        <a href="" ng-click="toggleResetWarning()" class="btn btn-xs btn-success">No</a>
+                    </div>
+                </div>
+            </div>
+            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
+            <table class="table-bordered">
+                <tr class="text-center">
+                    <th ng-repeat="d in ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']">{{d}}</th>
+                </tr>
+                <tr ng-repeat="week in weeks">
+                    <td ng-if="$parent.$first" ng-repeat="day in blankStartDays track by $index" width="14%"></td>
+                    <td ng-repeat="day in week" class="row" width="14%">
+                        <div class="col-md-12">
+                            {{day.Date | date: shortDate }}<br/>
+                            <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start.getUTCHours()'">
+                                    <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
+                                    <!--<span ng-if="shift.WatchAssignment" class="label label-success"-->
+                                    <!--uib-tooltip="{{shift.Title + ' at ' + (shift.Range.Start | date: 'HHmm') +-->
+                                    <!--'. Currently assigned to: ' + shift.WatchAssignment.PersonAssigned.FriendlyName}}">-->
+                                        <!--{{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}-->
+                                    <!--</span>-->
+                                    <ng-shift-nub ng-model="shift"></ng-shift-nub><span ng-if="shift.Range.Start.getDay() != shift.Range.End.getDay() && shift.Range.Start.getDay() == day.Date.getDay()">*</span><br/>
+                                </span>
+                        </div>
+                    </td>
+                </tr>
+                </span>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

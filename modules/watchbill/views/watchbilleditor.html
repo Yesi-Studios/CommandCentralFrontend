@@ -1,0 +1,40 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
+<div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
+    {{message}}
+</div>
+<div class="content_panel">
+    <div class="row">
+        <ng-day-editor ng-model="dayToCopy"></ng-day-editor>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <table class="table-bordered">
+                <tr class="text-center">
+                    <th ng-repeat="d in ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']">{{d}}</th>
+                </tr>
+                <tr ng-repeat="week in weeks">
+                    <td ng-if="$parent.$first" ng-repeat="day in blankStartDays track by $index" width="14%"></td>
+                    <td ng-repeat="day in week" class="row text-center" width="14%">
+                        <div class="col-md-12">
+                            {{day.Date | date: shortDate }}<br/>
+                                <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start.getUTCHours()'">
+                                    <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
+                                    <ng-shift-nub ng-model="shift"></ng-shift-nub><span ng-if="shift.Range.Start.getDay() != shift.Range.End.getDay() && shift.Range.Start.getDay() == day.Date.getDay()">*</span><br/>
+                                </span>
+                        </div>
+
+                        <button class="btn btn-success btn-sm"
+                                ng-click="copyShifts(dayToCopy, day)"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button class="btn btn-primary btn-sm"
+                                ng-click="copyDay(day)"><span class="glyphicon glyphicon-copy"></span></button>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <button class="btn btn-primary" ng-click="generateDefault()">Generate Default Shifts</button>
+            <button class="btn btn-success" ng-click="saveWatchBill()">Save</button>
+        </div>
+    </div>
+</div>

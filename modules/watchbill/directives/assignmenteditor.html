@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-3 col-md-offset-1">
+        <div class="form-group text-center">
+            <input class="form-control" type="text" ng-model="personFilter">
+            <select class="form-control" size="10" id="watchDayDesigner" ng-model="selectedPerson"
+                    ng-options="person as person.FriendlyName for person in ngPeople | filter: personFilter : false : 'FriendlyName' | orderBy: 'FriendlyName'">
+                <option value="" selected hidden />
+            </select>
+        </div>
+        <!--<button class="btn btn-success btn-sm pull-right"-->
+                <!--ng-click="ngModel.push({'Title':'New Shift', 'Range':{'Start':'','End':''}, 'ShiftType':''});selectedShift = ngModel[ngModel.length-1];"><span class="glyphicon glyphicon-plus"></span>-->
+        <!--</button>-->
+        <!--<button class="btn btn-danger btn-sm pull-right"-->
+                <!--ng-click="ngModel.splice(ngModel.indexOf(selectedShift, 1));selectedShift = ngModel[ngModel.length-1];"><span class="glyphicon glyphicon-remove"></span>-->
+        <!--</button>-->
+    </div>
+    <div class="col-md-3">
+        <H3>Shift Assigner</H3>
+        <p>Select a person to the left (use the text box above the list to search for a person), select a shift on the right, then click assign to assign that person to that shift.</p>
+        <p>To select a different day, click its select button below. You can also instantly populate the entire watchbill randomly by clicking "Populate".</p>
+        <!--<input type="text" ng-model="selectedShift.Title"/>-->
+        <!--<select id="shiftType" ng-model="selectedShift.ShiftType"-->
+                <!--ng-options="o as o.Value for o in shiftTypes | orderBy: 'Value' track by o.Id">-->
+            <!--<option></option></select>-->
+        <!--<div class="form-group">-->
+            <!--<label for="numberOfDays">Number of Days</label>-->
+            <!--<input type="number" name="numberOfDays" id="numberOfDays" ng-model="selectedShift.numberOfDays"/></div>-->
+        <button class="btn btn-success" ng-click="assignWatchstander(selectedPerson, selectedShift)">Assign</button>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group text-center">
+            <select class="form-control" size="12" id="watchShifts" ng-model="selectedShift"
+                ng-options="shift as (shift.Title + ' at ' + (shift.Range.Start | date: 'HHmm') + ' stood by ' + shift.WatchAssignment.PersonAssigned.FriendlyName.split(', ')[0]) for shift in ngModel.WatchShifts">
+                <option value="" selected hidden />
+            </select>
+        </div>
+        <!--<label for="from">From</label>-->
+        <!--<uib-timepicker name="from" ng-model="selectedShift.Range.Start"></uib-timepicker>{{selectedShift.Range.From}}-->
+        <!--<label for="to">To</label>-->
+        <!--<uib-timepicker name="to" ng-model="selectedShift.Range.End"></uib-timepicker>{{selectedShift.Range.To}}-->
+    </div>
+</div>

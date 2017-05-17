@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-md-3 col-md-offset-1">
+        <div class="form-group text-center">
+            <select class="form-control" size="14" id="watchDayDesigner" ng-model="selectedShift"
+                    ng-options="shift as shift.Title for shift in ngModel"></select>
+        </div>
+        <button class="btn btn-success btn-sm pull-right"
+                ng-click="ngModel.push({'Title':'New Shift', 'Range':{'Start':'','End':''}, 'ShiftType':''});selectedShift = ngModel[ngModel.length-1];">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button class="btn btn-danger btn-sm pull-right"
+                ng-click="removeSelectedShift()">
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+    </div>
+    <div class="col-md-7">
+        <H3>Watch Day Builder</H3>
+        <p>Add shifts to the list on the left, giving them start times, end times, titles, and shift types, then click
+            the green button on a day to apply that schedule to that day.</p>
+        <p>You can also copy a day's design below with the blue button on that day.</p>
+        <form class="form-horizontal row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="numberOfDays" class="col-md-4 control-label">Title</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" ng-model="selectedShift.Title"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="numberOfDays" class="col-md-4 control-label">Shift Type</label>
+                    <div class="col-md-8">
+                        <select id="shiftType" class="form-control" ng-model="selectedShift.ShiftType"
+                                ng-options="o as o.Value for o in shiftTypes | orderBy: 'Value' track by o.Id">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="numberOfDays" class="col-md-4 control-label">Number of Days</label>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" name="numberOfDays" id="numberOfDays"
+                               ng-model="selectedShift.numberOfDays"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-5" for="from">From</label>
+                    <uib-timepicker class="col-md-5" id="from" name="from" ng-model="selectedShift.Range.Start"
+                                    show-meridian="false"
+                                    show-spinners="false"></uib-timepicker>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5" for="to">To</label>
+                    <uib-timepicker class="col-md-5" name="to" ng-model="selectedShift.Range.End" show-meridian="false"
+                                    show-spinners="false"></uib-timepicker>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4" for="points">Points</label>
+                    <div class="col-md-7">
+                        <input type="number" class="form-control" name="points" id="points"
+                               ng-model="selectedShift.Points"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

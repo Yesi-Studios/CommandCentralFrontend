@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+    <form>
+        <h3>Create New Watchbill</h3>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-4">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title" id="title"
+                           ng-model="title"/></div>
+                <div class="form-group">
+                    <label for="from">Start Date</label>
+                    <ng-custom-date-picker id="from" ng-model="from"></ng-custom-date-picker>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="numberOfDays">Number of Days</label>
+                    <input class="form-control" type="number" name="numberOfDays" id="numberOfDays" ng-model="numberOfDays"/></div>
+                <div class="form-group">
+                    <label for="eligibilityGroup">Type of Watchbill</label>
+                    <br/>
+                    <select class="form-control" id="eligibilityGroup" ng-model="group"
+                            ng-options="o as o.Value for o in ngModel | orderBy: 'Value' track by o.Id">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success btn-sm" ng-click="createNewWatchBill()">Create</button>
+        <br/>
+        <br/>
+    </form>
+</div>

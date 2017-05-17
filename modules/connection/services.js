@@ -9,12 +9,8 @@ angular.module('Connection')
                 var redirectURL = '';
                 // Information for connecting to the database, including the URL and API key.
                 var apikey = config.apiKey;
-                //var backendURL = "http://73.20.152.170";  // Atwood's IP for working at home.
-                //var backendURL = "http://147.51.62.19";     // Dev service IP.
-                //var backendURL = "https://147.51.62.48:1337";     // Live service IP.
-                //var backendURL = "http://192.168.1.234";
                 var backendURL = config.backendURL;
-                //var backendURL = "http://192.168.1.196";
+
 
                 // Here we check to see if we have a port stored in localStorage, and if not, we use 1113.
                 // If it's enabled, there's a widget at the bottom of index.html, controlled by this module,
@@ -151,9 +147,10 @@ angular.module('Connection')
                     };
 
                     return $http(request).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
-                            success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
                             if(config.debugMode) console.log(endpoint);
                             if(config.debugMode) console.log(service.RestoreJsonNetReferences(response.data));
+                            success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
+
                         },
                         function (response) {
                             if (response.statusText == "") {
