@@ -135,10 +135,15 @@ angular.module('Connection')
 
                 };
 
-                /** @param {String} endpoint
-                 * @param {Function} success
-                 * @param {Function} error
-                 * @param {Object} params **/
+                /**
+                 * Makes a request to the given endpoint name with the given params
+                 * @param {String} endpoint - Name of the endpoint
+                 * @param {Function} success - The callback for a successful request
+                 * @param {Function} error - The callback for failers, probably ConnectionService.HandleServiceError
+                 * @param {Object} params - The parameters to be sent to the backend
+                 *
+                 * @deprecated soon to be replaced by something that can more easily make generic calls.
+                 **/
                 service.RequestFromBackend = function (endpoint, params, success, error) {
                     var reqData = { 'apikey': service.GetAPIKey() };
                     for (var attrname in params) { reqData[attrname] = params[attrname]; } // Merge params into our reqData
