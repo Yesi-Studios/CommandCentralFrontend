@@ -14,12 +14,7 @@ angular.module('Home')
                     $scope.dataLoading = false;
                     $scope.newsItems = response.ReturnValue;
                     $scope.loadedTime = new Date;
-                },
-		        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
 
         $scope.deleteNewsItem = function (itemID) {
@@ -29,12 +24,7 @@ angular.module('Home')
                 function (response) {
                     $scope.refreshNews();
 
-                },
-		        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
 
         $scope.userCanEditNews = function () { return AuthorizationService.CanEditNews(); };
@@ -50,12 +40,7 @@ angular.module('Home')
                     $scope.dataLoading = false;
                     $location.path('/');
 
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
     }])
 .controller('UpdateNewsController', ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'HomeService', 'ConnectionService',
@@ -69,12 +54,7 @@ angular.module('Home')
                 $scope.newsItem = response.ReturnValue;
                 $scope.text = $scope.newsItem.Paragraphs.join('\n');
 
-            },
-            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-        );
+            }, ConnectionService.HandleServiceError($scope, $location));
 
         $scope.updateNewsItem = function (newsItem, text) {
             $scope.errors = null;
@@ -88,11 +68,6 @@ angular.module('Home')
                     $scope.dataLoading = false;
                     $location.path('/');
 
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
     }]);

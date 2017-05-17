@@ -64,12 +64,7 @@ angular.module('Muster')
                     function (response) {
                         $scope.musterStatuses = response.ReturnValue.MusterStatus;
 
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
+                    }, ConnectionService.HandleServiceError($scope, $location));
 
                 var loadMuster = function() {
                     $scope.dataLoading = true;
@@ -95,13 +90,8 @@ angular.module('Muster')
 
                         $scope.makeDisplayList();
 
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-
-                );};
+                    }, ConnectionService.HandleServiceError($scope, $location));
+                };
 
                 loadMuster();
 
@@ -124,12 +114,7 @@ angular.module('Muster')
                         function (response) {
                             $scope.messages.push("Muster successfully submitted. Please wait for updated muster to load before submitting more changes.");
                             loadMuster();
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    )
+                        }, ConnectionService.HandleServiceError($scope, $location))
                 };
 
                 // Give our scope a way to sort
@@ -223,12 +208,7 @@ angular.module('Muster')
                                 } console.log($scope.command);
                                 console.log($scope.fieldThing);
                             }
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 };
 
                 if($routeParams.musterDate) {
@@ -251,12 +231,7 @@ angular.module('Muster')
                         function () {
                             $scope.dataLoading = false;
                             $scope.messages.push("Muster successfully finalized.");
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 }
             }
         ]).filter('yesNo', function() {

@@ -84,11 +84,7 @@ angular.module('Profiles')
                             $scope.canEditPersonField = function (field) {
                                 return $scope.editableFields.indexOf(field) > -1;
                             }
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
+                        }, ConnectionService.HandleServiceError($scope, $location)
                     ).then(function () {
                         // This is where LoadProfile ends, and the follow ups begin. We use .then above to make sure we don't try to take a
                         // lock on a profile that we haven't loaded, or try to process commands when we haven't loaded the profile's command.
@@ -107,17 +103,10 @@ angular.module('Profiles')
                                         var lockId = $scope.profileLock.Id;
                                         $scope.profileLock = null;
                                         ProfileService.ReleaseLock(lockId, false, function (response) {},
-                                        function (response) {
-                                            ConnectionService.HandleServiceError(response, $scope, $location);
-                                        });
+                                            ConnectionService.HandleServiceError($scope, $location));
                                     }
                                 });
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            }
-                        );
+                            }, ConnectionService.HandleServiceError($scope, $location));
 
                         $scope.loadFullAccountHistory();
 
@@ -142,22 +131,12 @@ angular.module('Profiles')
                                     $scope.profileData.Department = null;
                                 }
                                 if (config.debugMode) console.log($scope.form.$error);
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            }
-                        );
+                            }, ConnectionService.HandleServiceError($scope, $location));
 
                         ProfileService.GetChainOfCommand($routeParams.id, function (response) {if (config.debugMode) console.log("HERE");
                          if (config.debugMode) console.log(response);
                          $scope.chainOfCommand = response.ReturnValue;
-                         },
-                         // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                         function (response) {
-                         ConnectionService.HandleServiceError(response, $scope, $location);
-                         }
-                         );
+                         }, ConnectionService.HandleServiceError($scope, $location));
                     });
                 };
 
@@ -167,37 +146,14 @@ angular.module('Profiles')
                         $scope.lists = response.ReturnValue;
                         $scope.defaultPhoneType = $filter('filter')(response.ReturnValue.PhoneNumberType, {Value: "Home"})[0];
 
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
-
-                /*ProfileService.GetPermissionGroups(
-                 // If we succeed, this is our callback.
-                 function (response) {
-                 $scope.permissionGroups = response.ReturnValue;
-
-                 },
-                 // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                 function (response) {
-                 ConnectionService.HandleServiceError(response, $scope, $location);
-                 }
-                 );*/
+                    }, ConnectionService.HandleServiceError($scope, $location));
 
                 $scope.loadFullAccountHistory = function () {
                     ProfileService.LoadAccountHistory($routeParams.id,
                         // If we succeed, this is our call back
                         function (response) {
                             $scope.profileData.AccountHistory = response.ReturnValue;
-
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
 
                 };
 
@@ -221,12 +177,7 @@ angular.module('Profiles')
                             $scope.profileUpdateSuccess = true;
                             $scope.form.$setPristine();
                             $scope.loadProfile()
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 };
 
                 $scope.canDeleteEmail = function (email) {

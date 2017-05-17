@@ -79,12 +79,7 @@ angular.module('Search')
                             if ($scope.results.length == 0) {
                                 $scope.errors.push("No results for that query.");
                             }
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 };
 
                 // If we have search terms in our url, do the search and display the results
@@ -129,12 +124,7 @@ angular.module('Search')
                     function (response) {
                         $scope.fieldTypes = response.ReturnValue;
                         console.log($scope.fieldTypes);
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
+                    }, ConnectionService.HandleServiceError($scope, $location));
                 $scope.pageCount = function () {
                     return Math.ceil($scope.friends.length / $scope.itemsPerPage);
                 };
@@ -218,12 +208,7 @@ angular.module('Search')
                             if ($scope.results.length == 0) {
                                 $scope.errors.push("No results for that query.");
                             }
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 };
                 if ($routeParams.searchTerms && $routeParams.returnFields && $routeParams.searchLevel) {
                     searchByField(JSON.parse($routeParams.searchTerms), JSON.parse($routeParams.returnFields), JSON.parse($routeParams.searchLevel));
@@ -302,12 +287,7 @@ angular.module('Search')
                     function (response) {
                         $scope.fieldTypes = response.ReturnValue;
                         console.log($scope.fieldTypes);
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
+                    }, ConnectionService.HandleServiceError($scope, $location));
                 $scope.pageCount = function () {
                     return Math.ceil($scope.friends.length / $scope.itemsPerPage);
                 };
@@ -391,12 +371,7 @@ angular.module('Search')
                             if ($scope.results.length == 0) {
                                 $scope.errors.push("No results for that query.");
                             }
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 };
                 if ($routeParams.searchTerms && $routeParams.returnFields && $routeParams.searchLevel) {
                     searchByField(JSON.parse($routeParams.searchTerms), JSON.parse($routeParams.returnFields), JSON.parse($routeParams.searchLevel));

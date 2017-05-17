@@ -7,21 +7,11 @@ angular.module('Watchbill')
 
                 WatchbillService.GetAllLists(function (response) {
                         $scope.eligibilityGroups = response.ReturnValue.WatchEligibilityGroup;
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    });
-
+                    }, ConnectionService.HandleServiceError($scope, $location));
                 WatchbillService.LoadWatchbills(
                     function (response) {
                         $scope.watchbills = response.ReturnValue;
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
+                    }, ConnectionService.HandleServiceError($scope, $location));
             }]
     ).controller('WatchbillProgressController',
     ['$scope', '$rootScope', '$location', '$routeParams', '$filter', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
@@ -42,21 +32,14 @@ angular.module('Watchbill')
                 $scope.progressing = true;
                 $scope.watchbill.CurrentState = $scope.nextStatus;
                 WatchbillService.UpdateWatchbill($scope.watchbill, function (response) {
-                        $location.path('/watchbill/' + $scope.watchbill.Id);
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    })
+                    $location.path('/watchbill/' + $scope.watchbill.Id);
+                }, ConnectionService.HandleServiceError($scope, $location));
             };
 
             WatchbillService.GetAllLists(function (response) {
                     $scope.statuses = response.ReturnValue.WatchbillStatus;
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }).then(function () {
+                }, ConnectionService.HandleServiceError($scope, $location)
+                ).then(function () {
 
                 WatchbillService.LoadWatchbill($routeParams.id,
                     function (response) {
@@ -78,12 +61,7 @@ angular.module('Watchbill')
                             default:
                                 $scope.nextStatus = {'Value': 'ALREADY IN FINAL STAGE'};
                         }
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
+                    }, ConnectionService.HandleServiceError($scope, $location));
             });
         }]
 ).controller('WatchbillPopulateController',
@@ -111,11 +89,7 @@ angular.module('Watchbill')
             };
             WatchbillService.GetAllLists(function (response) {
                     $scope.lists = response.ReturnValue;
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                });
+                }, ConnectionService.HandleServiceError($scope, $location));
 
             $scope.submitChanges = function () {
                 var newAssignments = [];
@@ -136,11 +110,7 @@ angular.module('Watchbill')
                         function (response) {
                             // $scope.loadWatchbill();
                             $location.path('/watchbill/' + $scope.watchbill.Id);
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        });
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 } else {
                     $scope.errors.push("No changes to submit");
                 }
@@ -175,12 +145,7 @@ angular.module('Watchbill')
 
                         $scope.selectedDay = null;
                         $scope.blankStartDays = new Array(pushAmount);
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
+                    }, ConnectionService.HandleServiceError($scope, $location));
             };
             $scope.loadWatchbill = function () {
                 WatchbillService.LoadWatchbill($routeParams.id,
@@ -210,12 +175,7 @@ angular.module('Watchbill')
 
                         $scope.selectedDay = $scope.weeks[0][0];
                         $scope.blankStartDays = new Array(pushAmount);
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
+                    }, ConnectionService.HandleServiceError($scope, $location));
             };
             $scope.loadWatchbill();
         }]
@@ -229,11 +189,7 @@ angular.module('Watchbill')
                 WatchbillService.UpdateWatchbill($scope.watchbill, function (response) {
                         $location.path('/watchbill/' + $scope.watchbill.Id);
                         $route.reload();
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    })
+                    }, ConnectionService.HandleServiceError($scope, $location));
             };
 
             $scope.toggleResetWarning = function () {
@@ -245,11 +201,7 @@ angular.module('Watchbill')
             };
             WatchbillService.GetAllLists(function (response) {
                     $scope.lists = response.ReturnValue;
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                });
+                }, ConnectionService.HandleServiceError($scope, $location));
 
             WatchbillService.LoadWatchbill($routeParams.id,
                 function (response) {
@@ -276,12 +228,7 @@ angular.module('Watchbill')
                     });
 
                     $scope.blankStartDays = new Array(pushAmount);
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         }]
 ).controller('WatchbillEditorController',
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', '$route', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
@@ -373,21 +320,9 @@ angular.module('Watchbill')
                                         console.log(response);
                                         // $route.reload();
                                         $location.path('/watchbill/' + $routeParams.id);
-                                    },
-                                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                                    function (response) {
-                                        ConnectionService.HandleServiceError(response, $scope, $location);
-                                    });
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            });
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    });
+                                    }, ConnectionService.HandleServiceError($scope, $location));
+                            }, ConnectionService.HandleServiceError($scope, $location));
+                    }, ConnectionService.HandleServiceError($scope, $location));
 
             };
             WatchbillService.LoadWatchbill($routeParams.id,
@@ -417,12 +352,7 @@ angular.module('Watchbill')
                     });
 
                     $scope.blankStartDays = new Array(pushAmount);
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            )
+                }, ConnectionService.HandleServiceError($scope, $location));
         }
     ]
 ).controller('WatchbillSwapController', ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
@@ -449,12 +379,7 @@ angular.module('Watchbill')
                     $scope.firstShift = null;
                     $scope.secondShift = null;
                     loadWatchbill();
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    loadWatchbill();
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                });
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
 
         var loadWatchbill = function () {
@@ -483,12 +408,7 @@ angular.module('Watchbill')
                     });
 
                     $scope.blankStartDays = new Array(pushAmount);
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
         loadWatchbill();
     }]
@@ -504,11 +424,7 @@ angular.module('Watchbill')
             };
             WatchbillService.GetAllLists(function (response) {
                     $scope.lists = response.ReturnValue;
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                });
+                }, ConnectionService.HandleServiceError($scope, $location));
 
             $scope.loadWatchbill = function () {
                 WatchbillService.LoadWatchbill($routeParams.id,
@@ -532,12 +448,7 @@ angular.module('Watchbill')
 
                         WatchbillService.LoadWatchInputs($routeParams.id, function (response) {
                                 $scope.inputs = response.ReturnValue;
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            }
-                        );
+                            }, ConnectionService.HandleServiceError($scope, $location));
 
                         $scope.submitInput = function () {
                             var shifts = [];
@@ -555,11 +466,7 @@ angular.module('Watchbill')
                             WatchbillService.CreateWatchInput($scope.selectedPerson, shifts, $scope.reason, function (response) {
                                     $scope.messages.push("Input successfully submitted for " + $scope.selectedPerson.FriendlyName);
                                     $scope.loadWatchbill();
-                                },
-                                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                                function (response) {
-                                    ConnectionService.HandleServiceError(response, $scope, $location);
-                                })
+                                }, ConnectionService.HandleServiceError($scope, $location));
                         };
 
                         // Fix our dates to be Dates
@@ -620,31 +527,10 @@ angular.module('Watchbill')
                                                     }
                                                 }
 
-                                                // console.log("********");
-                                                // console.log($scope.inputPeople);
-                                                // console.log(subordIds);
-                                                // console.log($scope.watchbill.EligibilityGroup.EligiblePersons);
-                                            },
-                                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                                            function (response) {
-                                                ConnectionService.HandleServiceError(response, $scope, $location);
-                                            });
-                                    },
-                                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                                    function (response) {
-                                        ConnectionService.HandleServiceError(response, $scope, $location);
-                                    });
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            });
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                )
+                                            }, ConnectionService.HandleServiceError($scope, $location));
+                                    }, ConnectionService.HandleServiceError($scope, $location));
+                            }, ConnectionService.HandleServiceError($scope, $location));
+                    }, ConnectionService.HandleServiceError($scope, $location))
             };
             $scope.loadWatchbill();
         }]
@@ -746,16 +632,8 @@ angular.module('Watchbill')
                                 }
                                 $scope.messages = [];
                                 $scope.errors = [];
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            });
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    });
+                            }, ConnectionService.HandleServiceError($scope, $location));
+                    }, ConnectionService.HandleServiceError($scope, $location));
             };
 
             $scope.submit = function(id, persons) {
@@ -766,11 +644,7 @@ angular.module('Watchbill')
                 WatchbillService.EditWatchEligibilityGroup(id, personIds, function(response){
                     $scope.messages.push("Successfully updated, reloading...");
                     $scope.loadGroups();
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                });
+                }, ConnectionService.HandleServiceError($scope, $location));
             };
 
             $scope.loadGroups()
@@ -794,31 +668,19 @@ angular.module('Watchbill')
                 WatchbillService.ConfirmWatchInput(input.Id, function (response) {
                         $scope.messages.push("Confirmed watch input for " + input.Person.FriendlyName);
                         $scope.loadWatchbill();
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    });
+                    }, ConnectionService.HandleServiceError($scope, $location));
             };
 
             $scope.delete = function (input) {
                 WatchbillService.DeleteWatchInput(input.Id, function (response) {
                         $scope.messages.push("Deleted watch input for " + input.Person.FriendlyName);
                         $scope.loadWatchbill();
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    });
+                    }, ConnectionService.HandleServiceError($scope, $location));
             };
 
             WatchbillService.GetAllLists(function (response) {
                     $scope.lists = response.ReturnValue;
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                });
+                }, ConnectionService.HandleServiceError($scope, $location));
 
             $scope.loadWatchbill = function () {
                 WatchbillService.LoadWatchbill($routeParams.id,
@@ -854,34 +716,8 @@ angular.module('Watchbill')
                                         $scope.noNewInputs = false;
                                     }
                                 }
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            }
-                        );
-                        // $scope.inputs = [];
-                        //
-                        // for (var w = 0; w < $scope.weeks.length; w++) {
-                        //     for (var d = 0; d < $scope.weeks[w].length; d++) {
-                        //         for (var s = 0; s < $scope.weeks[w][d].WatchShifts.length; s++) {
-                        //             if ($scope.weeks[w][d].WatchShifts[s].WatchInputs) {
-                        //                 for (var imp = 0; imp < $scope.weeks[w][d].WatchShifts[s].WatchInputs.length; imp++) {
-                        //                     $scope.inputs.push($scope.weeks[w][d].WatchShifts[s].WatchInputs[imp]);
-                        //                     if (!$scope.weeks[w][d].WatchShifts[s].WatchInputs[imp].isConfirmed) {
-                        //                         $scope.noNewInputs = false;
-                        //                     }
-                        //                 }
-                        //             }
-                        //         }
-                        //     }
-                        // }
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
+                            }, ConnectionService.HandleServiceError($scope, $location));
+                    }, ConnectionService.HandleServiceError($scope, $location));
             };
             $scope.loadWatchbill();
         }]

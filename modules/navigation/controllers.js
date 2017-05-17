@@ -21,12 +21,7 @@ angular.module('Navigation')
                     $location.path('/profile/' + response.ReturnValue);
                     $scope.dataLoading = false;
 
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
 
 
@@ -37,12 +32,7 @@ angular.module('Navigation')
                     AuthenticationService.ClearCredentials();
                     $location.path('/login');
 
-                },
-			    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
         $scope.isMyProfileActive = function () {
             return $routeParams.id === AuthenticationService.GetCurrentUserID();

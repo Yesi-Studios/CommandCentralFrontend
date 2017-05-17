@@ -14,12 +14,7 @@ angular.module('Feedback')
                         $scope.showSuccess = true;
                         $scope.title = "";
                         $scope.body = "";
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                )
+                    }, ConnectionService.HandleServiceError($scope, $location))
             }
 
         }]);

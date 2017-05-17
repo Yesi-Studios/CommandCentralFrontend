@@ -38,12 +38,7 @@ angular.module('Authentication')
                                         // If we succeed, this is our callback
                                         function (response) {
                                             AuthorizationService.SetPermissionGroups(response.ReturnValue);
-                                        },
-                                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                                        function (response) {
-                                            ConnectionService.HandleServiceError(response, $scope, $location);
-                                        }
-                                    )
+                                        }, ConnectionService.HandleServiceError($scope, $location))
                                     .then(function () {
                                         var test = ConnectionService.GetRedirectURL();
                                         ConnectionService.ClearRedirectURL();
@@ -94,12 +89,7 @@ angular.module('Authentication')
                     $scope.accepted = true;
                     $scope.dataLoading = false;
 
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
     }])
 
@@ -113,12 +103,7 @@ angular.module('Authentication')
                     ConnectionService.AddLoginMessage("Account created. Login with your new account");
                     $location.path('/login');
 
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
     }])
     .controller('ForgotController',
@@ -135,12 +120,7 @@ angular.module('Authentication')
                             $scope.confirmation = "Got it. Check your .mil email for further instructions.";
                             $scope.dataLoading = false;
 
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 };
             }])
     .controller('ForgotUsernameController',
@@ -158,12 +138,7 @@ angular.module('Authentication')
                             ConnectionService.AddLoginMessage("Your username was sent to your .mil email.");
                             $location.path('/login');
 
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 };
             }])
     .controller('ChangePasswordController',
@@ -176,12 +151,7 @@ angular.module('Authentication')
                             ConnectionService.AddLoginMessage("Password successfully changed. Please log in with your new password.");
                             $location.path('/login');
 
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 };
             }])
 	.controller('FinishResetController',
@@ -194,12 +164,7 @@ angular.module('Authentication')
                     ConnectionService.AddLoginMessage("Password reset. Please login with your new password.");
                     $location.path('/login');
 
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
     }])
 	.controller('CreateUserController',
@@ -215,12 +180,7 @@ angular.module('Authentication')
             function (response) {
                 $scope.lists = response.ReturnValue;
 
-            },
-            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-            function (response) {
-                ConnectionService.HandleServiceError(response, $scope, $location);
-            }
-        );
+            }, ConnectionService.HandleServiceError($scope, $location));
 
         $scope.trimString = function (str) {
             if (str) {
@@ -244,11 +204,6 @@ angular.module('Authentication')
                     $scope.dataLoading = false;
                     $location.path('/profile/' + response.ReturnValue);
 
-                },
-                // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                function (response) {
-                    ConnectionService.HandleServiceError(response, $scope, $location);
-                }
-            );
+                }, ConnectionService.HandleServiceError($scope, $location));
         };
     }]);

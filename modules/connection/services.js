@@ -109,21 +109,29 @@ angular.module('Connection')
                 // This is a convenience function. Just about every controller handles service errors the same way, so we just feed this
                 // function the appropriate $scope and the $location service and let it handle the work. The Authentication controller has
                 // a customized version of this for handling errors when we're already on the login page.
-                service.HandleServiceError = function (response, scope, location) {
-                    // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
-                    // The stored credentials and kick them back to login page, displaying all appropriate error messages.
-                    if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
-                        for (var i = 0; i < response.ErrorMessages.length; i++) {
-                            service.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                /**
+                 * Handle an error the default way. This will attach errors to the scope, and redirect the user if necessary.
+                 * @param {Object} scope
+                 * @param {Object} location
+                 * @returns {Function}
+                 */
+                service.HandleServiceError = function (scope, location) {
+                    return function (response) {
+                        // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
+                        // The stored credentials and kick them back to login page, displaying all appropriate error messages.
+                        if (response.ErrorType == "Authentication" || response.ErrorType == "Authorization") {
+                            for (var i = 0; i < response.ErrorMessages.length; i++) {
+                                service.AddLoginError("The service returned an error: " + response.ErrorMessages[i]);
+                            }
+                            service.ClearCredentials();
+                            service.SetRedirectURL(location.url());
+                            location.path('/login');
+                        } else {
+                            // If it's any other type of error, we can just show it to them on this page.
+                            scope.errors = response.ErrorMessages;
                         }
-                        service.ClearCredentials();
-                        service.SetRedirectURL(location.url());
-                        location.path('/login');
-                    } else {
-                        // If it's any other type of error, we can just show it to them on this page.
-                        scope.errors = response.ErrorMessages;
-                    }
-                    scope.dataLoading = false;
+                        scope.dataLoading = false;
+                    };
 
                 };
 

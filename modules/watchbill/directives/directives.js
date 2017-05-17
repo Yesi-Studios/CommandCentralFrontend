@@ -20,21 +20,12 @@ angular.module('Watchbill')
                         WatchbillService.DeleteWatchbill(id,
                             function (response) {
                                 $route.reload();
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            });
+                            }, ConnectionService.HandleServiceError($scope, $location));
                     };
                     WatchbillService.LoadWatchbill($scope.watchbillId,
                         function (response) {
                             $scope.watchbill = response.ReturnValue;
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 }]
             }
         }
@@ -52,12 +43,7 @@ angular.module('Watchbill')
                     WatchbillService.LoadWatchbill($scope.watchbillId,
                         function (response) {
                             $scope.watchbill = response;
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 }]
             }
         }
@@ -89,18 +75,8 @@ angular.module('Watchbill')
                                 }
                                 WatchbillService.CreateWatchDays(days, watchbillId, function (response) {
                                         $location.path("/watchbill/edit/" + watchbillId);
-                                    },
-                                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                                    function (response) {
-                                        ConnectionService.HandleServiceError(response, $scope, $location);
-                                    }
-                                );
-                            },
-                            // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                            function (response) {
-                                ConnectionService.HandleServiceError(response, $scope, $location);
-                            }
-                        );
+                                    }, ConnectionService.HandleServiceError($scope, $location));
+                            }, ConnectionService.HandleServiceError($scope, $location));
                     }
                 }]
             }
@@ -119,12 +95,7 @@ angular.module('Watchbill')
                     WatchbillService.LoadWatchbill($scope.watchbillId,
                         function (response) {
                             $scope.watchbill = response;
-                        },
-                        // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                        function (response) {
-                            ConnectionService.HandleServiceError(response, $scope, $location);
-                        }
-                    );
+                        }, ConnectionService.HandleServiceError($scope, $location));
                 }]
             }
         }
@@ -170,12 +141,7 @@ angular.module('Watchbill')
                 };
                 WatchbillService.GetAllLists(function (response) {
                         $scope.shiftTypes = response.ReturnValue.WatchShiftType;
-                    },
-                    // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                    function (response) {
-                        ConnectionService.HandleServiceError(response, $scope, $location);
-                    }
-                );
+                    }, ConnectionService.HandleServiceError($scope, $location));
                 $scope.$watch('ngModel', function(newValue, oldValue){
                     if(!$scope.selectedShift && $scope.ngModel){
                         $scope.selectedShift = $scope.ngModel[0];
@@ -199,14 +165,7 @@ angular.module('Watchbill')
                 };
                 $scope.assignWatchstander = function (stander, shift) {
                     shift.WatchAssignment = {'PersonAssigned': stander, 'WatchShift': {'Id': shift.Id}};
-                }
-                // WatchbillService.GetAllLists(function (response) {
-                //         $scope.shiftTypes = response.ReturnValue.WatchShiftType;
-                //     },
-                //     // If we fail, this is our call back. We use a convenience function in the ConnectionService.
-                //     function (response) {
-                //         ConnectionService.HandleServiceError(response, $scope, $location);
-                //     });
+                };
             }]
         }
     });
