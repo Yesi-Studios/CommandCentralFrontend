@@ -77,8 +77,7 @@
                             {{day.Date | date: shortDate }}
                             <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
                                     <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
-                                    <ng-shift-nub ng-model="shift"></ng-shift-nub><input type="checkbox"
-                                                                                         ng-model="shift.checked"/>
+                                    <ng-shift-nub ng-model="shift"></ng-shift-nub><br/>
                                 </span>
                         </div>
                     </td>

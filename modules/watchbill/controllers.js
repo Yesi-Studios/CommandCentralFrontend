@@ -311,21 +311,10 @@ angular.module('Watchbill')
             }, ConnectionService.HandleServiceError($scope, $location));
 
             $scope.submitInput = function () {
-                var shifts = [];
-                var weeks = $scope.watchbill.weeks;
-                for (var w = 0; w < weeks.length; w++) {
-                    for (var d = 0; d < weeks[w].length; d++) {
-                        for (var s = 0; s < weeks[w][d].WatchShifts.length; s++) {
-                            if (weeks[w][d].WatchShifts[s].checked) {
-                                shifts.push(weeks[w][d].WatchShifts[s]);
-                                weeks[w][d].WatchShifts[s].checked = false;
-                            }
-                        }
-                    }
-                }
-
                 WatchbillService.CreateWatchInput($scope.selectedPerson, $scope.watchbill.Id, $scope.reason, $scope.from, $scope.to, function (response) {
                     $scope.messages.push("Input successfully submitted for " + $scope.selectedPerson.FriendlyName);
+                    $scope.from = null;
+                    $scope.to = null;
                     $scope.loadWatchbill();
                 }, ConnectionService.HandleServiceError($scope, $location));
             };
