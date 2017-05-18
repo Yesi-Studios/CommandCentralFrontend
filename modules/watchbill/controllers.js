@@ -324,7 +324,7 @@ angular.module('Watchbill')
                     }
                 }
 
-                WatchbillService.CreateWatchInput($scope.selectedPerson, shifts, $scope.reason, function (response) {
+                WatchbillService.CreateWatchInput($scope.selectedPerson, $scope.watchbill.Id, $scope.reason, $scope.from, $scope.to, function (response) {
                     $scope.messages.push("Input successfully submitted for " + $scope.selectedPerson.FriendlyName);
                     $scope.loadWatchbill();
                 }, ConnectionService.HandleServiceError($scope, $location));
@@ -348,10 +348,6 @@ angular.module('Watchbill')
                             }
                             return "";
                         };
-
-                        WatchbillService.LoadWatchInputs($routeParams.id, function (response) {
-                            $scope.inputs = response.ReturnValue;
-                        }, ConnectionService.HandleServiceError($scope, $location));
 
                         var permissionLevel = $rootScope.globals.currentUser.permissions.HighestLevels[$scope.watchbill.EligibilityGroup.OwningChainOfCommand];
                         ProfileService.LoadProfile($rootScope.globals.currentUser.userID, function (response) {
@@ -540,15 +536,6 @@ angular.module('Watchbill')
                 WatchbillService.LoadWatchbill($routeParams.id,
                     function (response) {
                         $scope.watchbill = response.ReturnValue;
-
-                        WatchbillService.LoadWatchInputs($routeParams.id, function (response) {
-                            $scope.inputs = response.ReturnValue;
-                            for (var j = 0; j < $scope.inputs; j++) {
-                                if (!$scope.inputs[j].IsConfirmed) {
-                                    $scope.noNewInputs = false;
-                                }
-                            }
-                        }, ConnectionService.HandleServiceError($scope, $location));
                     }, ConnectionService.HandleServiceError($scope, $location));
             };
             $scope.loadWatchbill();

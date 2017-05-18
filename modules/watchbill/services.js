@@ -109,12 +109,26 @@ angular.module('Watchbill')
                     }, success, error);
                 };
 
-                service.CreateWatchInput = function (person, shifts, reason, success, error) {
+                /**
+                 * Call to the backend to create a watch input.
+                 * @param {Object} person - The person who this input is for
+                 * @param {string} watchbillId - The id of the watchbill
+                 * @param {Object} reason - The justification for not standing watch
+                 * @param {Date} start - The beginning of the input period
+                 * @param {Date} end - The end of the input period
+                 * @param success - A callback for when the call succeeds
+                 * @param error - A callback for when the call fails
+                 */
+                service.CreateWatchInput = function (person, watchbillId, reason, start, end, success, error) {
                     return ConnectionService.RequestFromBackend('CreateWatchInputs', {
-                        'watchinputs': [{
-                            'person': person,
-                            'WatchShifts': shifts,
-                            'InputReason': reason
+                        WatchBillId: watchbillId,
+                        watchinputs: [{
+                            person: person,
+                            InputReason: reason,
+                            Range: {
+                                Start: start,
+                                End: end
+                            }
                         }], 'authenticationtoken': AuthenticationService.GetAuthToken()
                     }, success, error);
                 };

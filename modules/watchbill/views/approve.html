@@ -21,18 +21,23 @@
                 <h3>There are no inputs waiting for approval</h3>
             </div>
             <div class="list-group">
-                <li ng-repeat="input in inputs track by $index" ng-if="input.Id && !input.IsConfirmed"
+                <li ng-repeat="input in watchbill.WatchInputs track by $index" ng-if="input.Id && !input.IsConfirmed"
                     class="list-group-item row" ng-class="{active: hover}"
                     ng-mouseenter="hover = false" ng-mouseleave="hover = false">
-                    <div class="col-md-4"><strong>Person: {{input.Person.FriendlyName}}</strong></div>
-                    <div class="col-md-5">Shifts: <br/><span ng-repeat="shift in input.WatchShifts" ng-if="shift.Id">{{shift.Range.Start | date: 'medium'}} {{shift.Title}}<br/></span>
-                    </div>
-
-                    <div class="col-md-3">
+                    <div class="col-md-6">
+                        <strong>Person: {{input.Person.FriendlyName}}</strong><br/>
                         <span class="text-right" tooltip-placement="top-right"
                               uib-tooltip="{{input.InputReason.Description}}">
                         Reason: {{input.InputReason.Value}} <span class="glyphicon glyphicon-question-sign"></span>
                         </span>
+                    </div>
+                    <div class="col-md-3">
+                        From: {{input.Range.Start | date: 'short'}}<br/>
+                        To: {{input.Range.End | date: 'short'}}<br/>
+                    </div>
+
+                    <div class="col-md-3">
+
                         <button class="btn btn-block btn-success" ng-click="confirm(input)">Confirm</button>
                         <button class="btn btn-block btn-danger" ng-click="input.showDeleteWarning=true">Delete</button>
                         <span ng-show="input.showDeleteWarning" class="pull-right">Really delete?<br/><a href=""

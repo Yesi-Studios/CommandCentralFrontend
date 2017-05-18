@@ -14,29 +14,53 @@
     </div>
     <div class="row">
         <div class="col-md-5 col-md-offset-1">
-            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
-            <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
-            <p>Please select the shifts that the Sailor is exempt from below, then select the sailor (use the text bar to search) and a justification, and click submit.</p>
-            <p>Sailors with an asterisk next to their name have not submitted any watch inputs, and are listed as available for the entire watchbill.</p>
-            <p>Please note: Watch inputs must be approved by a coordinator, or they will not affect watchbill generation.</p>
-        </div>
-        <div class="col-md-5">
             <div class="form-group text-center">
                 <input class="form-control" type="text" ng-model="personFilter" placeholder="Search by Name">
                 <select class="form-control"
                         ng-options="p as (asteriskForRequirement(p.Id) + p.FriendlyName) for p in inputPeople | filter: personFilter : false : 'FriendlyName' | orderBy: 'FriendlyName'"
                         ng-model="selectedPerson" size="10"></select>
+                <div class="row text-left">
+                    <div class="col-md-6">
+                        <label for="from">Start Date</label>
+                        <ng-custom-date-picker id="from" ng-model="from"></ng-custom-date-picker>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="to">Start Time</label>
+                        <uib-timepicker id="from" name="from" ng-model="from"
+                                        show-meridian="false"
+                                        show-spinners="false"></uib-timepicker>
+                    </div>
+                </div>
+                <div class="row text-left">
+                    <div class="col-md-6">
+                        <label for="to">End Date</label>
+                        <ng-custom-date-picker id="to" ng-model="to"></ng-custom-date-picker>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="to">End Time</label>
+                        <uib-timepicker id="to" name="to" ng-model="to"
+                                        show-meridian="false"
+                                        show-spinners="false"></uib-timepicker>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="reasons">Justification</label>
-                    <select class="form-control" name="reasons" id="reasons" ng-options="o as o.Value for o in reasons | orderBy: 'Value'"
+                    <select class="form-control" name="reasons" id="reasons"
+                            ng-options="o as o.Value for o in reasons | orderBy: 'Value'"
                             ng-model="reason"></select>
                 </div>
                 <button ng-click="submitInput()" class="btn btn-success">Submit</button>
             </div>
         </div>
-        <div class="col-md-offset-1 col-md-3 text-right">
-            <br/>
-            <br/>
+        <div class="col-md-5">
+            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
+            <p>Please select the shifts that the Sailor is exempt from below, then select the sailor (use the text bar
+                to search) and a justification, and click submit.</p>
+            <p>Sailors with an asterisk next to their name have not submitted any watch inputs, and are listed as
+                available for the entire watchbill.</p>
+            <p>Please note: Watch inputs must be approved by a coordinator, or they will not affect watchbill
+                generation.</p>
         </div>
     </div>
     <div class="row">
@@ -46,7 +70,8 @@
                     <th ng-repeat="d in ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']">{{d}}</th>
                 </tr>
                 <tr ng-repeat="week in watchbill.weeks">
-                    <td ng-if="$parent.$first" ng-repeat="day in watchbill.blankStartDays track by $index" width="14%"></td>
+                    <td ng-if="$parent.$first" ng-repeat="day in watchbill.blankStartDays track by $index"
+                        width="14%"></td>
                     <td ng-repeat="day in week" class="row" width="14%">
                         <div class="col-md-12">
                             {{day.Date | date: shortDate }}
@@ -70,10 +95,13 @@
             <h3 class="text-center">Currently Submitted Inputs</h3>
             <br/>
             <div class="list-group">
-                <li ng-repeat="input in inputs track by $index" ng-if="input.Id" class="list-group-item row" ng-class="{active: hover}"
+                <li ng-repeat="input in watchbill.WatchInputs track by $index" ng-if="input.Id"
+                    class="list-group-item row" ng-class="{active: hover}"
                     ng-mouseenter="hover = true" ng-mouseleave="hover = false">
                     <div class="col-md-4"><strong>Person: {{input.Person.FriendlyName}}</strong></div>
-                    <div class="col-md-3">Shifts: <br/><span ng-repeat="shift in input.WatchShifts" ng-if="shift.Id">{{shift.Range.Start | date: 'shortDate'}} {{shift.Title}}<br/></span>
+                    <div class="col-md-3">
+                        From: {{input.Range.Start | date: 'short'}}<br/>
+                        To: {{input.Range.End | date: 'short'}}<br/>
                     </div>
                     <div class="col-md-3 text-right" tooltip-placement="top-right"
                          uib-tooltip="{{input.InputReason.Description}}">
