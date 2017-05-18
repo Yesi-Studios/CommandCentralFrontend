@@ -31,9 +31,13 @@ angular.module('Watchbill')
                     }, success, error);
                 };
 
-                service.CreateWatchbill = function (title, eligibilityGroup, success, error) {
+                service.CreateWatchbill = function (title, eligibilityGroup, begin, end, success, error) {
                     return ConnectionService.RequestFromBackend('CreateWatchbill', {
                         'title': title,
+                        'range': {
+                            'Start': begin,
+                            'End': end
+                        },
                         'eligibilityGroupId': eligibilityGroup.Id,
                         'authenticationtoken': AuthenticationService.GetAuthToken()
                     }, success, error);

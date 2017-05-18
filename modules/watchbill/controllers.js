@@ -207,6 +207,16 @@ angular.module('Watchbill')
                 function (response) {
                     $scope.watchbill = response.ReturnValue;
                     $scope.weeks = [];
+                    var millisecondsPerDays = 24*60*60*1000;
+                    var numberOfDays = Math.abs($scope.watchbill.Range.End - $scope.watchbill.Range.Start)/millisecondsPerDays;
+                    var days = {};
+                    for (var i = 0; i < numberOfDays; i++) {
+                        var newDate = new Date($scope.watchbill.Range.Start);
+                        newDate.setDate(newDate.getDate()+i);
+                        days[i] = {
+                            Shifts: []
+                        }
+                    }
 
                     // Fix our dates to be Dates
                     angular.forEach(response.ReturnValue.WatchDays, function (value, index) {

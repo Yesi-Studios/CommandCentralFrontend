@@ -6,22 +6,23 @@
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" name="title" id="title"
-                           ng-model="title"/></div>
+                           ng-model="title" tabindex="1"/></div>
                 <div class="form-group">
                     <label for="from">Start Date</label>
-                    <ng-custom-date-picker id="from" ng-model="from"></ng-custom-date-picker>
+                    <ng-custom-date-picker id="from" ng-model="from" tabindex="3"></ng-custom-date-picker>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="numberOfDays">Number of Days</label>
-                    <input class="form-control" type="number" name="numberOfDays" id="numberOfDays" ng-model="numberOfDays"/></div>
-                <div class="form-group">
                     <label for="eligibilityGroup">Type of Watchbill</label>
                     <br/>
-                    <select class="form-control" id="eligibilityGroup" ng-model="group"
+                    <select class="form-control" id="eligibilityGroup" ng-model="group" tabindex="2"
                             ng-options="o as o.Value for o in ngModel | orderBy: 'Value' track by o.Id">
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="to">End Date</label>
+                    <ng-custom-date-picker id="to" ng-model="to" tabindex="4"></ng-custom-date-picker>
                 </div>
             </div>
         </div>
