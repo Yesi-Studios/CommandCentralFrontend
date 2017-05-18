@@ -40,12 +40,14 @@ angular.module('Watchbill')
                             fixedDate.setDate(fixedDate.getDate() + i);
                             days[i] = {
                                 Date: fixedDate,
-                                Shifts: []
+                                WatchShifts: []
                             }
                         }
                         for (var i = 0; i < shifts.length; i++) {
+                            shifts[i].Range.Start = new Date(shifts[i].Range.Start);
+                            shifts[i].Range.End = new Date(shifts[i].Range.End);
                             var j = Math.floor(Math.abs((watchbill.Range.Start - shifts[i].Range.Start) / millisecondsPerDays));
-                            days[j].Shifts.push(shifts[i]);
+                            days[j].WatchShifts.push(shifts[i]);
                         }
 
                         // Sort our dates
@@ -53,6 +55,7 @@ angular.module('Watchbill')
 
                         // This is how much we have to adjust the start of the week in the calendar
                         watchbill.pushAmount = (new Date(days[0].Date)).getDay();
+                        watchbill.blankStartDays = new Array(watchbill.pushAmount);
 
                         // Create an array of the weeks populated with the days
                         watchbill.weeks = [];
@@ -62,6 +65,9 @@ angular.module('Watchbill')
                             }
                             watchbill.weeks[Math.floor((watchbill.pushAmount + index) / 7)].push(days[index]);
                         });
+
+                        watchbill.days = days;
+
                         success(response);
                     };
                     return ConnectionService.RequestFromBackend('LoadWatchbill', {
@@ -179,12 +185,12 @@ angular.module('Watchbill')
                     }, success, error);
                 };
 
-                service.DeleteWatchDay = function (id, success, error) {
-                    return ConnectionService.RequestFromBackend('DeleteWatchDay', {
-                        'watchday': {'Id': id},
-                        'authenticationtoken': AuthenticationService.GetAuthToken()
-                    }, success, error);
-                };
+                // service.DeleteWatchDay = function (id, success, error) {
+                //     return ConnectionService.RequestFromBackend('DeleteWatchDay', {
+                //         'watchday': {'Id': id},
+                //         'authenticationtoken': AuthenticationService.GetAuthToken()
+                //     }, success, error);
+                // };
 
                 /**
                  * Make a request to the backend to change the membership of an eligibility group.
@@ -201,9 +207,9 @@ angular.module('Watchbill')
                     }, success, error);
                 };
 
-                service.DeleteWatchDays = function (watchdayIds, success, error) {
-                    return ConnectionService.RequestFromBackend('DeleteWatchDays', {
-                        'Ids': watchdayIds,
+                service.DeleteWatchShifts = function (watchShiftIds, success, error) {
+                    return ConnectionService.RequestFromBackend('DeleteWatchShifts', {
+                        'Ids': watchShiftIds,
                         'authenticationtoken': AuthenticationService.GetAuthToken()
                     }, success, error);
                 };
