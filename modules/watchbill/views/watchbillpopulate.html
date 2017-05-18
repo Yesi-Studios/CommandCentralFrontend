@@ -21,8 +21,8 @@
                 <tr class="text-center">
                     <th ng-repeat="d in ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']">{{d}}</th>
                 </tr>
-                <tr ng-repeat="week in weeks">
-                    <td ng-if="$parent.$first" ng-repeat="day in blankStartDays track by $index" width="14%"></td>
+                <tr ng-repeat="week in watchbill.weeks">
+                    <td ng-if="$parent.$first" ng-repeat="day in watchbill.blankStartDays track by $index" width="14%"></td>
                     <td ng-repeat="day in week" class="row" width="14%">
                         <div class="col-md-12">
                             {{day.Date | date: shortDate }}<br/>

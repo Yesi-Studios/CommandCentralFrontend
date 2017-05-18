@@ -60,22 +60,9 @@ angular.module('Watchbill')
 
 
                     $scope.createNewWatchBill = function () {
-                        WatchbillService.CreateWatchbill($scope.title, $scope.group,
+                        WatchbillService.CreateWatchbill($scope.title, $scope.group, $scope.from, $scope.to,
                             function (response) {
-                                var watchbillId = response.ReturnValue.Id;
-                                var days = [];
-
-                                for (var j = 0; j < $scope.numberOfDays; j += 1) {
-                                    days[j] = {
-                                        'Date': new Date($scope.from),
-                                        'Remarks': ''
-                                        // 'watchbill': {'Id': watchbillId}
-                                    };
-                                    days[j].Date.setDate(days[j].Date.getDate() + j);
-                                }
-                                WatchbillService.CreateWatchDays(days, watchbillId, function (response) {
-                                        $location.path("/watchbill/edit/" + watchbillId);
-                                    }, ConnectionService.HandleServiceError($scope, $location));
+                                $location.path("/watchbill/edit/" + response.ReturnValue.Id);
                             }, ConnectionService.HandleServiceError($scope, $location));
                     }
                 }]
@@ -140,10 +127,10 @@ angular.module('Watchbill')
                     $scope.selectedShift = $scope.ngModel[$scope.ngModel.length - 1];
                 };
                 WatchbillService.GetAllLists(function (response) {
-                        $scope.shiftTypes = response.ReturnValue.WatchShiftType;
-                    }, ConnectionService.HandleServiceError($scope, $location));
-                $scope.$watch('ngModel', function(newValue, oldValue){
-                    if(!$scope.selectedShift && $scope.ngModel){
+                    $scope.shiftTypes = response.ReturnValue.WatchShiftType;
+                }, ConnectionService.HandleServiceError($scope, $location));
+                $scope.$watch('ngModel', function (newValue, oldValue) {
+                    if (!$scope.selectedShift && $scope.ngModel) {
                         $scope.selectedShift = $scope.ngModel[0];
                     }
                 })

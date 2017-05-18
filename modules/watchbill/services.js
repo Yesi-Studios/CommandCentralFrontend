@@ -6,8 +6,8 @@
 angular.module('Watchbill')
 
     .factory('WatchbillService',
-        ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
-            function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
+        ['$http', '$localStorage', '$rootScope', '$timeout', '$filter', 'AuthenticationService', 'ConnectionService',
+            function ($http, $localStorage, $rootScope, $timeout, $filter, AuthenticationService, ConnectionService) {
                 /**
                  * The callback for backend requests
                  * @callback responseCallback
@@ -17,23 +17,35 @@ angular.module('Watchbill')
                 var service = {};
 
                 service.PopulateWatchbill = function (id, success, error) {
+                    var successWrapper = function (response) {
+                        response.ReturnValue = fixWatchbill(response.ReturnValue);
+                        success(response);
+                    };
                     return ConnectionService.RequestFromBackend('LoadWatchbill', {
                         'Id': id,
                         'dopopulation': true,
                         'authenticationtoken': AuthenticationService.GetAuthToken()
-                    }, success, error);
+                    }, successWrapper, error);
                 };
 
                 service.LoadWatchbill = function (id, success, error) {
+                    var successWrapper = function (response) {
+                        response.ReturnValue = fixWatchbill(response.ReturnValue);
+                        success(response);
+                    };
                     return ConnectionService.RequestFromBackend('LoadWatchbill', {
                         'Id': id,
                         'authenticationtoken': AuthenticationService.GetAuthToken()
-                    }, success, error);
+                    }, successWrapper, error);
                 };
 
-                service.CreateWatchbill = function (title, eligibilityGroup, success, error) {
+                service.CreateWatchbill = function (title, eligibilityGroup, begin, end, success, error) {
                     return ConnectionService.RequestFromBackend('CreateWatchbill', {
                         'title': title,
+                        'range': {
+                            'Start': begin,
+                            'End': end
+                        },
                         'eligibilityGroupId': eligibilityGroup.Id,
                         'authenticationtoken': AuthenticationService.GetAuthToken()
                     }, success, error);
@@ -136,12 +148,12 @@ angular.module('Watchbill')
                     }, success, error);
                 };
 
-                service.DeleteWatchDay = function (id, success, error) {
-                    return ConnectionService.RequestFromBackend('DeleteWatchDay', {
-                        'watchday': {'Id': id},
-                        'authenticationtoken': AuthenticationService.GetAuthToken()
-                    }, success, error);
-                };
+                // service.DeleteWatchDay = function (id, success, error) {
+                //     return ConnectionService.RequestFromBackend('DeleteWatchDay', {
+                //         'watchday': {'Id': id},
+                //         'authenticationtoken': AuthenticationService.GetAuthToken()
+                //     }, success, error);
+                // };
 
                 /**
                  * Make a request to the backend to change the membership of an eligibility group.
@@ -158,9 +170,9 @@ angular.module('Watchbill')
                     }, success, error);
                 };
 
-                service.DeleteWatchDays = function (watchdayIds, success, error) {
-                    return ConnectionService.RequestFromBackend('DeleteWatchDays', {
-                        'Ids': watchdayIds,
+                service.DeleteWatchShifts = function (watchShiftIds, success, error) {
+                    return ConnectionService.RequestFromBackend('DeleteWatchShifts', {
+                        'Ids': watchShiftIds,
                         'authenticationtoken': AuthenticationService.GetAuthToken()
                     }, success, error);
                 };
@@ -208,7 +220,7 @@ angular.module('Watchbill')
 
                     var shifts = [];
 
-                    switch(dayOfWeek) {
+                    switch (dayOfWeek) {
                         case 0:
                             // DJO SJO MJO
                             shifts.push(makeShift(theDay, joodShift, 0, 8, "Day JOOD", 1));
@@ -266,7 +278,7 @@ angular.module('Watchbill')
                      * @param {number} points
                      */
                     function makeShift(day, shift, days, hour, title, points) {
-                        if(!points) {
+                        if (!points) {
                             points = 1;
                         }
                         var start = angular.copy(day.Date);
@@ -275,11 +287,11 @@ angular.module('Watchbill')
                         start.setSeconds(1);
                         start.setHours(hour);
 
-                        if(days){
-                            end.setDate(end.getDate()+days)
+                        if (days) {
+                            end.setDate(end.getDate() + days)
                             end.setMinutes(59);
                             end.setSeconds(0);
-                            end.setHours(hour-1);
+                            end.setHours(hour - 1);
                         } else {
                             end.setMinutes(59);
                             end.setSeconds(0);
@@ -290,7 +302,7 @@ angular.module('Watchbill')
                                 Start: start,
                                 End: end
                             },
-                            ShiftType : shift,
+                            ShiftType: shift,
                             Title: title,
                             Points: points
                         };
@@ -298,5 +310,48 @@ angular.module('Watchbill')
                     }
                 };
 
+                function fixWatchbill(watchbill) {
+
+                    watchbill.Range.Start = new Date(watchbill.Range.Start);
+                    watchbill.Range.End = new Date(watchbill.Range.End);
+
+                    var millisecondsPerDays = 24 * 60 * 60 * 1000;
+                    var numberOfDays = Math.abs(watchbill.Range.End - watchbill.Range.Start) / millisecondsPerDays + 1;
+                    var days = [];
+                    var shifts = watchbill.WatchShifts;
+                    for (var i = 0; i < numberOfDays; i++) {
+                        var fixedDate = new Date(watchbill.Range.Start);
+                        fixedDate.setDate(fixedDate.getDate() + i);
+                        days[i] = {
+                            Date: fixedDate,
+                            WatchShifts: []
+                        }
+                    }
+                    for (var i = 0; i < shifts.length; i++) {
+                        shifts[i].Range.Start = new Date(shifts[i].Range.Start);
+                        shifts[i].Range.End = new Date(shifts[i].Range.End);
+                        var j = Math.floor(Math.abs((watchbill.Range.Start - shifts[i].Range.Start) / millisecondsPerDays));
+                        days[j].WatchShifts.push(shifts[i]);
+                    }
+
+                    // Sort our dates
+                    days = $filter('orderBy')(days, 'Date');
+
+                    // This is how much we have to adjust the start of the week in the calendar
+                    watchbill.pushAmount = (new Date(days[0].Date)).getDay();
+                    watchbill.blankStartDays = new Array(watchbill.pushAmount);
+
+                    // Create an array of the weeks populated with the days
+                    watchbill.weeks = [];
+                    angular.forEach(days, function (value, index) {
+                        if (!watchbill.weeks[Math.floor((watchbill.pushAmount + index) / 7)]) {
+                            watchbill.weeks[Math.floor((watchbill.pushAmount + index) / 7)] = [];
+                        }
+                        watchbill.weeks[Math.floor((watchbill.pushAmount + index) / 7)].push(days[index]);
+                    });
+
+                    watchbill.days = days;
+                    return watchbill;
+                }
                 return service;
             }]);
