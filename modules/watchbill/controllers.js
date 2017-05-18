@@ -206,58 +206,8 @@ angular.module('Watchbill')
             WatchbillService.LoadWatchbill($routeParams.id,
                 function (response) {
                     $scope.watchbill = response.ReturnValue;
-                    $scope.weeks = [];
-                    $scope.watchbill.Range.Start = new Date($scope.watchbill.Range.Start);
-                    $scope.watchbill.Range.End = new Date($scope.watchbill.Range.End);
-                    var millisecondsPerDays = 24*60*60*1000;
-                    var dayDiff = Math.abs($scope.watchbill.Range.End - $scope.watchbill.Range.Start);
-                    var numberOfDays = dayDiff/millisecondsPerDays + 1;
-                    var days = [];
-                    var watchbill = $scope.watchbill;
-                    var shifts = watchbill.WatchShifts;
-                    for (var i = 0; i < numberOfDays; i++) {
-                        var fixedDate = new Date(watchbill.Range.Start);
-                        fixedDate.setDate(fixedDate.getDate() + i);
-                        days[i] = {
-                            Date: fixedDate,
-                            Shifts: []
-                        }
-                    }
-                    for (var i = 0; i < shifts.length; i++) {
-                        var j = Math.floor(Math.abs((watchbill.Range.Start - shifts[i].Range.Start)/millisecondsPerDays));
-                        // if (!days[j]) {
-                        //     var fixedDay = new Date(shifts[i].Range.Start);
-                        //     fixedDay.setHours(8);
-                        //     fixedDay.setMinutes(0);
-                        //     fixedDay.setSeconds(0);
-                        //     days[j] = {
-                        //         Date: fixedDay,
-                        //         Shifts: []
-                        //     };
-                        // }
-                        days[j].Shifts.push(shifts[i]);
-                    }
-
-                    // Fix our dates to be Dates
-                    // angular.forEach(response.ReturnValue.WatchDays, function (value, index) {
-                    //     $scope.watchbill.WatchDays[index].Date = new Date(value.Date);
-                    // });
-
-                    // Sort our dates because Atwood is an ass
-                    days = $filter('orderBy')(days, 'Date');
-
-                    // This is how much we have to adjust the start of the week in the calendar
-                    var pushAmount = (new Date(days[0].Date)).getDay();
-
-                    // Create an array of the weeks populated with the days
-                    angular.forEach(days, function (value, index) {
-                        if (!$scope.weeks[Math.floor((pushAmount + index) / 7)]) {
-                            $scope.weeks[Math.floor((pushAmount + index) / 7)] = [];
-                        }
-                        $scope.weeks[Math.floor((pushAmount + index) / 7)].push(days[index]);
-                    });
-
-                    $scope.blankStartDays = new Array(pushAmount);
+                    $scope.weeks = response.ReturnValue.weeks;
+                    $scope.blankStartDays = new Array(response.ReturnValue.pushAmount);
                 }, ConnectionService.HandleServiceError($scope, $location));
         }]
 ).controller('WatchbillEditorController',

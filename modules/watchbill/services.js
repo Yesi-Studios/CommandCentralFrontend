@@ -6,8 +6,8 @@
 angular.module('Watchbill')
 
     .factory('WatchbillService',
-        ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
-            function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
+        ['$http', '$localStorage', '$rootScope', '$timeout', '$filter', 'AuthenticationService', 'ConnectionService',
+            function ($http, $localStorage, $rootScope, $timeout, $filter, AuthenticationService, ConnectionService) {
                 /**
                  * The callback for backend requests
                  * @callback responseCallback
@@ -25,10 +25,49 @@ angular.module('Watchbill')
                 };
 
                 service.LoadWatchbill = function (id, success, error) {
+                    var successWrapper = function (response) {
+                        var watchbill = response.ReturnValue;
+
+                        watchbill.Range.Start = new Date(watchbill.Range.Start);
+                        watchbill.Range.End = new Date(watchbill.Range.End);
+
+                        var millisecondsPerDays = 24 * 60 * 60 * 1000;
+                        var numberOfDays = Math.abs(watchbill.Range.End - watchbill.Range.Start) / millisecondsPerDays + 1;
+                        var days = [];
+                        var shifts = watchbill.WatchShifts;
+                        for (var i = 0; i < numberOfDays; i++) {
+                            var fixedDate = new Date(watchbill.Range.Start);
+                            fixedDate.setDate(fixedDate.getDate() + i);
+                            days[i] = {
+                                Date: fixedDate,
+                                Shifts: []
+                            }
+                        }
+                        for (var i = 0; i < shifts.length; i++) {
+                            var j = Math.floor(Math.abs((watchbill.Range.Start - shifts[i].Range.Start) / millisecondsPerDays));
+                            days[j].Shifts.push(shifts[i]);
+                        }
+
+                        // Sort our dates
+                        days = $filter('orderBy')(days, 'Date');
+
+                        // This is how much we have to adjust the start of the week in the calendar
+                        watchbill.pushAmount = (new Date(days[0].Date)).getDay();
+
+                        // Create an array of the weeks populated with the days
+                        watchbill.weeks = [];
+                        angular.forEach(days, function (value, index) {
+                            if (!watchbill.weeks[Math.floor((watchbill.pushAmount + index) / 7)]) {
+                                watchbill.weeks[Math.floor((watchbill.pushAmount + index) / 7)] = [];
+                            }
+                            watchbill.weeks[Math.floor((watchbill.pushAmount + index) / 7)].push(days[index]);
+                        });
+                        success(response);
+                    };
                     return ConnectionService.RequestFromBackend('LoadWatchbill', {
                         'Id': id,
                         'authenticationtoken': AuthenticationService.GetAuthToken()
-                    }, success, error);
+                    }, successWrapper, error);
                 };
 
                 service.CreateWatchbill = function (title, eligibilityGroup, begin, end, success, error) {
@@ -212,7 +251,7 @@ angular.module('Watchbill')
 
                     var shifts = [];
 
-                    switch(dayOfWeek) {
+                    switch (dayOfWeek) {
                         case 0:
                             // DJO SJO MJO
                             shifts.push(makeShift(theDay, joodShift, 0, 8, "Day JOOD", 1));
@@ -270,7 +309,7 @@ angular.module('Watchbill')
                      * @param {number} points
                      */
                     function makeShift(day, shift, days, hour, title, points) {
-                        if(!points) {
+                        if (!points) {
                             points = 1;
                         }
                         var start = angular.copy(day.Date);
@@ -279,11 +318,11 @@ angular.module('Watchbill')
                         start.setSeconds(1);
                         start.setHours(hour);
 
-                        if(days){
-                            end.setDate(end.getDate()+days)
+                        if (days) {
+                            end.setDate(end.getDate() + days)
                             end.setMinutes(59);
                             end.setSeconds(0);
-                            end.setHours(hour-1);
+                            end.setHours(hour - 1);
                         } else {
                             end.setMinutes(59);
                             end.setSeconds(0);
@@ -294,7 +333,7 @@ angular.module('Watchbill')
                                 Start: start,
                                 End: end
                             },
-                            ShiftType : shift,
+                            ShiftType: shift,
                             Title: title,
                             Points: points
                         };
