@@ -43,4 +43,20 @@
             <button class="btn btn-primary" ng-click="submitChanges()">Submit</button>
         </div>
     </div>
+    <div class="row" ng-if="watchbill.NotQualledPersons.length">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <strong>Warning!</strong>The following sailors are listed as eligible for this watchbill, but do not
+                    have any watch
+                    qualifications.
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="person in watchbill.NotQualledPersons">{{person.FriendlyName}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
