@@ -42,6 +42,10 @@ angular.module('Profiles')
             return ConnectionService.RequestFromBackend('LoadAccountHistoryByPerson', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);
         };
 
+        service.LoadInputRequirements = function (success, error) {
+            return ConnectionService.RequestFromBackend('LoadOpenInputRequirements', { 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+        };
+
         service.GetChainOfCommand = function (personid, success, error) {
             return ConnectionService.RequestFromBackend('GetChainOfCommandOfPerson', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);
         };

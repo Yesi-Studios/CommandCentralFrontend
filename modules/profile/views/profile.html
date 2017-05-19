@@ -148,7 +148,7 @@
                 </div>
             </uib-tab>
             <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
-            <uib-tab heading="Contact Infomation">
+            <uib-tab heading="Contact Info">
                 <br/>
                 <div class="row">
                     <div class="col-md-12">
@@ -395,7 +395,7 @@
                 </div>
             </uib-tab>
             <!--suppress HtmlUnknownTag, HtmlUnknownTag -->
-            <uib-tab heading="Work Information">
+            <uib-tab heading="Work Info">
                 <br/>
                 <div class="row">
                     <div class="col-md-6">
@@ -574,7 +574,8 @@
                                 <!--suppress HtmlUnknownAttribute -->
                                 <select class="form-control" id="dutyStatus"
                                         ng-disabled="!canEditPersonField('BilletAssignment')"
-                                        ng-show="canReturnPersonField('BilletAssignment')" ng-model="profileData.BilletAssignment"
+                                        ng-show="canReturnPersonField('BilletAssignment')"
+                                        ng-model="profileData.BilletAssignment"
                                         ng-options="o as o.Value for o in lists['BilletAssignment'] | orderBy: 'Value' track by o.Id">
                                     <option></option>
                                 </select>
@@ -583,8 +584,8 @@
                             <div class="col-md-4">
                                 <!--suppress HtmlUnknownAttribute -->
                                 <input class="form-control" id="dodId" ng-disabled="!canEditPersonField('DoDId')"
-                                        ng-show="canReturnPersonField('DoDId')" ng-model="profileData.DoDId"
-                                        >
+                                       ng-show="canReturnPersonField('DoDId')" ng-model="profileData.DoDId"
+                                >
                                 </input>
                             </div>
                         </div>
@@ -779,6 +780,75 @@
                     </button>
                 </div>
                 <br/>
+            </uib-tab>
+            <uib-tab heading="Watchbills">
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10 text-center">
+                        <label for="watches">
+                            <h3>Watch History
+                                <span class="glyphicon glyphicon-question-sign"
+                                      uib-tooltip="This is a list of all watch assignment for this profile, starting with the most recent or future watches.">
+                                </span>
+                            </h3>
+                        </label>
+                        <div id="watches" class="form-group" height="400px"
+                             style="border: groove ;overflow: auto; height: 250px !important;">
+                            <!--suppress HtmlUnknownAttribute -->
+                            <table class="table-striped contact-table profile-table">
+                                <!--ng-show="canReturnPersonField('Changes')"-->
+                                <col width="10%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="30%">
+                                <col width="20%">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Watch</th>
+                                    <th class="text-center">Type</th>
+                                    <th class="text-center">Start</th>
+                                    <th class="text-center">End</th>
+                                    <th class="text-center">Acknowledged?</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="ass in profileData.WatchAssignments | orderBy: '-WatchShift.Range.Start' track by ass.Id">
+                                    <td>{{ass.WatchShift.Title}}</td>
+                                    <td>{{ass.WatchShift.ShiftType.Value}}</td>
+                                    <td>{{ass.WatchShift.Range.Start | date: "short"}}</td>
+                                    <td>{{ass.WatchShift.Range.End | date: "short"}}</td>
+                                    <td>
+                                        <span ng-if="ass.IsAcknowledged" class="glyphicon glyphicon-ok"></span>
+                                        <span ng-if="!ass.IsAcknowledged" class="glyphicon glyphicon-remove"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-6 text-center">
+                        <h3>Open Input Requirements
+                            <span class="glyphicon glyphicon-question-sign"
+                                  uib-tooltip="This is a list of all open watch input requirements for Sailors that the owner of this profile is responsible for.">
+                                </span>
+                        </h3>
+                        <div ng-repeat="watchbill in inputRequirements" class="panel panel-warning"
+                             ng-if="watchbill.InputRequirements && watchbill.InputRequirements.length > 0">
+                            <div class="panel-heading">
+                                "{{watchbill.Watchbill.Title}}" ({{watchbill.Watchbill.EligibilityGroup.Value}})
+                            </div>
+                            <div class="panel-body text-left">
+                                <div style="border: groove ;overflow: auto; height: 250px !important;">
+                                    <span ng-repeat="req in watchbill.InputRequirements">
+                                        <a href="#/profile/{{req.Person.Id}}"><span
+                                                class="glyphicon glyphicon-new-window"></span></a> {{req.Person.FriendlyName}}<br/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </uib-tab>
         </uib-tabset>
         <div ng-show="form.$dirty" class="text-center"><h4><span class="label label-danger">Unsaved Changes!</span><br/><br/>

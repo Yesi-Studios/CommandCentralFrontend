@@ -140,12 +140,15 @@ angular.module('Profiles')
                     });
                 };
 
+                ProfileService.LoadInputRequirements(function(response){
+                    $scope.inputRequirements = response.ReturnValue;
+                }, ConnectionService.HandleServiceError($scope, $location));
+
                 ProfileService.GetAllLists(
                     // If we succeed, this is our call back
                     function (response) {
                         $scope.lists = response.ReturnValue;
                         $scope.defaultPhoneType = $filter('filter')(response.ReturnValue.PhoneNumberType, {Value: "Home"})[0];
-
                     }, ConnectionService.HandleServiceError($scope, $location));
 
                 $scope.loadFullAccountHistory = function () {
