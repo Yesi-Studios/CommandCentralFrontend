@@ -22,6 +22,8 @@
                 <a ng-if="watchbill.CurrentState.Value == 'Under Review'"
                    href="#/watchbill/swap/{{watchbill.Id}}" class="btn btn-primary">Swap
                     Watchstanders</a>
+                <a ng-if="watchbill.CurrentState.Value == 'Published'" href="#/watchbill/acknowledge/{{watchbill.Id}}"
+                   class="btn btn-success">Acknowledge Watches</a>
                 <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}"
                    class="btn btn-success">Next Stage</a>
             </div>
@@ -55,7 +57,7 @@
                                 <!--{{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}-->
                                 <!--</span>-->
                                     <ng-shift-nub ng-model="shift"></ng-shift-nub><span
-                                    ng-if="shift.Range.Start.getDay() != shift.Range.End.getDay() && shift.Range.Start.getDay() == day.Date.getDay()">*</span><br/>
+                                    ng-if="shift.Range.End - shift.Range.Start >= 24*60*60*1000 && shift.Range.Start.getDay() == day.Date.getDay()">*</span><br/>
                                 </span>
                         </div>
                     </td>

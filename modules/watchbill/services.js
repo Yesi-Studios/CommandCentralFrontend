@@ -253,44 +253,44 @@ angular.module('Watchbill')
                             // DJO SJO MJO
                             shifts.push(makeShift(theDay, joodShift, 0, 8, "Day JOOD", 1));
                             shifts.push(makeShift(theDay, joodShift, 0, 16, "Swing JOOD", 1));
-                            shifts.push(makeShift(theDay, joodShift, 0, 0, "Mid JOOD", 1));
+                            shifts.push(makeShift(theDay, joodShift, 0, 24, "Mid JOOD", 1));
                             shifts.push(makeShift(theDay, oodShift, 0, 8, "Day OOD", 3));
                             shifts.push(makeShift(theDay, oodShift, 0, 16, "Swing OOD", 3));
-                            shifts.push(makeShift(theDay, oodShift, 0, 0, "Mid OOD", 3));
+                            shifts.push(makeShift(theDay, oodShift, 0, 24, "Mid OOD", 3));
                             break;
                         case 6:
                             // DJO SJO MJO
                             shifts.push(makeShift(theDay, joodShift, 0, 8, "Day JOOD", 1));
                             shifts.push(makeShift(theDay, joodShift, 0, 16, "Swing JOOD", 2));
-                            shifts.push(makeShift(theDay, joodShift, 0, 0, "Mid JOOD", 2));
+                            shifts.push(makeShift(theDay, joodShift, 0, 24, "Mid JOOD", 2));
                             shifts.push(makeShift(theDay, oodShift, 0, 8, "Day OOD", 3));
                             shifts.push(makeShift(theDay, oodShift, 0, 16, "Swing OOD", 6));
-                            shifts.push(makeShift(theDay, oodShift, 0, 0, "Mid OOD", 6));
+                            shifts.push(makeShift(theDay, oodShift, 0, 24, "Mid OOD", 6));
                             break;
                         case 1:
                         case 3:
                             // SJO MJO CDO2
                             shifts.push(makeShift(theDay, joodShift, 0, 16, "Swing JOOD", 1));
-                            shifts.push(makeShift(theDay, joodShift, 0, 0, "Mid JOOD", 1));
+                            shifts.push(makeShift(theDay, joodShift, 0, 24, "Mid JOOD", 1));
                             shifts.push(makeShift(theDay, oodShift, 0, 16, "Swing OOD", 3));
-                            shifts.push(makeShift(theDay, oodShift, 0, 0, "Mid OOD", 3));
-                            shifts.push(makeShift(theDay, cdoShift, 1, 8, "CDO", 10));
+                            shifts.push(makeShift(theDay, oodShift, 0, 24, "Mid OOD", 3));
+                            shifts.push(makeShift(theDay, cdoShift, 2, 8, "CDO", 10));
                             break;
                         case 2:
                         case 4:
                             // SJO MJO
                             shifts.push(makeShift(theDay, joodShift, 0, 16, "Swing JOOD", 1));
-                            shifts.push(makeShift(theDay, joodShift, 0, 0, "Mid JOOD", 1));
+                            shifts.push(makeShift(theDay, joodShift, 0, 24, "Mid JOOD", 1));
                             shifts.push(makeShift(theDay, oodShift, 0, 16, "Swing OOD", 3));
-                            shifts.push(makeShift(theDay, oodShift, 0, 0, "Mid OOD", 3));
+                            shifts.push(makeShift(theDay, oodShift, 0, 24, "Mid OOD", 3));
                             break;
                         case 5:
                             //SJO MJO CDO3
                             shifts.push(makeShift(theDay, joodShift, 0, 16, "Swing JOOD", 2));
-                            shifts.push(makeShift(theDay, joodShift, 0, 0, "Mid JOOD", 2));
+                            shifts.push(makeShift(theDay, joodShift, 0, 24, "Mid JOOD", 2));
                             shifts.push(makeShift(theDay, oodShift, 0, 16, "Swing OOD", 6));
-                            shifts.push(makeShift(theDay, oodShift, 0, 0, "Mid OOD", 6));
-                            shifts.push(makeShift(theDay, cdoShift, 2, 8, "CDO", 20));
+                            shifts.push(makeShift(theDay, oodShift, 0, 24, "Mid OOD", 6));
+                            shifts.push(makeShift(theDay, cdoShift, 3, 8, "CDO", 20));
                             break;
                     }
                     return shifts;
@@ -311,17 +311,17 @@ angular.module('Watchbill')
                         }
                         var start = angular.copy(day.Date);
                         var end = angular.copy(day.Date);
-                        start.setMinutes(0);
-                        start.setSeconds(1);
-                        start.setHours(hour);
+                        start.setMinutes(45);
+                        start.setSeconds(0);
+                        start.setHours(hour-1);
 
                         if (days) {
                             end.setDate(end.getDate() + days)
-                            end.setMinutes(59);
+                            end.setMinutes(45);
                             end.setSeconds(0);
                             end.setHours(hour - 1);
                         } else {
-                            end.setMinutes(59);
+                            end.setMinutes(45);
                             end.setSeconds(0);
                             end.setHours(hour + 7);
                         }

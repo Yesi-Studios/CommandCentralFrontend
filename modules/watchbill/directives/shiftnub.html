@@ -3,4 +3,6 @@
                                     '. Currently assigned to: ' + ngModel.WatchAssignment.PersonAssigned.FriendlyName}}">
                                         {{ngModel.Title}} {{daysText()}}: {{ngModel.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}
                                     </span>
-<span ng-if="!ngModel.WatchAssignment" class="label label-default">&nbsp{{ngModel.Range.Start | date: 'HHmm'}} <strong>{{ngModel.Title}}</strong> <span ng-if="days">({{days + 1}} days)</span>&nbsp</span>
+<span ng-if="!ngModel.WatchAssignment" class="label label-default"
+      uib-tooltip="{{ngModel.Title + ' from ' + (ngModel.Range.Start | date: 'short') + ' to ' + (ngModel.Range.End | date: 'short')}}">&nbsp{{ngModel.Range.Start | date: 'HHmm'}} <strong>{{ngModel.Title}}</strong> <span
+        ng-if="days">({{days}} days)</span>&nbsp</span>

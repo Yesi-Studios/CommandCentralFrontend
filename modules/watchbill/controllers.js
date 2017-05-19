@@ -180,9 +180,14 @@ angular.module('Watchbill')
                     fixed.Range.End.setMonth(day.Date.getMonth());
                     fixed.Range.End.setYear(day.Date.getFullYear());
                     fixed.Range.End.setDate(day.Date.getDate());
+                    fixed.Range.Start.setSeconds(0);
+                    fixed.Range.End.setSeconds(0);
+                    if (fixed.Range.Start > fixed.Range.End) {
+                        fixed.Range.End.setDate(fixed.Range.End.getDate()+1);
+                    }
                     delete fixed.Id;
                     if (fixed.numberOfDays > 1) {
-                        fixed.Range.End.setDate(fixed.Range.End.getDate() + fixed.numberOfDays - 1);
+                        fixed.Range.End.setDate(fixed.Range.End.getDate() + fixed.numberOfDays);
                     }
                     day.WatchShifts.push(fixed);
                 })
@@ -191,7 +196,7 @@ angular.module('Watchbill')
             $scope.copyDay = function (day) {
                 $scope.dayToCopy = angular.copy(day.WatchShifts);
                 angular.forEach($scope.dayToCopy, function (value, index) {
-                    value.numberOfDays = value.Range.End.getDate() - value.Range.Start.getDate() + 1;
+                    value.numberOfDays = Math.floor((value.Range.End - value.Range.Start)/(24*60*60*1000));
                     if (value.Range.End.getMonth() != value.Range.Start.getMonth()) {
                         var millisecondsPerDay = 1000 * 60 * 60 * 24;
                         var diff = value.Range.End - value.Range.Start;
