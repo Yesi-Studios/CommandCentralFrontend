@@ -24,6 +24,7 @@
                     ng-mouseenter="hover = false" ng-mouseleave="hover = false">
                     <div class="col-md-6">
                         <strong>Person: {{assignment.PersonAssigned.FriendlyName}}</strong><br/>
+                        <strong>Shift: {{assignment.WatchShift.Title}} ({{assignment.WatchShift.ShiftType.Value}})</strong>
                     </div>
                     <div class="col-md-3">
                         From: {{assignment.WatchShift.Range.Start | date: 'short'}}<br/>
