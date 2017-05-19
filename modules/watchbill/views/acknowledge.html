@@ -1,0 +1,40 @@
+<div ng-show="errors" ng-repeat="error in errors track by $index" class="alert alert-danger status_message">{{error}}
+</div>
+<div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
+    {{message}}
+</div>
+<div class="content_panel">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <a href="#/watchbill/{{watchbill.Id}}"
+               class="pull-right btn btn-success">Back to Watchbill</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+            <H1>{{watchbill.Title}} beginning {{watchbill.Range.Start | date: 'longDate'}}</H1>
+            <div ng-if="!assignemnts.length">
+                <br/>
+                <h3>There are no unacknowledged assignments</h3>
+            </div>
+            <div class="list-group">
+                <li ng-repeat="assignment in assignments track by $index"
+                    class="list-group-item row" ng-class="{active: hover}"
+                    ng-mouseenter="hover = false" ng-mouseleave="hover = false">
+                    <div class="col-md-6">
+                        <strong>Person: {{assignment.PersonAssigned.FriendlyName}}</strong><br/>
+                    </div>
+                    <div class="col-md-3">
+                        From: {{assignment.WatchShift.Range.Start | date: 'short'}}<br/>
+                        To: {{assignment.WatchShift.Range.End | date: 'short'}}<br/>
+                    </div>
+
+                    <div class="col-md-3">
+                        <button class="btn btn-block btn-success" ng-click="confirm(assignment)">Confirm</button>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </div>
+</div>

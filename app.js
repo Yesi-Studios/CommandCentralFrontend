@@ -147,6 +147,11 @@ angular.module('CommandCentral', [
             templateUrl: 'modules/watchbill/views/approve.html'
         })
 
+        .when('/watchbill/acknowledge/:id', {
+            controller: 'WatchbillAcknowledgeController',
+            templateUrl: 'modules/watchbill/views/acknowledge.html'
+        })
+
         .when('/updatenews/:id', {
             controller: 'UpdateNewsController',
             templateUrl: 'modules/home/views/updatenews.html'

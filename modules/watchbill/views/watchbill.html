@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <H1>{{watchbill.Title}} beginning {{watchbill.Range.Start | date: 'longDate'}}</H1>
             <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
             <table class="table-bordered">
                 <tr class="text-center">

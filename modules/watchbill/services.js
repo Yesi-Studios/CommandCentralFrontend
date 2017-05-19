@@ -191,6 +191,20 @@ angular.module('Watchbill')
                     }, success, error);
                 };
 
+                service.AcknowledgeWatchAssignment = function (id, success, error) {
+                    return ConnectionService.RequestFromBackend('AcknowledgeWatchAssignment', {
+                        'id': id,
+                        'authenticationtoken': AuthenticationService.GetAuthToken()
+                    }, success, error);
+                };
+
+                service.LoadAcknowledgeableWatchAssignemnts = function (id, success, error) {
+                    return ConnectionService.RequestFromBackend('LoadAcknowledgeableWatchAssignments', {
+                        'watchbillid': id,
+                        'authenticationtoken': AuthenticationService.GetAuthToken()
+                    }, success, error);
+                };
+
                 /**
                  * Get all reference lists from the backend
                  * @param {responseCallback} success - The callback if the request succeeds
@@ -348,8 +362,9 @@ angular.module('Watchbill')
                         days[j].WatchShifts.push(shifts[i]);
                     }
 
-                    // Sort our dates
+                    // Sort our dates and shifts
                     days = $filter('orderBy')(days, 'Date');
+                    watchbill.WatchShifts = $filter('orderBy')(watchbill.WatchShifts, 'Range.Start');
 
                     // This is how much we have to adjust the start of the week in the calendar
                     watchbill.pushAmount = (new Date(days[0].Date)).getDay();
@@ -367,5 +382,6 @@ angular.module('Watchbill')
                     watchbill.days = days;
                     return watchbill;
                 }
+
                 return service;
             }]);

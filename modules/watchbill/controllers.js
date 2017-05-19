@@ -236,7 +236,7 @@ angular.module('Watchbill')
 
                 newShifts = uniqueById(newShifts);
 
-                if($scope.watchbill.WatchShifts.length) {
+                if ($scope.watchbill.WatchShifts.length) {
                     // First, delete all the watch days in the backend
                     var watchShiftIds = [];
 
@@ -528,5 +528,38 @@ angular.module('Watchbill')
                     }, ConnectionService.HandleServiceError($scope, $location));
             };
             $scope.loadWatchbill();
+        }]
+).controller('WatchbillAcknowledgeController',
+    ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
+        function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
+            $scope.messages = [];
+            $scope.errors = [];
+
+            $scope.getByValue = function (arr, prop, val) {
+                return $filter('filter')(arr, {prop: val})[0] || {};
+            };
+
+            $scope.confirm = function (assignment) {
+                WatchbillService.AcknowledgeWatchAssignment(assignment.Id, function (response) {
+                    $scope.messages.push("Confirmed watch input for " + assignment.PersonAssigned.FriendlyName);
+                    $scope.loadWatchbillAndAssignments();
+                }, ConnectionService.HandleServiceError($scope, $location));
+            };
+
+            WatchbillService.GetAllLists(function (response) {
+                $scope.lists = response.ReturnValue;
+            }, ConnectionService.HandleServiceError($scope, $location));
+
+            $scope.loadWatchbillAndAssignments = function () {
+                WatchbillService.LoadWatchbill($routeParams.id,
+                    function (response) {
+                        $scope.watchbill = response.ReturnValue;
+                    }, ConnectionService.HandleServiceError($scope, $location));
+                WatchbillService.LoadAcknowledgeableWatchAssignemnts($routeParams.id,
+                    function (response) {
+                        $scope.assignments = response.ReturnValue;
+                    }, ConnectionService.HandleServiceError($scope, $location));
+            };
+            $scope.loadWatchbillAndAssignments();
         }]
 );

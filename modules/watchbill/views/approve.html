@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
 
-            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <H1>{{watchbill.Title}} beginning {{watchbill.Range.Start | date: 'longDate'}}</H1>
             <div ng-if="noNewInputs">
                 <br/>
                 <h3>There are no inputs waiting for approval</h3>

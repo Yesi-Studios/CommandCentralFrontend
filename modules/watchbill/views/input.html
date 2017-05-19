@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="col-md-5">
-            <H1>{{watchbill.Title}} beginning {{watchbill.WatchDays[0].Date | date: 'longDate'}}</H1>
+            <H1>{{watchbill.Title}} beginning {{watchbill.Range.Start | date: 'longDate'}}</H1>
             <h3>In the "{{watchbill.CurrentState.Value}}" Phase.</h3>
             <p>Please select the shifts that the Sailor is exempt from below, then select the sailor (use the text bar
                 to search) and a justification, and click submit.</p>
