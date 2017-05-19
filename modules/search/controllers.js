@@ -3,8 +3,8 @@
 angular.module('Search')
 
     .controller('SearchController',
-        ['$scope', '$filter', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'SearchService', 'config',
-            function ($scope, $filter, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, SearchService, config) {
+        ['$scope', '$filter', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'AuthorizationService', 'ConnectionService', 'SearchService', 'config',
+            function ($scope, $filter, $rootScope, $location, $routeParams, AuthenticationService, AuthorizationService, ConnectionService, SearchService, config) {
 
                 // This scope will just about always contain PII
                 $rootScope.containsPII = true;
