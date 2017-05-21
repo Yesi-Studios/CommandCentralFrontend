@@ -15,7 +15,22 @@ angular.module('Profiles')
                     ProfileService.GetChangeEvents(
                         function (response) {
                             $scope.changeEvents = response.ReturnValue;
+                            fixEvents();
                         }, ConnectionService.HandleServiceError($scope, $location));
+
+
+                    $scope.$watch('ngModel', function() {
+                        if ($scope.changeEvents) {
+                            fixEvents();
+                        }
+                    });
+
+                    function fixEvents() {
+                        for (var i = 0; i < $scope.changeEvents.length; i++) {
+                            var ev = $scope.changeEvents[i];
+                            $scope.ngModel[ev.Id] = $scope.ngModel[ev.Id] || 'None';
+                        }
+                    }
                 }]
             }
         }

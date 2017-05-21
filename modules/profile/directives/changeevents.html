@@ -3,6 +3,21 @@
         <h1>Change Events</h1>
     </div>
     <div class="panel-body">
-        {{changeEvents}}
+        <ul id="changeEvents" class="list-group">
+            <li class="row list-group-item" ng-repeat="ev in changeEvents">
+                <div class="col-md-4">
+                    {{ev.EventName}}
+                </div>
+                <div class="col-md-4">
+                    {{ev.Description}}
+                </div>
+                <div class="col-md-4">
+                    <select ng-model="ngModel[ev.Id]">
+                        <option value="None">None</option>
+                        <option ng-repeat="level in ev.ValidLevels" value="{{level}}">{{level}}</option>
+                    </select>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
