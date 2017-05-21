@@ -49,6 +49,10 @@ angular.module('Profiles')
         service.GetChainOfCommand = function (personid, success, error) {
             return ConnectionService.RequestFromBackend('GetChainOfCommandOfPerson', { 'authenticationtoken': AuthenticationService.GetAuthToken(), 'personid': personid }, success, error);
         };
+
+        service.GetChangeEvents = function (success, error) {
+            return ConnectionService.RequestFromBackend('GetChangeEvents', { 'authenticationtoken': AuthenticationService.GetAuthToken()}, success, error);
+        };
 		 
         return service;
     }]);

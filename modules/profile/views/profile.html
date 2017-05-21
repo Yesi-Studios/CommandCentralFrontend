@@ -768,6 +768,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10">
+                        <ng-change-events-editor ng-model="profile.SubscribedEvents" ng-disbaled="!canEditPersonField('SubscribedEvents')"></ng-change-events-editor>
+                    </div>
+                </div>
                 <div ng-if="isMyProfile" class="row">
                     <div class="col-md-offset-8 col-md-4 text-right">
                         <a href="#/changepassword" class="btn btn-sm btn-default">Change My Password</a>
