@@ -3,8 +3,8 @@
 angular.module('Connection')
 
     .factory('ConnectionService',
-        ['$http', '$localStorage', '$rootScope', 'config',
-            function ($http, $localStorage, $rootScope, config) {
+        ['$http', '$localStorage', '$rootScope', '$window', 'config',
+            function ($http, $localStorage, $rootScope, $window, config) {
                 var service = {};
                 var redirectURL = '';
                 // Information for connecting to the database, including the URL and API key.
@@ -130,6 +130,7 @@ angular.module('Connection')
                         } else {
                             // If it's any other type of error, we can just show it to them on this page.
                             scope.errors = response.ErrorMessages;
+                            $window.scrollTo(0, 0);
                             if(callback && typeof callback === "function") { callback();}
                         }
                         scope.dataLoading = false;
