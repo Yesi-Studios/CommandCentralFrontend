@@ -103,7 +103,7 @@ angular.module('Watchbill')
 
                 $scope.daysText = function () {
                     if ($scope.days) {
-                        var days = $scope.days + 1;
+                        var days = $scope.days;
                         return "(" + days + " days)";
                     } else {
                         return "";
