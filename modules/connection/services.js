@@ -174,6 +174,13 @@ angular.module('Connection')
                         });
                 };
 
+                /**
+                 * Handles the problems with circular references in JSON.
+                 * For details on this function, visit https://www.stilldrinking.org/programming-sucks and scroll down
+                 * to "All code is bad"
+                 * @param {Object|string} theJSON
+                 * @returns {Object}}
+                 */
                 service.RestoreJsonNetReferences = function (theJSON) {
                     if (typeof theJSON === "string") { theJSON = JSON.parse(theJSON); }
 

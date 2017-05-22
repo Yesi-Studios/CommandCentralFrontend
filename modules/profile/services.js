@@ -6,7 +6,7 @@ angular.module('Profiles')
     ['$http', '$localStorage', '$rootScope', '$timeout', 'AuthenticationService', 'ConnectionService',
     function ($http, $localStorage, $rootScope, $timeout, AuthenticationService, ConnectionService) {
         var service = {};
-		
+
         service.GetAllLists = function (success, error) {
             return ConnectionService.RequestFromBackend('LoadReferenceLists', {'enititynames': []}, success, error);
         };
