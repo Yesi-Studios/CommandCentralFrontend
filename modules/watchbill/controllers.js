@@ -262,7 +262,7 @@ angular.module('Watchbill')
                 } else {
                     WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {
                         $location.path('/watchbill/' + $routeParams.id);
-                    }, ConnectionService.HandleServiceError($scope, $location, recoverOriginal));
+                    }, ConnectionService.HandleServiceError($scope, $location));
                 }
             };
             function recoverOriginal() {
