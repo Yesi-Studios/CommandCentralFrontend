@@ -1,6 +1,12 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h1>Change Events</h1>
+        <h2>
+            Change Events
+            <span class="glyphicon glyphicon-question-sign"
+                  uib-tooltip="To receive emails for certain events, select the level for which you would like to
+                  subscribe. For example, to be notified whenever a sailor in your department changes divisions, find
+                  the 'Assignment Changed' event, and select 'Department' from the drop down."></span>
+        </h2>
     </div>
     <div class="panel-body">
         <ul id="changeEvents" class="list-group">
@@ -11,7 +17,7 @@
                 <div class="col-md-4">
                     {{ev.Description}}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 text-right">
                     <select ng-model="ngModel[ev.Id]">
                         <option value="None">None</option>
                         <option ng-repeat="level in ev.ValidLevels" value="{{level}}">{{level}}</option>
