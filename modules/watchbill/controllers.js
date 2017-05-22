@@ -165,6 +165,8 @@ angular.module('Watchbill')
 ).controller('WatchbillEditorController',
     ['$scope', '$rootScope', '$filter', '$location', '$routeParams', '$route', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
         function ($scope, $rootScope, $filter, $location, $routeParams, $route, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
+            $scope.errors = [];
+            $scope.messages = [];
             $scope.copyShifts = function (shifts, day) {
                 day.WatchShifts = [];
                 /**
@@ -183,7 +185,7 @@ angular.module('Watchbill')
                     fixed.Range.Start.setSeconds(0);
                     fixed.Range.End.setSeconds(0);
                     if (fixed.Range.Start > fixed.Range.End) {
-                        fixed.Range.End.setDate(fixed.Range.End.getDate()+1);
+                        fixed.Range.End.setDate(fixed.Range.End.getDate() + 1);
                     }
                     delete fixed.Id;
                     if (fixed.numberOfDays > 1) {
@@ -196,7 +198,7 @@ angular.module('Watchbill')
             $scope.copyDay = function (day) {
                 $scope.dayToCopy = angular.copy(day.WatchShifts);
                 angular.forEach($scope.dayToCopy, function (value, index) {
-                    value.numberOfDays = Math.floor((value.Range.End - value.Range.Start)/(24*60*60*1000));
+                    value.numberOfDays = Math.floor((value.Range.End - value.Range.Start) / (24 * 60 * 60 * 1000));
                     if (value.Range.End.getMonth() != value.Range.Start.getMonth()) {
                         var millisecondsPerDay = 1000 * 60 * 60 * 24;
                         var diff = value.Range.End - value.Range.Start;
@@ -249,21 +251,42 @@ angular.module('Watchbill')
                         this.push(value.Id);
                     }, watchShiftIds);
 
+
                     WatchbillService.DeleteWatchShifts(watchShiftIds, function (response) {
                         WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {
                             $location.path('/watchbill/' + $routeParams.id);
-                        }, ConnectionService.HandleServiceError($scope, $location));
-                    }, ConnectionService.HandleServiceError($scope, $location));
+                        }, ConnectionService.HandleServiceError($scope, $location, recoverOriginal));
+                    }, ConnectionService.HandleServiceError($scope, $location, function () {
+                        loadWatchbill();
+                    }));
                 } else {
                     WatchbillService.CreateWatchShifts(newShifts, $scope.watchbill.Id, function (response) {
                         $location.path('/watchbill/' + $routeParams.id);
-                    }, ConnectionService.HandleServiceError($scope, $location));
+                    }, ConnectionService.HandleServiceError($scope, $location, recoverOriginal));
                 }
             };
-            WatchbillService.LoadWatchbill($routeParams.id,
-                function (response) {
-                    $scope.watchbill = response.ReturnValue;
+            function recoverOriginal() {
+                $scope.errors.push('Problem saving new shifts. Reloading original watchbill...');
+                // If saving the new shift fails, reconstruct the watchbill we had.
+                WatchbillService.CreateWatchShifts($scope.originalWatchbill.WatchShifts, $scope.originalWatchbill.Id, function (response) {
+                    $scope.errors.push('Watchbill reconstructed, loading...');
+                    loadWatchbill();
                 }, ConnectionService.HandleServiceError($scope, $location));
+            }
+
+            function loadWatchbill() {
+                WatchbillService.LoadWatchbill($routeParams.id,
+                    function (response) {
+                        $scope.watchbill = response.ReturnValue;
+                        $scope.originalWatchbill = angular.copy(response.ReturnValue);
+                        if ($scope.errors && $scope.errors.length) {
+                            $scope.errors = [$scope.errors[0]];
+                        }
+                    }, ConnectionService.HandleServiceError($scope, $location)
+                );
+            }
+
+            loadWatchbill();
         }
     ]
 ).controller('WatchbillSwapController', ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',

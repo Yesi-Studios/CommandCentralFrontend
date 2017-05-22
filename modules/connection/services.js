@@ -113,9 +113,10 @@ angular.module('Connection')
                  * Handle an error the default way. This will attach errors to the scope, and redirect the user if necessary.
                  * @param {Object} scope
                  * @param {Object} location
+                 * @param {Function} callback
                  * @returns {Function}
                  */
-                service.HandleServiceError = function (scope, location) {
+                service.HandleServiceError = function (scope, location, callback) {
                     return function (response) {
                         // If we tried to do something we can't, or didn't authenticate properly, something might be very wrong. Delete
                         // The stored credentials and kick them back to login page, displaying all appropriate error messages.
@@ -129,6 +130,7 @@ angular.module('Connection')
                         } else {
                             // If it's any other type of error, we can just show it to them on this page.
                             scope.errors = response.ErrorMessages;
+                            if(callback && typeof callback === "function") { callback();}
                         }
                         scope.dataLoading = false;
                     };

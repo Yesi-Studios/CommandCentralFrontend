@@ -56,9 +56,10 @@
                                 <!--'. Currently assigned to: ' + shift.WatchAssignment.PersonAssigned.FriendlyName}}">-->
                                 <!--{{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}-->
                                 <!--</span>-->
-                                    <ng-shift-nub ng-model="shift"></ng-shift-nub><span
-                                    ng-if="shift.Range.End - shift.Range.Start >= 24*60*60*1000 && shift.Range.Start.getDay() == day.Date.getDay()">*</span><br/>
+                                    <ng-shift-nub ng-model="shift"></ng-shift-nub>
                                 </span>
+                            <br/>
+                            <br/>
                         </div>
                     </td>
                 </tr>
