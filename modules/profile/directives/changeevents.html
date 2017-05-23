@@ -18,7 +18,7 @@
                     {{ev.Description}}
                 </div>
                 <div class="col-md-4 text-right">
-                    <select ng-model="ngModel[ev.Id]">
+                    <select ng-if="ngModel" ng-model="ngModel[ev.Id]">
                         <option value="None">None</option>
                         <option ng-repeat="level in ev.ValidLevels" value="{{level}}">{{level}}</option>
                     </select>
