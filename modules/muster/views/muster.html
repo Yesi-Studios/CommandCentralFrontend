@@ -76,11 +76,11 @@
                                 <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='Division'"></span>
                             </button>
                         </th>
-                        <th ng-click="setOrder('HasBeenMustered')">
-                            <button ng-class="{'btn-primary': orderKey=='HasBeenMustered' || orderKey=='-HasBeenMustered'}">
-                                Mustered Today?
-                                <span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-HasBeenMustered'"></span>
-                                <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='HasBeenMustered'"></span>
+                        <th ng-click="setOrder('CurrentMusterStatus.Musterer.FriendlyName')">
+                            <button ng-class="{'btn-primary': orderKey=='CurrentMusterStatus.Musterer.FriendlyName' || orderKey=='-CurrentMusterStatus.Musterer.FriendlyName'}">
+                                Mustered By?
+                                <span class="glyphicon glyphicon-chevron-up" ng-if="orderKey=='-CurrentMusterStatus.Musterer.FriendlyName'"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-if="orderKey=='CurrentMusterStatus.Musterer.FriendlyName'"></span>
                             </button>
                         </th>
                         <th ng-click="setOrder('CurrentMusterStatus.MusterStatus.toString()')">
@@ -99,7 +99,7 @@
                         <td>{{sailor['Paygrade']}}</td>
                         <td>{{sailor['Designation']}}</td>
                         <td>{{sailor['Division']}}</td>
-                        <td>{{sailor['HasBeenMustered'] | yesNo }}</td>
+                        <td>{{sailor['CurrentMusterStatus'].Musterer.FriendlyName || "(Not Mustered)"}}</td>
                         <td>
                             <select name="{{sailor.Id}}MusterStatus" tabindex="{{$index+1000}}" class="form-control" ng-model="sailor.CurrentMusterStatus.MusterStatus" ng-options="o.Value as o.Value for o in musterStatuses | orderBy: 'Value'" ng-disabled="musterFinalized">
                             </select>
