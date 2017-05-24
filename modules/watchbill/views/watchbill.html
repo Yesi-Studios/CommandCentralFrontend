@@ -49,7 +49,7 @@
                     <td ng-repeat="day in week" class="row" width="14%">
                         <div class="col-md-12">
                             {{day.Date | date: shortDate }}<br/>
-                            <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start.getUTCHours()'">
+                            <span ng-repeat="shift in day.WatchShifts | orderBy: 'Range.Start'">
                                     <!--{{shift.Title}}:<br>{{shift.Range.Start | date: 'HHmm'}} to {{shift.Range.End | date: 'HHmm'}}-->
                                 <!--<span ng-if="shift.WatchAssignment" class="label label-success"-->
                                 <!--uib-tooltip="{{shift.Title + ' at ' + (shift.Range.Start | date: 'HHmm') +-->

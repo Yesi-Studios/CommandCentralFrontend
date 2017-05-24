@@ -462,7 +462,7 @@ angular.module('Watchbill')
                 for (var i = 0; i < peopleToRemove.length; i++) {
                     $scope.selectedGroup.UneligiblePersons.push(peopleToRemove[i]);
                 }
-                $scope.selectedGroup.EligiblePersons = arrayDifference(peopleToRemove, $scope.selectedGroup.EligiblePersons)
+                $scope.selectedGroup.EligiblePersons = arrayDifference(peopleToRemove, $scope.selectedGroup.EligiblePersons);
                 $scope.peopleToRemove = [];
             };
 
@@ -482,11 +482,13 @@ angular.module('Watchbill')
             $scope.loadGroups = function () {
                 WatchbillService.GetAllPeople(function (response) {
                     $scope.allPeople = [];
+                    $scope.rankDict = {};
                     angular.forEach(response.ReturnValue.Results, function (value, key) {
                         this.push({
                             'Id': value.Id,
                             'FriendlyName': friendlyName(value)
-                        })
+                        });
+                        $scope.rankDict[value.Id] = value.Paygrade;
                     }, $scope.allPeople);
 
                     WatchbillService.GetAllLists(function (response) {

@@ -74,7 +74,6 @@ angular.module('Profiles')
                             if (response.ReturnValue.Person.GTCTrainingDate) $scope.profileData.GTCTrainingDate = new Date(response.ReturnValue.Person.GTCTrainingDate);
                             if (response.ReturnValue.Person.ADAMSTrainingDate) $scope.profileData.ADAMSTrainingDate = new Date(response.ReturnValue.Person.ADAMSTrainingDate);
 
-
                             $scope.canSearchPersonField = function (field) {
                                 return ('currentUser' in $scope.globals) && ($scope.globals.currentUser.permissions.searchable.indexOf(field) > -1);
                             };

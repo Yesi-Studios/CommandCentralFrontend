@@ -234,7 +234,7 @@ angular.module('Watchbill')
                     return ConnectionService.RequestFromBackend('AdvancedSearchPersons', {
                         'authenticationtoken': AuthenticationService.GetAuthToken(),
                         'filters': null,
-                        'returnfields': ['Id', 'FirstName', 'LastName', 'MiddleName'],
+                        'returnfields': ['Id', 'FirstName', 'LastName', 'MiddleName', 'Paygrade'],
                         'searchLevel': 'Command'
                     }, success, error);
                 };

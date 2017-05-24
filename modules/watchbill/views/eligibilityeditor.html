@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label for="notInGroup">People Not in Group</label>
                 <select class="form-control" id="notInGroup" ng-model="peopleToAdd"
-                        ng-options="person as person.FriendlyName for person in selectedGroup.UneligiblePersons | orderBy: 'FriendlyName'"
+                        ng-options="person as rankDict[person.Id] + ' ' + person.FriendlyName for person in selectedGroup.UneligiblePersons | orderBy: 'FriendlyName'"
                         size="20" multiple></select>
             </div>
         </div>
@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label for="peopleInGroup">People in Group</label>
                 <select class="form-control" id="peopleInGroup" ng-model="peopleToRemove"
-                        ng-options="person as person.FriendlyName for person in selectedGroup.EligiblePersons | orderBy: 'FriendlyName'"
+                        ng-options="person as rankDict[person.Id] + ' ' + person.FriendlyName for person in selectedGroup.EligiblePersons | orderBy: 'FriendlyName'"
                         size="20" multiple></select>
             </div>
 
