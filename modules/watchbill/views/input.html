@@ -6,7 +6,7 @@
 <div class="content_panel">
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
-            <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/approve/{{watchbill.Id}}"
+            <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs' && levelNumber >= 1" href="#/watchbill/approve/{{watchbill.Id}}"
                class="pull-right btn btn-primary">Approve Inputs</a>
             <a href="#/watchbill/{{watchbill.Id}}"
                class="pull-right btn btn-success">Back to Watchbill</a>

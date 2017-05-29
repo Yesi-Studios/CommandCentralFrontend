@@ -8,23 +8,23 @@
         <div class="col-md-12">
             <br/>
             <div class="btn-group pull-right">
-                <a ng-if="watchbill.CurrentState.Value == 'Initial'" href="#/watchbill/edit/{{watchbill.Id}}"
+                <a ng-if="watchbill.CurrentState.Value == 'Initial' && levelNumber == 3" href="#/watchbill/edit/{{watchbill.Id}}"
                    class="btn btn-primary">Edit</a>
-                <a ng-if="watchbill.CurrentState.Value != 'Initial'" ng-click="toggleResetWarning()"
+                <a ng-if="watchbill.CurrentState.Value != 'Initial' && levelNumber == 3" ng-click="toggleResetWarning()"
                    class="btn btn-warning">Reset To Initial</a>
                 <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/input/{{watchbill.Id}}"
                    class="btn btn-primary">Submit Inputs</a>
-                <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/approve/{{watchbill.Id}}"
+                <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs' && levelNumber >= 1" href="#/watchbill/approve/{{watchbill.Id}}"
                    class="btn btn-primary">Approve Inputs</a>
-                <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs'"
+                <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs' && levelNumber == 3"
                    href="#/watchbill/populate/{{watchbill.Id}}" class="btn btn-primary">Assign
                     Watchstanders</a>
-                <a ng-if="watchbill.CurrentState.Value == 'Under Review'"
+                <a ng-if="watchbill.CurrentState.Value == 'Under Review' && levelNumber >= 1"
                    href="#/watchbill/swap/{{watchbill.Id}}" class="btn btn-primary">Swap
                     Watchstanders</a>
                 <a ng-if="watchbill.CurrentState.Value == 'Published'" href="#/watchbill/acknowledge/{{watchbill.Id}}"
                    class="btn btn-success">Acknowledge Watches</a>
-                <a ng-if="watchbill.CurrentState.Value != 'Published'" href="#/watchbill/progress/{{watchbill.Id}}"
+                <a ng-if="watchbill.CurrentState.Value != 'Published' && levelNumber == 3" href="#/watchbill/progress/{{watchbill.Id}}"
                    class="btn btn-success">Next Stage</a>
             </div>
             <div class="row" ng-show="showResetWarning">
@@ -57,8 +57,8 @@
                                 <!--{{shift.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}-->
                                 <!--</span>-->
                                     <ng-shift-nub ng-model="shift"></ng-shift-nub>
+                                    <br/>
                                 </span>
-                            <br/>
                             <br/>
                         </div>
                     </td>

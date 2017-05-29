@@ -69,7 +69,7 @@
                             <li ng-class="{ active: isActive('/muster/finalize')}" ng-if="canFinalizeMuster()"><a href="#/muster/finalize" ng-click="resetPIIBanner()">Finalize Muster</a></li>
                         </ul>
                     </li>
-                    <li ng-if="canUseWatchbillTools()" ng-class="{ active: isIn('/watchbill')}"><a href="#/watchbill" ng-click="resetPIIBanner()">Watchbills</a></li>
+                    <li ng-class="{ active: isIn('/watchbill')}"><a href="#/watchbill" ng-click="resetPIIBanner()">Watchbills</a></li>
                     <li uib-dropdown ng-if="canUseAdminTools()">
                         <a id="admin-dropdown" uib-dropdown-toggle href>Admin Tools<span class="caret"></span></a>
                         <ul uib-dropdown-menu aria-labelledby="muster-dropdown" class="dropdown-menu">

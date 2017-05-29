@@ -63,13 +63,23 @@ angular.module('Authorization')
             }
         };
 
-        /** @return Boolean **/
-        service.CanUseWatchbillTools = function () {
+        /** @return Number **/
+        service.GetWatchbillAuthLevel = function () {
+            var level = '';
             try {
-                return $rootScope.globals.currentUser.permissions.HighestLevels["QuarterdeckWatchbill"]=="Command";
-
+                level = $rootScope.globals.currentUser.permissions.HighestLevels["QuarterdeckWatchbill"];
+                switch (level) {
+                    case 'Division':
+                        return 1;
+                    case 'Department':
+                        return 2;
+                    case 'Command':
+                        return 3;
+                    default:
+                        return 0;
+                }
             } catch (err){
-                return false;
+                return 0;
             }
         };
 

@@ -5,6 +5,7 @@ angular.module('Watchbill')
         ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
             function ($scope, $rootScope, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
 
+                $scope.levelNumber = AuthorizationService.GetWatchbillAuthLevel();
                 WatchbillService.GetAllLists(function (response) {
                     $scope.eligibilityGroups = response.ReturnValue.WatchEligibilityGroup;
                 }, ConnectionService.HandleServiceError($scope, $location));
@@ -153,6 +154,9 @@ angular.module('Watchbill')
             $scope.getByValue = function (arr, prop, val) {
                 return $filter('filter')(arr, {prop: val})[0] || {};
             };
+
+            $scope.levelNumber = AuthorizationService.GetWatchbillAuthLevel();
+
             WatchbillService.GetAllLists(function (response) {
                 $scope.lists = response.ReturnValue;
             }, ConnectionService.HandleServiceError($scope, $location));
@@ -334,6 +338,9 @@ angular.module('Watchbill')
             $scope.getByValue = function (arr, prop, val) {
                 return $filter('filter')(arr, {prop: val})[0] || {};
             };
+
+            $scope.levelNumber = AuthorizationService.GetWatchbillAuthLevel();
+
             WatchbillService.GetAllLists(function (response) {
                 $scope.lists = response.ReturnValue;
             }, ConnectionService.HandleServiceError($scope, $location));
