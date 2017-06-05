@@ -49,7 +49,7 @@
                             ng-options="o as o.Value for o in reasons | orderBy: 'Value'"
                             ng-model="reason"></select>
                 </div>
-                <button ng-click="submitInput()" class="btn btn-success">Submit</button>
+                <button ng-click="submitInput()" class="btn btn-success" ng-disabled="!(from&&to&&reason&&selectedPerson)">Submit</button>
             </div>
         </div>
         <div class="col-md-5">
