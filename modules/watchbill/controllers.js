@@ -376,15 +376,22 @@ angular.module('Watchbill')
                         var permissionLevel = $rootScope.globals.currentUser.permissions.HighestLevels[$scope.watchbill.EligibilityGroup.OwningChainOfCommand];
                         ProfileService.LoadProfile($rootScope.globals.currentUser.userID, function (response) {
                             var valId = response.ReturnValue.Person[permissionLevel];
+                            var firstName = response.ReturnValue.Person.FirstName;
+                            var lastName = response.ReturnValue.Person.LastName;
                             WatchbillService.GetAllLists(function (response) {
                                 var val = "";
                                 $scope.reasons = response.ReturnValue.WatchInputReason;
                                 // console.log(response.ReturnValue[permissionLevel]);
                                 // console.log(valId);
-                                for (var k in response.ReturnValue[permissionLevel]) {
-                                    if (response.ReturnValue[permissionLevel][k].Id == valId) {
-                                        val = response.ReturnValue[permissionLevel][k].Value;
+                                if (permissionLevel) {
+                                    for (var k in response.ReturnValue[permissionLevel]) {
+                                        if (response.ReturnValue[permissionLevel][k].Id == valId) {
+                                            val = response.ReturnValue[permissionLevel][k].Value;
+                                        }
                                     }
+                                } else { // TODO: Fix backend and get rid of this temporary fix. Search by Id instead.
+                                    permissionLevel = "LastName";
+                                    val = lastName;
                                 }
                                 WatchbillService.GetSubordinatePersons(permissionLevel, val, function (response) {
 

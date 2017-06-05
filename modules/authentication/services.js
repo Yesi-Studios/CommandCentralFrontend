@@ -106,6 +106,15 @@ angular.module('Authentication')
 			}
 		
 		};
- 
+
+        service.GetCurrentUser = function () {
+            if ($rootScope.globals && $rootScope.globals.currentUser) {
+                return $rootScope.globals.currentUser;
+            } else {
+                return null;
+            }
+
+        };
+
         return service;
     }]);
