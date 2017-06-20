@@ -1,7 +1,7 @@
-<span ng-if="ngModel.WatchAssignment" class="label label-success" style="font-size: 9px;"
+<span ng-if="ngModel.WatchAssignment" class="label label-success" style="font-size: 8px;"
       uib-tooltip="{{ngModel.Title + ' at ' + (ngModel.Range.Start | date: 'HHmm') +
-                                    '. Currently assigned to: ' + ngModel.WatchAssignment.PersonAssigned.FriendlyName}}">
-                                        {{ngModel.Title}} {{daysText()}}: {{ngModel.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}
+                                    '. Currently assigned to: ' + ngModel.WatchAssignment.PersonAssigned.FriendlyName + ', ' + ngModel.WatchAssignment.PersonAssigned.Paygrade.Value}}">
+                                        {{ngModel.Title}} {{daysText()}}: {{ngModel.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}, {{ngModel.WatchAssignment.PersonAssigned.Paygrade.Value}}
                                     </span>
 <span ng-if="!ngModel.WatchAssignment" class="label label-default"
       uib-tooltip="{{ngModel.Title + ' from ' + (ngModel.Range.Start | date: 'short') + ' to ' + (ngModel.Range.End | date: 'short')}}">&nbsp{{ngModel.Range.Start | date: 'HHmm'}} <strong>{{ngModel.Title}}</strong> <span
