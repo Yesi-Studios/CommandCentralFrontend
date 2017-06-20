@@ -345,6 +345,10 @@ angular.module('Watchbill')
                 $scope.lists = response.ReturnValue;
             }, ConnectionService.HandleServiceError($scope, $location));
 
+            $scope.$watch('from', function(newValue, oldValue) {
+                $scope.to = newValue;
+            });
+
             $scope.submitInput = function () {
                 WatchbillService.CreateWatchInput($scope.selectedPerson, $scope.watchbill.Id, $scope.reason, $scope.from, $scope.to, function (response) {
                     $scope.messages.push("Input successfully submitted for " + $scope.selectedPerson.FriendlyName);
