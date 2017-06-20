@@ -3,7 +3,10 @@
 <div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
     {{message}}
 </div>
-<div class="content_panel">
+<div class="content_panel" ng-if="!watchbill">
+    Loading...
+</div>
+<div class="content_panel" ng-if="watchbill">
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
             <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs'" href="#/watchbill/input/{{watchbill.Id}}"

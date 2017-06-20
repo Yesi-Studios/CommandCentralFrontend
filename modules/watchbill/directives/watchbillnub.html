@@ -1,4 +1,4 @@
-<li class="list-group-item row" ng-class="{active: hover}"
+<li class="list-group-item row" ng-class="{active: hover}" ng-if="watchbill"
     ng-mouseenter="hover = true" ng-mouseleave="hover = false">
     <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-3"><strong>Name: "{{watchbill.Title}}"</strong></div>
     <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-3">Type of Watchbill:
@@ -16,6 +16,9 @@
                 <a href="" ng-click="showDeleteWarning=false" class="btn btn-xs btn-success">No</a>
             </div>
         </span></div>
+</li>
+<li class="list-group-item row"  ng-if="!watchbill">
+    <h4>Loading...</h4>
 </li>
 <!--<div class="input-group">-->
 <!--<span class="input-group-addon" id="searchAddon{{fieldName}}">{{fieldName}}<span-->
