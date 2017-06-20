@@ -141,6 +141,14 @@ angular.module('Watchbill')
                     }, success, error);
                 };
 
+                service.AnswerInputRequirement = function (watchbillId, personId, success, error) {
+                    return ConnectionService.RequestFromBackend('AnswerInputRequirement', {
+                        'watchbillid': watchbillId,
+                        'personid': personId,
+                        'authenticationtoken': AuthenticationService.GetAuthToken()
+                    }, success, error);
+                };
+
                 service.ConfirmWatchInput = function (inputId, success, error) {
                     return ConnectionService.RequestFromBackend('ConfirmWatchInput', {
                         'Id': inputId,

@@ -16,10 +16,19 @@
         <div class="col-md-10 col-md-offset-1">
 
             <H1>{{watchbill.Title}} beginning {{watchbill.Range.Start | date: 'longDate'}}</H1>
-            <div ng-if="noNewInputs">
+            <div ng-if="noNewInputs && watchbill">
                 <br/>
                 <h3>There are no inputs waiting for approval</h3>
             </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{100*(peopleWithInputs/totalPeople)}}"
+                     aria-valuemin="0" aria-valuemax="100"
+                     ng-style="{'min-width': '4em', 'width': 100*(peopleWithInputs/totalPeople)+'%'}">
+                    {{100*(peopleWithInputs/totalPeople) | number: 2}}% of Sailors submitted inputs
+                </div>
+            </div>
+            <br/>
+            <br/>
             <div class="list-group">
                 <li ng-repeat="input in watchbill.WatchInputs track by $index" ng-if="input.Id && !input.IsConfirmed"
                     class="list-group-item row" ng-class="{active: hover}"

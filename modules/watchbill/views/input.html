@@ -6,7 +6,8 @@
 <div class="content_panel">
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
-            <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs' && levelNumber >= 1" href="#/watchbill/approve/{{watchbill.Id}}"
+            <a ng-if="watchbill.CurrentState.Value == 'Open for Inputs' && levelNumber >= 1"
+               href="#/watchbill/approve/{{watchbill.Id}}"
                class="pull-right btn btn-primary">Approve Inputs</a>
             <a href="#/watchbill/{{watchbill.Id}}"
                class="pull-right btn btn-success">Back to Watchbill</a>
@@ -49,7 +50,16 @@
                             ng-options="o as o.Value for o in reasons | orderBy: 'Value'"
                             ng-model="reason"></select>
                 </div>
-                <button ng-click="submitInput()" class="btn btn-success" ng-disabled="!(from&&to&&reason&&selectedPerson) || from >= to">Submit</button>
+                <button ng-click="submitInput()" class="btn btn-success"
+                        ng-disabled="!(from&&to&&reason&&selectedPerson) || from >= to">Submit
+                </button>
+                <button ng-click="submitNoInput()" class="btn btn-primary" ng-disabled="!selectedPerson">
+                <span class="text-right" tooltip-placement="right"
+                      uib-tooltip="This will answer the requirement for a Sailor to submit inputs without submitting any dates of unavailability. This is the correct option when a Sailor has confirmed they are available for the entire watchbill period.">
+                    Submit Blank Input
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                        </span>
+                </button>
             </div>
         </div>
         <div class="col-md-5">

@@ -345,7 +345,7 @@ angular.module('Watchbill')
                 $scope.lists = response.ReturnValue;
             }, ConnectionService.HandleServiceError($scope, $location));
 
-            $scope.$watch('from', function(newValue, oldValue) {
+            $scope.$watch('from', function (newValue, oldValue) {
                 $scope.to = newValue;
             });
 
@@ -354,6 +354,13 @@ angular.module('Watchbill')
                     $scope.messages.push("Input successfully submitted for " + $scope.selectedPerson.FriendlyName);
                     $scope.from = null;
                     $scope.to = null;
+                    $scope.loadWatchbill();
+                }, ConnectionService.HandleServiceError($scope, $location));
+            };
+
+            $scope.submitNoInput = function() {
+                WatchbillService.AnswerInputRequirement($scope.watchbill.Id, $scope.selectedPerson.Id, function(response){
+                    $scope.messages.push("Successfully submitted an empty input for " + $scope.selectedPerson.FriendlyName);
                     $scope.loadWatchbill();
                 }, ConnectionService.HandleServiceError($scope, $location));
             };
@@ -573,8 +580,29 @@ angular.module('Watchbill')
                 WatchbillService.LoadWatchbill($routeParams.id,
                     function (response) {
                         $scope.watchbill = response.ReturnValue;
+                        var inpReqs = $scope.watchbill.InputRequirements;
+                        $scope.peopleWithInputs = 0;
+                        $scope.totalPeople = inpReqs.length;
+                        var nope = 0;
+                        for (var i = 0; i < inpReqs.length; i++) {
+                            if (inpReqs[i].IsAnswered) {
+                                $scope.peopleWithInputs++;
+                            } else {
+                                nope++;
+                            }
+                        }
+                        var inps = $scope.watchbill.WatchInputs;
+                        for (var i = 0; i < inps.length; i++) {
+                            if(!inps[i].IsConfirmed) {
+                                $scope.noNewInputs = false;
+                            }
+                        }
+                        console.log('people ' + $scope.peopleWithInputs);
+                        console.log('total '+ $scope.totalPeople);
+                        console.log('nope '+ nope);
                     }, ConnectionService.HandleServiceError($scope, $location));
-            };
+            }
+            ;
             $scope.loadWatchbill();
         }]
 ).controller('WatchbillAcknowledgeController',
