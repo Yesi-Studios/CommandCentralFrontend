@@ -430,6 +430,27 @@ angular.module('Watchbill')
             $scope.messages = [];
             $scope.errors = [];
 
+            $scope.sortableFields = [
+                'FriendlyName',
+                'Paygrade.Value'
+            ];
+
+            $scope.setInOrder = function (theKey) {
+                if ($scope.inOrderKey == theKey) {
+                    $scope.inOrderKey = "-" + theKey;
+                } else {
+                    $scope.inOrderKey = theKey;
+                }
+            };
+
+            $scope.setOutOrder = function (theKey) {
+                if ($scope.outOrderKey == theKey) {
+                    $scope.outOrderKey = "-" + theKey;
+                } else {
+                    $scope.outOrderKey = theKey;
+                }
+            };
+
             $scope.updateLists = function () {
                 for (var i = 0; i < $scope.groups.length; i++) {
                     if ($scope.groups[i].Id == $scope.originalSelectedGroup.Id) {

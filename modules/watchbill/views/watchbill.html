@@ -79,7 +79,10 @@
                 </div>
                 <div class="panel-body">
                     <ul>
-                        <li ng-repeat="person in watchbill.NotQualledPersons">{{person.FriendlyName}}</li>
+                        <li ng-repeat="person in watchbill.NotQualledPersons">{{person.FriendlyName}}
+                            <a ng-href="#/profile/{{person.Id}}"><span class="glyphicon glyphicon-new-window"
+                                                                             aria-hidden="true"></span></a>
+                        </li>
                     </ul>
                 </div>
             </div>

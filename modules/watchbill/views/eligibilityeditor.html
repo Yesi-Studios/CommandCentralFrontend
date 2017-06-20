@@ -18,9 +18,16 @@
     <div class="row">
         <div class="col-md-offset-1 col-md-4">
             <div class="form-group">
-                <label for="notInGroup">People Not in Group</label>
+                <label for="notInGroup">People Not in Group</label><br />
+                <span ng-repeat="field in sortableFields" ng-click="setOutOrder(field)">
+                    <button ng-class="{'btn-primary': outOrderKey==field || outOrderKey=='-'+field}">{{field}}<span
+                            class="glyphicon glyphicon-chevron-up" ng-if="outOrderKey=='-'+field"></span><span
+                            class="glyphicon glyphicon-chevron-down" ng-if="outOrderKey==field"></span></button>
+                </span>
+                <br />
+                <br />
                 <select class="form-control" id="notInGroup" ng-model="peopleToAdd"
-                        ng-options="person as rankDict[person.Id] + ' ' + person.FriendlyName for person in selectedGroup.UneligiblePersons | orderBy: 'FriendlyName'"
+                        ng-options="person as rankDict[person.Id] + ' ' + person.FriendlyName for person in selectedGroup.UneligiblePersons | orderBy: outOrderKey"
                         size="20" multiple></select>
             </div>
         </div>
@@ -33,9 +40,16 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="peopleInGroup">People in Group</label>
+                <label for="peopleInGroup">People in Group</label><br />
+                <span ng-repeat="field in sortableFields" ng-click="setInOrder(field)">
+                    <button ng-class="{'btn-primary': inOrderKey==field || inOrderKey=='-'+field}">{{field}}<span
+                            class="glyphicon glyphicon-chevron-up" ng-if="inOrderKey=='-'+field"></span><span
+                            class="glyphicon glyphicon-chevron-down" ng-if="inOrderKey==field"></span></button>
+                </span>
+                <br />
+                <br />
                 <select class="form-control" id="peopleInGroup" ng-model="peopleToRemove"
-                        ng-options="person as rankDict[person.Id] + ' ' + person.FriendlyName for person in selectedGroup.EligiblePersons | orderBy: 'FriendlyName'"
+                        ng-options="person as rankDict[person.Id] + ' ' + person.FriendlyName for person in selectedGroup.EligiblePersons | orderBy: inOrderKey"
                         size="20" multiple></select>
             </div>
 

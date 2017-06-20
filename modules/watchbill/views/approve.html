@@ -34,11 +34,15 @@
                     class="list-group-item row" ng-class="{active: hover}"
                     ng-mouseenter="hover = false" ng-mouseleave="hover = false">
                     <div class="col-md-6">
-                        <strong>Person: {{input.Person.FriendlyName}}</strong><br/>
+                        <strong>Person: {{input.Person.FriendlyName}}</strong>
+                        <a ng-href="#/profile/{{input.Person.Id}}"><span class="glyphicon glyphicon-new-window"
+                                                                   aria-hidden="true"></span></a>
+                        <br/>
                         <span class="text-right" tooltip-placement="top-right"
                               uib-tooltip="{{input.InputReason.Description}}">
                         Reason: {{input.InputReason.Value}} <span class="glyphicon glyphicon-question-sign"></span>
-                        </span>
+                        </span><br />
+                        Rank: {{input.Person.Paygrade.Value}}/{{input.Person.Designation.Value}}
                     </div>
                     <div class="col-md-3">
                         From: {{input.Range.Start | date: 'short'}}<br/>
