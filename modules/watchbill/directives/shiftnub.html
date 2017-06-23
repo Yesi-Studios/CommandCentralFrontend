@@ -1,4 +1,4 @@
-<span ng-if="ngModel.WatchAssignment" class="label" ng-class="{'label-success':ngModel.WatchAssignment.IsClientResponsibleFor, 'label-primary':!ngModel.WatchAssignment.IsClientResponsibleFor}" style="font-size: 8px;"
+<span ng-if="ngModel.WatchAssignment" class="label" ng-class="{'label-success':ngModel.WatchAssignment.IsClientResponsibleFor, 'label-warning':!ngModel.WatchAssignment.hasOwnProperty('IsClientResponsibleFor'), 'label-primary':!ngModel.WatchAssignment.IsClientResponsibleFor}" style="font-size: 8px;"
       uib-tooltip="{{ngModel.Title + ' at ' + (ngModel.Range.Start | date: 'HHmm') +
                                     '. Currently assigned to: ' + ngModel.WatchAssignment.PersonAssigned.FriendlyName + ', ' + ngModel.WatchAssignment.PersonAssigned.Paygrade.Value +
                                     '\nDepartment: ' + ngModel.WatchAssignment.PersonAssigned.Department.Value +
