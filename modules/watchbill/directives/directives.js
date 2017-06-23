@@ -16,6 +16,8 @@ angular.module('Watchbill')
                         $location.path(path);
                     };
 
+                    $scope.inDepartment = false;
+
                     $scope.deleteWatchbill = function (id) {
                         WatchbillService.DeleteWatchbill(id,
                             function (response) {
