@@ -9,7 +9,7 @@
             <a href="#/watchbill/eligibility" ng-if="levelNumber == 3" class="btn btn-primary pull-right">Edit Eligibility Groups</a>
             <H1>Watchbills</H1>
             <div class="list-group text-left">
-                <ng-watch-bill-nub ng-repeat="watchbill in watchbills"
+                <ng-watch-bill-nub ng-repeat="watchbill in watchbills" ng-model="watchbill"
                                    watchbill-id="{{watchbill.Id}}"></ng-watch-bill-nub>
             </div>
             <ng-watch-bill-creator ng-if="levelNumber == 3" ng-model="eligibilityGroups"></ng-watch-bill-creator>

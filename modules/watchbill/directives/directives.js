@@ -16,18 +16,18 @@ angular.module('Watchbill')
                         $location.path(path);
                     };
 
-                    $scope.inDepartment = false;
-
                     $scope.deleteWatchbill = function (id) {
                         WatchbillService.DeleteWatchbill(id,
                             function (response) {
                                 $route.reload();
                             }, ConnectionService.HandleServiceError($scope, $location));
                     };
-                    WatchbillService.LoadWatchbill($scope.watchbillId,
-                        function (response) {
-                            $scope.watchbill = response.ReturnValue;
-                        }, ConnectionService.HandleServiceError($scope, $location));
+
+                    $scope.watchbill = $scope.ngModel;
+                    // WatchbillService.LoadWatchbill($scope.watchbillId,
+                    //     function (response) {
+                    //         $scope.watchbill = response.ReturnValue;
+                    //     }, ConnectionService.HandleServiceError($scope, $location));
                 }]
             }
         }

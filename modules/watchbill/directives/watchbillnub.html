@@ -1,8 +1,8 @@
 <li class="list-group-item row" ng-class="{active: hover}" ng-if="watchbill"
     ng-mouseenter="hover = true" ng-mouseleave="hover = false">
-    <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-3"><strong>Name: "{{watchbill.Title}}"</strong></div>
-    <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-3">Type of Watchbill:
-        {{watchbill.ElligibilityGroup.OwningChainOfCommand}}
+    <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-2"><strong>Name: "{{watchbill.Title}}"</strong></div>
+    <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-4">Type of Watchbill:
+        {{watchbill.EligibilityGroup.OwningChainOfCommand}}
     </div>
     <div ng-click="go('/watchbill/' + watchbill.Id)" class="col-md-4 text-right" tooltip-placement="top-right"
          uib-tooltip="{{watchbill.CurrentState.Description}}">
