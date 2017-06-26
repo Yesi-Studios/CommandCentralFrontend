@@ -71,6 +71,7 @@ angular.module('Watchbill')
             $scope.errors = [];
             $scope.messages = [];
             $scope.multipleWatches = [];
+            $scope.inputDict = {};
 
             $scope.log = function (thing) {
                 console.log(thing);
@@ -140,6 +141,13 @@ angular.module('Watchbill')
                         originalWatchbill = response.ReturnValue;
                         $scope.selectedDay = $scope.watchbill.days[0];
                         $scope.multipleWatches = response.ReturnValue.Analytics.MultipleAssignments;
+                        for (var i = 0; i < response.ReturnValue.WatchInputs.length; i++) {
+                            var inp = response.ReturnValue.WatchInputs[i];
+                            if(!$scope.inputDict[inp.Person.Id]) {
+                                $scope.inputDict[inp.Person.Id] = [];
+                            }
+                            $scope.inputDict[inp.Person.Id].push(inp);
+                        }
                     }, ConnectionService.HandleServiceError($scope, $location));
             };
             $scope.loadWatchbill();

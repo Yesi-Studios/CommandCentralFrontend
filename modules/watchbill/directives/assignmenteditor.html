@@ -40,3 +40,18 @@
         <!--<uib-timepicker name="to" ng-model="selectedShift.Range.End"></uib-timepicker>{{selectedShift.Range.To}}-->
     </div>
 </div>
+<div class="row">
+    <div ng-if="ngInputs[selectedPerson.Id]" class="col-md-10 col-md-offset-1">
+        <div class="alert alert-warning status_message">
+            This user has the following watch inputs: <br />
+            <span ng-repeat="input in ngInputs[selectedPerson.Id] track by $index">
+                "{{input.InputReason.Value}}" from {{input.Range.Start | date: "short"}} to {{input.Range.End | date: "short"}} <br />
+            </span>
+        </div>
+    </div>
+    <div ng-if="selectedPerson && !ngInputs[selectedPerson.Id]" class="col-md-10 col-md-offset-1">
+        <div  class="alert alert-success status_message">
+            This user has no inputs.
+        </div>
+    </div>
+</div>

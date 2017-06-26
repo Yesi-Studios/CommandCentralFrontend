@@ -145,7 +145,8 @@ angular.module('Watchbill')
             require: '^ngModel',
             scope: {
                 ngModel: '=',
-                ngPeople: '='
+                ngPeople: '=',
+                ngInputs: '='
             },
             templateUrl: "modules/watchbill/directives/assignmenteditor.html",
             controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
