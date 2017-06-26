@@ -70,6 +70,7 @@ angular.module('Watchbill')
 
             $scope.errors = [];
             $scope.messages = [];
+            $scope.multipleWatches = [];
 
             $scope.log = function (thing) {
                 console.log(thing);
@@ -106,6 +107,7 @@ angular.module('Watchbill')
                     }
                 }
                 if (newAssignments.length > 0) {
+                    $scope.errors = [];
                     WatchbillService.CreateWatchAssignments(newAssignments, $scope.watchbill.Id,
                         function (response) {
                             if (response.ReturnValue.HasWarnings) {
@@ -124,17 +126,20 @@ angular.module('Watchbill')
             };
 
             $scope.populate = function () {
+                $scope.errors = [];
                 WatchbillService.PopulateWatchbill($routeParams.id,
                     function (response) {
                         $scope.watchbill = response.ReturnValue;
                     }, ConnectionService.HandleServiceError($scope, $location));
             };
             $scope.loadWatchbill = function () {
+                $scope.errors = [];
                 WatchbillService.LoadWatchbill($routeParams.id,
                     function (response) {
                         $scope.watchbill = response.ReturnValue;
                         originalWatchbill = response.ReturnValue;
                         $scope.selectedDay = $scope.watchbill.days[0];
+                        $scope.multipleWatches = response.ReturnValue.Analytics.MultipleAssignments;
                     }, ConnectionService.HandleServiceError($scope, $location));
             };
             $scope.loadWatchbill();

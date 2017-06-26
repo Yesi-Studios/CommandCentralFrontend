@@ -3,6 +3,9 @@
 <div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
     {{message}}
 </div>
+<div ng-show="multipleWatches" class="alert alert-warning status_message">
+    The following Sailors have been assigned multiple watches this month: <br /><span ng-repeat="watch in multipleWatches track by $index">{{watch.Person.FriendlyName}} <br /> </saapan>
+</div>
 <div ng-show="warnings" ng-repeat="warning in warnings track by $index" class="alert alert-warning status_message">
     Input conflict: {{warning.Key.PersonAssigned.FriendlyName}} was assigned the watch shift {{warning.Key.WatchShift.Title}} on {{warning.Key.WatchShift.Range.Start | date: "short"}}, but they
     have an input from {{warning.Value[0].Range.Start | date: "short"}} to {{warning.Value[0].Range.End | date: "short"}} for {{warning.Value[0].InputReason.Value}}.
