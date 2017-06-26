@@ -65,8 +65,8 @@ angular.module('Watchbill')
             });
         }]
 ).controller('WatchbillPopulateController',
-    ['$scope', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
-        function ($scope, $rootScope, $filter, $location, $routeParams, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
+    ['$scope', '$rootScope', '$filter', '$location', '$routeParams', '$window', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',
+        function ($scope, $rootScope, $filter, $location, $routeParams, $window, AuthenticationService, ProfileService, AuthorizationService, ConnectionService, WatchbillService) {
 
             $scope.errors = [];
             $scope.messages = [];
@@ -108,8 +108,13 @@ angular.module('Watchbill')
                 if (newAssignments.length > 0) {
                     WatchbillService.CreateWatchAssignments(newAssignments, $scope.watchbill.Id,
                         function (response) {
-                            // $scope.loadWatchbill();
-                            $location.path('/watchbill/' + $scope.watchbill.Id);
+                            if (response.ReturnValue.HasWarnings) {
+                                $scope.loadWatchbill();
+                                $scope.warnings = response.ReturnValue.AssignmentWarnings;
+                                $window.scrollTo(0, 0);
+                            } else {
+                                $location.path('/watchbill/' + $scope.watchbill.Id);
+                            }
                         }, ConnectionService.HandleServiceError($scope, $location));
                 } else {
                     $scope.errors.push("No changes to submit");

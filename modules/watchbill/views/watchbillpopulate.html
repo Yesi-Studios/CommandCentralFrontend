@@ -3,6 +3,10 @@
 <div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
     {{message}}
 </div>
+<div ng-show="warnings" ng-repeat="warning in warnings track by $index" class="alert alert-warning status_message">
+    Input conflict: {{warning.Key.PersonAssigned.FriendlyName}} was assigned the watch shift {{warning.Key.WatchShift.Title}} on {{warning.Key.WatchShift.Range.Start | date: "short"}}, but they
+    have an input from {{warning.Value[0].Range.Start | date: "short"}} to {{warning.Value[0].Range.End | date: "short"}} for {{warning.Value[0].InputReason.Value}}.
+</div>
 <div class="content_panel">
     <div class="row">
         <ng-assignment-editor ng-model="selectedDay" ng-people="watchbill.EligibilityGroup.EligiblePersons"></ng-assignment-editor>
