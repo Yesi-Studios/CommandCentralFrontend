@@ -107,7 +107,9 @@ angular.module('Profiles')
                                 });
                             }, ConnectionService.HandleServiceError($scope, $location));
 
-                        $scope.loadFullAccountHistory();
+                        if($scope.canReturnPersonField("AccountHistory")) {
+                            $scope.loadFullAccountHistory();
+                        }
 
                         ProfileService.GetCommands(
                             // If we succeed, this is our callback
