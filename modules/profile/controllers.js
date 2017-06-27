@@ -97,8 +97,8 @@ angular.module('Profiles')
                                 // Hey, let's save that lock. Sweet.
                                 $scope.profileLock = response.ReturnValue;
 
-                                $scope.$on('$locationChangeStart', function (event) {
-                                    if ($scope.profileLock) {
+                                $scope.$on('$locationChangeStart', function (event, next, current) {
+                                    if ($scope.profileLock && next.substr(next.length-5).toLowerCase() !== "login") {
                                         var lockId = $scope.profileLock.Id;
                                         $scope.profileLock = null;
                                         ProfileService.ReleaseLock(lockId, false, function (response) {},
