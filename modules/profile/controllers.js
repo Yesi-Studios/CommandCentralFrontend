@@ -60,8 +60,8 @@ angular.module('Profiles')
                             $scope.friendlyName = response.ReturnValue.FriendlyName;
                             $scope.profileData = response.ReturnValue.Person;
                             $scope.isMyProfile = response.ReturnValue.IsMyProfile;
-                            $scope.returnableFields = response.ReturnValue.ResolvedPermissions.ReturnableFields.Main.Person;
-                            $scope.editableFields = response.ReturnValue.ResolvedPermissions.EditableFields.Main.Person;
+                            $scope.returnableFields = response.ReturnValue.ResolvedPermissions.ReturnableFields.Person;
+                            $scope.editableFields = response.ReturnValue.ResolvedPermissions.EditableFields.Person;
 
                             // Set up all the dates to be actual Dates
                             if (response.ReturnValue.Person.DateOfBirth) $scope.profileData.DateOfBirth = new Date(response.ReturnValue.Person.DateOfBirth);
