@@ -104,9 +104,14 @@ angular.module('Authorization')
 		service.GetReturnableFields = function(level) {
             var universalFields = $rootScope.globals.currentUser.permissions.ReturnableFields.Person;
             var specificFields = $rootScope.globals.currentUser.permissions.PrivelegedReturnableFields[level].Person;
-            var combinedFields = universalFields.concat(specificFields.filter(function (item) {
-                return universalFields.indexOf(item) < 0;
-            }));
+            var combinedFields;
+            if(specificFields) {
+                combinedFields = universalFields.concat(specificFields.filter(function (item) {
+                    return universalFields.indexOf(item) < 0;
+                }));
+            } else {
+                combinedFields = angular.copy(universalFields);
+            }
             var levelIndex = combinedFields.indexOf(level);
             if(config.debugMode) console.log(level);
             if(config.debugMode) console.log(levelIndex);
