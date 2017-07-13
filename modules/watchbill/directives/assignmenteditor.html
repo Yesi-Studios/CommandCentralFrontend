@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-3 col-md-offset-1">
         <div class="form-group text-center">
-            <input class="form-control" type="text" ng-model="personFilter">
+            <input class="form-control" type="text" ng-model="personFilter" placeholder="Type to search">
             <select class="form-control" size="10" id="watchDayDesigner" ng-model="selectedPerson"
                     ng-options="personContainer as personContainer.Person.FriendlyName for personContainer in ngPeople[selectedGroup] | filter: personFilter : false : 'Person.FriendlyName' | orderBy: 'Points'">
                 <option value="" selected hidden />
@@ -11,6 +11,7 @@
             <button type="button" class="btn" ng-click="setGroup('OOD')" ng-class="{'btn-primary': selectedGroup == 'OOD', 'btn-default': selectedGroup != 'OOD'}">OOD</button>
             <button type="button" class="btn" ng-click="setGroup('JOOD')" ng-class="{'btn-primary': selectedGroup == 'JOOD', 'btn-default': selectedGroup != 'JOOD'}">JOOD</button>
         </div>
+            <div class="text-center">Click to show users eligible for that type of watch.</div>
         </div>
         <!--<button class="btn btn-success btn-sm pull-right"-->
                 <!--ng-click="ngModel.push({'Title':'New Shift', 'Range':{'Start':'','End':''}, 'ShiftType':''});selectedShift = ngModel[ngModel.length-1];"><span class="glyphicon glyphicon-plus"></span>-->
@@ -58,6 +59,14 @@
     <div ng-if="selectedPerson && selectedPerson.Person && !ngInputs[selectedPerson.Person.Id]" class="col-md-10 col-md-offset-1">
         <div  class="alert alert-success status_message">
             This user has no inputs.
+        </div>
+    </div>
+</div>
+<div ng-if="selectedPerson['MostRecentWatchAssignment']" class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="alert alert-warning status_message">
+            This user last stood the following watch:
+            "{{selectedPerson.MostRecentWatchAssignment.WatchShift.ShiftType.Value}}" shift from {{selectedPerson.MostRecentWatchAssignment.WatchShift.Range.Start | date: "short"}} to {{selectedPerson.MostRecentWatchAssignment.WatchShift.Range.End | date: "short"}}.
         </div>
     </div>
 </div>
