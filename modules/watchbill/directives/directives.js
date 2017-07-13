@@ -150,6 +150,10 @@ angular.module('Watchbill')
             },
             templateUrl: "modules/watchbill/directives/assignmenteditor.html",
             controller: ['$scope', '$location', '$filter', 'WatchbillService', 'ConnectionService', function ($scope, $location, $filter, WatchbillService, ConnectionService) {
+                $scope.selectedGroup = "JOOD";
+
+                $scope.setGroup = function(group) { $scope.selectedGroup = group;};
+
                 $scope.log = function (thing) {
                     console.log(thing);
                 };

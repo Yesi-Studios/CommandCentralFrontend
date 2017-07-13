@@ -5,6 +5,6 @@
                                     '\nDivision: ' + ngModel.WatchAssignment.PersonAssigned.Division.Value}}">
                                         {{ngModel.Title}} {{daysText()}}: {{ngModel.WatchAssignment.PersonAssigned.FriendlyName.split(',')[0]}}, {{ngModel.WatchAssignment.PersonAssigned.Paygrade.Value}}
                                     </span>
-<span ng-if="!ngModel.WatchAssignment" class="label label-default"
+<span ng-if="!ngModel.WatchAssignment" class="label" ng-class="{'label-default':!ngModel.IsClientResponsibleFor, 'label-danger': ngModel.IsClientResponsibleFor}"
       uib-tooltip="{{ngModel.Title + ' from ' + (ngModel.Range.Start | date: 'short') + ' to ' + (ngModel.Range.End | date: 'short')}}">&nbsp{{ngModel.Range.Start | date: 'HHmm'}} <strong>{{ngModel.Title}}</strong> <span
         ng-if="days">({{days}} days)</span>&nbsp</span>

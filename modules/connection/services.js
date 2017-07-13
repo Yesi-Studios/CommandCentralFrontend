@@ -165,14 +165,14 @@ angular.module('Connection')
                     return $http(request).then(function (response) { // The return here is important. $http returns a promise, and the controllers need that.
                             if(config.debugMode) console.log(endpoint);
                             if(config.debugMode) console.log(service.RestoreJsonNetReferences(response.data));
-                            success(service.RestoreJsonNetReferences(JSON.parse(response.data)));
+                            success(service.RestoreJsonNetReferences(response.data));
 
                         },
                         function (response) {
                             if (response.statusText == "") {
                                 error({ "ErrorType": "Authentication", "ErrorMessages": ["The service is offline. If this message persists, please contact the developers."] });
                             } else {
-                                error(service.RestoreJsonNetReferences(JSON.parse(response.data)));
+                                error(service.RestoreJsonNetReferences(response.data));
                             }
                         });
                 };

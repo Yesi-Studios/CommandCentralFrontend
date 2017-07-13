@@ -50,7 +50,7 @@ angular.module('Watchbill')
                                 $scope.nextStatus = getByValue($scope.statuses, 'Value', 'Open for Inputs');
                                 break;
                             case 'Open for Inputs':
-                                $scope.nextStatus = getByValue($scope.statuses, 'Value', 'Closed for Inputs');
+                                $scope.nextStatus = getByValue($scope.statuses, 'Value', 'Assignment');
                                 break;
                             case 'Closed for Inputs':
                                 $scope.nextStatus = getByValue($scope.statuses, 'Value', 'Under Review');
@@ -151,6 +151,10 @@ angular.module('Watchbill')
                     }, ConnectionService.HandleServiceError($scope, $location));
             };
             $scope.loadWatchbill();
+            WatchbillService.GetRecommendations($routeParams.id,
+                function (response) {
+                    $scope.peopleByShiftType = response.ReturnValue;
+                }, ConnectionService.HandleServiceError($scope, $location));
         }]
 ).controller('WatchbillController',
     ['$scope', '$route', '$rootScope', '$filter', '$location', '$routeParams', 'AuthenticationService', 'ProfileService', 'AuthorizationService', 'ConnectionService', 'WatchbillService',

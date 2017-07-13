@@ -3,9 +3,14 @@
         <div class="form-group text-center">
             <input class="form-control" type="text" ng-model="personFilter">
             <select class="form-control" size="10" id="watchDayDesigner" ng-model="selectedPerson"
-                    ng-options="person as person.FriendlyName for person in ngPeople | filter: personFilter : false : 'FriendlyName' | orderBy: 'FriendlyName'">
+                    ng-options="personContainer as personContainer.Person.FriendlyName for personContainer in ngPeople[selectedGroup] | filter: personFilter : false : 'Person.FriendlyName' | orderBy: 'Points'">
                 <option value="" selected hidden />
             </select>
+        <div class="btn-group" role="group" aria-label="Pick a category of watchstander">
+            <button type="button" class="btn" ng-click="setGroup('CDO')" ng-class="{'btn-primary': selectedGroup == 'CDO', 'btn-default': selectedGroup != 'CDO'}">CDO</button>
+            <button type="button" class="btn" ng-click="setGroup('OOD')" ng-class="{'btn-primary': selectedGroup == 'OOD', 'btn-default': selectedGroup != 'OOD'}">OOD</button>
+            <button type="button" class="btn" ng-click="setGroup('JOOD')" ng-class="{'btn-primary': selectedGroup == 'JOOD', 'btn-default': selectedGroup != 'JOOD'}">JOOD</button>
+        </div>
         </div>
         <!--<button class="btn btn-success btn-sm pull-right"-->
                 <!--ng-click="ngModel.push({'Title':'New Shift', 'Range':{'Start':'','End':''}, 'ShiftType':''});selectedShift = ngModel[ngModel.length-1];"><span class="glyphicon glyphicon-plus"></span>-->
@@ -17,7 +22,8 @@
     <div class="col-md-3">
         <H3>Shift Assigner</H3>
         <p>Select a person to the left (use the text box above the list to search for a person), select a shift on the right, then click assign to assign that person to that shift.</p>
-        <p>To select a different day, click its select button below. You can also instantly populate the entire watchbill randomly by clicking "Populate".</p>
+        <p>To select a different day, click its select button below. The list to the left is populated with watch standers you are responsible for, in the order that they should be assigned.</p>
+        <p><strong>It is highly recommended that you assign people in the order they appear in the list to the left,</strong> while accounting for watch inputs and possibly previous shifts.</p>
         <!--<input type="text" ng-model="selectedShift.Title"/>-->
         <!--<select id="shiftType" ng-model="selectedShift.ShiftType"-->
                 <!--ng-options="o as o.Value for o in shiftTypes | orderBy: 'Value' track by o.Id">-->
@@ -25,12 +31,12 @@
         <!--<div class="form-group">-->
             <!--<label for="numberOfDays">Number of Days</label>-->
             <!--<input type="number" name="numberOfDays" id="numberOfDays" ng-model="selectedShift.numberOfDays"/></div>-->
-        <button class="btn btn-success" ng-click="assignWatchstander(selectedPerson, selectedShift)">Assign</button>
+        <button class="btn btn-success" ng-click="assignWatchstander(selectedPerson.Person, selectedShift)">Assign</button>
     </div>
     <div class="col-md-4">
         <div class="form-group text-center">
             <select class="form-control" size="12" id="watchShifts" ng-model="selectedShift"
-                ng-options="shift as (shift.Title + ' at ' + (shift.Range.Start | date: 'HHmm') + ' stood by ' + shift.WatchAssignment.PersonAssigned.FriendlyName.split(', ')[0]) for shift in ngModel.WatchShifts">
+                ng-options="shift as (shift.Title + ' at ' + (shift.Range.Start | date: 'HHmm') + ' stood by ' + shift.WatchAssignment.PersonAssigned.FriendlyName.split(', ')[0]) disable when !shift.IsClientResponsibleFor for shift in ngModel.WatchShifts">
                 <option value="" selected hidden />
             </select>
         </div>
@@ -41,15 +47,15 @@
     </div>
 </div>
 <div class="row">
-    <div ng-if="ngInputs[selectedPerson.Id]" class="col-md-10 col-md-offset-1">
+    <div ng-if="ngInputs[selectedPerson.Person.Id]" class="col-md-10 col-md-offset-1">
         <div class="alert alert-warning status_message">
             This user has the following watch inputs: <br />
-            <span ng-repeat="input in ngInputs[selectedPerson.Id] track by $index">
+            <span ng-repeat="input in ngInputs[selectedPerson.Person.Id] track by $index">
                 "{{input.InputReason.Value}}" from {{input.Range.Start | date: "short"}} to {{input.Range.End | date: "short"}} <br />
             </span>
         </div>
     </div>
-    <div ng-if="selectedPerson && !ngInputs[selectedPerson.Id]" class="col-md-10 col-md-offset-1">
+    <div ng-if="selectedPerson && selectedPerson.Person && !ngInputs[selectedPerson.Person.Id]" class="col-md-10 col-md-offset-1">
         <div  class="alert alert-success status_message">
             This user has no inputs.
         </div>

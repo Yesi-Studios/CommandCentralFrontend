@@ -3,7 +3,7 @@
 <div ng-show="messages" ng-repeat="message in messages track by $index" class="alert alert-success status_message">
     {{message}}
 </div>
-<div ng-show="multipleWatches" class="alert alert-warning status_message">
+<div ng-show="multipleWatches.length > 0" class="alert alert-warning status_message">
     The following Sailors have been assigned multiple watches this month: <br /><span ng-repeat="watch in multipleWatches track by $index">{{watch.Person.FriendlyName}} <br /> </span>
 </div>
 <div ng-show="warnings" ng-repeat="warning in warnings track by $index" class="alert alert-warning status_message">
@@ -12,13 +12,11 @@
 </div>
 <div class="content_panel">
     <div class="row">
-        <ng-assignment-editor ng-model="selectedDay" ng-inputs="inputDict" ng-people="watchbill.EligibilityGroup.EligiblePersons"></ng-assignment-editor>
+        <ng-assignment-editor ng-model="selectedDay" ng-inputs="inputDict" ng-people="peopleByShiftType"></ng-assignment-editor>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div class="btn-group pull-right">
-            <a ng-if="watchbill.CurrentState.Value == 'Closed for Inputs'" ng-click="populate()"
-               class="btn btn-primary">Populate</a>
             <a href="#/watchbill/{{watchbill.Id}}"
                class="btn btn-success">Back to Watchbill</a>
             </div>

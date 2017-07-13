@@ -247,6 +247,13 @@ angular.module('Watchbill')
                     }, success, error);
                 };
 
+                service.GetRecommendations = function (id, success, error) {
+                    return ConnectionService.RequestFromBackend('GetWatchRecommendations', {
+                        'authenticationtoken': AuthenticationService.GetAuthToken(),
+                        'watchbillid': id
+                    }, success, error);
+                };
+
                 service.GetDefaultWatchShifts = function (theDay) {
                     var dayOfWeek = theDay.Date.getDay();
                     var joodShift = {"Id": "858f6b78-5508-4a59-97a0-6e45aadab2a9"};
