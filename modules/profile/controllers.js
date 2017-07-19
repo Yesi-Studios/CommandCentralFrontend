@@ -167,9 +167,11 @@ angular.module('Profiles')
                     $scope.dataLoading = true;
                     $scope.profileUpdateSuccess = false;
                     // Check to see if the Primary NEC is also one of the Secondary NECs. If it is, remove it.
-                    for (var j in $scope.profileData.SecondaryNECs) {
-                        if ($scope.profileData.SecondaryNECs[j].Id === $scope.profileData.PrimaryNEC.Id) {
-                            $scope.profileData.SecondaryNECs.splice(j, 1);
+                    if ($scope.profileData.PrimaryNEC && $scope.profileData.PrimaryNEC.Id) {
+                        for (var j in $scope.profileData.SecondaryNECs) {
+                            if ($scope.profileData.SecondaryNECs[j].Id === $scope.profileData.PrimaryNEC.Id) {
+                                $scope.profileData.SecondaryNECs.splice(j, 1);
+                            }
                         }
                     }
 
